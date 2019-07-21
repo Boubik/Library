@@ -43,4 +43,5 @@ function add_book($conn, string $name, int $relase, string $language, string $IS
     $sql = "INSERT INTO `book` (`name`, `relase`, `language`, `ISBN`, `room_name`, `pages`) VALUES ('". $name ."', '". $relase ."-01-01', '". $language ."', '". $ISBN ."', '". $room_name ."', ". $pages .")";
     $sql = $conn->prepare($sql); 
     $sql->execute();
+    
 }

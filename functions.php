@@ -37,7 +37,7 @@ function connect_to_db(string $servername, string $dbname, string $username, str
  * @param   String  $room_name      room_name
  * @param   String  $pages          pages
  */
-function add_book($conn, string $name, int $relase, string $language, string $ISBN, string $room_name, int $pages){
+function add_book($conn, string $name, int $relase, string $language, string $ISBN, string $room_name, int $pages, string $img){
 
     $db_room = true;
     $select_search = "SELECT * FROM `room`";
@@ -58,7 +58,8 @@ function add_book($conn, string $name, int $relase, string $language, string $IS
         $sql->execute();
     }
 
-    $sql = "INSERT INTO `book` (`name`, `relase`, `language`, `ISBN`, `room_name`, `pages`) VALUES ('". $name ."', '". $relase ."-01-01', '". $language ."', '". $ISBN ."', '". $room_name ."', ". $pages .")";
+    $sql = "INSERT INTO `book` (`name`, `relase`, `language`, `ISBN`, `room_name`, `pages`, `img`) VALUES ('". $name ."', '". $relase ."-01-01', '". $language ."', '". $ISBN ."', '". $room_name ."', ". $pages .", '" . $img . "')";
+    echo $sql;
     $sql = $conn->prepare($sql); 
     $sql->execute();
     
@@ -229,9 +230,10 @@ function add_user($conn, string $f_name, string $l_name, string $username, strin
  * @param   mixed   $conn           db connection
  * @param   String  $username       username
  * @param   String  $password       password
+ * @param   Bool    check if is moderator or admin
  * @return  Bool    if true you can login
  */
-function login($conn, string $username, string $password){
+function login($conn, string $username, string $password, $mod_plus = false){
     date_default_timezone_set('Europe/Prague');
     $datetime = date("Y-m-d H:i:s");
     $password = hash_password($password);
@@ -241,6 +243,9 @@ function login($conn, string $username, string $password){
     $numrows = $sql->execute();
     $row = $sql->fetch();
     if($row["username"] == $username and $row["password"] == $password ){
+        if($mod_plus and !($row["role"] == "mod" or $row["role"] == "admin")){
+            return false;
+        }
         return true;
     }else {
         return false;

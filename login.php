@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Prihlášení</title>
 </head>
 <body>
 <?php
@@ -12,7 +12,7 @@ $conn = connect_to_db($configs["servername"], $configs["dbname"], $configs["user
 session_start();
 
 if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])){
-    header("Location: /index.php");
+    header("Location: /");
 }else{
     echo "Registrace";
     echo '<form method="POST" action="">' . "\nJméno";
@@ -35,6 +35,10 @@ if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn
 if(isset($_POST["register"])){
     if(!(username_exist($conn, $_POST["username"]))){
         add_user($conn, $_POST["f_name"], $_POST["l_name"], $_POST["username"], $_POST["password"]);
+        echo "jsi přihlášený";
+        $_SESSION["username"] = $_POST["login_username"];
+        $_SESSION["password"] = $_POST["login_password"];
+        header("Location: /");
     }else{
         echo "Přezdka už existuje";
     }
@@ -45,7 +49,7 @@ if(isset($_POST["login"])){
         echo "jsi přihlášený";
         $_SESSION["username"] = $_POST["login_username"];
         $_SESSION["password"] = $_POST["login_password"];
-        header("Location: /index.php");
+        header("Location: /");
     }else{
         echo "Špatné přihlašovací údaje";
         unset($_SESSION["username"]);

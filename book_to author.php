@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
-    <title>Add author</title>
+    <title>Přidání autora</title>
 </head>
 <body>
 <?php
@@ -9,6 +9,12 @@ include "functions.php";
 ini_set('max_execution_time', 0);
 $configs = include('config.php');
 $conn = connect_to_db($configs["servername"], $configs["dbname"], $configs["username"], $configs["password"]);
+session_start();
+
+if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"], true)){
+}else{
+    header("Location: /login.php");
+}
 
 echo "Přiřadte autora k \"" . $_GET["name"] . "\"<br>\n";
 

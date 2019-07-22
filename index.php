@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
-    <title>index</title>
+    <title>Knihovna</title>
 </head>
 <body>
 <?php

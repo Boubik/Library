@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>Add book</title>
 </head>
 <body>
 <?php
@@ -25,19 +25,31 @@ echo '</select>'. " nebo ";
 
 echo '<input type="text" name="room_name"><br>' . "\nPočet stran";
 
-echo '<input type="number" name="pages"><br>' . "\n";
+echo '<input type="number" name="pages"><br>' . "\nŽánry";
+echo '<input type="text" maxlength="45" name="genres">(mezera rozděluje žánry)<br>' . "\n";
 echo '<input type="submit" name="submit" value="Přidat">' . "\n";
 echo '</form>'. "\n";
 
 
 if(isset($_POST["submit"])){
+    $genres = explode(" ", $_POST["genres"]);
+    add_genres($conn, $genres);
+    $gendrs_get = NULL;
+    foreach($genres as $item){
+        $item = get_genres_id($conn, $item);
+        if($gendrs_get != NULL){
+            $gendrs_get = $gendrs_get . "," . $item;
+        }else{
+            $gendrs_get =  $item;
+        }
+    }
     if($_POST["room_name"] != ""){
         $room = $_POST["room_name"];
     }else{
         $room = $_POST["room"];
     }
     add_book($conn, $_POST["name"], $_POST["relase"], $_POST["language"], $_POST["ISBN"], $room, $_POST["pages"]);
-    header("Location: /book_to author.php?name=" . $_POST["name"] . "&relase=" . $_POST["relase"] . "&language=" . $_POST["language"] . "&ISBN=" . $_POST["ISBN"] . "&room_name=" . $room . "&pages=" . $_POST["pages"]);
+    header("Location: /book_to author.php?name=" . $_POST["name"] . "&relase=" . $_POST["relase"] . "&language=" . $_POST["language"] . "&ISBN=" . $_POST["ISBN"] . "&room_name=" . $room . "&pages=" . $_POST["pages"] . "&genres=" . $gendrs_get);
 }
 
 

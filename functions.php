@@ -80,51 +80,12 @@ function add_author($conn, string $f_name, string $l_name, int $bday, string $co
     
 }
 
-function get_authors($conn){
-
-    $rooms = array();
-    $select_search = "SELECT * FROM `author`";
-    $select_search = $conn->prepare($select_search); 
-    $numrows = $select_search->execute();
-    if($numrows > 0){
-        while($row = $select_search->fetch()){
-            $authors[] = $row;
-        }
-    }
-
-    return $authors;
-}
-
-function get_book($conn){
-
-    $rooms = array();
-    $select_search = "SELECT * FROM `book`";
-    $select_search = $conn->prepare($select_search); 
-    $numrows = $select_search->execute();
-    if($numrows > 0){
-        while($row = $select_search->fetch()){
-            $books[] = $row;
-        }
-    }
-
-    return $books;
-}
-
-function get_room($conn){
-
-    $rooms = array();
-    $select_search = "SELECT * FROM `room`";
-    $select_search = $conn->prepare($select_search); 
-    $numrows = $select_search->execute();
-    if($numrows > 0){
-        while($row = $select_search->fetch()){
-            $rooms[] = $row;
-        }
-    }
-
-    return $rooms;
-}
-
+/**
+ * get table rows
+ * @param   mixed   $conn           db connection
+ * @param   String  $name           name of table
+ * @return  array   return array of rows from table
+ */
 function get_table($conn, string $name){
 
     $rooms = array();
@@ -132,17 +93,96 @@ function get_table($conn, string $name){
     $select_search = $conn->prepare($select_search); 
     $numrows = $select_search->execute();
     if($numrows > 0){
+        $rows = array();
         while($row = $select_search->fetch()){
             $rows[] = $row;
         }
+        return $rows;
+    }else {
+        return NULL;
     }
 
-    return $rows;
 }
 
+/**
+ * insert author
+ * @param   mixed   $conn           db connection
+ * @param   String  $id_book        id of book
+ * @param   String  $id_author      id of author
+ */
 function add_book_has_author($conn, int $id_book, int $id_author){
 
     $sql = "INSERT INTO `book_has_author`(`book_id`, `author_id`) VALUES (". $id_book .", ". $id_author .")";
+    $sql = $conn->prepare($sql); 
+    $sql->execute();
+}
+
+/**
+ * insert author
+ * @param   mixed   $conn           db connection
+ * @param   String  $id_book        id of book
+ * @param   String  $id_author      id of author
+ */
+function add_genres($conn, array $names){
+    $genres = get_table($conn, "genres");
+    if($genres != NULL){
+        $i = $genres;
+        $genres = array();
+        foreach($i as $item){
+            $genres[] = $item["name"];
+        }
+
+        foreach($names as $item){
+            if(!(in_array($item, $genres))){
+                insert_genres($conn, $item);
+            }
+        }
+    }else{
+        foreach($names as $item){
+            insert_genres($conn, $item);
+        }
+    }
+
+}
+
+/**
+ * insert author
+ * @param   mixed   $conn           db connection
+ * @param   String  $name           name to insert
+ */
+function insert_genres($conn, string $name){
+    $sql = "INSERT INTO `genres`(`name`) VALUES ('". $name ."')";
+    $sql = $conn->prepare($sql);
+    $sql->execute();
+}
+
+/**
+ * insert author
+ * @param   mixed   $conn           db connection
+ * @param   String  $name           name to search in db
+ * @return  int     id
+ */
+function get_genres_id($conn, string $name){
+    $sql = "SELECT * FROM `genres` WHERE `name` = '". $name ."'";
+    $sql = $conn->prepare($sql);
+    $numrows = $sql->execute();
+    if($numrows > 0){
+        $row = $sql->fetch();
+        return $row["id"];
+    }else {
+        return NULL;
+    }
+}
+
+/**
+ * insert author
+ * @param   mixed   $conn           db connection
+ * @param   String  $id_book        id of book
+ * @param   String  $id_genres      id of genres
+ */
+function add_book_has_genres($conn, int $id_book, int $id_genres){
+
+    $sql = "INSERT INTO `book_has_genres`(`book_id`, `genres_id`) VALUES (". $id_book .", ". $id_genres .")";
     $sql = $conn->prepare($sql); 
     $sql->execute();
 }

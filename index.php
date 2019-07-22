@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
+    <link href="styles/index.css" rel="stylesheet" type="text/css">
+    <link rel="icon" href="images/logo.ico">
     <title>Knihovna</title>
 </head>
 <body>
@@ -11,7 +13,6 @@ $configs = include('config.php');
 $conn = connect_to_db($configs["servername"], $configs["dbname"], $configs["username"], $configs["password"]);
 session_start();
 
-echo "<br><br><br>";
 echo '<form method="POST" action="">' . "\n";
 if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])){
     echo '<input type="submit" name="logout"  value="Odhlásit se">' . "\n";
@@ -30,6 +31,55 @@ if(isset($_POST["login"])){
     header("Location: /login.php");
 }
 
+
+$books = get_table($conn, "book");
+
+echo "<div class=\"products\">";
+foreach($books as $book){
+    echo "<div class=\"book\">";
+
+    echo "<div class=\"name\">";
+    echo $book["name"];
+    echo "</div>";
+
+    echo "<div class=\"language\">";
+    echo "Jazyk: ".$book["language"];
+    echo "</div>";
+
+    echo "<img src=\"". $book["img"] ."\">";
+
+    echo "<div class=\"genres\">";
+    $k = mn($conn, "book_has_genres", $book["id"], "book_id", "genres_id");
+    $genres = NULL;
+    foreach($k as $id){
+        $genre = get_genre($conn, $id);
+        if($genres != NULL){
+            $genres = $genre . ", " . $genres;
+        }else{
+            $genres =  $genre;
+        }
+    }
+    echo "Žánr: ".$genres;
+    echo "</div>";
+
+    echo "<div class=\"author\">";
+    $k = mn($conn, "book_has_author", $book["id"], "book_id", "author_id");
+    $authors = NULL;
+    foreach($k as $id){
+        $author = get_author($conn, $id);
+        if($authors != NULL){
+            $authors = $author["f_name"] . " " . $author["l_name"] . ", " . $authors;
+        }else{
+            $authors =  $author["f_name"] . " " . $author["l_name"];
+        }
+    }
+    echo "Napsal: ".$authors;
+    echo "</div>";
+
+    echo "</div>";
+
+}
+echo "</div>";
     
 ?>
 </body>

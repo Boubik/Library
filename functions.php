@@ -28,7 +28,7 @@ function connect_to_db(string $servername, string $dbname, string $username, str
 }
 
 /**
- * insert book
+ * add book
  * @param   mixed   $conn           db connection
  * @param   String  $name           name of the book
  * @param   String  $relase         relase year
@@ -66,7 +66,7 @@ function add_book($conn, string $name, int $relase, string $language, string $IS
 }
 
 /**
- * insert author
+ * add author
  * @param   mixed   $conn           db connection
  * @param   String  $f_name         first name
  * @param   String  $l_name         last name
@@ -106,7 +106,7 @@ function get_table($conn, string $name){
 }
 
 /**
- * insert author
+ * add ids to table book_has_author
  * @param   mixed   $conn           db connection
  * @param   String  $id_book        id of book
  * @param   String  $id_author      id of author
@@ -119,7 +119,7 @@ function add_book_has_author($conn, int $id_book, int $id_author){
 }
 
 /**
- * insert author
+ * add genres
  * @param   mixed   $conn           db connection
  * @param   String  $id_book        id of book
  * @param   String  $id_author      id of author
@@ -147,7 +147,7 @@ function add_genres($conn, array $names){
 }
 
 /**
- * insert author
+ * insert genres
  * @param   mixed   $conn           db connection
  * @param   String  $name           name to insert
  */
@@ -158,7 +158,7 @@ function insert_genres($conn, string $name){
 }
 
 /**
- * insert author
+ * get genres id from db
  * @param   mixed   $conn           db connection
  * @param   String  $name           name to search in db
  * @return  int     id
@@ -176,7 +176,7 @@ function get_genres_id($conn, string $name){
 }
 
 /**
- * insert author
+ * add ids to table book_has_genres
  * @param   mixed   $conn           db connection
  * @param   int     $id_book        id of book
  * @param   int     $id_genres      id of genres
@@ -189,7 +189,7 @@ function add_book_has_genres($conn, int $id_book, int $id_genres){
 }
 
 /**
- * insert author
+ * check if user exist
  * @param   mixed   $conn           db connection
  * @param   String  $username       username to look for
  * @return  Bool    if username exist in db return true
@@ -208,7 +208,7 @@ function username_exist($conn, String $username){
 }
 
 /**
- * insert author
+ * add user to db
  * @param   mixed   $conn           db connection
  * @param   String  $f_name         first name
  * @param   String  $l_name         last name
@@ -260,4 +260,64 @@ function login($conn, string $username, string $password, $mod_plus = false){
  */
 function hash_password(string $password){
     return hash("sha3-512", $password);
+}
+
+/**
+ * get ids from mn table
+ * @param   Mixed   $conn           db
+ * @param   String  $mn_table       mn table name
+ * @param   Int     $id             id you want with
+ * @param   String  $id_name        id name to check
+ * @param   String  $id_get         id name what you want
+ * @return  Array   return ids
+ */
+function mn($conn, string $mn_table, int $id, string $id_name, string $id_get){
+    $ids = array();
+    $mn_table = get_table($conn, $mn_table);
+
+    foreach($mn_table as $item){
+        if($item[$id_name] == $id){
+            $ids[] = $item[$id_get];
+        }
+    }
+
+    return $ids;
+}
+
+/**
+ * get genres
+ * @param   Mixed   $conn       db connection
+ * @param   Int     $id         id
+ * @return  String  return genres
+ */
+function get_genre($conn, int $id){
+
+    $sql = "SELECT `name` FROM `genres` WHERE `id` = ". $id;
+    $sql = $conn->prepare($sql);
+    $numrows = $sql->execute();
+    $row = $sql->fetch();
+    if($numrows > 0){
+        return $row["name"];
+    }else {
+        return NULL;
+    }
+}
+
+/**
+ * get author
+ * @param   Mixed   $conn       db connection
+ * @param   Int     $id         id
+ * @return  Array   return author
+ */
+function get_author($conn, int $id){
+
+    $sql = "SELECT * FROM `author` WHERE `id` = ". $id;
+    $sql = $conn->prepare($sql);
+    $numrows = $sql->execute();
+    $row = $sql->fetch();
+    if($numrows > 0){
+        return $row;
+    }else {
+        return NULL;
+    }
 }

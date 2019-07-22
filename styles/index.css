@@ -1,0 +1,18 @@
+body{
+
+}
+
+.products{
+    width: 50%;
+    background: red;
+}
+
+.book{
+    width: 33.333333333%;
+    background: green;
+}
+
+.book img{
+    width: 50%;
+    background: green;
+}

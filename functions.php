@@ -177,12 +177,82 @@ function get_genres_id($conn, string $name){
 /**
  * insert author
  * @param   mixed   $conn           db connection
- * @param   String  $id_book        id of book
- * @param   String  $id_genres      id of genres
+ * @param   int     $id_book        id of book
+ * @param   int     $id_genres      id of genres
  */
 function add_book_has_genres($conn, int $id_book, int $id_genres){
 
     $sql = "INSERT INTO `book_has_genres`(`book_id`, `genres_id`) VALUES (". $id_book .", ". $id_genres .")";
     $sql = $conn->prepare($sql); 
     $sql->execute();
+}
+
+/**
+ * insert author
+ * @param   mixed   $conn           db connection
+ * @param   String  $username       username to look for
+ * @return  Bool    if username exist in db return true
+ */
+function username_exist($conn, String $username){
+
+    $sql = "SELECT * FROM `user` WHERE `username` = '". $username ."'";
+    $sql = $conn->prepare($sql);
+    $numrows = $sql->execute();
+    $row = $sql->fetch();
+    if($row["username"] == $username){
+        return true;
+    }else {
+        return false;
+    }
+}
+
+/**
+ * insert author
+ * @param   mixed   $conn           db connection
+ * @param   String  $f_name         first name
+ * @param   String  $l_name         last name
+ * @param   String  $username       username
+ * @param   String  $password       password
+ */
+function add_user($conn, string $f_name, string $l_name, string $username, string $password){
+    date_default_timezone_set('Europe/Prague');
+    $datetime = date("Y-m-d H:i:s");
+    $password = hash_password($password);
+    $sql = "INSERT INTO `user`(`f_name`, `l_name`, `username`, `password`, `last_login`, `ceated`) VALUES ('".$f_name."', '".$l_name."', '".$username."', '".$password."', '".$datetime."', '".$datetime."')";
+    $sql = $conn->prepare($sql); 
+    $sql->execute();
+    
+}
+
+/**
+ * check if login is ok
+ * @param   mixed   $conn           db connection
+ * @param   String  $username       username
+ * @param   String  $password       password
+ * @return  Bool    if true you can login
+ */
+function login($conn, string $username, string $password){
+    date_default_timezone_set('Europe/Prague');
+    $datetime = date("Y-m-d H:i:s");
+    $password = hash_password($password);
+
+    $sql = "SELECT * FROM `user` WHERE `username` = '". $username ."' AND`password` = '". $password ."'";
+    $sql = $conn->prepare($sql);
+    $numrows = $sql->execute();
+    $row = $sql->fetch();
+    if($row["username"] == $username and $row["password"] == $password ){
+        return true;
+    }else {
+        return false;
+    }
+    
+}
+
+/**
+ * make hash from pasword
+ * @param   String  $password       password
+ * @return  String    if true you can login
+ */
+function hash_password(string $password){
+    return hash("sha3-512", $password);
 }

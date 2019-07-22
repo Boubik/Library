@@ -72,6 +72,7 @@ if(isset($_POST['submit1']) or isset($_POST['submit2'])){
         add_book_has_genres($conn, (int)$id_book, (int)$id_genres);
     }
     add_book_has_author($conn, (int)$id_book, (int)$id_author);
+    header("Location: /add.php");
 }
 
 /*add_book($conn, "Stopařův průvodce po Galaxii", 1991, "CZ", "80-207-0229-6", "14", 304);

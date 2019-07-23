@@ -321,3 +321,64 @@ function get_author($conn, int $id){
         return NULL;
     }
 }
+
+/**
+ * get book by id from db
+ * @param   Mixed   $conn           db connection
+ * @param   Int     $id             name to search in db
+ * @return  Arry    info about book
+ */
+function get_book_by_id($conn, int $id){
+    $sql = "SELECT * FROM `book` WHERE `id` = '". $id ."'";
+    $sql = $conn->prepare($sql);
+    $numrows = $sql->execute();
+    if($numrows > 0){
+        $row = $sql->fetch();
+        return $row;
+    }else {
+        return NULL;
+    }
+}
+
+/**
+ * get reservation from db
+ * @param   Mixed   $conn           db connection
+ * @return  Arry    info about reservation
+ */
+function get_reservations($conn){
+    $sql = "SELECT * FROM `reservation` WHERE `e-reservation` > CURTIME() ORDER BY `e-reservation`";
+    $sql = $conn->prepare($sql);
+    $numrows = $sql->execute();
+    if($numrows > 0){
+        $rows = array();
+        while($row = $sql->fetch()){
+            $rows[] = $row;
+        }
+        return $rows;
+    }else {
+        return NULL;
+    }
+}
+
+/**
+ * add reservation to db
+ * @param   Mixed   $conn               db connection
+ * @param   String  $s_reservation      start reservation date
+ * @param   String  $e_reservation      end reservation date
+ * @return  Bool    if reservation can be done
+ */
+function add_reservations($conn, $s_reservation, $e_reservation){
+    $sql = "SELECT * FROM `reservation` WHERE `e-reservation` > CURTIME() ORDER BY `e-reservation`";
+    $sql = $conn->prepare($sql);
+    $numrows = $sql->execute();
+    if($numrows > 0){
+        $rows = array();
+        while($row = $sql->fetch()){
+            $rows[] = $row;
+        }
+    }else {
+        $rows = NULL;
+    }
+
+    
+}

@@ -39,14 +39,14 @@ foreach($books as $book){
     echo "<div class=\"book\">";
 
     echo "<div class=\"name\">";
-    echo $book["name"];
+    echo "<a href=\"/book.php?id=". $book["id"] ."&name=". $book["name"] ."\">".$book["name"]."</a>";
     echo "</div>";
 
     echo "<div class=\"language\">";
     echo "Jazyk: ".$book["language"];
     echo "</div>";
 
-    echo "<img src=\"". $book["img"] ."\">";
+    echo "<a href=\"/book.php?id=". $book["id"] ."&name=". $book["name"] ."\"><img src=\"". $book["img"] ."\"></a>";
 
     echo "<div class=\"genres\">";
     $k = mn($conn, "book_has_genres", $book["id"], "book_id", "genres_id");
@@ -76,8 +76,11 @@ foreach($books as $book){
     echo "Napsal: ".$authors;
     echo "</div>";
 
+    echo "<div class=\"more_info\">";
+    echo "<button><a href=\"/book.php?id=". $book["id"] ."&name=". $book["name"] ."\">Více info</a></button>";
     echo "</div>";
 
+    echo "</div>";
 }
 echo "</div>";
     

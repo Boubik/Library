@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prihlášení</title>
+    <link rel="stylesheet" type="text/css" href="styles/login.css">
 </head>
 <body>
 <?php
@@ -14,22 +15,36 @@ session_start();
 if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])){
     header("Location: /");
 }else{
-    echo "Registrace";
-    echo '<form method="POST" action="">' . "\nJméno";
-    echo '<input type="text" maxlength="45" name="f_name"><br>' . "\nPřímení";
-    echo '<input type="text" maxlength="45" name="l_name"><br>' . "\nPřezdka";
-    echo '<input type="text" name="username"><br>' . "\nHeslo";
-    echo '<input type="password" name="password"><br>' . "\n";
-    echo '<input type="submit" name="register"  value="Registrovat">' . "\n";
-    echo '</form>'. "\n";
+
+    echo '<div id="Log">';
+        echo '<div id="img">';
+            echo '<img src="images/img1.png" alt="Login images">'; 
+            echo '</div>';     
+                echo '<div id="Log_inner">';
+                    echo "login";
+                    echo '<form method="POST" placeholder="" action="">';
+                    echo '<input type="text" name="login_username" placeholder="Přezdívka"><br>';
+                    echo '<input type="password" name="login_password" placeholder="Heslo"><br>' . "\n";
+                    echo "<br>";
+                    echo '<input type="submit" name="login"  value="Přihlásit se">' . "\n";
+                    echo '</form>'. "\n";
+                    echo '</div>';
+       
+    echo '</div>';
 
     echo "<br><br><br>";
-    echo "login";
-    echo '<form method="POST" action="">' . "\nPřezdka";
-    echo '<input type="text" name="login_username"><br>' . "\nHeslo";
-    echo '<input type="password" name="login_password"><br>' . "\n";
-    echo '<input type="submit" name="login"  value="Přihlásit se">' . "\n";
-    echo '</form>'. "\n";
+
+    // echo '<div id="Reg">';
+    //     echo "Registrace";
+    //     echo '<form method="POST" action="">' . "\nJméno";
+    //     echo '<input type="text" maxlength="45" name="f_name"><br>' . "\nPřímení";
+    //     echo '<input type="text" maxlength="45" name="l_name"><br>' . "\nPřezdívka";
+    //     echo '<input type="text" name="username"><br>' . "\nHeslo";
+    //     echo '<input type="password" name="password"><br>' . "\n";
+    //     echo "<br>";
+    //     echo '<input type="submit" name="register"  value="Registrovat">' . "\n";
+    //     echo '</form>'. "\n";
+    // echo '</div>';
 }
 
 if(isset($_POST["register"])){
@@ -40,7 +55,7 @@ if(isset($_POST["register"])){
         $_SESSION["password"] = $_POST["login_password"];
         header("Location: /");
     }else{
-        echo "Přezdka už existuje";
+        echo "Přezdívka už existuje";
     }
 }
 

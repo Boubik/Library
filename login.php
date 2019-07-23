@@ -16,11 +16,11 @@ if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn
     header("Location: /");
 }else{
 
-    echo '<div id="Log">';
+    echo '<div id="main">';
         echo '<div id="img">';
             echo '<img src="images/img1.png" alt="Login images">'; 
-            echo '</div>';     
-                echo '<div id="Log_inner">';
+            echo '</div>';   echo   
+                '<div id="Log">';
                     echo "login";
                     echo '<form method="POST" placeholder="" action="">';
                     echo '<input type="text" name="login_username" placeholder="Přezdívka"><br>';
@@ -29,22 +29,31 @@ if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn
                     echo '<input type="submit" name="login"  value="Přihlásit se">' . "\n";
                     echo '</form>'. "\n";
                     echo '</div>';
-       
+
+                    echo '<div id="swap">';
+                        echo'mate učet?<button onclick="myFunction()">Zaregistruj se!</button>';
+                    echo '</div>'; 
+                        
+    
+                    echo '<div id="2" style="display:none;">
+                    My Dynamic Content
+                    </div>';
+ 
+
+    echo '<div id="Reg" style="display:none;" >';
+        echo "Registrace";
+        echo '<form method="POST" action="">';
+        echo '<input type="text" maxlength="45" name="f_name" placeholder="Jméno"><br>';
+        echo '<input type="text" maxlength="45" name="l_name" placeholder="Přímení"><br>';
+        echo '<input type="text" name="username" placeholder="Přezdívka"><br>';
+        echo '<input type="password" name="password" placeholder="Heslo"><br>';
+        echo "<br>";
+        echo '<input type="submit" name="register"  value="Registrovat">' . "\n";
+        echo '</form>'. "\n";
     echo '</div>';
+    echo '</div>';   
 
-    echo "<br><br><br>";
 
-    // echo '<div id="Reg">';
-    //     echo "Registrace";
-    //     echo '<form method="POST" action="">' . "\nJméno";
-    //     echo '<input type="text" maxlength="45" name="f_name"><br>' . "\nPřímení";
-    //     echo '<input type="text" maxlength="45" name="l_name"><br>' . "\nPřezdívka";
-    //     echo '<input type="text" name="username"><br>' . "\nHeslo";
-    //     echo '<input type="password" name="password"><br>' . "\n";
-    //     echo "<br>";
-    //     echo '<input type="submit" name="register"  value="Registrovat">' . "\n";
-    //     echo '</form>'. "\n";
-    // echo '</div>';
 }
 
 if(isset($_POST["register"])){
@@ -73,4 +82,17 @@ if(isset($_POST["login"])){
 }
 ?>
 </body>
+<script>
+function myFunction() {
+  var x = document.getElementById("Log");
+  var y = document.getElementById("Reg");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+    y.style.display = "none";
+  } else {
+    x.style.display = "none";
+    y.style.display = "block";
+  }
+}
+</script>
 </html>

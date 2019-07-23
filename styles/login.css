@@ -11,32 +11,28 @@ body{
 }
 
 #Reg{
-    background-color:rgb(255, 255, 255);
-    border-radius: 5px;
-    margin: auto;
-    margin-top: 5%;
-    margin-left: 20%;
-    margin-right: 20%;
-    padding-top: 20px;
-    text-align: center; 
+  position: relative;
+  display: block;
+  width: 200px;
+  float: right;
+  margin-right: 50px; 
+  margin-top: -400px;
 }
 
-
-#Log_inner{
+#Log{
     position: relative;
     display: block;
     width: 200px;
     float: right;
     margin-right: 50px; 
-    margin-top: 100px;
-  
+    margin-top: 100px; 
 }
 
-#Log{
+#main{
     position: relative;
     background-color:rgb(255, 255, 255);
     border-radius: 5px;
-    height: 400px;
+    height: 500px;
     width: 800px;
     margin: auto;
     margin-top: 5%;
@@ -51,6 +47,14 @@ body{
     display: block;
     margin-left: 80px;
     margin-top: 50px;
+}
+
+#swap{
+  position: relative;
+  display: block;
+  width: 200px;
+  margin-top: 460px;
+  margin-left: 550px; 
 }
 
 
@@ -77,6 +81,7 @@ input[type=text] {
   }
 
   input[type=submit] {
+    font-family: 'Muli', sans-serif;
     background-color:  rgb(0, 255, 13);
     width: 100%;
     padding: 12px 20px;
@@ -97,3 +102,9 @@ input[type=password]:focus {
     transition: 0.5s;
   }
   
+  button{
+    font-family: 'Muli', sans-serif;
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
+    color: rgb(0, 71, 224);
+  }

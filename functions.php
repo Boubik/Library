@@ -376,8 +376,9 @@ function add_reservations($conn, $s_reservation, $e_reservation){
         while($row = $sql->fetch()){
             $rows[] = $row;
         }
-        return $rows;
     }else {
         $rows = NULL;
     }
+
+    
 }

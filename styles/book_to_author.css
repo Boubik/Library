@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+
+body{
+    overflow: hidden;
+    font-family: 'Muli', sans-serif;
+    background: -webkit-linear-gradient(to right, #ad5389, #3c1053);
+    background: linear-gradient(to right, #ad5389, #3c1053);
+    width: auto;
+    height: 100%;
+    margin: auto;
+}
+
+#main{
+    border-radius: 5px;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px; 
+    background-color: white;
+    text-align: center;
+    width: 300px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+#sel{
+    width: 200px;
+    background-color:  rgb(211, 211, 211);
+    border-radius: 5px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 3px solid  rgb(211, 211, 211);
+    outline: none;
+  }
+
+input[type=text] {
+    width: 200px;
+    background-color:  rgb(211, 211, 211);
+    border-radius: 5px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 3px solid  rgb(211, 211, 211);
+    outline: none;
+  }
+
+  input[type=number] {
+    width: 200px;
+    background-color:  rgb(211, 211, 211);
+    border-radius: 5px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 3px solid  rgb(211, 211, 211);
+    outline: none;
+  }
+
+  input[type=text]:focus {
+    background-color: rgb(255, 255, 255);
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+  }
+
+  input[type=number]:focus {
+    background-color: rgb(255, 255, 255);
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+  }
+
+  input[type=submit] {
+    font-family: 'Muli', sans-serif;
+    background-color:  rgb(0, 255, 13);
+    padding: 12px 20px;
+    margin: 8px 0;
+    width: 200px;
+  }

@@ -2,6 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Přidání autora</title>
+    <link rel="stylesheet" type="text/css" href="styles/book_to_author.css">
 </head>
 <body>
 <?php
@@ -15,27 +16,30 @@ if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn
 }else{
     header("Location: /login.php");
 }
+echo '<div id="main">';
+    echo '<div id="inner">';
+        echo "Přiřadte autora k \"" . $_GET["name"] . "\"<br>\n";
 
-echo "Přiřadte autora k \"" . $_GET["name"] . "\"<br>\n";
+        echo '<form method="POST" action="">';
+        echo '<input type="text" maxlength="45" name="f_name" placeholder="Jméno"><br>';
+        echo '<input type="text" maxlength="45" name="l_name" placeholder="Přímen"><br>';
+        echo '<input type="number" name="bday" placeholder="Rok narozen"><br>' . "\n";
+        echo '<input type="text" maxlength="2" name="country" placeholder="Země narození"><br>';
+        echo '<input type="submit" name="submit1"  value="Spojit">';
+        echo '</form>'. "\n";
 
-echo '<form method="POST" action="">' . "\nJméno";
-echo '<input type="text" maxlength="45" name="f_name"><br>' . "\nPřímen";
-echo '<input type="text" maxlength="45" name="l_name"><br>' . "\nRok narozen";
-echo '<input type="number" name="bday"><br>' . "\nZemě narození";
-echo '<input type="text" maxlength="2" name="country"><br>' . "\n";
-echo '<input type="submit" name="submit1"  value="Spojit">' . "\n";
-echo '</form>'. "\n";
-
-echo '<br><br><form method="POST" action="">' . "\n";
-echo '<select name="authors">' . "\n";
-foreach(get_table($conn, "author") as $author){
-    $bday = explode("-", $author["bday"]);
-    $bday = $bday[0];
-    echo '<option>'. $author["f_name"] . ", " . $author["l_name"] . ", " . $bday . ", " . $author["country"] .'</option>' . "\n";
-}
-echo '</select><br>'. "\n";
-echo '<input type="submit" name="submit2"  value="Spojit">' . "\n";
-echo '</form>'. "\n";
+        echo '<br><br><form method="POST" action="">' . "\n";
+        echo '<select id="sel" name="authors">' . "\n";
+        foreach(get_table($conn, "author") as $author){
+            $bday = explode("-", $author["bday"]);
+            $bday = $bday[0];
+            echo '<option>'. $author["f_name"] . ", " . $author["l_name"] . ", " . $bday . ", " . $author["country"] .'</option>' . "\n";
+        }
+        echo '</select><br>'. "\n";
+        echo '<input type="submit" name="submit2"  value="Spojit">' . "\n";
+        echo '</form>'. "\n";
+    echo '<div>';
+echo '<div>';
 
 if(isset($_POST['submit1'])){
     add_author($conn, $_POST["f_name"], $_POST["l_name"], $_POST["bday"], $_POST["country"]);

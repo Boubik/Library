@@ -2,6 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Přidání knížky</title>
+    <link rel="stylesheet" type="text/css" href="styles/add.css">
 </head>
 <body>
 <?php
@@ -15,27 +16,30 @@ if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn
 }else{
     header("Location: /login.php");
 }
+echo '<div id="main">';
+    echo '<div id="inner">';
+        echo '<form method="POST" action="">';
+        echo '<input type="text" maxlength="45" name="name" placeholder="Název knihy"><br>';
+        echo '<input type="number"  name="relase" placeholder="Rok vydán"><br>';
+        echo '<input type="text" maxlength="2" name="language" placeholder="Jazyk"><br>';
+        echo '<input type="text" name="ISBN" placeholder="ISBN"><br>';
 
-echo '<form method="POST" action="">' . "\nNázev knihy";
-echo '<input type="text" maxlength="45" name="name"><br>' . "\nRok vydán";
-echo '<input type="number"  name="relase"><br>' . "\nJazyk";
-echo '<input type="text" maxlength="2" name="language"><br>' . "\nISBN";
-echo '<input type="text" name="ISBN"><br>' . "\nmístnost";
+        echo '<select name="room" id="sel">' . "\n";
+        echo '<option>Místnost</option>' . "\n";
+        foreach(get_table($conn, "room") as $row){
+            echo '<option>'. $row["name"] .'</option>' . "\n";
+        }
+        echo '</select>'. "<br> nebo <br>";
 
-echo '<select name="room">' . "\n";
-echo '<option></option>' . "\n";
-foreach(get_table($conn, "room") as $row){
-    echo '<option>'. $row["name"] .'</option>' . "\n";
-}
-echo '</select>'. " nebo ";
+        echo '<input type="text" name="room_name" placeholder="Místnost"><br>';
 
-echo '<input type="text" name="room_name"><br>' . "\nPočet stran";
-
-echo '<input type="number" name="pages"><br>' . "\nŽánry";
-echo '<input type="text" maxlength="45" name="genres">(mezera rozděluje žánry)<br>' . "\nurl obrázku";
-echo '<input type="text" maxlength="200" name="img"><br>' . "\n";
-echo '<input type="submit" name="submit" value="Přidat">' . "\n";
-echo '</form>'. "\n";
+        echo '<input type="number" name="pages" placeholder="Počet stran"><br>';
+        echo '<input type="text" maxlength="45" name="genres" placeholder="Žánry"><br>(mezera rozděluje žánry)<br>';
+        echo '<input type="text" maxlength="200" name="img" placeholder="url obrázku"><br>' . "\n";
+        echo '<input type="submit" name="submit" value="Přidat">'  . "\n";
+        echo '</form>'. "\n";
+    echo '</div>';
+echo '</div>';
 
 
 if(isset($_POST["submit"])){

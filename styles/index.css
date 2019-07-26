@@ -1,18 +1,54 @@
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+
 body{
-
+    font-family: 'Muli', sans-serif;
+    background: -webkit-linear-gradient(to right, #ad5389, #3c1053);
+    background: linear-gradient(to right, #ad5389, #3c1053);
+    width: auto;
+    height: 100%;
+    margin: auto;
 }
 
-.products{
-    width: 50%;
-    background: red;
-}
 
 .book{
-    width: 33.333333333%;
-    background: green;
+    display: inline-block;
+    width: 200px;
+    height: 300px;
+    border:  black solid 1px ;
+    margin: auto;
+    margin: 32px;
+    background-color: #ccc;
 }
 
+
+.products{
+    border-radius: 5px;
+    width: 800px;
+    background: white;
+    margin: auto;
+
+}
+
+
+
 .book img{
+    padding-left: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     width: 50%;
-    background: green;
+}
+
+.name{
+    padding-top: 15px;
+    text-align: center;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+#info{
+    text-align: center;
+    
 }

@@ -35,52 +35,57 @@ if(isset($_POST["login"])){
 $books = get_table($conn, "book");
 
 echo "<div class=\"products\">";
-foreach($books as $book){
-    echo "<div class=\"book\">";
+    foreach($books as $book){
+        echo "<div class=\"book\">";
 
-    echo "<div class=\"name\">";
-    echo "<a href=\"/book.php?id=". $book["id"] ."&name=". $book["name"] ."\">".$book["name"]."</a>";
-    echo "</div>";
+        echo "<div class=\"name\">";
+            echo "<a href=\"/book.php?id=". $book["id"] ."&name=". $book["name"] ."\">".$book["name"]."</a>";
+        echo "</div>";
 
-    echo "<div class=\"language\">";
-    echo "Jazyk: ".$book["language"];
-    echo "</div>";
 
-    echo "<a href=\"/book.php?id=". $book["id"] ."&name=". $book["name"] ."\"><img src=\"". $book["img"] ."\"></a>";
+        echo '<div id="img">';
+            echo "<a href=\"/book.php?id=". $book["id"] ."&name=". $book["name"] ."\"><img src=\"". $book["img"] ."\"></a>";
+        echo "</div>";
 
-    echo "<div class=\"genres\">";
-    $k = mn($conn, "book_has_genres", $book["id"], "book_id", "genres_id");
-    $genres = NULL;
-    foreach($k as $id){
-        $genre = get_genre($conn, $id);
-        if($genres != NULL){
-            $genres = $genre . ", " . $genres;
-        }else{
-            $genres =  $genre;
-        }
-    }
-    echo "Žánr: ".$genres;
-    echo "</div>";
+        echo '<div id="info">';
+            echo "<div class=\"language\">";
+            echo "Jazyk: ".$book["language"];
+            echo "</div>";
 
-    echo "<div class=\"author\">";
-    $k = mn($conn, "book_has_author", $book["id"], "book_id", "author_id");
-    $authors = NULL;
-    foreach($k as $id){
-        $author = get_author($conn, $id);
-        if($authors != NULL){
-            $authors = $author["f_name"] . " " . $author["l_name"] . ", " . $authors;
-        }else{
-            $authors =  $author["f_name"] . " " . $author["l_name"];
-        }
-    }
-    echo "Napsal: ".$authors;
-    echo "</div>";
+            echo "<div class=\"genres\">";
+                $k = mn($conn, "book_has_genres", $book["id"], "book_id", "genres_id");
+                $genres = NULL;
+                foreach($k as $id){
+                    $genre = get_genre($conn, $id);
+                    if($genres != NULL){
+                        $genres = $genre . ", " . $genres;
+                    }else{
+                        $genres =  $genre;
+                    }
+                }
+                echo "Žánr: ".$genres;
+            echo "</div>";
 
-    echo "<div class=\"more_info\">";
-    echo "<button><a href=\"/book.php?id=". $book["id"] ."&name=". $book["name"] ."\">Více info</a></button>";
-    echo "</div>";
+            echo "<div class=\"author\">";
+                $k = mn($conn, "book_has_author", $book["id"], "book_id", "author_id");
+                $authors = NULL;
+                foreach($k as $id){
+                    $author = get_author($conn, $id);
+                    if($authors != NULL){
+                        $authors = $author["f_name"] . " " . $author["l_name"] . ", " . $authors;
+                    }else{
+                        $authors =  $author["f_name"] . " " . $author["l_name"];
+                    }
+                }
+                echo "Napsal: ".$authors;
+            echo "</div>";
+        echo "</div>";
 
-    echo "</div>";
+        // echo "<div class=\"more_info\">";
+        //     echo "<button><a href=\"/book.php?id=". $book["id"] ."&name=". $book["name"] ."\">Více info</a></button>";
+        // echo "</div>";
+
+        echo "</div>";
 }
 echo "</div>";
     

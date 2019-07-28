@@ -12,16 +12,14 @@ body{
 #side{
     width: 20%;
     float: left;
-    border: black solid 1px;
     height: 700px;
 }
 
 #header{
-    border: black solid 1px;
     width: 1100px;
     margin: auto;
     padding-top: 50px;
-    padding-bottom: 50px;
+    padding-bottom: 30px;
     
 }
 
@@ -32,10 +30,6 @@ body{
     margin: auto;
 
 }
-#bookcon{
-    border: solid black 1px;
-
-}
 
 .book{
     display: inline-block;
@@ -44,7 +38,7 @@ body{
     height: 300px;
     margin: auto;
     margin: 32px;
-    background-color: #ccc;
+    /* background-color: #ccc; */
 }
 
 
@@ -71,3 +65,25 @@ a{
     text-align: center;
     
 }
+
+
+.book:hover{
+    /* background-color: #0fbcf9; */
+    /* background-color: #ccc; */
+    background-color:rgb(155, 61, 120);
+    transition-duration: 0.5s;
+}
+
+input[type=submit] {
+    border-radius: 5px;
+    font-family: 'Muli', sans-serif;
+    border: 3px solid  rgb(211, 211, 211);
+    background-color:  rgb(211, 211, 211);
+    outline: none;
+  }
+
+  input[type=submit]:hover {
+    background-color: white;
+    transition-duration: 0.5s;
+  }
+

@@ -372,10 +372,31 @@ function add_reservations($conn, $s_reservation, $e_reservation){
     $sql = $conn->prepare($sql);
     $numrows = $sql->execute();
     if($numrows > 0){
-        $rows = array();
         while($row = $sql->fetch()){
-            $rows[] = $row;
+            if( ( (strtotime($row["e-reservation"]) < strtotime($s_reservation) and strtotime($row["e-reservation"]) < strtotime($e_reservation) ) or strtotime($row["s-reservation"]) > strtotime($e_reservation) ) ){
+            }else{
+                return false;
+            }
         }
+    }
+    return true;
+
+    
+}
+
+/**
+ * get usr id
+ * @param   Mixed   $conn               db connection
+ * @param   String  $username           username
+ * @return  Int     id from user
+ */
+function get_user_id($conn, $username){
+    $sql = "SELECT * FROM `user` WHERE `username` = '" . $username . "'";
+    $sql = $conn->prepare($sql);
+    $numrows = $sql->execute();
+    if($numrows > 0){
+        $row = $sql->fetch();
+        return $row["id"];
     }else {
         $rows = NULL;
     }

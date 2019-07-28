@@ -15,6 +15,9 @@ session_start();
 
 echo '<form method="POST" action="">' . "\n";
 if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])){
+    if(login($conn, $_SESSION["username"], $_SESSION["password"], true)){
+        echo '<input type="submit" name="add_book"  value="Přidat knku">' . "\n";
+    }
     echo '<input type="submit" name="logout"  value="Odhlásit se">' . "\n";
 }else{
     echo '<input type="submit" name="login"  value="Přihrásit se">' . "\n";
@@ -29,6 +32,10 @@ if(isset($_POST["logout"])){
 
 if(isset($_POST["login"])){
     header("Location: /login.php");
+}
+
+if(isset($_POST["add_book"])){
+    header("Location: /add.php");
 }
 
 

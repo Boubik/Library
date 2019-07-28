@@ -70,7 +70,7 @@ a{
 
 .book:hover{
     transition-duration: 0.5s;
-    /* background-color:rgb(155, 61, 120); */
+    /* background-color:rgb(155, 61, 120);  */
     border: solid 1px #ccc;
     -webkit-box-shadow: 0px 0px 20px 1px rgba(177, 177, 177, 0.75);
     -moz-box-shadow: 0px 0px 20px 1px rgba(177, 177, 177, 0.75);

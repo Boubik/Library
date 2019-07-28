@@ -72,10 +72,15 @@
     echo '<input type="submit" name="reservation"  value="zarezervovat">' . "\n";
     echo "</form>";
     echo "</div>";
-    $reservations = get_reservations($conn);
     echo "<br>\nnadcházející rezervace:<br>\n";
-    foreach ($reservations as $reservation) {
-        echo "od: " . substr($reservation["s-reservation"], 0, 10) . " do " . substr($reservation["e-reservation"], 0, 10) . "<br>\n";
+
+    $k = mn($conn, "book_has_reservation", $book["id"], "book_id", "reservation_id");
+    $res = NULL;
+    foreach($k as $id){
+        $reservations = get_reservations($conn, $id);
+        foreach ($reservations as $reservation) {
+            echo "od: " . substr($reservation["s-reservation"], 0, 10) . " do " . substr($reservation["e-reservation"], 0, 10) . "<br>\n";
+        }
     }
 
     echo "</div>";
@@ -85,8 +90,10 @@
         if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])){
             $date = $_POST["s_date"];
             if (strtotime($date) > strtotime('-' . 1 . ' days') and isset($_SESSION["username"]) and isset($_SESSION["password"]) and strtotime($_POST["s_date"]) < strtotime($_POST["e_date"])) {
-                if(add_reservations($conn, $_POST["s_date"], $_POST["e_date"])){
-                    echo "jde<br>\n";
+                if(reservations($conn, $_POST["s_date"], $_POST["e_date"])){
+                    $reservation_id = get_reservation_id($conn, $_POST["s_date"], $_POST["e_date"]);
+                    add_book_has_reservation($conn, (int)$_GET["id"], (int)$reservation_id);
+                    header("Location: /book.php?id=". $_GET["id"] ."&name=". $_GET["name"]);
                 }else{
                     echo "Vaše rezervace nenímožná kryje se s jinou";
                 }

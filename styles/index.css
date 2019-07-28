@@ -12,9 +12,9 @@ body{
 
 .book{
     display: inline-block;
+    border-radius: 5px;
     width: 200px;
     height: 300px;
-    border:  black solid 1px ;
     margin: auto;
     margin: 32px;
     background-color: #ccc;
@@ -32,6 +32,8 @@ body{
 
 
 .book img{
+    display: box;
+    height: 150px;
     padding-left: 50px;
     padding-top: 10px;
     padding-bottom: 10px;

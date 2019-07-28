@@ -19,6 +19,7 @@ echo '<div id="header">';
         if(login($conn, $_SESSION["username"], $_SESSION["password"], true)){
             echo '<input type="submit" name="add_book"  value="Přidat knížku">' . "\n";
         }
+        echo '<input type="submit" name="profile"  value="Moje rezervace">' . "\n";
         echo '<input type="submit" name="logout"  value="Odhlásit se">' . "\n";
     }else{
         echo '<input type="submit" name="login"  value="Přihrásit se">' . "\n";
@@ -38,6 +39,10 @@ if(isset($_POST["login"])){
 
 if(isset($_POST["add_book"])){
     header("Location: /add.php");
+}
+
+if(isset($_POST["profile"])){
+    header("Location: /profile.php");
 }
 
 

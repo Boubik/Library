@@ -413,7 +413,6 @@ function get_user_id($conn, $username){
     $numrows = $sql->execute();
     if($numrows > 0){
         $row = $sql->fetch();
-        echo $row["id"];
         return $row["id"];
     }
 }

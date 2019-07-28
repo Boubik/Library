@@ -9,6 +9,33 @@ body{
     margin: auto;
 }
 
+#side{
+    width: 20%;
+    float: left;
+    border: black solid 1px;
+    height: 700px;
+}
+
+#header{
+    border: black solid 1px;
+    width: 1100px;
+    margin: auto;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    
+}
+
+.products{
+    border-radius: 5px;
+    width: 1100px;
+    background: white;
+    margin: auto;
+
+}
+#bookcon{
+    border: solid black 1px;
+
+}
 
 .book{
     display: inline-block;
@@ -19,16 +46,6 @@ body{
     margin: 32px;
     background-color: #ccc;
 }
-
-
-.products{
-    border-radius: 5px;
-    width: 800px;
-    background: white;
-    margin: auto;
-
-}
-
 
 
 .book img{

@@ -32,13 +32,14 @@ body{
 }
 
 .book{
+    border: 1px solid white;
     display: inline-block;
     border-radius: 5px;
     width: 200px;
     height: 300px;
     margin: auto;
     margin: 32px;
-    /* background-color: #ccc; */
+    transition: transform .5s;
 }
 
 
@@ -68,10 +69,16 @@ a{
 
 
 .book:hover{
-    /* background-color: #0fbcf9; */
-    /* background-color: #ccc; */
-    background-color:rgb(155, 61, 120);
     transition-duration: 0.5s;
+    /* background-color:rgb(155, 61, 120); */
+    border: solid 1px #ccc;
+    -webkit-box-shadow: 0px 0px 20px 1px rgba(177, 177, 177, 0.75);
+    -moz-box-shadow: 0px 0px 20px 1px rgba(177, 177, 177, 0.75);
+    box-shadow: 0px 0px 20px 1px rgba(177, 177, 177, 0.75);
+    -ms-transform: scale(1.1); 
+    -webkit-transform: scale(1.1); 
+    transform: scale(1.1);
+
 }
 
 input[type=submit] {

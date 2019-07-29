@@ -105,15 +105,28 @@ echo "<div class=\"products\">";
         echo "Žádná taková knížka tu není<br>\n";
     }
     foreach($books as $book){
-        echo "<div class=\"book\">";
+        echo "<a href=\"/book.php?id=". $book["book_id"] ."&name=". $book["book_name"] ."\"><div class=\"book\">";
 
         echo "<div class=\"name\">";
-            echo "<a href=\"/book.php?id=". $book["book_id"] ."&name=". $book["book_name"] ."\">".$book["book_name"]."</a>";
+            echo $book["book_name"];
         echo "</div>";
 
 
+        $status = "volna";
+        $k = get_table($conn, "reservation");
+        foreach($k as $reservation){
+            if($reservation["user_id"] == $book["book_id"]){
+                if(strtotime($reservation["e-reservation"]) > strtotime('-' . 1 . ' days') and strtotime($reservation["s-reservation"]) < strtotime('-'. 0 . ' days')){
+                    $status = "pucena";
+                    break;
+                }
+            }
+        }
+        echo "<div class=\"status\" id=\"" . $status . "\"></div>";
+
+
         echo '<div id="img">';
-            echo "<a href=\"/book.php?id=". $book["book_id"] ."&name=". $book["book_name"] ."\"><img src=\"". $book["img"] ."\"></a>";
+            echo "<img src=\"". $book["img"] ."\">";
         echo "</div>";
 
         echo '<div id="info">';
@@ -150,7 +163,7 @@ echo "<div class=\"products\">";
             echo "</div>";
         echo "</div>";
 
-echo "</div>";
+echo "</div></a>";
 }
 echo "</div>";
     

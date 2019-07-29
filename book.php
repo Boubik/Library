@@ -37,6 +37,10 @@
 
     echo "<img src=\"" . $book["img"] . "\">";
 
+    echo "<div class=\"class\">";
+    echo "Místnost: ".$book["room_name"];
+    echo "</div>";
+
     echo "<div class=\"genres\">";
     $k = mn($conn, "book_has_genres", $book["id"], "book_id", "genres_id");
     $genres = NULL;

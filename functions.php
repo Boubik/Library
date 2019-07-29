@@ -1,4 +1,5 @@
 <?php
+use function PHPSTORM_META\elementType;
 
 /**
  * connect to db
@@ -21,8 +22,8 @@ function connect_to_db(string $servername, string $dbname, string $username, str
             echo "Something goes worn give us time to fix it";
             }
 
-    $character = $conn->prepare("SET character SET UTF8");
-    $character->execute();
+    $sql = $conn->prepare("SET character SET UTF8");
+    $sql->execute();
 
     return $conn;
 }
@@ -493,4 +494,106 @@ function book($conn, String $search = ""){
         return $rows;
     }
     return NULL;
+}
+
+/**
+ * check if db is up to date or if exist
+ */
+function generate_db(){
+    ini_set('max_execution_time', 0);
+    $configs = include('config.php');
+    $servername = $configs["servername"];
+    $dbname = $configs["dbname"];
+    $username = $configs["username"];
+    $password = $configs["password"];
+    $version = $configs["version"];
+    $db = false;
+    $update = false;
+
+        //connect
+        try {
+            $conn = new PDO("mysql:host=".$servername.";dbname=".$dbname.";charset=utf8", $username, $password);
+            // set the PDO error mode to exception
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            }
+        catch(PDOException $e)
+            {
+                //connect
+                try {
+                    $conn = new PDO("mysql:host=".$servername.";charset=utf8", $username, $password);
+                    // set the PDO error mode to exception
+                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    }
+                catch(PDOException $e)
+                    {
+                    echo "Something goes worn give us time to fix it";
+                    }
+        
+            $sql = $conn->prepare("SET character SET UTF8");
+            $sql->execute();
+            $db = true;
+            }
+        
+            $sql = $conn->prepare("SET character SET UTF8");
+            $sql->execute();
+
+            if($db){
+                $sql = $conn->prepare("CREATE SCHEMA IF NOT EXISTS `Library` DEFAULT CHARACTER SET utf8 ;USE `Library` ;");
+                $sql->execute();
+                $update = true;
+            }else {
+                try {
+                    $sql = $conn->prepare("SELECT version.version FROM version ORDER BY version.version DESC");
+                    $numrows = $sql->execute();
+                    if($numrows > 0){
+                        $row = $sql->fetch();
+                        if($row["version"] < $version){
+                            $update = true;
+                        }
+                    }else {
+                        $update = true;
+                    }
+                    }
+                catch(PDOException $e)
+                    {
+                        $update = true;
+                    }
+            }
+            
+            if($update){
+                $fileList = glob('db/*.sql');
+                $sql = load_file($fileList[0]);
+                $sql = explode("USE `Library` ;", $sql);
+                $sql = $sql[1];
+                $sql = explode(";", $sql);
+                foreach($sql as $item){
+                    try {
+                        $sql = $conn->prepare($item);
+                        $sql->execute();
+                        }
+                    catch(PDOException $e)
+                        {
+                        }
+                }
+                $sql = "INSERT version VALUES ('".$version."')";
+                $sql = $conn->prepare($sql);
+                $sql->execute();
+            }
+}
+
+/**
+ * will load file in root folder of program
+ * @param   String  $filename   filen name with end (.txt, etc)
+ * @param   String  $mode       mode (w, a, etc)
+ * @return  String  text in file
+ */
+function load_file($filename, $mode = "r")
+{
+
+    $handle = fopen($filename, $mode);
+    $text = "";
+    while (($line = fgets($handle)) !== false) {
+        $text = $text.$line;
+    }
+    return $text;
 }

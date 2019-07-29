@@ -9,6 +9,7 @@
 <?php
 include "functions.php";
 ini_set('max_execution_time', 0);
+generate_db();
 $configs = include('config.php');
 $conn = connect_to_db($configs["servername"], $configs["dbname"], $configs["username"], $configs["password"]);
 session_start();

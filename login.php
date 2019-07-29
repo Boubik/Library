@@ -60,8 +60,8 @@ if(isset($_POST["register"])){
     if(!(username_exist($conn, $_POST["username"]))){
         add_user($conn, $_POST["f_name"], $_POST["l_name"], $_POST["username"], $_POST["password"]);
         echo "jsi přihlášený";
-        $_SESSION["username"] = $_POST["login_username"];
-        $_SESSION["password"] = $_POST["login_password"];
+        $_SESSION["username"] = $_POST["username"];
+        $_SESSION["password"] = $_POST["password"];
         header("Location: /");
     }else{
         echo "Přezdívka už existuje";

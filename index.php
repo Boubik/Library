@@ -74,7 +74,10 @@ echo "<div class=\"products\">";
     echo '</div>';
 
     echo '<div id="bookcon">';
-    //$books = get_table($conn, "book");
+        
+    if(!isset($books[0])){
+        echo "Žádná taková knížka tu není<br>\n";
+    }
     foreach($books as $book){
         echo "<div class=\"book\">";
 

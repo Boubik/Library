@@ -33,7 +33,12 @@ echo '<div id="header">';
     echo '</form>'. "\n";
 
     echo '<form method="POST" action="">' . "\n";
-    echo '<input type="text" name="q">' . "\n";
+    echo '<input type="text" name="q" value="';
+    if(isset($_GET["q"])){
+        echo $_GET["q"].'">' . "\n";
+    }else{
+        echo '">' . "\n";
+    }
     echo '<input type="submit" name="search"  value="Hledat">' . "\n";
     echo '</form>'. "\n";
 echo '</div>';
@@ -66,10 +71,18 @@ echo "<div class=\"products\">";
 
     echo '<div id="side">';
 
-    $genres = get_table($conn, "genres");
-    foreach($genres as $item){
-        echo "<a href=\"/index.php?q=". $item["name"] ."\">".$item["name"]."</a><br>\n";
-    }
+        echo '<div id="author">';
+        $genres = get_table($conn, "genres");
+        foreach($genres as $item){
+            echo "<a href=\"/index.php?q=". $item["name"] ."\">".$item["name"]."</a><br>\n";
+        }
+        echo "</div>";
+        echo '<div id="genres">';
+        $genres = get_table($conn, "genres");
+        foreach($genres as $item){
+            echo "<a href=\"/index.php?q=". $item["name"] ."\">".$item["name"]."</a><br>\n";
+        }
+        echo "</div>";
 
     echo '</div>';
 

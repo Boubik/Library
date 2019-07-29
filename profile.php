@@ -23,6 +23,9 @@ $configs = include('config.php');
 $conn = connect_to_db($configs["servername"], $configs["dbname"], $configs["username"], $configs["password"]);
 
 
+echo '<div id="header">';
+    echo "<a href=\"/\"><image src=\"/images/logo.png\" style=\"height: 100px\"></a>";
+echo "</div>";
 $new = array();
 $old = array();
 $user_id = get_user_id($conn, $_SESSION["username"]);

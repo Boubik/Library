@@ -19,6 +19,7 @@ if(isset($_GET["q"])){
 }
 
 echo '<div id="header">';
+    echo "<a href=\"/\"><image src=\"/images/logo.png\" style=\"height: 100px\"></a>";
     echo '<form method="POST" action="">' . "\n";
     if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])){
         if(login($conn, $_SESSION["username"], $_SESSION["password"], true)){

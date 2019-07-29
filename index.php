@@ -78,9 +78,21 @@ echo "<div class=\"products\">";
             echo "<a href=\"/index.php?q=". $item["name"] ."\">".$item["name"]."</a><br>\n";
         }
         echo "</div>";
-        echo '<div id="genres">';
-        $genres = get_table($conn, "genres");
-        foreach($genres as $item){
+        echo '<div id="author">';
+        $author = get_table($conn, "author");
+        foreach($author as $item){
+            echo "<a href=\"/index.php?q=". $item["f_name"]. " ". $item["l_name"] ."\">".$item["f_name"]. " ". $item["l_name"]."</a><br>\n";
+        }
+        echo "</div>";
+        echo '<div id="language">';
+        $language = get_table($conn, "book");
+        foreach($language as $item){
+            echo "<a href=\"/index.php?q=". $item["language"] ."\">".$item["language"]."</a><br>\n";
+        }
+        echo "</div>";
+        echo '<div id="room">';
+        $room = get_table($conn, "room");
+        foreach($room as $item){
             echo "<a href=\"/index.php?q=". $item["name"] ."\">".$item["name"]."</a><br>\n";
         }
         echo "</div>";

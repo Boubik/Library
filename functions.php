@@ -426,7 +426,6 @@ function get_user_id($conn, $username){
  */
 function get_reservation_id($conn, $s_reservation, $e_reservation){
     $sql = "SELECT * FROM `reservation` WHERE `s-reservation` = '". $s_reservation ."' AND `e-reservation` = '". $e_reservation ."'";
-    echo $sql;
     $sql = $conn->prepare($sql);
     $numrows = $sql->execute();
     if($numrows > 0){
@@ -443,7 +442,55 @@ function get_reservation_id($conn, $s_reservation, $e_reservation){
  */
 function add_book_has_reservation($conn, int $id_book, int $id_reservation){
     $sql = "INSERT INTO `book_has_reservation`(`book_id`, `reservation_id`) VALUES (". $id_book .", ". $id_reservation .")";
-    echo $sql;
     $sql = $conn->prepare($sql); 
     $sql->execute();
+}
+
+/**
+ * search
+ * @param   mixed   $conn           db connection
+ * @param   String  $search         search in db
+ * @return  Array   array
+*/
+function book($conn, String $search = ""){
+    if($search == ""){
+        $sql = "SELECT book.id AS 'book_id', book.name AS 'book_name', book.relase, book.language, book.ISBN, book.pages, book.img, book.room_name, genres.id AS 'genres_id', genres.name AS 'genres_name', author.id  AS 'author_id', author.f_name, author.l_name, room.name AS 'room_name' FROM book, genres, book_has_genres, book_has_author, author, room WHERE book.room_name = room.name AND book.id = book_has_genres.book_id AND book_has_genres.genres_id = genres.id AND book_has_author.author_id = author.id AND book.id = book_has_author.book_id";
+    }else{
+        $sql = "SELECT book.id AS 'book_id', book.name AS 'book_name', book.relase, book.language, book.ISBN, book.pages, book.img, book.room_name, genres.id AS 'genres_id', genres.name AS 'genres_name', author.id  AS 'author_id', author.f_name, author.l_name, room.name AS 'room_name' FROM book, genres, book_has_genres, book_has_author, author, room WHERE book.room_name = room.name AND book.id = book_has_genres.book_id AND book_has_genres.genres_id = genres.id AND book_has_author.author_id = author.id AND book.id = book_has_author.book_id AND (book.room_name LIKE '%". $search ."%' OR book.name LIKE '%". $search ."%' OR book.relase LIKE '%". $search ."%' OR book.language LIKE '%". $search ."%'OR book.ISBN LIKE '%". $search ."%'OR book.pages LIKE '%". $search ."%'OR author.f_name LIKE '%". $search ."%' OR author.l_name LIKE '%". $search ."%' OR author.bday LIKE '%". $search ."%' OR author.country LIKE '%". $search ."%' OR genres.name LIKE '%". $search ."%' OR room.name LIKE '%". $search ."%')";
+    }
+    $sql = $conn->prepare($sql);
+    $numrows = $sql->execute();
+    if($numrows > 0){
+        $rows = array();
+        while($row = $sql->fetch()){
+            $rows[] = $row;
+        }
+        
+        $key = 0;
+        while(isset($rows[$key])){
+            $value = $rows[$key];
+            $k = $rows[$key]["genres_name"];
+            $rows[$key]["genres_name"] = array();
+            $rows[$key]["genres_name"][] = $k;
+
+            $rows[$key]["author"] = array();
+            $rows[$key]["author"][] = $rows[$key]["f_name"] . " " . $rows[$key]["l_name"];
+            $i = 1;
+            while(isset($rows[($key+$i)])){
+                if($value["book_id"] == $rows[($key+$i)]["book_id"]){
+                    if(!(in_array($rows[($key+$i)]["genres_name"], $rows[$key]["genres_name"]))){
+                        $rows[$key]["genres_name"][] = $rows[($key+$i)]["genres_name"];
+                    }
+                    if(!(in_array(($rows[($key+$i)]["f_name"] . " " . $rows[($key+$i)]["l_name"]), $rows[$key]["author"]))){
+                        $rows[$key]["author"][] = $rows[($key+$i)]["f_name"] . " " . $rows[($key+$i)]["l_name"];
+                    }
+                }
+                unset($rows[($key+$i)]);
+                $i+=1;
+            }
+            $key +=1;
+        }
+        return $rows;
+    }
+    return NULL;
 }

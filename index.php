@@ -12,6 +12,11 @@ ini_set('max_execution_time', 0);
 $configs = include('config.php');
 $conn = connect_to_db($configs["servername"], $configs["dbname"], $configs["username"], $configs["password"]);
 session_start();
+if(isset($_GET["q"])){
+    $books = book($conn, $_GET["q"]);
+}else{
+    $books = book($conn);
+}
 
 echo '<div id="header">';
     echo '<form method="POST" action="">' . "\n";
@@ -46,62 +51,63 @@ if(isset($_POST["profile"])){
 }
 
 
-$books = get_table($conn, "book");
 
 echo "<div class=\"products\">";
+
     echo '<div id="side">';
 
+    $genres = get_table($conn, "genres");
+    foreach($genres as $item){
+        echo "<a href=\"/index.php?q=". $item["name"] ."\">".$item["name"]."</a><br>\n";
+    }
+
     echo '</div>';
+
     echo '<div id="bookcon">';
-        foreach($books as $book){
-            echo "<div class=\"book\">";
+    //$books = get_table($conn, "book");
+    foreach($books as $book){
+        echo "<div class=\"book\">";
 
-            echo "<div class=\"name\">";
-                echo "<a href=\"/book.php?id=". $book["id"] ."&name=". $book["name"] ."\">".$book["name"]."</a>";
+        echo "<div class=\"name\">";
+            echo "<a href=\"/book.php?id=". $book["book_id"] ."&name=". $book["book_name"] ."\">".$book["book_name"]."</a>";
+        echo "</div>";
+
+
+        echo '<div id="img">';
+            echo "<a href=\"/book.php?id=". $book["book_id"] ."&name=". $book["book_name"] ."\"><img src=\"". $book["img"] ."\"></a>";
+        echo "</div>";
+
+        echo '<div id="info">';
+            echo "<div class=\"language\">";
+            echo "Jazyk: ".$book["language"];
             echo "</div>";
 
-
-            echo '<div id="img">';
-                echo "<a href=\"/book.php?id=". $book["id"] ."&name=". $book["name"] ."\"><img src=\"". $book["img"] ."\"></a>";
+            echo "<div class=\"genres\">";
+            $genres = NULL;
+            foreach($book["genres_name"] as $value){
+                if($genres == NULL){
+                    $genres = $value;
+                }else{
+                    $genres = $genres. ", ". $value;
+                }
+            }
+                echo "Žánr: ".$genres;
             echo "</div>";
 
-            echo '<div id="info">';
-                echo "<div class=\"language\">";
-                echo "Jazyk: ".$book["language"];
-                echo "</div>";
-
-                echo "<div class=\"genres\">";
-                    $k = mn($conn, "book_has_genres", $book["id"], "book_id", "genres_id");
-                    $genres = NULL;
-                    foreach($k as $id){
-                        $genre = get_genre($conn, $id);
-                        if($genres != NULL){
-                            $genres = $genre . ", " . $genres;
-                        }else{
-                            $genres =  $genre;
-                        }
-                    }
-                    echo "Žánr: ".$genres;
-                echo "</div>";
-
-                echo "<div class=\"author\">";
-                    $k = mn($conn, "book_has_author", $book["id"], "book_id", "author_id");
-                    $authors = NULL;
-                    foreach($k as $id){
-                        $author = get_author($conn, $id);
-                        if($authors != NULL){
-                            $authors = $author["f_name"] . " " . $author["l_name"] . ", " . $authors;
-                        }else{
-                            $authors =  $author["f_name"] . " " . $author["l_name"];
-                        }
-                    }
-                    echo "Napsal: ".$authors;
-                echo "</div>";
+            echo "<div class=\"author\">";
+            $author = NULL;
+            foreach($book["author"] as $value){
+                if($author == NULL){
+                    $author = $value;
+                }else{
+                    $author = $author. ", ". $value;
+                }
+            }
+                echo "Napsal: ".$author;
             echo "</div>";
+        echo "</div>";
 
-    echo "</div>";
-
-            // echo "</div>";
+echo "</div>";
 }
 echo "</div>";
     

@@ -112,12 +112,12 @@ echo "<div class=\"products\">";
         echo "</div>";
 
 
-        $status = "volna";
+        $status = "free";
         $k = get_table($conn, "reservation");
         foreach($k as $reservation){
             if($reservation["user_id"] == $book["book_id"]){
                 if(strtotime($reservation["e-reservation"]) > strtotime('-' . 1 . ' days') and strtotime($reservation["s-reservation"]) < strtotime('-'. 0 . ' days')){
-                    $status = "pucena";
+                    $status = "booked";
                     break;
                 }
             }

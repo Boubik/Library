@@ -30,6 +30,11 @@ echo '<div id="header">';
         echo '<input type="submit" name="login"  value="Přihrásit se">' . "\n";
     }
     echo '</form>'. "\n";
+
+    echo '<form method="POST" action="">' . "\n";
+    echo '<input type="text" name="q">' . "\n";
+    echo '<input type="submit" name="search"  value="Hledat">' . "\n";
+    echo '</form>'. "\n";
 echo '</div>';
 
 if(isset($_POST["logout"])){
@@ -48,6 +53,10 @@ if(isset($_POST["add_book"])){
 
 if(isset($_POST["profile"])){
     header("Location: /profile.php");
+}
+
+if(isset($_POST["search"]) and isset($_POST["q"]) and $_POST["q"] != ""){
+    header("Location: /index.php?q=".$_POST["q"]);
 }
 
 
@@ -78,6 +87,10 @@ echo "<div class=\"products\">";
         echo "</div>";
 
         echo '<div id="info">';
+            echo "<div class=\"class\">";
+            echo "Místnost: ".$book["room_name"];
+            echo "</div>";
+
             echo "<div class=\"language\">";
             echo "Jazyk: ".$book["language"];
             echo "</div>";

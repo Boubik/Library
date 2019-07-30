@@ -112,67 +112,68 @@ echo "<div class=\"products\">";
         
     if(!isset($books[0])){
         echo "Žádná taková knížka tu není<br>\n";
+    }else{
+        foreach($books as $book){
+            echo "<a href=\"/book.php?id=". $book["book_id"] ."&name=". $book["book_name"] ."\"><div class=\"book\">";
+
+            echo "<div class=\"name\">";
+                echo $book["book_name"];
+            echo "</div>";
+
+
+            $status = "free";
+            $k = get_table($conn, "reservation");
+            foreach($k as $reservation){
+                if($reservation["user_id"] == $book["book_id"]){
+                    if(strtotime($reservation["e-reservation"]) > strtotime('-' . 1 . ' days') and strtotime($reservation["s-reservation"]) < strtotime('-'. 0 . ' days')){
+                        $status = "booked";
+                        break;
+                    }
+                }
+            }
+            echo "<div class=\"status\" id=\"" . $status . "\"></div>";
+
+
+            echo '<div id="img">';
+                echo "<img src=\"". $book["img"] ."\">";
+            echo "</div>";
+
+            echo '<div id="info">';
+                echo "<div class=\"class\">";
+                echo "Místnost: ".$book["room_name"];
+                echo "</div>";
+
+                echo "<div class=\"language\">";
+                echo "Jazyk: ".$book["language"];
+                echo "</div>";
+
+                echo "<div class=\"genres\">";
+                $genres = NULL;
+                foreach($book["genres_name"] as $value){
+                    if($genres == NULL){
+                        $genres = $value;
+                    }else{
+                        $genres = $genres. ", ". $value;
+                    }
+                }
+                    echo "Žánr: ".$genres;
+                echo "</div>";
+
+                echo "<div class=\"author\">";
+                $author = NULL;
+                foreach($book["author"] as $value){
+                    if($author == NULL){
+                        $author = $value;
+                    }else{
+                        $author = $author. ", ". $value;
+                    }
+                }
+                    echo "Napsal: ".$author;
+                echo "</div>";
+            echo "</div>";
+
+    echo "</div></a>";
     }
-    foreach($books as $book){
-        echo "<a href=\"/book.php?id=". $book["book_id"] ."&name=". $book["book_name"] ."\"><div class=\"book\">";
-
-        echo "<div class=\"name\">";
-            echo $book["book_name"];
-        echo "</div>";
-
-
-        $status = "free";
-        $k = get_table($conn, "reservation");
-        foreach($k as $reservation){
-            if($reservation["user_id"] == $book["book_id"]){
-                if(strtotime($reservation["e-reservation"]) > strtotime('-' . 1 . ' days') and strtotime($reservation["s-reservation"]) < strtotime('-'. 0 . ' days')){
-                    $status = "booked";
-                    break;
-                }
-            }
-        }
-        echo "<div class=\"status\" id=\"" . $status . "\"></div>";
-
-
-        echo '<div id="img">';
-            echo "<img src=\"". $book["img"] ."\">";
-        echo "</div>";
-
-        echo '<div id="info">';
-            echo "<div class=\"class\">";
-            echo "Místnost: ".$book["room_name"];
-            echo "</div>";
-
-            echo "<div class=\"language\">";
-            echo "Jazyk: ".$book["language"];
-            echo "</div>";
-
-            echo "<div class=\"genres\">";
-            $genres = NULL;
-            foreach($book["genres_name"] as $value){
-                if($genres == NULL){
-                    $genres = $value;
-                }else{
-                    $genres = $genres. ", ". $value;
-                }
-            }
-                echo "Žánr: ".$genres;
-            echo "</div>";
-
-            echo "<div class=\"author\">";
-            $author = NULL;
-            foreach($book["author"] as $value){
-                if($author == NULL){
-                    $author = $value;
-                }else{
-                    $author = $author. ", ". $value;
-                }
-            }
-                echo "Napsal: ".$author;
-            echo "</div>";
-        echo "</div>";
-
-echo "</div></a>";
 }
 echo "</div>";
     

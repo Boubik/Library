@@ -462,15 +462,17 @@ function book($conn, String $search = ""){
     //echo $sql;
     $sql = $conn->prepare($sql);
     $numrows = $sql->execute();
+    $search = false;
     if($numrows > 0){
         $rows = array();
         $rows2 = array();
         while($row = $sql->fetch()){
             $rows[] = $row;
+            $search = true;
         }
 
-        $ids = array();
-        if(!isset($row[0])){
+        if($search){
+            $ids = array();
             foreach($rows as $value){
                 if(!in_array($value["book_id"], $ids)){
                     $ids[] = $value["book_id"];

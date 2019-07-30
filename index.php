@@ -25,6 +25,7 @@ echo '<div id="header">';
     if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])){
         if(login($conn, $_SESSION["username"], $_SESSION["password"], true)){
             echo '<input type="submit" name="add_book"  value="Přidat knížku">' . "\n";
+            echo '<input type="submit" name="add_author"  value="Přidat autora">' . "\n";
         }
         echo '<input type="submit" name="profile"  value="Moje rezervace">' . "\n";
         echo '<input type="submit" name="logout"  value="Odhlásit se">' . "\n";
@@ -55,7 +56,11 @@ if(isset($_POST["login"])){
 }
 
 if(isset($_POST["add_book"])){
-    header("Location: /add.php");
+    header("Location: /add_book.php");
+}
+
+if(isset($_POST["add_author"])){
+    header("Location: /add_author.php");
 }
 
 if(isset($_POST["profile"])){

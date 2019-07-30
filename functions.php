@@ -455,9 +455,9 @@ function add_book_has_reservation($conn, int $id_book, int $id_reservation){
 */
 function book($conn, String $search = ""){
     if($search == ""){
-        $sql = "SELECT book.id AS 'book_id', book.name AS 'book_name', book.relase, book.language, book.ISBN, book.pages, book.img, book.room_name, genres.id AS 'genres_id', genres.name AS 'genres_name', author.id AS 'author_id', author.f_name, author.l_name, room.name AS 'room_name' FROM book, genres, book_has_genres, book_has_author, author, room WHERE book.room_name = room.name AND book.id = book_has_genres.book_id AND book_has_genres.genres_id = genres.id AND book_has_author.author_id = author.id AND book.id = book_has_author.book_id ORDER BY book.name";
+        $sql = "SELECT book.id AS 'book_id', book.name AS 'book_name', book.relase, book.language, book.ISBN, book.pages, book.img, book.room_name, genres.id AS 'genres_id', genres.name AS 'genres_name', author.id AS 'author_id', author.f_name, author.l_name, room.name AS 'room_name' FROM book INNER JOIN book_has_genres ON book_has_genres.book_id = book.id INNER JOIN genres ON genres.id = book_has_genres.genres_id INNER JOIN book_has_author ON book_has_author.book_id = book.id INNER JOIN room ON room.name = room_name INNER JOIN author ON author.id = book_has_author.author_id ORDER BY book.name";
     }else{
-        $sql = "SELECT book.id AS 'book_id', book.name AS 'book_name', book.relase, book.language, book.ISBN, book.pages, book.img, book.room_name, genres.id AS 'genres_id', genres.name AS 'genres_name', author.id  AS 'author_id', author.f_name, author.l_name, room.name AS 'room_name' FROM book, genres, book_has_genres, book_has_author, author, room WHERE book.room_name = room.name AND book.id = book_has_genres.book_id AND book_has_genres.genres_id = genres.id AND book_has_author.author_id = author.id AND book.id = book_has_author.book_id AND (book.room_name LIKE '%". $search ."%' OR book.name LIKE '%". $search ."%' OR book.relase LIKE '%". $search ."%' OR book.language LIKE '%". $search ."%'OR book.ISBN LIKE '%". $search ."%'OR book.pages LIKE '%". $search ."%'OR author.f_name LIKE '%". $search ."%' OR author.l_name LIKE '%". $search ."%' OR author.bday LIKE '%". $search ."%' OR author.country LIKE '%". $search ."%' OR genres.name LIKE '%". $search ."%' OR room.name LIKE '%". $search ."%' OR author.bday LIKE '%Jana Hollanová%' OR author.country LIKE '%Jana Hollanová%' OR genres.name LIKE '%Jana Hollanová%' OR room.name LIKE '%Jana Hollanová%' OR CONCAT(author.f_name, ' ' , author.l_name) LIKE '%". $search ."%' OR CONCAT(author.l_name, ' ', author.f_name) LIKE '%". $search ."%')";
+        $sql = "SELECT book.id AS 'book_id', book.name AS 'book_name', book.relase, book.language, book.ISBN, book.pages, book.img, book.room_name, genres.id AS 'genres_id', genres.name AS 'genres_name', author.id AS 'author_id', author.f_name, author.l_name, room.name AS 'room_name' FROM book INNER JOIN book_has_genres ON book_has_genres.book_id = book.id INNER JOIN genres ON genres.id = book_has_genres.genres_id INNER JOIN book_has_author ON book_has_author.book_id = book.id INNER JOIN room ON room.name = room_name INNER JOIN author ON author.id = book_has_author.author_id WHERE book.room_name = room.name AND book.id = book_has_genres.book_id AND book_has_genres.genres_id = genres.id AND book_has_author.author_id = author.id AND book.id = book_has_author.book_id AND (book.room_name LIKE '%". $search ."%' OR book.name LIKE '%". $search ."%' OR book.relase LIKE '%". $search ."%' OR book.language LIKE '%". $search ."%'OR book.ISBN LIKE '%". $search ."%'OR book.pages LIKE '%". $search ."%'OR author.f_name LIKE '%". $search ."%' OR author.l_name LIKE '%". $search ."%' OR author.bday LIKE '%". $search ."%' OR author.country LIKE '%". $search ."%' OR genres.name LIKE '%". $search ."%' OR room.name LIKE '%". $search ."%' OR author.bday LIKE '%Jana Hollanová%' OR author.country LIKE '%Jana Hollanová%' OR genres.name LIKE '%Jana Hollanová%' OR room.name LIKE '%Jana Hollanová%' OR CONCAT(author.f_name, ' ' , author.l_name) LIKE '%". $search ."%' OR CONCAT(author.l_name, ' ', author.f_name) LIKE '%". $search ."%')";
     }
     //echo $sql;
     $sql = $conn->prepare($sql);
@@ -468,31 +468,43 @@ function book($conn, String $search = ""){
         while($row = $sql->fetch()){
             $rows[] = $row;
         }
-        
-        $key = 0;
-        while(isset($rows[$key])){
-            $i = 1;
-            while(isset($rows[($key+$i)])){
-                $k = $rows[$key]["genres_name"];
-                $rows[$key]["genres_name"] = array();
-                $rows[$key]["genres_name"][] = $k;
-    
-                $rows[$key]["author"] = array();
-                $rows[$key]["author"][] = $rows[$key]["f_name"] . " " . $rows[$key]["l_name"];
-                if($rows[$key]["book_id"] == $rows[($key+$i)]["book_id"]){
-                    if(!(in_array($rows[($key+$i)]["genres_name"], $rows[$key]["genres_name"]))){
-                        $rows[$key]["genres_name"][] = $rows[($key+$i)]["genres_name"];
-                    }
-                    if(!(in_array(($rows[($key+$i)]["f_name"] . " " . $rows[($key+$i)]["l_name"]), $rows[$key]["author"]))){
-                        $rows[$key]["author"][] = $rows[($key+$i)]["f_name"] . " " . $rows[($key+$i)]["l_name"];
-                    }
-                    $rows2[] = $rows[$key];
-                    $key +=1;
-                }
-                $i+=1;
+
+        $ids = array();
+        foreach($rows as $value){
+            if(!in_array($value["book_id"], $ids)){
+                $ids[] = $value["book_id"];
             }
-            $key +=1;
         }
+        foreach($ids as $id){
+            $k[$id] = array();
+            foreach($rows as $value){
+                if($value["book_id"] == $id){
+                    if(!isset($k[$id]["genres_name"]) or !in_array($value["genres_name"], $k[$id]["genres_name"])){
+                        $k[$id]["genres_name"][] = $value["genres_name"];
+                    }
+                    if(!isset($k[$id]["author"]) or !in_array(($value["f_name"] . " " . $value["l_name"]), $k[$id]["author"])){
+                        $k[$id]["author"][] = $value["f_name"] . " " . $value["l_name"];
+                    }
+                }
+            }
+        }
+        foreach($k as $key => $value){
+            foreach($rows as $item){
+                if($item["book_id"] == $key){
+                    $item["author"] = $value["author"];
+                    $item["genres_name"] = $value["genres_name"];
+                    break;
+                }
+            }
+            $rows2[] = $item;
+        }
+
+
+        /*foreach($rows2 as $key => $value){
+            echo $key. " ";
+            print_r($value);
+            echo "<br><br>";
+        }*/
         return $rows2;
     }
     return NULL;

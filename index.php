@@ -91,8 +91,12 @@ echo "<div class=\"products\">";
         echo "</div>";
         echo '<div id="language">';
         $language = get_table($conn, "book");
+        $k = array();
         foreach($language as $item){
-            echo "<a href=\"/index.php?q=". $item["language"] ."\">".$item["language"]."</a><br>\n";
+            if(!in_array($item["language"], $k)){
+                echo "<a href=\"/index.php?q=". $item["language"] ."\">".$item["language"]."</a><br>\n";
+                $k[] = $item["language"];
+            }
         }
         echo "</div>";
         echo '<div id="room">';

@@ -470,42 +470,46 @@ function book($conn, String $search = ""){
         }
 
         $ids = array();
-        foreach($rows as $value){
-            if(!in_array($value["book_id"], $ids)){
-                $ids[] = $value["book_id"];
-            }
-        }
-        foreach($ids as $id){
-            $k[$id] = array();
+        if(!isset($row[0])){
             foreach($rows as $value){
-                if($value["book_id"] == $id){
-                    if(!isset($k[$id]["genres_name"]) or !in_array($value["genres_name"], $k[$id]["genres_name"])){
-                        $k[$id]["genres_name"][] = $value["genres_name"];
-                    }
-                    if(!isset($k[$id]["author"]) or !in_array(($value["f_name"] . " " . $value["l_name"]), $k[$id]["author"])){
-                        $k[$id]["author"][] = $value["f_name"] . " " . $value["l_name"];
+                if(!in_array($value["book_id"], $ids)){
+                    $ids[] = $value["book_id"];
+                }
+            }
+            foreach($ids as $id){
+                $k[$id] = array();
+                foreach($rows as $value){
+                    if($value["book_id"] == $id){
+                        if(!isset($k[$id]["genres_name"]) or !in_array($value["genres_name"], $k[$id]["genres_name"])){
+                            $k[$id]["genres_name"][] = $value["genres_name"];
+                        }
+                        if(!isset($k[$id]["author"]) or !in_array(($value["f_name"] . " " . $value["l_name"]), $k[$id]["author"])){
+                            $k[$id]["author"][] = $value["f_name"] . " " . $value["l_name"];
+                        }
                     }
                 }
             }
-        }
-        foreach($k as $key => $value){
-            foreach($rows as $item){
-                if($item["book_id"] == $key){
-                    $item["author"] = $value["author"];
-                    $item["genres_name"] = $value["genres_name"];
-                    break;
+            foreach($k as $key => $value){
+                foreach($rows as $item){
+                    if($item["book_id"] == $key){
+                        $item["author"] = $value["author"];
+                        $item["genres_name"] = $value["genres_name"];
+                        break;
+                    }
                 }
+                $rows2[] = $item;
             }
-            $rows2[] = $item;
+            /*foreach($rows2 as $key => $value){
+                echo $key. " ";
+                print_r($value);
+                echo "<br><br>";
+            }*/
+            return $rows2;
+        }else{
+            return NULL;
         }
 
 
-        /*foreach($rows2 as $key => $value){
-            echo $key. " ";
-            print_r($value);
-            echo "<br><br>";
-        }*/
-        return $rows2;
     }
     return NULL;
 }

@@ -1,6 +1,4 @@
 <?php
-use function PHPSTORM_META\elementType;
-
 /**
  * connect to db
  * @param   String  $servername     name of the book
@@ -244,6 +242,7 @@ function login($conn, string $username, string $password, $mod_plus = false){
     $numrows = $sql->execute();
     $row = $sql->fetch();
     if($row["username"] == $username and $row["password"] == $password ){
+        last_login($conn, $username);
         if($mod_plus and !($row["role"] == "mod" or $row["role"] == "admin")){
             return false;
         }
@@ -251,6 +250,20 @@ function login($conn, string $username, string $password, $mod_plus = false){
     }else {
         return false;
     }
+    
+}
+
+/**
+ * add user to db
+ * @param   mixed   $conn           db connection
+ * @param   String  $username       username
+ */
+function last_login($conn, string $username){
+    date_default_timezone_set('Europe/Prague');
+    $datetime = date("Y-m-d H:i:s");
+    $sql = "UPDATE `user` SET `last_login` = '". $datetime ."' WHERE `username` = '". $username ."'";
+    $sql = $conn->prepare($sql); 
+    $sql->execute();
     
 }
 

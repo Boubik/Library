@@ -11,8 +11,8 @@ body{
 
 #side{
     width: 20%;
-    float: left;
-    height: 700px;
+    height: 100%;
+    padding-left: 10px;
 }
 
 #header{
@@ -20,15 +20,27 @@ body{
     margin: auto;
     padding-top: 50px;
     padding-bottom: 30px;
-    
 }
 
-.products{
+#serch{
+    padding: 5px;
+    float: right;
+    height: 25px;
+}
+    
+
+#monkaS{
+    padding: 5px;
+    float: right;
+    height: 25px;
+}
+
+.filtr{
     border-radius: 5px;
     width: 1100px;
     background: white;
     margin: auto;
-
+    margin-top: 20px;
 }
 
 .book{
@@ -36,7 +48,7 @@ body{
     display: inline-block;
     border-radius: 5px;
     width: 200px;
-    height: 300px;
+    height: 320px;
     margin: auto;
     margin: 32px;
     transition: transform .5s;
@@ -64,13 +76,11 @@ a{
 
 #info{
     text-align: center;
-    
 }
 
 
 .book:hover{
     transition-duration: 0.5s;
-    /* background-color:rgb(155, 61, 120);  */
     border: solid 1px #ccc;
     -webkit-box-shadow: 0px 0px 20px 1px rgba(177, 177, 177, 0.75);
     -moz-box-shadow: 0px 0px 20px 1px rgba(177, 177, 177, 0.75);
@@ -94,3 +104,26 @@ input[type=submit] {
     transition-duration: 0.5s;
   }
 
+  input[type=text]:focus {
+    background-color: rgb(255, 255, 255);
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+  }
+
+  input[type=text] {
+    background-color:  rgb(211, 211, 211);
+    border-radius: 5px;
+    border: 3px solid  rgb(211, 211, 211);
+    outline: none;
+  }
+
+  #filtrinfo{
+      text-align: center;
+      padding-bottom: 10px;
+      padding-top: 5px;
+  }
+
+  hr{
+      width: 80%;
+      border-top: 1px solid rgb(0, 0, 0);
+  }

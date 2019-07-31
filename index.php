@@ -21,29 +21,35 @@ if(isset($_GET["q"])){
 
 echo '<div id="header">';
     echo "<a href=\"/\"><image src=\"/images/logo.png\" style=\"height: 100px\"></a>";
-    echo '<form method="POST" action="">' . "\n";
-    if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])){
-        if(login($conn, $_SESSION["username"], $_SESSION["password"], true)){
-            echo '<input type="submit" name="add_book"  value="Přidat knížku">' . "\n";
-            echo '<input type="submit" name="add_author"  value="Přidat autora">' . "\n";
-        }
-        echo '<input type="submit" name="profile"  value="Moje rezervace">' . "\n";
-        echo '<input type="submit" name="logout"  value="Odhlásit se">' . "\n";
-    }else{
-        echo '<input type="submit" name="login"  value="Přihrásit se">' . "\n";
-    }
-    echo '</form>'. "\n";
+        echo '<div id="inheader">';
+        echo '<div id="monkaS">';
+                echo '<form method="POST" action="">' . "\n";
+                if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])){
+                    if(login($conn, $_SESSION["username"], $_SESSION["password"], true)){
+                        echo '<input type="submit" name="add_book"  value="Přidat knížku">' . "\n";
+                        echo '<input type="submit" name="add_author"  value="Přidat autora">' . "\n";
+                    }
+                    echo '<input type="submit" name="profile"  value="Moje rezervace">' . "\n";
+                    echo '<input type="submit" name="logout"  value="Odhlásit se">' . "\n";
+                }else{
+                    echo '<input type="submit" name="login"  value="Přihrásit se">' . "\n";
+                }
+                echo '</form>'. "\n";
+            echo '</div>';
 
-    echo '<form method="POST" action="">' . "\n";
-    echo '<input type="text" name="q" value="';
-    if(isset($_GET["q"])){
-        echo $_GET["q"].'">' . "\n";
-    }else{
-        echo '">' . "\n";
-    }
-    echo '<input type="submit" name="search"  value="Hledat">' . "\n";
-    echo '</form>'. "\n";
-echo '</div>';
+            echo '<div id="serch">';
+                echo '<form method="POST" action="">' . "\n";
+                echo '<input type="text" placeholder="Hledate neco?" name="q" value="';
+                if(isset($_GET["q"])){
+                    echo $_GET["q"].'">' . "\n";
+                }else{
+                    echo '">' . "\n";
+                }
+                echo '<input type="submit" name="search"  value="Hledat">' . "\n";
+                echo '</form>'. "\n";
+            echo '</div>';
+        echo '</div>';
+    echo '</div>';
 
 if(isset($_POST["logout"])){
     unset($_SESSION["username"]);
@@ -73,23 +79,32 @@ if(isset($_POST["search"]) and isset($_POST["q"]) and $_POST["q"] != ""){
 
 
 
-echo "<div class=\"products\">";
+echo "<div class=\"filtr\">";
 
     echo '<div id="side">';
 
-        echo '<div id="author">';
+        echo '<div id="genres">';
+        echo '<div id="filtrinfo">';
+            echo 'Autor';
+        echo "</div>";
         $genres = get_table($conn, "genres");
         foreach($genres as $item){
             echo "<a href=\"/index.php?q=". $item["name"] ."\">".$item["name"]."</a><br>\n";
         }
         echo "</div>";
         echo '<div id="author">';
+        echo '<div id="filtrinfo">';
+        echo '<hr>Autor';
+        echo "</div>";
         $author = get_table($conn, "author");
         foreach($author as $item){
             echo "<a href=\"/index.php?q=". $item["f_name"]. " ". $item["l_name"] ."\">".$item["f_name"]. " ". $item["l_name"]."</a><br>\n";
         }
         echo "</div>";
         echo '<div id="language">';
+        echo '<div id="filtrinfo">';
+        echo '<hr>Jazyk';
+        echo "</div>";
         $language = get_table($conn, "book");
         $k = array();
         foreach($language as $item){
@@ -100,6 +115,9 @@ echo "<div class=\"products\">";
         }
         echo "</div>";
         echo '<div id="room">';
+        echo '<div id="filtrinfo">';
+        echo '<hr>Mistnost';
+        echo "</div>";
         $room = get_table($conn, "room");
         foreach($room as $item){
             echo "<a href=\"/index.php?q=". $item["name"] ."\">".$item["name"]."</a><br>\n";

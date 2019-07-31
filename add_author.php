@@ -109,6 +109,7 @@ if(isset($_GET["name"]) and isset($_GET["relase"]) and isset($_GET["language"]) 
 
     if(isset($_POST["add_author"])){
         add_author($conn, $_POST["f_name"], $_POST["l_name"], $_POST["bday"], $_POST["country"]);
+        header("Location: /");
         /*if(isset($_POST["books"]) and $_POST["books"] != "k nikomu"){
             foreach(get_table($conn, "author") as $items){
                 $bday = explode("-", $items["bday"]);

@@ -85,7 +85,7 @@ echo "<div class=\"filtr\">";
 
         echo '<div id="genres">';
         echo '<div id="filtrinfo">';
-            echo 'Autor';
+            echo 'Žánr';
         echo "</div>";
         $genres = get_table($conn, "genres");
         foreach($genres as $item){

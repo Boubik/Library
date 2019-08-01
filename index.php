@@ -20,7 +20,7 @@ if(isset($_GET["q"])){
 }
 
 echo '<div id="header">';
-    echo "<a href=\"/\"><image src=\"/images/logo.png\" style=\"height: 100px\"></a>";
+    echo "<a href=\"/\"><image src=\"/images/logo_1.png\" style=\"height: 100px\"></a>";
         echo '<div id="inheader">';
         echo '<div id="monkaS">';
                 echo '<form method="POST" action="">' . "\n";
@@ -129,7 +129,9 @@ echo "<div class=\"filtr\">";
     echo '<div id="bookcon">';
         
     if(!isset($books[0])){
-        echo "Žádná taková knížka tu není<br>\n";
+        echo '<div id="warning>';
+            echo "Žádná taková knížka tu není<br>\n";
+        echo "</div>";
     }else{
         foreach($books as $book){
             echo "<a href=\"/book.php?id=". $book["book_id"] ."&name=". $book["book_name"] ."\"><div class=\"book\">";

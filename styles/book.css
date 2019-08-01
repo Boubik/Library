@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+
+body{
+    font-family: 'Muli', sans-serif;
+    background: -webkit-linear-gradient(to right, #ad5389, #3c1053);
+    background: linear-gradient(to right, #ad5389, #3c1053);
+    width: auto;
+    height: 100%;
+    margin: auto;
+}
+
+#header{
+    width: 800px;
+    margin: auto;
+    padding-top: -10px;
+    padding-bottom: 30px;
+}
+
+.book{
+    width: 800px;
+    border-radius: 5px;  
+    margin: auto;
+    background-color: white; 
+    margin-bottom: 200px;
+    padding-bottom: 200px;
+}
+
+#info{
+    width: 300px;
+    margin-left: 500px;
+    margin-top: -400px;
+    overflow: auto;
+
+}
+
+.reservation{
+    width: 300px;
+    margin-left: 500px;
+    margin-top: 100px;
+    overflow: auto;
+}
+
+img{
+    margin-left: 30px;
+    margin-top: 100px;
+}
+
+input[type=date] {
+    background-color:  rgb(211, 211, 211);
+    border-radius: 5px;
+    border: 3px solid  rgb(211, 211, 211);
+    outline: none;
+    margin: 5px;
+    transition: 0.5s;
+  }
+
+  input[type=date]:focus {
+    border: 3px solid #555;
+    background-color: white;
+  }
+
+  input[type=submit] {
+    background-color:  rgb(9, 255, 0);
+    border-radius: 5px;
+    margin: 5px;
+  }

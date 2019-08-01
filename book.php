@@ -25,72 +25,74 @@ session_start();
 $book = get_book_by_id($conn, $_GET["id"]);
 
 echo '<div id="header">';
-    echo "<a href=\"/\"><image src=\"/images/logo.png\" style=\"height: 100px\"></a>";
+    echo "<a href=\"/\"><image src=\"/images/logo_1.png\" style=\"height: 100px\"></a>";
 echo "</div>";
 
 echo "<div class=\"book\">";
 
-echo "<div class=\"name\">";
-echo $book["name"];
-echo "</div>";
-
-echo "<div class=\"language\">";
-echo "Jazyk: " . $book["language"];
-echo "</div>";
-
 echo "<img src=\"" . $book["img"] . "\">";
 
-echo "<div class=\"class\">";
-echo "Místnost: ".$book["room_name"];
-echo "</div>";
+    echo '<div id="info";>';
+        echo "<div class=\"name\">";
+        echo $book["name"];
+        echo "</div>";
 
-echo "<div class=\"genres\">";
-$k = mn($conn, "book_has_genres", $book["id"], "book_id", "genres_id");
-$genres = NULL;
-foreach ($k as $id) {
-    $genre = get_genre($conn, $id);
-    if ($genres != NULL) {
-        $genres = $genre . ", " . $genres;
-    } else {
-        $genres =  $genre;
+        echo "<div class=\"language\">";
+        echo "Jazyk: " . $book["language"];
+        echo "</div>";
+
+        echo "<div class=\"class\">";
+        echo "Místnost: ".$book["room_name"];
+        echo "</div>";
+
+        echo "<div class=\"genres\">";
+        $k = mn($conn, "book_has_genres", $book["id"], "book_id", "genres_id");
+        $genres = NULL;
+        foreach ($k as $id) {
+            $genre = get_genre($conn, $id);
+            if ($genres != NULL) {
+                $genres = $genre . ", " . $genres;
+            } else {
+                $genres =  $genre;
+            }
+        }
+        echo "Žánr: " . $genres;
+        echo "</div>";
+
+        echo "<div class=\"author\">";
+        $k = mn($conn, "book_has_author", $book["id"], "book_id", "author_id");
+        $authors = NULL;
+        foreach ($k as $id) {
+            $author = get_author($conn, $id);
+            if ($authors != NULL) {
+                $authors = $author["f_name"] . " " . $author["l_name"] . ", " . $authors;
+            } else {
+                $authors =  $author["f_name"] . " " . $author["l_name"];
+            }
+        }
+        echo "Napsal: " . $authors;
+        echo "</div>";
+    echo "</div>";
+
+    echo "<div class=\"reservation\">";
+    echo '<form method="POST" action="">' . "\nZačátek";
+    echo '<input type="date" name="s_date"><br>' . "\nKonec   ";
+    echo '<input type="date" name="e_date"><br>' . "\n";
+    echo '<input type="submit" name="reservation"  value="zarezervovat">' . "\n";
+    echo "</form>";
+    echo "<br>\nnadcházející rezervace:<br>\n";
+    echo "</div>";
+
+    $k = mn($conn, "book_has_reservation", $book["id"], "book_id", "reservation_id");
+    $res = NULL;
+    foreach($k as $id){
+        $reservations = get_reservations($conn, $id);
+        foreach ($reservations as $reservation) {
+            echo "od: " . substr($reservation["s-reservation"], 0, 10) . " do " . substr($reservation["e-reservation"], 0, 10) . "<br>\n";
+        }
     }
-}
-echo "Žánr: " . $genres;
-echo "</div>";
 
-echo "<div class=\"author\">";
-$k = mn($conn, "book_has_author", $book["id"], "book_id", "author_id");
-$authors = NULL;
-foreach ($k as $id) {
-    $author = get_author($conn, $id);
-    if ($authors != NULL) {
-        $authors = $author["f_name"] . " " . $author["l_name"] . ", " . $authors;
-    } else {
-        $authors =  $author["f_name"] . " " . $author["l_name"];
-    }
-}
-echo "Napsal: " . $authors;
-echo "</div>";
-
-echo "<div class=\"reservation\">";
-echo '<form method="POST" action="">' . "\nZačátek";
-echo '<input type="date" name="s_date"><br>' . "\nKonec ";
-echo '<input type="date" name="e_date"><br>' . "\n";
-echo '<input type="submit" name="reservation"  value="zarezervovat">' . "\n";
-echo "</form>";
-echo "</div>";
-echo "<br>\nnadcházející rezervace:<br>\n";
-
-$k = mn($conn, "book_has_reservation", $book["id"], "book_id", "reservation_id");
-$res = NULL;
-foreach($k as $id){
-    $reservations = get_reservations($conn, $id);
-    foreach ($reservations as $reservation) {
-        echo "od: " . substr($reservation["s-reservation"], 0, 10) . " do " . substr($reservation["e-reservation"], 0, 10) . "<br>\n";
-    }
-}
-
-echo "</div>";
+    echo "</div>";
 
 
 if (isset($_POST["reservation"])) {

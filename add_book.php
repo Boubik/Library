@@ -13,7 +13,7 @@ $conn = connect_to_db($configs["servername"], $configs["dbname"], $configs["user
 session_start();
 
 echo '<div id="header">';
-    echo "<a href=\"/\"><image src=\"/images/logo.png\" style=\"height: 100px\"></a>";
+    echo "<a href=\"/\"><image src=\"/images/logo_1.png\" style=\"height: 100px\"></a>";
 echo "</div>";
 
 if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"], true)){

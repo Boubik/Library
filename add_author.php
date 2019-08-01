@@ -14,7 +14,7 @@ $conn = connect_to_db($configs["servername"], $configs["dbname"], $configs["user
 session_start();
 
 echo '<div id="header">';
-    echo "<a href=\"/\"><image src=\"/images/logo.png\" style=\"height: 100px\"></a>";
+    echo "<a href=\"/\"><image src=\"/images/logo_1.png\" style=\"height: 100px\"></a>";
 echo "</div>";
 
 if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"], true)){
@@ -23,10 +23,9 @@ if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn
 }
 
 if(isset($_GET["name"]) and isset($_GET["relase"]) and isset($_GET["language"]) and isset($_GET["ISBN"]) and isset($_GET["room_name"]) and isset($_GET["pages"]) and isset($_GET["genres"]) and isset($_GET["img"])){
-    echo '<div id="main">';
-        echo '<div id="inner">';
-            echo "Přiřadte autora k \"" . $_GET["name"] . "\"<br>\n";
 
+    echo '<div id="main">';
+            echo "Přiřadte autora k \"" . $_GET["name"] . "\"<br>\n";
             echo '<form method="POST" action="">';
             echo '<input type="text" maxlength="45" name="f_name" placeholder="Jméno"><br>';
             echo '<input type="text" maxlength="45" name="l_name" placeholder="Přímen"><br>';
@@ -45,7 +44,6 @@ if(isset($_GET["name"]) and isset($_GET["relase"]) and isset($_GET["language"]) 
             echo '</select><br>'. "\n";
             echo '<input type="submit" name="submit2"  value="Spojit">' . "\n";
             echo '</form>'. "\n";
-        echo '<div>';
     echo '<div>';
 
     if(isset($_POST['submit1'])){

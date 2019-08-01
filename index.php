@@ -84,27 +84,33 @@ echo "<div class=\"filtr\">";
     echo '<div id="side">';
 
         echo '<div id="genres">';
-        echo '<div id="filtrinfo">';
-            echo 'Žánr';
-        echo "</div>";
+        echo '<div class="dropdown">';
+            echo '<p>Žánr</p>';
+            echo '<div class="dropdown-content">';  
         $genres = get_table($conn, "genres");
         foreach($genres as $item){
             echo "<a href=\"/index.php?q=". $item["name"] ."\">".$item["name"]."</a><br>\n";
         }
         echo "</div>";
-        echo '<div id="author">';
-        echo '<div id="filtrinfo">';
-        echo '<hr>Autor';
         echo "</div>";
+        echo "</div>";
+
+        echo '<div id="author">';
+        echo '<div class="dropdown">';
+            echo '<p>Autor</p>';
+            echo '<div class="dropdown-content">';  
         $author = get_table($conn, "author");
         foreach($author as $item){
             echo "<a href=\"/index.php?q=". $item["f_name"]. " ". $item["l_name"] ."\">".$item["f_name"]. " ". $item["l_name"]."</a><br>\n";
         }
         echo "</div>";
-        echo '<div id="language">';
-        echo '<div id="filtrinfo">';
-        echo '<hr>Jazyk';
         echo "</div>";
+        echo "</div>";
+
+        echo '<div id="language">';
+        echo '<div class="dropdown">';
+            echo '<p>Jazyk</p>';
+            echo '<div class="dropdown-content">';   
         $language = get_table($conn, "book");
         $k = array();
         foreach($language as $item){
@@ -114,16 +120,20 @@ echo "<div class=\"filtr\">";
             }
         }
         echo "</div>";
-        echo '<div id="room">';
-        echo '<div id="filtrinfo">';
-        echo '<hr>Mistnost';
         echo "</div>";
+        echo "</div>";
+
+        echo '<div id="room">';
+        echo '<div class="dropdown">';
+            echo '<p>Mistnost</p>';
+            echo '<div class="dropdown-content">';     
         $room = get_table($conn, "room");
         foreach($room as $item){
             echo "<a href=\"/index.php?q=". $item["name"] ."\">".$item["name"]."</a><br>\n";
         }
         echo "</div>";
-
+        echo "</div>";
+        echo '</div>';
     echo '</div>';
 
     echo '<div id="bookcon">';

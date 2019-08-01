@@ -85,7 +85,7 @@ echo "<div class=\"filtr\">";
 
         echo '<div id="genres">';
         echo '<div class="dropdown">';
-            echo '<p>Žánr</p>';
+            echo '<span>Žánr</span>';
             echo '<div class="dropdown-content">';  
         $genres = get_table($conn, "genres");
         foreach($genres as $item){
@@ -97,7 +97,7 @@ echo "<div class=\"filtr\">";
 
         echo '<div id="author">';
         echo '<div class="dropdown">';
-            echo '<p>Autor</p>';
+            echo '<span>Autor</span>';
             echo '<div class="dropdown-content">';  
         $author = get_table($conn, "author");
         foreach($author as $item){
@@ -109,7 +109,7 @@ echo "<div class=\"filtr\">";
 
         echo '<div id="language">';
         echo '<div class="dropdown">';
-            echo '<p>Jazyk</p>';
+            echo '<span>Jazyk</span>';
             echo '<div class="dropdown-content">';   
         $language = get_table($conn, "book");
         $k = array();
@@ -125,7 +125,7 @@ echo "<div class=\"filtr\">";
 
         echo '<div id="room">';
         echo '<div class="dropdown">';
-            echo '<p>Mistnost</p>';
+            echo '<span>Mistnost</span>';
             echo '<div class="dropdown-content">';     
         $room = get_table($conn, "room");
         foreach($room as $item){

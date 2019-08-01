@@ -12,8 +12,8 @@ body{
 #header{
     width: 800px;
     margin: auto;
-    padding-top: -10px;
-    padding-bottom: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .book{

@@ -3,6 +3,8 @@
     <meta charset="UTF-8">
     <title>Přidání knížky</title>
     <link rel="stylesheet" type="text/css" href="styles/add.css">
+    <link href="styles/header.css" rel="stylesheet" type="text/css">
+    <link href="styles/footer.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <?php

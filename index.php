@@ -2,6 +2,8 @@
 <head>
     <meta charset="UTF-8">
     <link href="styles/index.css" rel="stylesheet" type="text/css">
+    <link href="styles/header.css" rel="stylesheet" type="text/css">
+    <link href="styles/footer.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="images/logo.ico">
     <title>Knihovna</title>
 </head>

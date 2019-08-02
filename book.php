@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <link href="styles/book.css" rel="stylesheet" type="text/css">
+    <link href="styles/header.css" rel="stylesheet" type="text/css">
+    <link href="styles/footer.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="images/logo.ico">
     <?php
     if (isset($_GET["name"])) {

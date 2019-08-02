@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Přidání autora</title>
     <link rel="stylesheet" type="text/css" href="styles/book_to_author.css">
+    <link href="styles/header.css" rel="stylesheet" type="text/css">
+    <link href="styles/footer.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <?php

@@ -3,6 +3,8 @@
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prihlášení</title>
     <link rel="stylesheet" type="text/css" href="styles/login.css">
+    <link href="styles/header.css" rel="stylesheet" type="text/css">
+    <link href="styles/footer.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <?php

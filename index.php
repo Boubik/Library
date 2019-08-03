@@ -208,7 +208,11 @@ echo "<div class=\"filtr\">";
     }
 }
 echo "</div>";
+echo "</div>";
 
+
+echo '<div id="footer">';
+echo "</div>";
     
 ?>
 </body>

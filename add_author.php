@@ -128,6 +128,8 @@ if(isset($_GET["name"]) and isset($_GET["relase"]) and isset($_GET["language"]) 
     }
 }
 
+echo '<div id="footer">';
+echo "</div>";
 
 
 ?>

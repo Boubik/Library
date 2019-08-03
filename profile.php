@@ -67,6 +67,9 @@ echo '<div id="main">';
 
 echo "</div>";
 
+echo '<div id="footer">';
+echo "</div>";
+
 ?>
 </body>
 </html>

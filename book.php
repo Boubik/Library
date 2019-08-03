@@ -116,6 +116,8 @@ if (isset($_POST["reservation"])) {
     }
 }
 
+echo '<div id="footer">';
+echo "</div>";
 
 ?>
 </body>

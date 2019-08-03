@@ -86,6 +86,10 @@ if(isset($_POST["login"])){
         unset($_SESSION["password"]);
     }
 }
+
+echo '<div id="footer">';
+echo "</div>";
+
 ?>
 </body>
 <script>

@@ -69,6 +69,8 @@ if(isset($_POST["submit"])){
     header("Location: /add_author.php?name=" . $_POST["name"] . "&relase=" . $_POST["relase"] . "&language=" . $_POST["language"] . "&ISBN=" . $_POST["ISBN"] . "&room_name=" . $room . "&pages=" . $_POST["pages"] . "&genres=" . $gendrs_get . "&img=" . $_POST["img"]);
 }
 
+echo '<div id="footer">';
+echo "</div>";
 
 
 ?>

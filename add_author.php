@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="styles/book_to_author.css">
     <link href="styles/header.css" rel="stylesheet" type="text/css">
     <link href="styles/footer.css" rel="stylesheet" type="text/css">
+    <script src="https://kit.fontawesome.com/350205fd30.js"></script>
 </head>
 <body>
 <?php
@@ -129,8 +130,18 @@ if(isset($_GET["name"]) and isset($_GET["relase"]) and isset($_GET["language"]) 
 }
 
 echo '<div id="footer">';
+    echo '<div id="footercon">';
+        echo '<div id="social">';
+            echo '<a href="https://www.facebook.com/skolavdf/?ref=bookmarks" target="_blank" class="fab fa-facebook-f"></a>';
+            echo '<a href="https://www.instagram.com/skolavdf/" target="_blank" class="fab fa-instagram"></a>';
+        echo "</div>";
+        echo '<div id="splitter"></div>';
+        echo '<div id="team">';
+        echo'Code: Jan Chlouba <br>';
+        echo'Designe: Ibrahim Daghstani';
+        echo "</div>";
+    echo "</div>";
 echo "</div>";
-
 
 ?>
 </body>

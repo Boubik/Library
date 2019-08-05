@@ -1,10 +1,57 @@
 #footer{
-    border: black solid 1px;
-    background-color: rgb(15, 15, 15);
+    background-color: black;
     width: 100%;
     height: 200px;
 }
 
 body{
     overflow-x: hidden;
+}
+
+
+#footercon{
+    margin: auto;
+    width: 500px;
+    height: 150px;
+    padding-top: 40px;
+}
+
+
+#social{
+    position: absolute;
+    height: 50px;
+    width: 200px;
+    padding-left: 150px;
+    padding-top: 20px;
+}
+
+#splitter{
+    position: absolute;
+    border-left: 3px solid white;
+    height: 100px;
+    margin: auto;
+    margin-left: 250px;
+}
+
+#team{
+    color: white;
+    padding-top: 10px;
+    padding-left: 270px;
+    padding-top: 30px;
+    height: 50px;
+    width: 300px;
+    margin: auto;
+}
+
+.fab{
+    color: white;
+    padding: 10px;
+    font-size: 35px;
+    text-align: center;
+    transition: transform .2s;
+}
+
+
+.fab:hover{
+    transform: scale(1.5); 
 }

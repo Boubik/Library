@@ -7,6 +7,7 @@
     <link href="styles/header.css" rel="stylesheet" type="text/css">
     <link href="styles/footer.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="images/logo.ico">
+    <script src="https://kit.fontawesome.com/350205fd30.js"></script>
     <?php
     if (isset($_GET["name"])) {
         echo "<title>Kniha: " . $_GET["name"] . "</title>";
@@ -117,8 +118,18 @@ if (isset($_POST["reservation"])) {
 }
 
 echo '<div id="footer">';
+    echo '<div id="footercon">';
+        echo '<div id="social">';
+            echo '<a href="https://www.facebook.com/skolavdf/?ref=bookmarks" target="_blank" class="fab fa-facebook-f"></a>';
+            echo '<a href="https://www.instagram.com/skolavdf/" target="_blank" class="fab fa-instagram"></a>';
+        echo "</div>";
+        echo '<div id="splitter"></div>';
+        echo '<div id="team">';
+        echo'Code: Jan Chlouba <br>';
+        echo'Designe: Ibrahim Daghstani';
+        echo "</div>";
+    echo "</div>";
 echo "</div>";
-
 ?>
 </body>
 

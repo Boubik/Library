@@ -17,19 +17,17 @@ $configs = include('config.php');
 $conn = connect_to_db($configs["servername"], $configs["dbname"], $configs["username"], $configs["password"]);
 session_start();
 $search = "";
+$page = 1;
 $count_books = count_books($conn);
 $books_rows = 10;
+$per_page = $books_rows*3;
 if(isset($_GET["q"])){
     $search = $_GET["q"];
-    if(isset($_GET["page"])){
-        $page = $_GET["page"];
-        $books = book($conn, $search, $count_books, $page);
-    }else{
-        $books = book($conn, $search);
-    }
-}else{
-    $books = book($conn, $search);
 }
+if(isset($_GET["page"])){
+    $page = $_GET["page"];
+}
+$books = book($conn, $search, $count_books, $page, $per_page);
 
 echo '<div id="header">';
     echo "<a href=\"/\"><image src=\"/images/logo_1.png\" style=\"height: 100px\"></a>";
@@ -219,14 +217,28 @@ echo "<div class=\"filtr\">";
     }
 }
 echo "</div>";
+
 $i = 1;
-echo "stránky: ";
-do{
+while(1){
+    //echo ($i+3) ." > ". $count_books . "<br>";
+    if(($i*(3*$books_rows)) >= $count_books){
+        break;
+    }else{
+        if($i == 1){
+            echo "stránky: ";
+            echo "<a href=\"/?q=".$search ."&page=". $i ."\">" . $i . "</a>";
+        }
+        echo ", ";
+        echo "<a href=\"/?q=".$search ."&page=". ($i+1) ."\">" . ($i+1) . "</a>";
+    }
+    $i++;
+}
+/*while(($count_books/3)%$books_rows == 0){
  if($i > 1){
      echo ", ";
  }
  echo "<a href=\"/?q=".$search ."&page=". $i ."\">" . $i . "</a>";
-}while($count_books%$books_rows == 0);
+}*/
 
 echo "</div>";
 

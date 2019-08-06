@@ -476,18 +476,32 @@ function book($conn, String $search = "", $count_books = 1, $page = 1, $per_page
     $book_id = array();
     $books = array();
     if($search == ""){
-        $sql = "SELECT book.id AS 'book_id' FROM book INNER JOIN book_has_genres ON book_has_genres.book_id = book.id INNER JOIN genres ON genres.id = book_has_genres.genres_id INNER JOIN book_has_author ON book_has_author.book_id = book.id INNER JOIN room ON room.name = room_name INNER JOIN author ON author.id = book_has_author.author_id ORDER BY book.name LIMIT ". $items .", ". $per_page;
+        $sql = "SELECT book.id AS 'book_id' FROM book INNER JOIN book_has_genres ON book_has_genres.book_id = book.id INNER JOIN genres ON genres.id = book_has_genres.genres_id INNER JOIN book_has_author ON book_has_author.book_id = book.id INNER JOIN room ON room.name = room_name INNER JOIN author ON author.id = book_has_author.author_id ORDER BY book.name";
     }else{
-        $sql = "SELECT book.id AS 'book_id' FROM book INNER JOIN book_has_genres ON book_has_genres.book_id = book.id INNER JOIN genres ON genres.id = book_has_genres.genres_id INNER JOIN book_has_author ON book_has_author.book_id = book.id INNER JOIN room ON room.name = room_name INNER JOIN author ON author.id = book_has_author.author_id WHERE book.room_name = room.name AND book.id = book_has_genres.book_id AND book_has_genres.genres_id = genres.id AND book_has_author.author_id = author.id AND book.id = book_has_author.book_id AND (book.room_name LIKE '%". $search ."%' OR book.name LIKE '%". $search ."%' OR book.relase LIKE '%". $search ."%' OR book.language LIKE '%". $search ."%'OR book.ISBN LIKE '%". $search ."%'OR book.pages LIKE '%". $search ."%'OR author.f_name LIKE '%". $search ."%' OR author.l_name LIKE '%". $search ."%' OR author.bday LIKE '%". $search ."%' OR author.country LIKE '%". $search ."%' OR genres.name LIKE '%". $search ."%' OR room.name LIKE '%". $search ."%' OR author.bday LIKE '%Jana Hollanová%' OR author.country LIKE '%Jana Hollanová%' OR genres.name LIKE '%Jana Hollanová%' OR room.name LIKE '%Jana Hollanová%' OR CONCAT(author.f_name, ' ' , author.l_name) LIKE '%". $search ."%' OR CONCAT(author.l_name, ' ', author.f_name) LIKE '%". $search ."%') ORDER BY book.name LIMIT ". $items .", ". $per_page;
+        $sql = "SELECT book.id AS 'book_id' FROM book INNER JOIN book_has_genres ON book_has_genres.book_id = book.id INNER JOIN genres ON genres.id = book_has_genres.genres_id INNER JOIN book_has_author ON book_has_author.book_id = book.id INNER JOIN room ON room.name = room_name INNER JOIN author ON author.id = book_has_author.author_id WHERE book.room_name = room.name AND book.id = book_has_genres.book_id AND book_has_genres.genres_id = genres.id AND book_has_author.author_id = author.id AND book.id = book_has_author.book_id AND (book.room_name LIKE '%". $search ."%' OR book.name LIKE '%". $search ."%' OR book.relase LIKE '%". $search ."%' OR book.language LIKE '%". $search ."%'OR book.ISBN LIKE '%". $search ."%'OR book.pages LIKE '%". $search ."%'OR author.f_name LIKE '%". $search ."%' OR author.l_name LIKE '%". $search ."%' OR author.bday LIKE '%". $search ."%' OR author.country LIKE '%". $search ."%' OR genres.name LIKE '%". $search ."%' OR room.name LIKE '%". $search ."%' OR author.bday LIKE '%Jana Hollanová%' OR author.country LIKE '%Jana Hollanová%' OR genres.name LIKE '%Jana Hollanová%' OR room.name LIKE '%Jana Hollanová%' OR CONCAT(author.f_name, ' ' , author.l_name) LIKE '%". $search ."%' OR CONCAT(author.l_name, ' ', author.f_name) LIKE '%". $search ."%') ORDER BY book.name";
     }
     //echo $sql;
     $sql = $conn->prepare($sql);
     $sql->execute();
+    $i = 0;
+    $k = 0;
+    $b = array();
     while($row = $sql->fetch()){
-        if(!in_array($row["book_id"], $book_id)){
-            $book_id[] = $row["book_id"];
+        if(!in_array($row["book_id"], $b)){
+            if($k == $items){
+                $book_id[] = $row["book_id"];
+                $i++;
+                if($i == $per_page){
+                    break;
+                }
+            }else {
+                $k++;
+            }
+            $b[] = $row["book_id"];
         }
     }
+    unset($b);
+
     if(isset($book_id[0]) and $items <= $count_books){
         $sql = "SELECT `id`, `name` as 'book_name', `relase`, `language`, `ISBN`, `pages`, `img`, `room_name` FROM `book` WHERE `id` IN(";
         $i = 0;

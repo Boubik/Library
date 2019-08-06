@@ -23,13 +23,13 @@ if(isset($_SESSION["rows"])){
     if(isset($_POST["rows"]) and $_POST["rows"] != $_SESSION["rows"]){
         $_SESSION["rows"] = $_POST["rows"];
     }
-    $per_page = $_SESSION["rows"];
-    $books_rows = $_SESSION["rows"]/3;
+    $per_page = $_SESSION["rows"]*3;
+    $books_rows = $_SESSION["rows"];
 }else{
     if(isset($_POST["rows"])){
         $_SESSION["rows"] = $_POST["rows"];
-        $per_page = $_SESSION["rows"];
-        $books_rows = $_SESSION["rows"]/3;
+        $per_page = $_SESSION["rows"]*3;
+        $books_rows = $_SESSION["rows"];
     }else{
         $per_page = 30;
         $books_rows = $per_page/3;
@@ -164,15 +164,15 @@ echo "<div class=\"filtr\">";
 
         echo "řádků na strácne: ";
 
-        echo '<form method="POST" action=""><select id="sel" name="rows">' . "\n";
+        echo '<form method="POST" action="/"><select id="sel" name="rows">' . "\n";
         $i = 1;
         while($i != 11){
-            if(($i*3) == $per_page){
+            if($i == ($per_page/3)){
             echo '<option selected>';
             }else{
                 echo '<option>';
             }
-            echo $i*3 .'</option>' . "\n";
+            echo $i .'</option>' . "\n";
             $i++;
         }
         echo '</select>';

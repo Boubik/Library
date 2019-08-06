@@ -6,6 +6,8 @@
     <link href="styles/footer.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="images/logo.ico">
     <script src="https://kit.fontawesome.com/350205fd30.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <title>Knihovna</title>
 </head>
 <body>
@@ -71,8 +73,6 @@ echo '<div id="header">';
                 }else{
                     echo '">' . "\n";
                 }
-                // echo '<button type="submit" name="search"><i class="fa fa-search"></i></button>' . "\n";
-                // echo '<input type="submit" name="search"  value="Hledat">' . "\n";
                 echo '</form>'. "\n";
             echo '</div>';
         echo '</div>';
@@ -162,6 +162,8 @@ echo "<div class=\"filtr\">";
         echo "</div>";
         echo '</div>';
 
+        echo '<div id="sideset">';
+
         echo "řádků na strácne: ";
 
         echo '<form method="POST" action="/"><select id="sel" name="rows">' . "\n";
@@ -175,9 +177,10 @@ echo "<div class=\"filtr\">";
             echo $i .'</option>' . "\n";
             $i++;
         }
-        echo '</select>';
+        echo '</select><br>' ;
         echo '<input type="submit" name="per_page"  value="nastavit">' . "\n";
         echo'</form>'. "\n";
+    echo '</div>';
     echo '</div>';
 
     echo '<div id="bookcon">';
@@ -189,7 +192,7 @@ echo "<div class=\"filtr\">";
     }else{
         foreach($books as $key => $book){
             echo "<a href=\"/book.php?id=". $key ."&name=". $book["book_name"] ."\"><div class=\"book\">";
-
+            echo '<div data-aos="fade-right">';
             echo "<div class=\"name\">";
                 echo $book["book_name"];
             echo "</div>";
@@ -206,7 +209,6 @@ echo "<div class=\"filtr\">";
                 }
             }
             echo "<div class=\"status\" id=\"" . $status . "\"></div>";
-
 
             echo '<div id="img">';
                 echo "<img src=\"". $book["img"] ."\">";
@@ -247,26 +249,28 @@ echo "<div class=\"filtr\">";
             echo "</div>";
 
     echo "</div></a>";
+    echo "</div>";
     }
 }
 echo "</div>";
+echo "</div>";
 
-$i = 1;
-while(1){
-    //echo ($i+3) ." > ". $count_books . "<br>";
-    if(($i*(3*$books_rows)) >= $count_books){
-        break;
-    }else{
-        if($i == 1){
-            echo "stránky: ";
-            echo "<a href=\"/?q=".$search ."&page=". $i ."\">" . $i . "</a>";
+echo '<div id="aqua">';
+    $i = 1;
+    while(1){
+        //echo ($i+3) ." > ". $count_books . "<br>";
+        if(($i*(3*$books_rows)) >= $count_books){
+            break;
+        }else{
+            if($i == 1){
+                echo "stránky: ";
+                echo "<a href=\"/?q=".$search ."&page=". $i ."\">" . $i . "</a>";
+            }
+            echo ", ";
+            echo "<a href=\"/?q=".$search ."&page=". ($i+1) ."\">" . ($i+1) . "</a>";
         }
-        echo ", ";
-        echo "<a href=\"/?q=".$search ."&page=". ($i+1) ."\">" . ($i+1) . "</a>";
+        $i++;
     }
-    $i++;
-}
-
 echo "</div>";
 
 
@@ -286,4 +290,7 @@ echo "</div>";
     
 ?>
 </body>
+<script>
+  AOS.init();
+</script>
 </html>

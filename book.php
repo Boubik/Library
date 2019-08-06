@@ -29,36 +29,7 @@ $book = get_book_by_id($conn, $_GET["id"]);
 
 echo '<div id="header">';
     echo "<a href=\"/\"><image src=\"/images/logo_1.png\" style=\"height: 100px\"></a>";
-        echo '<div id="inheader">';
-        echo '<div id="monkaS">';
-                echo '<form method="POST" action="">' . "\n";
-                if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])){
-                    if(login($conn, $_SESSION["username"], $_SESSION["password"], true)){
-                        echo '<input type="submit" name="add_book"  value="Přidat knížku">' . "\n";
-                        echo '<input type="submit" name="add_author"  value="Přidat autora">' . "\n";
-                    }
-                    echo '<input type="submit" name="profile"  value="Můj profil">' . "\n";
-                    echo '<input type="submit" name="logout"  value="Odhlásit se">' . "\n";
-                }else{
-                    echo '<input type="submit" name="login"  value="Přihrásit se">' . "\n";
-                }
-                echo '</form>'. "\n";
-            echo '</div>';
-
-            echo '<div id="serch">';
-                echo '<form method="GET" action="">' . "\n";
-                echo '<input type="text" onfocusout=" " placeholder="Hledate neco?" name="q" autocomplete="off" value="';
-                if(isset($_GET["q"])){
-                    echo $_GET["q"].'">' . "\n";
-                }else{
-                    echo '">' . "\n";
-                }
-                // echo '<button type="submit" name="search"><i class="fa fa-search"></i></button>' . "\n";
-                // echo '<input type="submit" name="search"  value="Hledat">' . "\n";
-                echo '</form>'. "\n";
-            echo '</div>';
         echo '</div>';
-    echo '</div>';
 
 if(isset($_POST["logout"])){
     unset($_SESSION["username"]);
@@ -87,13 +58,12 @@ if(isset($_POST["search"]) and isset($_POST["q"]) and $_POST["q"] != ""){
 }
 
 echo "<div class=\"book\">";
-
+    echo "<div class=\"name\">";
+    echo $book["name"];
+    echo "</div>";
 echo "<img src=\"" . $book["img"] . "\">";
 
     echo '<div id="info";>';
-        echo "<div class=\"name\">";
-        echo $book["name"];
-        echo "</div>";
 
         echo "<div class=\"language\">";
         echo "Jazyk: " . $book["language"];

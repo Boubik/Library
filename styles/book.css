@@ -11,7 +11,8 @@ body{
 
 #header{
     width: 800px;
-}
+  }
+
 
 .book{
     width: 800px;
@@ -37,9 +38,10 @@ body{
     overflow: auto;
 }
 
-img{
+.book img{
+    z-index: 1;
     margin-left: 30px;
-    margin-top: 100px;
+    margin-top: 50px;
 }
 
 input[type=date] {
@@ -61,3 +63,86 @@ input[type=date] {
     border-radius: 5px;
     margin: 5px;
   }
+
+  .name{
+    text-align: center;
+    font-size: 50px;
+    width: 500px;
+    margin: auto;
+    padding-top: 20px; 
+  }
+
+
+  /* login */
+
+  #monkaS input[type=submit] {
+    color: white;
+    border-radius: 0px 0px 5px 5px;
+    font-family: 'Muli', sans-serif;
+    background-color:  rgba(211, 211, 211, 0);
+    border: none;
+    border-bottom: white 2px solid;
+    border-right: 2px solid  rgb(255, 255, 255);
+    border-left: 2px solid  rgb(255, 255, 255);
+    height: 40px;
+    margin-top: -50px;
+    cursor: pointer;
+    transition: .2s;
+  }
+
+  #monkaS input[type=submit]:hover{
+      animation-duration: 3s;
+      height: 70px;
+      background-color: white;
+      color: #3c1053;
+  }
+
+  input[type=submit]:hover {
+    background-color: white;
+    transition-duration: 0.5s;
+  }
+
+  #serch *input[type=text]:focus  {
+        width: 100%;
+        background-color: white;
+    }
+
+  #serch input:focus::-webkit-input-placeholder {
+        color: rgb(0, 0, 0);
+    }
+
+  #serch input[type=text] {
+    float: right;
+    width: 200px;
+    box-sizing: border-box;
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: rgba(255, 255, 255, 0);
+    padding: 12px 20px 12px 40px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+  }
+
+  #serch{
+    z-index: 2;
+    color: white;
+    height: 35px;
+    margin-top: -50px;
+    margin-left: 700px;
+    width: 400px;
+    z-index: 1;
+}
+
+#serch ::placeholder{
+    color: white;
+}
+
+#monkaS{
+  z-index: 2;
+  float: right;
+  margin-left: 696px;
+  margin-top: -60px;
+  height: 25px;
+  top: 0; 
+}

@@ -318,6 +318,25 @@ function get_genre($conn, int $id){
 }
 
 /**
+ * get book
+ * @param   Mixed   $conn       db connection
+ * @param   Int     $id         id
+ * @return  String  return book
+ */
+function get_book($conn, int $id){
+
+    $sql = "SELECT `name` FROM `book` WHERE `id` = ". $id;
+    $sql = $conn->prepare($sql);
+    $numrows = $sql->execute();
+    $row = $sql->fetch();
+    if($numrows > 0){
+        return $row["name"];
+    }else {
+        return NULL;
+    }
+}
+
+/**
  * get author
  * @param   Mixed   $conn       db connection
  * @param   Int     $id         id
@@ -385,8 +404,8 @@ function get_reservations($conn, $id){
  * @param   String  $e_reservation      end reservation date
  * @return  Bool    if reservation can be done
  */
-function reservations($conn, $s_reservation, $e_reservation){
-    $sql = "SELECT * FROM `reservation` WHERE `e-reservation` > CURTIME() ORDER BY `e-reservation`";
+function reservations($conn, $s_reservation, $e_reservation, $book_id){
+    $sql = "SELECT * FROM `reservation` INNER JOIN book_has_reservation ON book_has_reservation.reservation_id = reservation.id INNER JOIN book ON book.id = book_has_reservation.book_id WHERE `e-reservation` > CURTIME() AND book.id = ". $book_id ." ORDER BY `e-reservation`";
     $sql = $conn->prepare($sql);
     $numrows = $sql->execute();
     if($numrows > 0){
@@ -436,10 +455,11 @@ function get_user_id($conn, $username){
  * @param   Mixed   $conn               db connection
  * @param   String  $s_reservation      start reservation date
  * @param   String  $e_reservation      end reservation date
+ * @param   Int     $book_id            id of reservation
  * @return  Int     id from reservation
  */
-function get_reservation_id($conn, $s_reservation, $e_reservation){
-    $sql = "SELECT * FROM `reservation` WHERE `s-reservation` = '". $s_reservation ."' AND `e-reservation` = '". $e_reservation ."'";
+function get_reservation_id($conn, $s_reservation, $e_reservation, $book_id){
+    $sql = "SELECT * FROM `reservation` WHERE `s-reservation` = '". $s_reservation ."' AND `e-reservation` = '". $e_reservation ."' ORDER BY `reservation`.`id` DESC";
     $sql = $conn->prepare($sql);
     $numrows = $sql->execute();
     if($numrows > 0){

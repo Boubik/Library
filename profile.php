@@ -25,10 +25,64 @@ ini_set('max_execution_time', 0);
 $configs = include('config.php');
 $conn = connect_to_db($configs["servername"], $configs["dbname"], $configs["username"], $configs["password"]);
 
-
 echo '<div id="header">';
     echo "<a href=\"/\"><image src=\"/images/logo_1.png\" style=\"height: 100px\"></a>";
-echo "</div>";
+        echo '<div id="inheader">';
+        echo '<div id="monkaS">';
+                echo '<form method="POST" action="">' . "\n";
+                if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])){
+                    if(login($conn, $_SESSION["username"], $_SESSION["password"], true)){
+                        echo '<input type="submit" name="add_book"  value="Přidat knížku">' . "\n";
+                        echo '<input type="submit" name="add_author"  value="Přidat autora">' . "\n";
+                    }
+                    echo '<input type="submit" name="profile"  value="Můj profil">' . "\n";
+                    echo '<input type="submit" name="logout"  value="Odhlásit se">' . "\n";
+                }else{
+                    echo '<input type="submit" name="login"  value="Přihrásit se">' . "\n";
+                }
+                echo '</form>'. "\n";
+            echo '</div>';
+
+            echo '<div id="serch">';
+                echo '<form method="GET" action="">' . "\n";
+                echo '<input type="text" onfocusout=" " placeholder="Hledate neco?" name="q" autocomplete="off" value="';
+                if(isset($_GET["q"])){
+                    echo $_GET["q"].'">' . "\n";
+                }else{
+                    echo '">' . "\n";
+                }
+                // echo '<button type="submit" name="search"><i class="fa fa-search"></i></button>' . "\n";
+                // echo '<input type="submit" name="search"  value="Hledat">' . "\n";
+                echo '</form>'. "\n";
+            echo '</div>';
+        echo '</div>';
+    echo '</div>';
+
+if(isset($_POST["logout"])){
+    unset($_SESSION["username"]);
+    unset($_SESSION["password"]);
+    header("Location: /index.php");
+}
+
+if(isset($_POST["login"])){
+    header("Location: /login.php");
+}
+
+if(isset($_POST["add_book"])){
+    header("Location: /add_book.php");
+}
+
+if(isset($_POST["add_author"])){
+    header("Location: /add_author.php");
+}
+
+if(isset($_POST["profile"])){
+    header("Location: /profile.php");
+}
+
+if(isset($_POST["search"]) and isset($_POST["q"]) and $_POST["q"] != ""){
+    header("Location: /index.php?q=".$_POST["q"]);
+}
 
 
 echo '<div id="main">';
@@ -38,10 +92,11 @@ echo '<div id="main">';
     $k = get_table($conn, "reservation");
     foreach($k as $reservation){
         if($reservation["user_id"] == $user_id){
+            $book_has_reservation = mn($conn, "book_has_reservation", $reservation["id"], "reservation_id", "book_id");
             if(strtotime($reservation["e-reservation"]) > strtotime('-' . 1 . ' days')){
-                $new[] = "od: " . substr($reservation["s-reservation"], 0, 10) . " do " . substr($reservation["e-reservation"], 0, 10) . "<br>\n";
+                $new[] = " Kniha: \"". get_book($conn, $book_has_reservation[0]) ."\" od: " . substr($reservation["s-reservation"], 0, 10) . " do " . substr($reservation["e-reservation"], 0, 10) . "<br>\n";
             }else{
-                $old[] = "od: " . substr($reservation["s-reservation"], 0, 10) . " do " . substr($reservation["e-reservation"], 0, 10) . "<br>\n";
+                $old[] = " Kniha: \"". get_book($conn, $book_has_reservation[0]) ."\" od: " . substr($reservation["s-reservation"], 0, 10) . " do " . substr($reservation["e-reservation"], 0, 10) ."<br>\n";
             }
         }
     }

@@ -39,7 +39,7 @@ echo '<div id="header">';
                         echo '<input type="submit" name="add_book"  value="Přidat knížku">' . "\n";
                         echo '<input type="submit" name="add_author"  value="Přidat autora">' . "\n";
                     }
-                    echo '<input type="submit" name="profile"  value="Moje rezervace">' . "\n";
+                    echo '<input type="submit" name="profile"  value="Můj profil">' . "\n";
                     echo '<input type="submit" name="logout"  value="Odhlásit se">' . "\n";
                 }else{
                     echo '<input type="submit" name="login"  value="Přihrásit se">' . "\n";

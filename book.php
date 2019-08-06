@@ -29,7 +29,62 @@ $book = get_book_by_id($conn, $_GET["id"]);
 
 echo '<div id="header">';
     echo "<a href=\"/\"><image src=\"/images/logo_1.png\" style=\"height: 100px\"></a>";
-echo "</div>";
+        echo '<div id="inheader">';
+        echo '<div id="monkaS">';
+                echo '<form method="POST" action="">' . "\n";
+                if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])){
+                    if(login($conn, $_SESSION["username"], $_SESSION["password"], true)){
+                        echo '<input type="submit" name="add_book"  value="Přidat knížku">' . "\n";
+                        echo '<input type="submit" name="add_author"  value="Přidat autora">' . "\n";
+                    }
+                    echo '<input type="submit" name="profile"  value="Můj profil">' . "\n";
+                    echo '<input type="submit" name="logout"  value="Odhlásit se">' . "\n";
+                }else{
+                    echo '<input type="submit" name="login"  value="Přihrásit se">' . "\n";
+                }
+                echo '</form>'. "\n";
+            echo '</div>';
+
+            echo '<div id="serch">';
+                echo '<form method="GET" action="">' . "\n";
+                echo '<input type="text" onfocusout=" " placeholder="Hledate neco?" name="q" autocomplete="off" value="';
+                if(isset($_GET["q"])){
+                    echo $_GET["q"].'">' . "\n";
+                }else{
+                    echo '">' . "\n";
+                }
+                // echo '<button type="submit" name="search"><i class="fa fa-search"></i></button>' . "\n";
+                // echo '<input type="submit" name="search"  value="Hledat">' . "\n";
+                echo '</form>'. "\n";
+            echo '</div>';
+        echo '</div>';
+    echo '</div>';
+
+if(isset($_POST["logout"])){
+    unset($_SESSION["username"]);
+    unset($_SESSION["password"]);
+    header("Location: /index.php");
+}
+
+if(isset($_POST["login"])){
+    header("Location: /login.php");
+}
+
+if(isset($_POST["add_book"])){
+    header("Location: /add_book.php");
+}
+
+if(isset($_POST["add_author"])){
+    header("Location: /add_author.php");
+}
+
+if(isset($_POST["profile"])){
+    header("Location: /profile.php");
+}
+
+if(isset($_POST["search"]) and isset($_POST["q"]) and $_POST["q"] != ""){
+    header("Location: /index.php?q=".$_POST["q"]);
+}
 
 echo "<div class=\"book\">";
 
@@ -102,8 +157,8 @@ if (isset($_POST["reservation"])) {
     if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])){
         $date = $_POST["s_date"];
         if (strtotime($date) > strtotime('-' . 1 . ' days') and isset($_SESSION["username"]) and isset($_SESSION["password"]) and strtotime($_POST["s_date"]) < strtotime($_POST["e_date"])) {
-            if(reservations($conn, $_POST["s_date"], $_POST["e_date"])){
-                $reservation_id = get_reservation_id($conn, $_POST["s_date"], $_POST["e_date"]);
+            if(reservations($conn, $_POST["s_date"], $_POST["e_date"], $_GET["id"])){
+                $reservation_id = get_reservation_id($conn, $_POST["s_date"], $_POST["e_date"], $_GET["id"]);
                 add_book_has_reservation($conn, (int)$_GET["id"], (int)$reservation_id);
                 header("Location: /book.php?id=". $_GET["id"] ."&name=". $_GET["name"]);
             }else{

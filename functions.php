@@ -466,7 +466,93 @@ function add_book_has_reservation($conn, int $id_book, int $id_reservation){
  * @param   String  $search         search in db
  * @return  Array   array
 */
-function book($conn, String $search = ""){
+function book($conn, String $search = "", $count_books = 1, $page = 1, $per_page = 30){
+    $page -= 1;
+    if($page == 0){
+        $items = 0;
+    }else {
+        $items = $page * $per_page;
+    }
+    $book_id = array();
+    $books = array();
+    if($search == ""){
+        $sql = "SELECT book.id AS 'book_id' FROM book INNER JOIN book_has_genres ON book_has_genres.book_id = book.id INNER JOIN genres ON genres.id = book_has_genres.genres_id INNER JOIN book_has_author ON book_has_author.book_id = book.id INNER JOIN room ON room.name = room_name INNER JOIN author ON author.id = book_has_author.author_id ORDER BY book.name LIMIT ". $items .", ". $per_page;
+    }else{
+        $sql = "SELECT book.id AS 'book_id' FROM book INNER JOIN book_has_genres ON book_has_genres.book_id = book.id INNER JOIN genres ON genres.id = book_has_genres.genres_id INNER JOIN book_has_author ON book_has_author.book_id = book.id INNER JOIN room ON room.name = room_name INNER JOIN author ON author.id = book_has_author.author_id WHERE book.room_name = room.name AND book.id = book_has_genres.book_id AND book_has_genres.genres_id = genres.id AND book_has_author.author_id = author.id AND book.id = book_has_author.book_id AND (book.room_name LIKE '%". $search ."%' OR book.name LIKE '%". $search ."%' OR book.relase LIKE '%". $search ."%' OR book.language LIKE '%". $search ."%'OR book.ISBN LIKE '%". $search ."%'OR book.pages LIKE '%". $search ."%'OR author.f_name LIKE '%". $search ."%' OR author.l_name LIKE '%". $search ."%' OR author.bday LIKE '%". $search ."%' OR author.country LIKE '%". $search ."%' OR genres.name LIKE '%". $search ."%' OR room.name LIKE '%". $search ."%' OR author.bday LIKE '%Jana Hollanová%' OR author.country LIKE '%Jana Hollanová%' OR genres.name LIKE '%Jana Hollanová%' OR room.name LIKE '%Jana Hollanová%' OR CONCAT(author.f_name, ' ' , author.l_name) LIKE '%". $search ."%' OR CONCAT(author.l_name, ' ', author.f_name) LIKE '%". $search ."%') ORDER BY book.name LIMIT ". $items .", ". $per_page;
+    }
+    //echo $sql;
+    $sql = $conn->prepare($sql);
+    $sql->execute();
+    while($row = $sql->fetch()){
+        if(!in_array($row["book_id"], $book_id)){
+            $book_id[] = $row["book_id"];
+        }
+    }
+    if(isset($book_id[0]) and $items <= $count_books){
+        $sql = "SELECT `id`, `name` as 'book_name', `relase`, `language`, `ISBN`, `pages`, `img`, `room_name` FROM `book` WHERE `id` IN(";
+        $i = 0;
+        foreach($book_id as $id){
+            if($i > 0){
+                $sql .= ", ";
+            }
+            $sql .= $id;
+            $i++;
+        }
+        $sql .= ")";
+        $sql = $conn->prepare($sql); 
+        $number = $sql->execute();
+        $db_book = array();
+        while($row = $sql->fetch()){
+            $db_book[$row["id"]] = $row;
+        }
+        foreach($book_id as $id){
+            $books[$id] = array();
+            $genres_ids = mn($conn, "book_has_genres", $id, "book_id", "genres_id");
+            $sql = "SELECT `name` FROM `genres` WHERE `id` IN(";
+            $i = 0;
+            foreach($genres_ids as $value){
+                if($i > 0){
+                    $sql .= ", ";
+                }
+                $sql .= $value;
+                $i++;
+            }
+            $sql .= ")";
+            $sql = $conn->prepare($sql);
+            $sql->execute();
+            $books[$id]["genres_name"] = array();
+            while($row = $sql->fetch()){
+                $books[$id]["genres_name"][] = $row["name"];
+            }
+
+            $author_ids = mn($conn, "book_has_author", $id, "book_id", "author_id");
+            $sql = "SELECT `f_name`, `l_name` FROM `author` WHERE `id` IN(";
+            $i = 0;
+            foreach($author_ids as $value){
+                if($i > 0){
+                    $sql .= ", ";
+                }
+                $sql .= $value;
+                $i++;
+            }
+            $sql .= ")";
+            $sql = $conn->prepare($sql);
+            $sql->execute();
+            $books[$id]["author"] = array();
+            while($row = $sql->fetch()){
+                $books[$id]["author"][] = $row["f_name"] . " " . $row["l_name"];
+            }
+
+            $books[$id]["book_name"] = $db_book[$id]["book_name"];
+            $books[$id]["language"] = $db_book[$id]["language"];
+            $books[$id]["img"] = $db_book[$id]["img"];
+            $books[$id]["room_name"] = $db_book[$id]["room_name"];
+        }
+    }
+    return $books;
+
+
+    /*
     if($search == ""){
         $sql = "SELECT book.id AS 'book_id', book.name AS 'book_name', book.relase, book.language, book.ISBN, book.pages, book.img, book.room_name, genres.id AS 'genres_id', genres.name AS 'genres_name', author.id AS 'author_id', author.f_name, author.l_name, room.name AS 'room_name' FROM book INNER JOIN book_has_genres ON book_has_genres.book_id = book.id INNER JOIN genres ON genres.id = book_has_genres.genres_id INNER JOIN book_has_author ON book_has_author.book_id = book.id INNER JOIN room ON room.name = room_name INNER JOIN author ON author.id = book_has_author.author_id ORDER BY book.name";
     }else{
@@ -514,19 +600,31 @@ function book($conn, String $search = ""){
                 }
                 $rows2[] = $item;
             }
-            /*foreach($rows2 as $key => $value){
-                echo $key. " ";
-                print_r($value);
-                echo "<br><br>";
-            }*/
             return $rows2;
         }else{
             return NULL;
         }
 
 
-    }
+    }*/
     return NULL;
+}
+
+/**
+ * count books
+ * @param   Mixed   db
+ */
+function count_books($conn){
+    $sql = "SELECT COUNT(id) as \"books\" FROM book";
+    $sql = $conn->prepare($sql);
+    $sql->execute();
+    while($row = $sql->fetch()){
+        if(isset($row["books"])){
+            return $row["books"];
+        }else {
+            return 0;
+        }
+    }
 }
 
 /**

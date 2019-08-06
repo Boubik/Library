@@ -16,10 +16,19 @@ generate_db();
 $configs = include('config.php');
 $conn = connect_to_db($configs["servername"], $configs["dbname"], $configs["username"], $configs["password"]);
 session_start();
+$search = "";
+$count_books = count_books($conn);
+$books_rows = 10;
 if(isset($_GET["q"])){
-    $books = book($conn, $_GET["q"]);
+    $search = $_GET["q"];
+    if(isset($_GET["page"])){
+        $page = $_GET["page"];
+        $books = book($conn, $search, $count_books, $page);
+    }else{
+        $books = book($conn, $search);
+    }
 }else{
-    $books = book($conn);
+    $books = book($conn, $search);
 }
 
 echo '<div id="header">';
@@ -142,13 +151,13 @@ echo "<div class=\"filtr\">";
 
     echo '<div id="bookcon">';
         
-    if(!isset($books[0])){
+    if(!isset($books)){
         echo '<div id="warning>';
             echo "Žádná taková knížka tu není<br>\n";
         echo "</div>";
     }else{
-        foreach($books as $book){
-            echo "<a href=\"/book.php?id=". $book["book_id"] ."&name=". $book["book_name"] ."\"><div class=\"book\">";
+        foreach($books as $key => $book){
+            echo "<a href=\"/book.php?id=". $key ."&name=". $book["book_name"] ."\"><div class=\"book\">";
 
             echo "<div class=\"name\">";
                 echo $book["book_name"];
@@ -158,7 +167,7 @@ echo "<div class=\"filtr\">";
             $status = "free";
             $k = get_table($conn, "reservation");
             foreach($k as $reservation){
-                if($reservation["user_id"] == $book["book_id"]){
+                if($reservation["user_id"] == $key){
                     if(strtotime($reservation["e-reservation"]) > strtotime('-' . 1 . ' days') and strtotime($reservation["s-reservation"]) < strtotime('-'. 0 . ' days')){
                         $status = "booked";
                         break;
@@ -210,6 +219,15 @@ echo "<div class=\"filtr\">";
     }
 }
 echo "</div>";
+$i = 1;
+echo "stránky: ";
+do{
+ if($i > 1){
+     echo ", ";
+ }
+ echo "<a href=\"/?q=".$search ."&page=". $i ."\">" . $i . "</a>";
+}while($count_books%$books_rows == 0);
+
 echo "</div>";
 
 

@@ -19,8 +19,24 @@ session_start();
 $search = "";
 $page = 1;
 $count_books = count_books($conn);
-$books_rows = 10;
-$per_page = $books_rows*3;
+if(isset($_SESSION["rows"])){
+    if(isset($_POST["rows"]) and $_POST["rows"] != $_SESSION["rows"]){
+        $_SESSION["rows"] = $_POST["rows"];
+    }
+    $per_page = $_SESSION["rows"];
+    $books_rows = $_SESSION["rows"]/3;
+}else{
+    if(isset($_POST["rows"])){
+        $_SESSION["rows"] = $_POST["rows"];
+        $per_page = $_SESSION["rows"];
+        $books_rows = $_SESSION["rows"]/3;
+    }else{
+        $per_page = 30;
+        $books_rows = $per_page/3;
+        $_SESSION["rows"] = $per_page;
+    }
+}
+
 if(isset($_GET["q"])){
     $search = $_GET["q"];
 }
@@ -145,6 +161,23 @@ echo "<div class=\"filtr\">";
         echo "</div>";
         echo "</div>";
         echo '</div>';
+
+        echo "řádků na strácne: ";
+
+        echo '<form method="POST" action=""><select id="sel" name="rows">' . "\n";
+        $i = 1;
+        while($i != 11){
+            if(($i*3) == $per_page){
+            echo '<option selected>';
+            }else{
+                echo '<option>';
+            }
+            echo $i*3 .'</option>' . "\n";
+            $i++;
+        }
+        echo '</select>';
+        echo '<input type="submit" name="per_page"  value="nastavit">' . "\n";
+        echo'</form>'. "\n";
     echo '</div>';
 
     echo '<div id="bookcon">';
@@ -233,12 +266,6 @@ while(1){
     }
     $i++;
 }
-/*while(($count_books/3)%$books_rows == 0){
- if($i > 1){
-     echo ", ";
- }
- echo "<a href=\"/?q=".$search ."&page=". $i ."\">" . $i . "</a>";
-}*/
 
 echo "</div>";
 

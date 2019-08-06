@@ -41,7 +41,7 @@ echo '<div id="header">';
             echo '</div>';
 
             echo '<div id="serch">';
-                echo '<form method="POST" action="">' . "\n";
+                echo '<form method="GET" action="">' . "\n";
                 echo '<input type="text" onfocusout=" " placeholder="Hledate neco?" name="q" autocomplete="off" value="';
                 if(isset($_GET["q"])){
                     echo $_GET["q"].'">' . "\n";

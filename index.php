@@ -166,7 +166,7 @@ echo "<div class=\"filtr\">";
 
         echo '<form method="POST" action="/"><select id="sel" name="rows">' . "\n";
         $i = 1;
-        while($i != 11){
+        while($i != 21){
             if($i == ($per_page/3)){
             echo '<option selected>';
             }else{

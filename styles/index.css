@@ -45,16 +45,23 @@ body{
 }
 
 #serch{
-    padding: 5px;
-    float: right;
-    height: 25px;
+    color: white;
+    height: 35px;
+    margin-top: -50px;
+    margin-left: 700px;
+    width: 400px;
 }
-    
+
+::placeholder{
+    color: white;
+}
 
 #monkaS{
-    padding: 5px;
     float: right;
+    margin-left: 696px;
+    margin-top: -60px;
     height: 25px;
+    top: 0; 
 }
 
 .filtr{
@@ -129,12 +136,26 @@ a{
 
 }
 
-input[type=submit] {
-    border-radius: 5px;
+#monkaS input[type=submit] {
+    color: white;
+    border-radius: 0px 0px 5px 5px;
     font-family: 'Muli', sans-serif;
-    border: 3px solid  rgb(211, 211, 211);
-    background-color:  rgb(211, 211, 211);
-    outline: none;
+    background-color:  rgba(211, 211, 211, 0);
+    border: none;
+    border-bottom: white 2px solid;
+    border-right: 2px solid  rgb(255, 255, 255);
+    border-left: 2px solid  rgb(255, 255, 255);
+    height: 40px;
+    margin-top: -50px;
+    cursor: pointer;
+    transition: .2s;
+  }
+
+  #monkaS input[type=submit]:hover{
+      animation-duration: 3s;
+      height: 70px;
+      background-color: white;
+      color: #3c1053;
   }
 
   input[type=submit]:hover {
@@ -142,17 +163,26 @@ input[type=submit] {
     transition-duration: 0.5s;
   }
 
-  input[type=text]:focus {
-    background-color: rgb(255, 255, 255);
-    -webkit-transition: 0.5s;
-    transition: 0.5s;
-  }
+    input[type=text]:focus  {
+        width: 100%;
+        background-color: white;
+    }
+
+  input:focus::-webkit-input-placeholder {
+        color: rgb(0, 0, 0);
+    }
 
   input[type=text] {
-    background-color:  rgb(211, 211, 211);
-    border-radius: 5px;
-    border: 3px solid  rgb(211, 211, 211);
-    outline: none;
+    float: right;
+    width: 200px;
+    box-sizing: border-box;
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: rgba(255, 255, 255, 0);
+    padding: 12px 20px 12px 40px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
   }
 
   #filtrinfo{
@@ -199,4 +229,5 @@ input[type=submit] {
 
 
   /* load */
+
 

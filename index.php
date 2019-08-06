@@ -42,13 +42,14 @@ echo '<div id="header">';
 
             echo '<div id="serch">';
                 echo '<form method="POST" action="">' . "\n";
-                echo '<input type="text" placeholder="Hledate neco?" name="q" value="';
+                echo '<input type="text" onfocusout=" " placeholder="Hledate neco?" name="q" autocomplete="off" value="';
                 if(isset($_GET["q"])){
                     echo $_GET["q"].'">' . "\n";
                 }else{
                     echo '">' . "\n";
                 }
-                echo '<input type="submit" name="search"  value="Hledat">' . "\n";
+                // echo '<button type="submit" name="search"><i class="fa fa-search"></i></button>' . "\n";
+                // echo '<input type="submit" name="search"  value="Hledat">' . "\n";
                 echo '</form>'. "\n";
             echo '</div>';
         echo '</div>';

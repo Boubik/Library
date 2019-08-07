@@ -53,8 +53,6 @@ echo '<div id="header">';
                 }else{
                     echo '">' . "\n";
                 }
-                // echo '<button type="submit" name="search"><i class="fa fa-search"></i></button>' . "\n";
-                // echo '<input type="submit" name="search"  value="Hledat">' . "\n";
                 echo '</form>'. "\n";
             echo '</div>';
         echo '</div>';
@@ -90,7 +88,9 @@ echo "<div class=\"book\">";
     echo "<div class=\"name\">";
     echo $book["name"];
     echo "</div>";
-echo "<img src=\"" . $book["img"] . "\">";
+    echo '<div id="image">';
+        echo "<img src=\"" . $book["img"] . "\">";
+    echo "</div>";
 
     echo '<div id="info";>';
 
@@ -145,7 +145,9 @@ echo "<img src=\"" . $book["img"] . "\">";
     foreach($k as $id){
         $reservations = get_reservations($conn, $id);
         foreach ($reservations as $reservation) {
+            echo '<div id="rev">';
             echo "od: " . substr($reservation["s-reservation"], 0, 10) . " do " . substr($reservation["e-reservation"], 0, 10) . "<br>\n";
+            echo '</div>';
         }
     }
 

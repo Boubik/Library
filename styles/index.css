@@ -46,9 +46,10 @@ body{
 }
 
 #serch{
+    position: absolute;
     color: white;
     height: 35px;
-    margin-top: -50px;
+    margin-top: -16px;
     margin-left: 700px;
     width: 400px;
 }
@@ -60,7 +61,7 @@ body{
 #monkaS{
     float: right;
     margin-left: 696px;
-    margin-top: -60px;
+    margin-top: -110px;
     height: 25px;
     top: 0; 
 }
@@ -280,6 +281,34 @@ a{
 #aqua a{
     color: white;
 }
-  /* load */
 
+#booked{
+    text-align: center;
+    margin-left: 50px;
+    margin-top: 10px; 
+    position: absolute;
+    height: 20px;
+    width: 100px;
+    color: white;
+    background-color: red;
+}
+
+#booked::before{
+    content: "Nedostupná";
+}
+
+#free::before{
+    content: "Dostupná";
+}
+
+ #free{
+    color: white;
+    text-align: center;
+    margin-top: 10px; 
+    margin-left: 50px;
+    position: absolute;
+    height: 20px;
+    width: 100px;
+    background-color:green;
+ }
 

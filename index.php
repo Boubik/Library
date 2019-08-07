@@ -190,6 +190,7 @@ echo "<div class=\"filtr\">";
             echo "Žádná taková knížka tu není<br>\n";
         echo "</div>";
     }else{
+        $k = get_reservation_with_book($conn);
         foreach($books as $key => $book){
             echo "<a href=\"/book.php?id=". $key ."&name=". $book["book_name"] ."\"><div class=\"book\">";
             echo '<div data-aos="zoom-in" data-aos-once="true" data-aos-easing="linear" data-aos-duration="30">';
@@ -199,13 +200,10 @@ echo "<div class=\"filtr\">";
 
 
             $status = "free";
-            $id= "";
-            $k = get_table($conn, "reservation");
             foreach($k as $reservation){
-                if($reservation["user_id"] == $key){
+                if($reservation["book_id"] == $key){
                     if(strtotime($reservation["e-reservation"]) > strtotime('-' . 1 . ' days') and strtotime($reservation["s-reservation"]) < strtotime('-'. 0 . ' days')){
                         $status = "booked";
-                        $id="trired";
                         break;
                     }
                 }

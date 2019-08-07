@@ -376,20 +376,17 @@ function get_book_by_id($conn, int $id){
 /**
  * get reservation from db
  * @param   Mixed   $conn           db connection
- * @param   Int     $id             id of book
  * @return  Arry    info about reservation
  */
-function get_reservations($conn, $id){
-    $sql = "SELECT * FROM `reservation` WHERE `e-reservation` > CURTIME() ORDER BY `e-reservation`";
+function get_reservations($conn){
+    $sql = "SELECT book.id as 'book_id', reservation.id AS 'reservation_id', `s-reservation`, `e-reservation` FROM `reservation` INNER JOIN book_has_reservation ON book_has_reservation.reservation_id = reservation.id INNER JOIN book ON book.id = book_has_reservation.book_id WHERE `e-reservation` >= CURRENT_DATE() ORDER BY `e-reservation`";
     $sql = $conn->prepare($sql);
     $numrows = $sql->execute();
 
     if($numrows > 0){
         $rows = array();
         while($row = $sql->fetch()){
-            if($row["id"] == $id){
-                $rows[] = $row;
-            }
+            $rows[] = $row;
         }
         return $rows;
     }else {
@@ -465,6 +462,24 @@ function get_reservation_id($conn, $s_reservation, $e_reservation, $book_id){
     if($numrows > 0){
         $row = $sql->fetch();
         return $row["id"];
+    }
+}
+
+/**
+ * get reservation id
+ * @param   Mixed   $conn               db connection
+ * @return  Array   table with reservation and book
+ */
+function get_reservation_with_book($conn){
+    $sql = "SELECT book.id AS 'book_id', reservation.id AS 'reservation_id', reservation.`s-reservation`, reservation.`e-reservation` FROM `book` INNER JOIN book_has_reservation ON book_has_reservation.book_id = book.id INNER JOIN reservation on reservation.id = book_has_reservation.reservation_id";
+    $sql = $conn->prepare($sql);
+    $numrows = $sql->execute();
+    if($numrows > 0){
+        $rows = array();
+        while($row = $sql->fetch()){
+            $rows[] = $row;
+        }
+        return $rows;
     }
 }
 

@@ -140,11 +140,9 @@ echo "<div class=\"book\">";
     echo "<br>\nnadcházející rezervace:<br>\n";
     echo "</div>";
 
-    $k = mn($conn, "book_has_reservation", $book["id"], "book_id", "reservation_id");
-    $res = NULL;
-    foreach($k as $id){
-        $reservations = get_reservations($conn, $id);
-        foreach ($reservations as $reservation) {
+    $reservations = get_reservations($conn, $id);
+    foreach ($reservations as $reservation) {
+        if($book["id"] == $reservation["book_id"]){
             echo '<div id="rev">';
             echo "od: " . substr($reservation["s-reservation"], 0, 10) . " do " . substr($reservation["e-reservation"], 0, 10) . "<br>\n";
             echo '</div>';

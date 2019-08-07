@@ -233,8 +233,6 @@ function add_user($conn, string $f_name, string $l_name, string $username, strin
  * @return  Bool    if true you can login
  */
 function login($conn, string $username, string $password, $mod_plus = false){
-    date_default_timezone_set('Europe/Prague');
-    $datetime = date("Y-m-d H:i:s");
     $password = hash_password($password);
 
     $sql = "SELECT * FROM `user` WHERE `username` = '". $username ."' AND`password` = '". $password ."'";

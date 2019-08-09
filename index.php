@@ -258,6 +258,11 @@ echo "</div>";
 
 echo '<div id="aqua">';
     $i = 1;
+    if(($i*(3*$books_rows)) <= $count_books){
+        if($page  > 1){
+            echo "<a href=\"/?q=".$search ."&page=". ($page-1) ."\">< </a>";
+        }
+    }
     while(1){
         //echo ($i+3) ." > ". $count_books . "<br>";
         if(($i*(3*$books_rows)) >= $count_books){
@@ -271,6 +276,9 @@ echo '<div id="aqua">';
             echo "<a href=\"/?q=".$search ."&page=". ($i+1) ."\">" . ($i+1) . "</a>";
         }
         $i++;
+    }
+    if($page  < $i){
+        echo "<a href=\"/?q=".$search ."&page=". ($page+1) ."\"> ></a>";
     }
 echo "</div>";
 

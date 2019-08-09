@@ -39,6 +39,8 @@ if(isset($_SESSION["rows"])){
         $_SESSION["rows"] = $per_page;
     }
 }
+unset($_POST["rows"]);
+unset($_POST["per_page"]);
 
 if(isset($_GET["q"])){
     $search = $_GET["q"];
@@ -102,7 +104,9 @@ if(isset($_POST["profile"])){
 }
 
 if(isset($_POST["search"]) and isset($_POST["q"]) and $_POST["q"] != ""){
-    header("Location: /index.php?q=".$_POST["q"]);
+    $q = $_POST["q"];
+    unset($_POST["search"]);
+    header("Location: /?q=".$q);
 }
 
 
@@ -264,7 +268,6 @@ echo '<div id="aqua">';
         }
     }
     while(1){
-        //echo ($i+3) ." > ". $count_books . "<br>";
         if(($i*(3*$books_rows)) >= $count_books){
             break;
         }else{

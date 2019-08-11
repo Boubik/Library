@@ -109,16 +109,15 @@ if(isset($_POST["search"]) and isset($_POST["q"]) and $_POST["q"] != ""){
     header("Location: /?q=".$q);
 }
 
-
-
 echo "<div class=\"filtr\">";
 
+    echo '<div class="focus-in-expand ">';
     echo '<div id="side">';
 
         echo '<div id="no_clue">';
         echo '<div class="dropdown">';
-            echo '<a id="category">Žánr</a>';
-            echo '<div class="dropdown-content">';  
+            echo '<a id="category" id="zanr">Žánr</a>';
+            echo '<div class="dropdown-content" class="zanr">';  
         $genres = get_table($conn, "genres");
         foreach($genres as $item){
             echo "<a href=\"/index.php?q=". $item["name"] ."\">".$item["name"]."</a><br>\n";
@@ -129,8 +128,8 @@ echo "<div class=\"filtr\">";
 
         echo '<div id="no_clue">';
         echo '<div class="dropdown">';
-            echo '<a id="category">Autor</a>';
-            echo '<div class="dropdown-content">';  
+            echo '<a id="category" id="autor">Autor</a>';
+            echo '<div class="dropdown-content" class="autor">';  
         $author = get_table($conn, "author");
         foreach($author as $item){
             echo "<a href=\"/index.php?q=". $item["f_name"]. " ". $item["l_name"] ."\">".$item["f_name"]. " ". $item["l_name"]."</a><br>\n";
@@ -141,8 +140,8 @@ echo "<div class=\"filtr\">";
 
         echo '<div id="no_clue">';
         echo '<div class="dropdown">';
-            echo '<a id="category">Jazyk</a>';
-            echo '<div class="dropdown-content">';   
+            echo '<a id="category" id="language">Jazyk</a>';
+            echo '<div class="dropdown-content" class="language">';   
         $language = get_table($conn, "book");
         $k = array();
         foreach($language as $item){
@@ -157,8 +156,8 @@ echo "<div class=\"filtr\">";
 
         echo '<div id="no_clue">';
         echo '<div class="dropdown">';
-            echo '<a id="category">Mistnost</a>';
-            echo '<div class="dropdown-content">';     
+            echo '<a id="category" id="room">Mistnost</a>';
+            echo '<div class="dropdown-content" class="room">';     
         $room = get_table($conn, "room");
         foreach($room as $item){
             echo "<a href=\"/index.php?q=". $item["name"] ."\">".$item["name"]."</a><br>\n";
@@ -167,10 +166,11 @@ echo "<div class=\"filtr\">";
         echo "</div>";
         echo '</div>';
 
-        echo '<div id="sideset">';
+    echo '<div class="sideset">';
 
-        echo "řádků na strácne: ";
+        echo 'řádků na strácne:';
 
+        echo '<div class="sidesethidden">';
         echo '<form method="POST" action="/"><select id="sel" name="rows">' . "\n";
         $i = 1;
         while($i != 21){
@@ -185,10 +185,18 @@ echo "<div class=\"filtr\">";
         echo '</select><br>' ;
         echo '<input type="submit" name="per_page"  value="nastavit">' . "\n";
         echo'</form>'. "\n";
+        echo '</div>';
     echo '</div>';
     echo '</div>';
+    echo "</div>";
 
     echo '<div id="bookcon">';
+    // echo '<div data-aos="fade-in" data-aos-duration="2000">';
+    echo '<div class="focus-in-expand ">';
+    echo '<div id="greet">';
+    echo "Vitame vas";
+    echo '</div>';
+    echo '</div>';
         
     if(!isset($books)){
         echo '<div id="warning>';
@@ -213,6 +221,7 @@ echo "<div class=\"filtr\">";
                     }
                 }
             }
+            echo '<div class="focus-in-expand ">';
             echo "<div class=\"status\" id=\"" . $status . "\"></div>";
 
             echo '<div id="img">';
@@ -255,10 +264,12 @@ echo "<div class=\"filtr\">";
 
     echo "</div></a>";
     echo "</div>";
+    echo "</div>";
     }
 }
 echo "</div>";
 echo "</div>";
+
 
 echo '<div id="aqua">';
     $i = 1;

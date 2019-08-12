@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="styles/add.css">
     <link href="styles/header.css" rel="stylesheet" type="text/css">
     <link href="styles/footer.css" rel="stylesheet" type="text/css">
-    <script src="https://kit.fontawesome.com/350205fd30.js"></script>
+    <script src="js/350205fd30.js"></script>
 </head>
 <body>
 <?php

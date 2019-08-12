@@ -5,9 +5,9 @@
     <link href="styles/header.css" rel="stylesheet" type="text/css">
     <link href="styles/footer.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="images/logo.ico">
-    <script src="https://kit.fontawesome.com/350205fd30.js"></script>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/350205fd30.js"></script>
+    <link href="styles/aos.css" rel="stylesheet">
+    <script src="js/aos.js"></script>
     <title>Knihovna</title>
 </head>
 <body>

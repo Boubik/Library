@@ -7,7 +7,7 @@
     <link href="styles/header.css" rel="stylesheet" type="text/css">
     <link href="styles/footer.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="images/logo.ico">
-    <script src="https://kit.fontawesome.com/350205fd30.js"></script>
+    <script src="js/350205fd30.js"></script>
     <?php
     if (isset($_GET["name"])) {
         echo "<title>Kniha: " . $_GET["name"] . "</title>";

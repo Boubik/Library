@@ -111,7 +111,6 @@ if(isset($_POST["search"]) and isset($_POST["q"]) and $_POST["q"] != ""){
 
 echo "<div class=\"filtr\">";
 
-    echo '<div class="focus-in-expand ">';
     echo '<div id="side">';
 
         echo '<div id="no_clue">';
@@ -164,13 +163,11 @@ echo "<div class=\"filtr\">";
         }
         echo "</div>";
         echo "</div>";
-        echo '</div>';
 
     echo '<div class="sideset">';
 
         echo 'řádků na strácne:';
 
-        echo '<div class="sidesethidden">';
         echo '<form method="POST" action="/"><select id="sel" name="rows">' . "\n";
         $i = 1;
         while($i != 21){
@@ -187,16 +184,10 @@ echo "<div class=\"filtr\">";
         echo'</form>'. "\n";
         echo '</div>';
     echo '</div>';
-    echo '</div>';
     echo "</div>";
 
     echo '<div id="bookcon">';
     // echo '<div data-aos="fade-in" data-aos-duration="2000">';
-    echo '<div class="focus-in-expand ">';
-    echo '<div id="greet">';
-    echo "Vitame vas";
-    echo '</div>';
-    echo '</div>';
         
     if(!isset($books)){
         echo '<div id="warning>';
@@ -221,7 +212,7 @@ echo "<div class=\"filtr\">";
                     }
                 }
             }
-            echo '<div class="focus-in-expand ">';
+            // echo '<div class="focus-in-expand ">';
             echo "<div class=\"status\" id=\"" . $status . "\"></div>";
 
             echo '<div id="img">';
@@ -264,7 +255,7 @@ echo "<div class=\"filtr\">";
 
     echo "</div></a>";
     echo "</div>";
-    echo "</div>";
+    // echo "</div>";
     }
 }
 echo "</div>";

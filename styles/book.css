@@ -11,7 +11,7 @@ body{
 
 #header{
     width: 800px;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
   }
 
 
@@ -71,10 +71,14 @@ input[type=date] {
   }
 
   input[type=submit] {
-    background-color:  rgb(9, 255, 0);
-    border-radius: 5px;
+    background-color: #3c1053;
+    color: white;
+    border: none;
+    border-radius: 25px;
     margin: 5px;
-  }
+    height: 30px;
+    width: 100px; 
+   }
 
   .name{
     text-align: center;
@@ -84,24 +88,14 @@ input[type=date] {
     padding-top: 20px; 
   }
 
+  #rev{
+    width: 300px;
+    margin-left: 500px;
+    overflow: auto;
+  }
+  
 
   /* login */
-
-  #monkaS input[type=submit] {
-    color: white;
-    border-radius: 0px 0px 5px 5px;
-    font-family: 'Muli', sans-serif;
-    background-color:  rgba(211, 211, 211, 0);
-    border: none;
-    border-bottom: white 2px solid;
-    border-right: 2px solid  rgb(255, 255, 255);
-    border-left: 2px solid  rgb(255, 255, 255);
-    height: 40px;
-    margin-top: -50px;
-    cursor: pointer;
-    transition: .2s;
-  }
-
   #monkaS input[type=submit]:hover{
       animation-duration: 3s;
       height: 70px;
@@ -110,13 +104,14 @@ input[type=date] {
   }
 
   input[type=submit]:hover {
-    background-color: white;
+    background-color: #00d9ff;
     transition-duration: 0.5s;
   }
 
-  #serch *input[type=text]:focus  {
-        width: 100%;
+  #serch input[type=text]:focus  {
+        width: 70%;
         background-color: white;
+        z-index: 2;
     }
 
   #serch input:focus::-webkit-input-placeholder {
@@ -134,6 +129,7 @@ input[type=date] {
     padding: 12px 20px 12px 40px;
     -webkit-transition: width 0.4s ease-in-out;
     transition: width 0.4s ease-in-out;
+    z-index: 2;
   }
 
   #serch{
@@ -141,9 +137,9 @@ input[type=date] {
     color: white;
     height: 35px;
     margin-top: -50px;
-    margin-left: 700px;
+    margin-left: 400px;
     width: 400px;
-    z-index: 1;
+    z-index: 2;
 }
 
 #serch ::placeholder{
@@ -151,16 +147,26 @@ input[type=date] {
 }
 
 #monkaS{
-  z-index: 2;
-  float: right;
-  margin-left: 696px;
-  margin-top: -60px;
+  position: relative;
+  margin-left: 506px;
+  margin-top: -120px;
+  margin-bottom: 90px;
+  width: 1100px;
   height: 25px;
   top: 0; 
 }
 
-#rev{
-  width: 300px;
-  margin-left: 500px;
-  overflow: auto;
+#monkaS input[type=submit] {
+  color: white;
+  border-radius: 0px 0px 5px 5px;
+  font-family: 'Muli', sans-serif;
+  background-color:  rgba(211, 211, 211, 0);
+  border: none;
+  border-bottom: white 2px solid;
+  border-right: 2px solid  rgb(255, 255, 255);
+  border-left: 2px solid  rgb(255, 255, 255);
+  height: 40px;
+  cursor: pointer;
+  transition: .2s;
+  position: relative;
 }

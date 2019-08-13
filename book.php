@@ -35,13 +35,13 @@ echo '<div id="header">';
                 echo '<form method="POST" action="">' . "\n";
                 if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])){
                     if(login($conn, $_SESSION["username"], $_SESSION["password"], true)){
-                        echo '<input type="submit" name="add_book"  value="Přidat knížku">' . "\n";
-                        echo '<input type="submit" name="add_author"  value="Přidat autora">' . "\n";
+                        echo '<input id="addbook" type="submit" name="add_book"  value="Přidat knížku">' . "\n";
+                        echo '<input id="addautor" type="submit" name="add_author"  value="Přidat autora">' . "\n";
                     }
-                    echo '<input type="submit" name="profile"  value="Můj profil">' . "\n";
-                    echo '<input type="submit" name="logout"  value="Odhlásit se">' . "\n";
+                    echo '<input id="profil" type="submit" name="profile"  value="Můj profil">' . "\n";
+                    echo '<input id="logout" type="submit" name="logout"  value="Odhlásit se">' . "\n";
                 }else{
-                    echo '<input type="submit" name="login"  value="Přihrásit se">' . "\n";
+                    echo '<input id="login" type="submit" name="login"  value="Přihrásit se">' . "\n";
                 }
                 echo '</form>'. "\n";
             echo '</div>';

@@ -21,6 +21,7 @@ body{
     padding-top: 30px;
     padding-bottom: 30px; 
     margin-bottom: 250px;
+    margin-top: 20px;
 }
 
 hr{
@@ -59,7 +60,7 @@ hr{
   }
 
     #serch input[type=text]:focus  {
-        width: 100%;
+        width: 91.5%;
         background-color: white;
     }
 
@@ -78,6 +79,7 @@ hr{
     padding: 12px 20px 12px 40px;
     -webkit-transition: width 0.4s ease-in-out;
     transition: width 0.4s ease-in-out;
+    margin-top: 10px; 
   }
 
   #serch{

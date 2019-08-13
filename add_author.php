@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Přidání autora</title>
-    <link rel="stylesheet" type="text/css" href="styles/book_to_author.css">
+    <link rel="stylesheet" type="text/css" href="styles/add_author.css">
     <link href="styles/header.css" rel="stylesheet" type="text/css">
     <link href="styles/footer.css" rel="stylesheet" type="text/css">
     <script src="js/350205fd30.js"></script>
@@ -20,6 +20,7 @@ session_start();
 echo '<div id="header">';
     echo "<a href=\"/\"><image src=\"/images/logo_1.png\" style=\"height: 100px\"></a>";
 echo "</div>";
+echo '<div id="main">';
 
 if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"], true)){
 }else{
@@ -28,7 +29,7 @@ if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn
 
 if(isset($_GET["name"]) and isset($_GET["relase"]) and isset($_GET["language"]) and isset($_GET["ISBN"]) and isset($_GET["room_name"]) and isset($_GET["pages"]) and isset($_GET["genres"]) and isset($_GET["img"])){
 
-    echo '<div id="main">';
+
             echo "Přiřadte autora k \"" . $_GET["name"] . "\"<br>\n";
             echo '<form method="POST" action="">';
             echo '<input type="text" maxlength="45" name="f_name" placeholder="Jméno"><br>';
@@ -129,6 +130,7 @@ if(isset($_GET["name"]) and isset($_GET["relase"]) and isset($_GET["language"]) 
         }*/
     }
 }
+echo '</div>';
 
 echo '<div id="footer">';
     echo '<div id="footercon">';

@@ -59,7 +59,7 @@ if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn
         echo '<input type="submit" name="register"  value="Registrovat">' . "\n";
         echo '</form>'. "\n";
     echo '</div>';
-    echo '</div>';   
+
 
 
 }
@@ -72,7 +72,9 @@ if(isset($_POST["register"])){
         $_SESSION["password"] = $_POST["password"];
         header("Location: /");
     }else{
-        echo "Přezdívka už existuje";
+        echo '<div class="nicktaken">';
+        echo "Přezdívka již existuje";
+        echo '</div>';
     }
 }
 
@@ -83,11 +85,14 @@ if(isset($_POST["login"])){
         $_SESSION["password"] = $_POST["login_password"];
         header("Location: /");
     }else{
+        echo '<div class="warning">';
         echo "Špatné přihlašovací údaje";
+        echo '</div>';
         unset($_SESSION["username"]);
         unset($_SESSION["password"]);
     }
 }
+echo '</div>';   
 
 echo '<div id="footer">';
     echo '<div id="footercon">';

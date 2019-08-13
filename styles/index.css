@@ -73,7 +73,7 @@ body{
     display: inline-block;
     border-radius: 5px;
     width: 200px;
-    height: 320px;
+    height: 355px;
     margin: auto;
     margin: 32px;
     transition: transform .5s;
@@ -88,6 +88,7 @@ body{
     padding-top: 10px;
     padding-bottom: 10px;
     width: 50%;
+    margin-top: 25px;
 }
 
 .name{
@@ -140,9 +141,9 @@ a{
     color: white;
     border-radius: 0px 0px 5px 5px;
     font-family: 'Muli', sans-serif;
-    background-color:  rgba(211, 211, 211, 0);
+    background-color:  rgba(255, 255, 255, 0);
     border: none;
-    border-bottom: white 2px solid;
+    border-bottom: rgb(255, 255, 255) 2px solid;
     border-right: 2px solid  rgb(255, 255, 255);
     border-left: 2px solid  rgb(255, 255, 255);
     height: 40px;
@@ -164,7 +165,7 @@ a{
   }
 
     input[type=text]:focus  {
-        width: 100%;
+        width: 92%;
         background-color: white;
     }
 
@@ -197,12 +198,10 @@ a{
   }
 
   #category:hover{
-      background-color: #00d9ff;
+      background-color: #ff2dae;
+      /* border-radius: 25px 0px 0px 25px; */
       transition: 0.3s;
   }
-
-
-
 
   .dropdown:hover .dropdown-content {
     display: block;
@@ -213,19 +212,21 @@ a{
   .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #00d9ff;
+    background-color: #3c1053;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     padding: 12px 16px;
     z-index: 1;
     width: auto;
+    border-radius: 20px;
   }
 
 
   .dropdown-content a {
-    color: black;
+    color: white !important; 
     text-decoration: none;
     display: block;
+    cursor: pointer;
   }
 
 
@@ -324,6 +325,7 @@ a{
     width: 100px;
     color: white;
     background-color: red;
+    border-radius: 25px;
 }
 
 #booked::before{
@@ -343,4 +345,5 @@ a{
     height: 20px;
     width: 100px;
     background-color:green;
+    border-radius: 25px;
  }

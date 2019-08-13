@@ -38,7 +38,6 @@ body{
     height: 500px;
     width: 800px;
     margin: auto;
-    margin-top: 5%;
     padding-top: 20px;
     padding-bottom: 20px;  
     text-align: center;   
@@ -86,10 +85,13 @@ input[type=text] {
 
   input[type=submit] {
     font-family: 'Muli', sans-serif;
-    background-color:  rgb(0, 255, 13);
+    background-color: #3c1053;
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
+    border: none;
+    border-radius: 5px;
+    color: white;
   }
 
 
@@ -112,4 +114,66 @@ input[type=password]:focus {
     background-color: rgba(255, 255, 255, 0);
     color: rgb(0, 71, 224);
   }
-  
+
+
+
+
+.warning {
+  position: absolute;
+  margin-left: 550px;
+  margin-top: -50px;
+  color: rgb(255, 0, 0);
+}
+
+
+@keyframes warning {
+  0%   { opacity:1; }
+  25%   { opacity:0; }
+  50%  { opacity:1; }
+  75%   { opacity:0; }
+  100% { opacity:1; }
+}
+@-o-keyframes warning {
+  0%   { opacity:1; }
+  25%   { opacity:0; }
+  50%  { opacity:1; }
+  75%   { opacity:0; }
+  100% { opacity:1; }
+}
+@-moz-keyframes warning {
+  0%   { opacity:1; }
+  25%   { opacity:0; }
+  50%  { opacity:1; }
+  75%   { opacity:0; }
+  100% { opacity:1; }
+}
+@-webkit-keyframes warning {
+  0%   { opacity:1; }
+  25%   { opacity:0; }
+  50%  { opacity:1; }
+  75%   { opacity:0; }
+  100% { opacity:1; }
+}
+.warning{
+   -webkit-animation: warning 1s ;
+   -moz-animation: warning  1s ;
+   -o-animation: warning  1s ;
+    animation: warning 1s ;
+}
+
+
+.nicktaken {
+position: absolute;
+border-radius: 15px;
+color: rgb(255, 0, 0);
+margin-left: 570px;
+margin-top: -50px;
+}
+
+
+.nicktaken{
+  -webkit-animation: warning 1s ;
+  -moz-animation: warning  1s ;
+  -o-animation: warning  1s ;
+   animation: warning 1s ;
+}

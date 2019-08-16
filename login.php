@@ -20,11 +20,12 @@ echo '<div id="header">';
     echo "<a href=\"/\"><image src=\"/images/logo_1.png\" style=\"height: 100px\"></a>";
 echo "</div>";
 
-if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])){
+if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"]) and !isset($_GET["reset"])){
     header("Location: /");
 }else{
 
     echo '<div id="main">';
+    if(!isset($_GET["reset"])){
         echo '<div id="img">';
             echo '<img src="images/img1.png" alt="Login images">'; 
             echo '</div>';   echo   
@@ -46,7 +47,7 @@ if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn
                     echo '<div id="2" style="display:none;">
                     My Dynamic Content
                     </div>';
- 
+
 
     echo '<div id="Reg" style="display:none;" >';
         echo "Registrace";
@@ -58,10 +59,35 @@ if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn
         echo "<br>";
         echo '<input type="submit" name="register"  value="Registrovat">' . "\n";
         echo '</form>'. "\n";
-    echo '</div>';
+    }else{
+        echo '<div id="reset">';
+            echo "Reset hesla pro uživatele \"".$_SESSION["username"]."\"";
+            echo '<form method="POST" action="">';
+            echo '<input type="password" maxlength="45" name="old_pass" placeholder="staré heslo"><br>';
+            echo '<input type="password" maxlength="45" name="new_pass" placeholder="nové heslo"><br>';
+            echo '<input type="password" maxlength="45" name="new2_pass" placeholder="potvrzení nové heslo"><br>';
+            echo "<br>";
+            echo '<input type="submit" name="reset"  value="Změnit">' . "\n";
+            echo '</form>'. "\n";
+        echo '</div>';
+    }
 
 
 
+}
+
+if(isset($_POST["reset"])){
+    if(login($conn, $_SESSION["username"], $_POST["old_pass"])){
+        if($_POST["new_pass"] == $_POST["new2_pass"]){
+            update_password($conn, $_SESSION["username"], $_POST["new_pass"]);
+            $_SESSION["password"] = $_POST["new_pass"];
+            header("Location: /profile.php");
+        }else{
+            echo "Hesla se neschodují";
+        }
+    }else{
+        echo "Špatné heslo";
+    }
 }
 
 if(isset($_POST["register"])){
@@ -92,6 +118,7 @@ if(isset($_POST["login"])){
         unset($_SESSION["password"]);
     }
 }
+echo '</div>';
 echo '</div>';   
 
 echo '<div id="footer">';

@@ -87,6 +87,7 @@ if(isset($_POST["search"]) and isset($_POST["q"]) and $_POST["q"] != ""){
 
 
 echo '<div id="main">';
+echo "<a href=\"/login.php?reset=".$_SESSION["username"]."\">Change password</a><br>";
     $new = array();
     $old = array();
     $user_id = get_user_id($conn, $_SESSION["username"]);

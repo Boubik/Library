@@ -225,6 +225,22 @@ function add_user($conn, string $f_name, string $l_name, string $username, strin
 }
 
 /**
+ * set new password
+ * @param   mixed   $conn           db connection
+ * @param   String  $username       username
+ * @param   String  $password       new password
+ */
+function update_password($conn, string $username, string $password){
+    date_default_timezone_set('Europe/Prague');
+    $datetime = date("Y-m-d H:i:s");
+    $password = hash_password($password);
+    $sql = "UPDATE `user` SET `password`= '".$password."' WHERE `username` = '".$username."'";
+    $sql = $conn->prepare($sql); 
+    $sql->execute();
+    
+}
+
+/**
  * check if login is ok
  * @param   mixed   $conn           db connection
  * @param   String  $username       username

@@ -92,6 +92,7 @@ input[type=text] {
     border: none;
     border-radius: 5px;
     color: white;
+    transition: 0.3s;
   }
 
 
@@ -114,6 +115,12 @@ input[type=password]:focus {
     background-color: rgba(255, 255, 255, 0);
     color: rgb(0, 71, 224);
   }
+
+  input[type=submit]:hover{
+    background-color: #ff2dae;
+
+  }
+
 
 
 
@@ -176,4 +183,62 @@ margin-top: -50px;
   -moz-animation: warning  1s ;
   -o-animation: warning  1s ;
    animation: warning 1s ;
+}
+
+
+
+/* password reser */
+
+#main2{
+  position: relative;
+  background-color:rgb(255, 255, 255);
+  border-radius: 5px;
+  height: 500px;
+  width: 500px;
+  margin: auto;
+  padding-top: 20px;
+  padding-bottom: 20px;  
+  text-align: center;   
+  margin-bottom: 100px; 
+  margin-top: 100px;
+}
+
+#reset{
+margin-top: 60px;
+}
+
+input[type=password]#reset {
+  background-color:  rgb(211, 211, 211);
+  border-radius: 5px;
+  width: 300px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 3px solid rgb(211, 211, 211);
+  outline: none;
+}
+
+
+input[type=submit]#konec {
+  font-family: 'Muli', sans-serif;
+  background-color: #3c1053;
+  width: 300px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 25px;
+  color: white;
+  transition: 0.3s;
+}
+
+
+input[type=password]#reset:focus {
+  background-color: rgb(255, 255, 255);
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+input[type=submit]#konec:hover{
+  background-color: #ff2dae;
+
 }

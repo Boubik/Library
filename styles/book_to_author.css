@@ -73,8 +73,14 @@ input[type=text] {
 
   input[type=submit] {
     font-family: 'Muli', sans-serif;
-    background-color:  rgb(0, 255, 13);
+    background-color: #3c1053;
     padding: 12px 20px;
     margin: 8px 0;
     width: 200px;
+    border: none;
+    transition: 0.3s;
+  }
+
+  input[type=submit]:hover {
+    background-color: #ff2dae;
   }

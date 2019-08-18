@@ -229,7 +229,6 @@ a{
     cursor: pointer;
   }
 
-
   #side a:hover{
     cursor: pointer;
 }
@@ -268,7 +267,7 @@ a{
  }  
 
   .sideset input[type=submit]:hover{
-      background-color: #00d9ff;
+      background-color: #ff2dae;
  
  }
 

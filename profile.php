@@ -37,6 +37,7 @@ echo '<div id="header">';
                         echo '<input type="submit" name="add_author"  value="Přidat autora">' . "\n";
                     }
                     echo '<input type="submit" name="profile"  value="Můj profil">' . "\n";
+
                     echo '<input type="submit" name="logout"  value="Odhlásit se">' . "\n";
                 }else{
                     echo '<input type="submit" name="login"  value="Přihrásit se">' . "\n";
@@ -87,7 +88,9 @@ if(isset($_POST["search"]) and isset($_POST["q"]) and $_POST["q"] != ""){
 
 
 echo '<div id="main">';
+echo '<div id="res">';
 echo "<a href=\"/login.php?reset=".$_SESSION["username"]."\">Change password</a><br>";
+echo '</div>';
     $new = array();
     $old = array();
     $user_id = get_user_id($conn, $_SESSION["username"]);

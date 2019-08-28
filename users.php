@@ -112,11 +112,19 @@ if(isset($_POST["search"]) and isset($_POST["q"]) and $_POST["q"] != ""){
 }
 
 if(isset($_GET["set_role"])){
-    echo "lmao";
     if(!($is_admin) and $_GET["role"] == "admin"){
         header("Location: /users.php");
     }else{
         set_role($conn, $_GET["username"], $_GET["role"]);
+        header("Location: /users.php");
+    }
+}
+
+if(isset($_GET["delete"])){
+    if($is_admin){
+        delete_user($conn, $_GET["username"]);
+        header("Location: /users.php");
+    }else{
         header("Location: /users.php");
     }
 }
@@ -127,6 +135,9 @@ $users = users($conn, $search);
 echo '<div id="main">';
     echo '<table>';
         echo "<th>Jméno</th><th>Přezdívka</th><th>Role</th>";
+        if($is_admin){
+            echo"<th>Smazat</th>";
+        }
         foreach($users as $value){
             echo "<tr>";
 
@@ -148,6 +159,15 @@ echo '<div id="main">';
                     
                     echo '<input type="submit" name="set_role" placeholder="nastavit">';
                 echo '</form></th>';
+
+                if($is_admin){
+                    echo "<th>";
+                        echo '<form method="GET" action="">';
+                        echo '<input type="text" name="username" value="'.$value["username"].'" id="none">';
+                            echo '<input type="submit" name="delete" placeholder="nastavit">';
+                        echo '</form>';
+                    echo '</th>';
+                }
 
             echo "</tr>";
         }

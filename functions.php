@@ -300,9 +300,23 @@ function is_admin($conn, string $username, string $password){
  * @param   String  $role           role
  */
 function set_role($conn, string $username, string $role){
-
+    
     save_to_log(date("H:i") . ": Set role: " . $role . " to: " . $username);
     $sql = "UPDATE `user` SET `role`= '".$role."' WHERE `username` = '".$username."'";
+    $sql = $conn->prepare($sql);
+    $sql->execute();
+    
+}
+
+/**
+ * set role
+ * @param   mixed   $conn           db connection
+ * @param   String  $username       username
+ */
+function delete_user($conn, string $username){
+    
+    save_to_log(date("H:i") . ": Delete user: " . $username);
+    $sql = "DELETE FROM `user` WHERE `username` = '".$username."'";
     $sql = $conn->prepare($sql);
     $sql->execute();
     

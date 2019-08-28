@@ -38,6 +38,7 @@ function connect_to_db(string $servername, string $dbname, string $username, str
  */
 function add_book($conn, string $name, int $relase, string $language, string $ISBN, string $room_name, int $pages, string $img){
 
+    save_to_log(date("H:i") . ": Add book: " . $name);
     $db_room = true;
     $select_search = "SELECT * FROM `room`";
     $select_search = $conn->prepare($select_search); 
@@ -73,6 +74,7 @@ function add_book($conn, string $name, int $relase, string $language, string $IS
  */
 function add_author($conn, string $f_name, string $l_name, int $bday, string $country){
 
+    save_to_log(date("H:i") . ": Add author: " . $f_name ." ". $l_name);
     $sql = "INSERT INTO `author`(`f_name`, `l_name`, `bday`, `country`) VALUES ('". $f_name ."', '". $l_name ."', '". $bday ."-01-01', '". $country ."')";
     $sql = $conn->prepare($sql); 
     $sql->execute();
@@ -214,6 +216,7 @@ function username_exist($conn, String $username){
  * @param   String  $password       password
  */
 function add_user($conn, string $f_name, string $l_name, string $username, string $password){
+    save_to_log(date("H:i") . ": Add user: " . $username);
     date_default_timezone_set('Europe/Prague');
     $datetime = date("Y-m-d H:i:s");
     $password = hash_password($password);
@@ -298,6 +301,7 @@ function is_admin($conn, string $username, string $password){
  */
 function set_role($conn, string $username, string $role){
 
+    save_to_log(date("H:i") . ": Set role: " . $role . " to: " . $username);
     $sql = "UPDATE `user` SET `role`= '".$role."' WHERE `username` = '".$username."'";
     $sql = $conn->prepare($sql);
     $sql->execute();
@@ -476,6 +480,7 @@ function reservations($conn, $s_reservation, $e_reservation, $book_id){
  * @return  Bool    if reservation can be done
  */
 function add_reservations($conn, $s_reservation, $e_reservation){
+    save_to_log(date("H:i") . ": Add reservation from: " . $s_reservation . " to: " . $e_reservation);
     $id = get_user_id($conn, $_SESSION["username"]);
     $sql = "INSERT INTO `reservation`(`s-reservation`, `e-reservation`, `user_id`) VALUES ('".$s_reservation."', '".$e_reservation."' , $id)";
     $sql = $conn->prepare($sql); 
@@ -700,17 +705,17 @@ function generate_db(){
     $dbname = $configs["dbname"];
     $username = $configs["username"];
     $password = $configs["password"];
-    $db = false;
-    $update = false;
 
         //connect
         try {
             $conn = new PDO("mysql:host=".$servername.";dbname=".$dbname.";charset=utf8", $username, $password);
             // set the PDO error mode to exception
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $execute = false;
             }
         catch(PDOException $e)
             {
+                $execute = true;
                 //connect
                 try {
                     $conn = new PDO("mysql:host=".$servername.";charset=utf8", $username, $password);
@@ -719,32 +724,19 @@ function generate_db(){
                     }
                 catch(PDOException $e)
                     {
+                        $execute = false;
                     echo "Something goes worn give us time to fix it";
                     }
         
-            $sql = $conn->prepare("SET character SET UTF8");
-            $sql->execute();
-            $db = true;
+                $sql = $conn->prepare("SET character SET UTF8");
+                $sql->execute();
             }
         
             $sql = $conn->prepare("SET character SET UTF8");
             $sql->execute();
-
-            if($db){
-                $sql = $conn->prepare("CREATE SCHEMA IF NOT EXISTS `Library` DEFAULT CHARACTER SET utf8 ;USE `Library` ;");
-                $sql->execute();
-                $update = true;
-            }else {
-                try {
-                    $execute = true;
-                    }
-                catch(PDOException $e)
-                    {
-                        $execute = true;
-                    }
-            }
             
             if($execute){
+                save_to_log(date("H:i") . ": Generating DB");
                 $fileList = glob('db/*.sql');
                 $sql = load_file($fileList[0]);
                 $sql = explode("USE `Library` ;", $sql);
@@ -789,4 +781,31 @@ function hide_book($conn, $id)
     $sql = "UPDATE `book` SET `show`= '0' WHERE `id` = '".$id."'";
     $sql = $conn->prepare($sql);
     $sql->execute();
+}
+
+/**
+ * save text to .log and delete old
+ * @param   String  $log_text   text that will be putet to log
+ */
+function save_to_log(String $log_text)
+{
+    date_default_timezone_set('Europe/Prague');
+    $configs = include('config.php');
+    if (!file_exists('logs')) {
+        mkdir('logs', 0777, true);
+    }
+    $date = date("Y-m-d");
+    $fa = fopen("logs/" . $date . ".log", "a");
+    fwrite($fa, $log_text . "\n");
+    fclose($fa);
+
+    if ($configs["delete_log"] != null) {
+        $fileList = glob('logs/*.log');
+        foreach ($fileList as $filename) {
+            $date = substr($filename, 5, 10);
+            if (strtotime($date) < strtotime('-' . ($configs["delete_log"] + 1) . ' days')) {
+                unlink($filename);
+            }
+        }
+    }
 }

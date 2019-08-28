@@ -700,7 +700,6 @@ function generate_db(){
     $dbname = $configs["dbname"];
     $username = $configs["username"];
     $password = $configs["password"];
-    $version = $configs["version"];
     $db = false;
     $update = false;
 

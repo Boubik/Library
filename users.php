@@ -157,14 +157,14 @@ echo '<div id="main">';
                         }
                     echo '</select>' . "\n";
                     
-                    echo '<input type="submit" name="set_role" placeholder="nastavit">';
+                    echo '<input type="submit" name="set_role" value="nastavit">';
                 echo '</form></th>';
 
                 if($is_admin){
                     echo "<th>";
                         echo '<form method="GET" action="">';
                         echo '<input type="text" name="username" value="'.$value["username"].'" id="none">';
-                            echo '<input type="submit" name="delete" placeholder="nastavit">';
+                            echo '<input type="submit" name="delete" value="smazat">';
                         echo '</form>';
                     echo '</th>';
                 }

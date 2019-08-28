@@ -5,7 +5,6 @@ return array(
     "username" => "root",
     "password" => "",
     "dbname" => "Library",
-    "version" => "2",
 
 //Log
     "log" => false

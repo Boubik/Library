@@ -124,34 +124,35 @@ if(isset($_GET["set_role"])){
 
 $users = users($conn, $search);
 
-echo '<div id="main"><table>';
-echo "<th>Jméno</th><th>Přezdívka</th><th>Role</th>";
-foreach($users as $value){
-    echo "<tr>";
+echo '<div id="main">';
+    echo '<table>';
+        echo "<th>Jméno</th><th>Přezdívka</th><th>Role</th>";
+        foreach($users as $value){
+            echo "<tr>";
 
-        echo "<th> ".$value["f_name"]." ".$value["l_name"]. "</th><th>".$value["username"]."</th>";
-        echo "<th>";
-        
-        echo '<form method="GET" action="">';
-            echo '<input type="text" name="username" value="'.$value["username"].'" id="none">';
-            echo '<select name="role" id="sel">' . "\n";
-                foreach($roles as $item){
-                    if($item == $value["role"]){
-                        echo '<option selected>';
-                    }else{
-                        echo '<option>';
-                    }
-                    echo $item.'</option>' . "\n";
-                }
-            echo '</select>' . "\n";
-            
-            echo '<input type="submit" name="set_role" placeholder="nastavit">';
-        echo '</form></th>';
+                echo "<th> ".$value["f_name"]." ".$value["l_name"]. "</th><th>".$value["username"]."</th>";
+                echo "<th>";
+                
+                echo '<form method="GET" action="">';
+                    echo '<input type="text" name="username" value="'.$value["username"].'" id="none">';
+                    echo '<select name="role" id="sel">' . "\n";
+                        foreach($roles as $item){
+                            if($item == $value["role"]){
+                                echo '<option selected>';
+                            }else{
+                                echo '<option>';
+                            }
+                            echo $item.'</option>' . "\n";
+                        }
+                    echo '</select>' . "\n";
+                    
+                    echo '<input type="submit" name="set_role" placeholder="nastavit">';
+                echo '</form></th>';
 
-    echo "</tr>";
-}
-
-echo "</table>\n</div>";
+            echo "</tr>";
+        }
+    echo "</table>";
+echo"</div>";
 
 echo '<div id="footer">';
     echo '<div id="footercon">';

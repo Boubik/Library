@@ -659,7 +659,6 @@ function book($conn, String $search = "", $count_books = 1, $page = 1, $per_page
  * @return  Array   array
 */
 function users($conn, String $search = ""){
-    $users = array();
     if($search == ""){
         $sql = "SELECT * FROM `user`";
     }else{

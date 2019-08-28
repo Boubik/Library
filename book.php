@@ -34,10 +34,8 @@ echo '<div id="header">';
         echo '<div id="monkaS">';
                 echo '<form method="POST" action="">' . "\n";
                 if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])){
-                    if(is_admin($conn, $_SESSION["username"], $_SESSION["password"])){
-                        echo '<input id="addbook" type="submit" name="users"  value="uživatelé">' . "\n";
-                    }
                     if(login($conn, $_SESSION["username"], $_SESSION["password"], true)){
+                        echo '<input id="addbook" type="submit" name="users"  value="uživatelé">' . "\n";
                         echo '<input id="addbook" type="submit" name="add_book"  value="Přidat knížku">' . "\n";
                         echo '<input id="addautor" type="submit" name="add_author"  value="Přidat autora">' . "\n";
                     }
@@ -51,12 +49,12 @@ echo '<div id="header">';
 
             echo '<div id="serch">';
                 echo '<form method="GET" action="">' . "\n";
-                echo '<input type="text" onfocusout=" " placeholder="Hledate neco?" name="q" autocomplete="off" value="';
+                /*echo '<input type="text" onfocusout=" " placeholder="Hledate neco?" name="q" autocomplete="off" value="';
                 if(isset($_GET["q"])){
                     echo $_GET["q"].'">' . "\n";
                 }else{
                     echo '">' . "\n";
-                }
+                }*/
                 echo '</form>'. "\n";
             echo '</div>';
         echo '</div>';
@@ -84,13 +82,13 @@ if(isset($_POST["profile"])){
     header("Location: /profile.php");
 }
 
-if(isset($_POST["search"]) and isset($_POST["q"]) and $_POST["q"] != ""){
-    header("Location: /index.php?q=".$_POST["q"]);
-}
-
 if(isset($_POST["delete_book"])){
     hide_book($conn, $_GET["id"]);
     header("Location: /index.php");
+}
+
+if(isset($_POST["users"])){
+    header("Location: /users.php");
 }
 
 echo "<div class=\"book\">";

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * connect to db
  * @param   String  $servername     name of the book
@@ -7,18 +8,17 @@
  * @param   String  $password       password
  * @return  mixed   $conn
  */
-function connect_to_db(string $servername, string $dbname, string $username, string $password){
+function connect_to_db(string $servername, string $dbname, string $username, string $password)
+{
 
-        //connect
-        try {
-            $conn = new PDO("mysql:host=".$servername.";dbname=".$dbname.";charset=utf8", $username, $password);
-            // set the PDO error mode to exception
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            }
-        catch(PDOException $e)
-            {
-            echo "Something goes worn give us time to fix it";
-            }
+    //connect
+    try {
+        $conn = new PDO("mysql:host=" . $servername . ";dbname=" . $dbname . ";charset=utf8", $username, $password);
+        // set the PDO error mode to exception
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $e) {
+        echo "Something goes worn give us time to fix it";
+    }
 
     $sql = $conn->prepare("SET character SET UTF8");
     $sql->execute();
@@ -36,32 +36,32 @@ function connect_to_db(string $servername, string $dbname, string $username, str
  * @param   String  $room_name      room_name
  * @param   String  $pages          pages
  */
-function add_book($conn, string $name, int $relase, string $language, string $ISBN, string $room_name, int $pages, string $img){
+function add_book($conn, string $name, int $relase, string $language, string $ISBN, string $room_name, int $pages, string $img)
+{
 
     save_to_log(date("H:i") . ": Add book: " . $name);
     $db_room = true;
     $select_search = "SELECT * FROM `room`";
-    $select_search = $conn->prepare($select_search); 
+    $select_search = $conn->prepare($select_search);
     $numrows = $select_search->execute();
-    if($numrows > 0){
-        while($row = $select_search->fetch()){
-            if($room_name == $row["name"]){
+    if ($numrows > 0) {
+        while ($row = $select_search->fetch()) {
+            if ($room_name == $row["name"]) {
                 $db_room = false;
                 break;
             }
         }
     }
 
-    if($db_room){
-        $sql = "INSERT INTO `room`(`name`) VALUES ('". $room_name ."')";
-        $sql = $conn->prepare($sql); 
+    if ($db_room) {
+        $sql = "INSERT INTO `room`(`name`) VALUES ('" . $room_name . "')";
+        $sql = $conn->prepare($sql);
         $sql->execute();
     }
 
-    $sql = "INSERT INTO `book` (`name`, `relase`, `language`, `ISBN`, `room_name`, `pages`, `img`) VALUES ('". $name ."', '". $relase ."', '". $language ."', '". $ISBN ."', '". $room_name ."', ". $pages .", '" . $img . "')";
-    $sql = $conn->prepare($sql); 
+    $sql = "INSERT INTO `book` (`name`, `relase`, `language`, `ISBN`, `room_name`, `pages`, `img`) VALUES ('" . $name . "', '" . $relase . "', '" . $language . "', '" . $ISBN . "', '" . $room_name . "', " . $pages . ", '" . $img . "')";
+    $sql = $conn->prepare($sql);
     $sql->execute();
-    
 }
 
 /**
@@ -72,13 +72,13 @@ function add_book($conn, string $name, int $relase, string $language, string $IS
  * @param   String  $bday           b. day
  * @param   String  $country        two characters "CZ"
  */
-function add_author($conn, string $f_name, string $l_name, int $bday, string $country){
+function add_author($conn, string $f_name, string $l_name, int $bday, string $country)
+{
 
-    save_to_log(date("H:i") . ": Add author: " . $f_name ." ". $l_name);
-    $sql = "INSERT INTO `author`(`f_name`, `l_name`, `bday`, `country`) VALUES ('". $f_name ."', '". $l_name ."', '". $bday ."-01-01', '". $country ."')";
-    $sql = $conn->prepare($sql); 
+    save_to_log(date("H:i") . ": Add author: " . $f_name . " " . $l_name);
+    $sql = "INSERT INTO `author`(`f_name`, `l_name`, `bday`, `country`) VALUES ('" . $f_name . "', '" . $l_name . "', '" . $bday . "-01-01', '" . $country . "')";
+    $sql = $conn->prepare($sql);
     $sql->execute();
-    
 }
 
 /**
@@ -87,22 +87,22 @@ function add_author($conn, string $f_name, string $l_name, int $bday, string $co
  * @param   String  $name           name of table
  * @return  array   return array of rows from table
  */
-function get_table($conn, string $name){
+function get_table($conn, string $name)
+{
 
     $rooms = array();
     $select_search = "SELECT * FROM `$name`";
-    $select_search = $conn->prepare($select_search); 
+    $select_search = $conn->prepare($select_search);
     $numrows = $select_search->execute();
-    if($numrows > 0){
+    if ($numrows > 0) {
         $rows = array();
-        while($row = $select_search->fetch()){
+        while ($row = $select_search->fetch()) {
             $rows[] = $row;
         }
         return $rows;
-    }else {
+    } else {
         return NULL;
     }
-
 }
 
 /**
@@ -111,10 +111,11 @@ function get_table($conn, string $name){
  * @param   String  $id_book        id of book
  * @param   String  $id_author      id of author
  */
-function add_book_has_author($conn, int $id_book, int $id_author){
+function add_book_has_author($conn, int $id_book, int $id_author)
+{
 
-    $sql = "INSERT INTO `book_has_author`(`book_id`, `author_id`) VALUES (". $id_book .", ". $id_author .")";
-    $sql = $conn->prepare($sql); 
+    $sql = "INSERT INTO `book_has_author`(`book_id`, `author_id`) VALUES (" . $id_book . ", " . $id_author . ")";
+    $sql = $conn->prepare($sql);
     $sql->execute();
 }
 
@@ -124,26 +125,26 @@ function add_book_has_author($conn, int $id_book, int $id_author){
  * @param   String  $id_book        id of book
  * @param   String  $id_author      id of author
  */
-function add_genres($conn, array $names){
+function add_genres($conn, array $names)
+{
     $genres = get_table($conn, "genres");
-    if($genres != NULL){
+    if ($genres != NULL) {
         $i = $genres;
         $genres = array();
-        foreach($i as $item){
+        foreach ($i as $item) {
             $genres[] = $item["name"];
         }
 
-        foreach($names as $item){
-            if(!(in_array($item, $genres))){
+        foreach ($names as $item) {
+            if (!(in_array($item, $genres))) {
                 insert_genres($conn, $item);
             }
         }
-    }else{
-        foreach($names as $item){
+    } else {
+        foreach ($names as $item) {
             insert_genres($conn, $item);
         }
     }
-
 }
 
 /**
@@ -151,8 +152,9 @@ function add_genres($conn, array $names){
  * @param   mixed   $conn           db connection
  * @param   String  $name           name to insert
  */
-function insert_genres($conn, string $name){
-    $sql = "INSERT INTO `genres`(`name`) VALUES ('". $name ."')";
+function insert_genres($conn, string $name)
+{
+    $sql = "INSERT INTO `genres`(`name`) VALUES ('" . $name . "')";
     $sql = $conn->prepare($sql);
     $sql->execute();
 }
@@ -163,14 +165,15 @@ function insert_genres($conn, string $name){
  * @param   String  $name           name to search in db
  * @return  int     id
  */
-function get_genres_id($conn, string $name){
-    $sql = "SELECT * FROM `genres` WHERE `name` = '". $name ."'";
+function get_genres_id($conn, string $name)
+{
+    $sql = "SELECT * FROM `genres` WHERE `name` = '" . $name . "'";
     $sql = $conn->prepare($sql);
     $numrows = $sql->execute();
-    if($numrows > 0){
+    if ($numrows > 0) {
         $row = $sql->fetch();
         return $row["id"];
-    }else {
+    } else {
         return NULL;
     }
 }
@@ -181,10 +184,11 @@ function get_genres_id($conn, string $name){
  * @param   int     $id_book        id of book
  * @param   int     $id_genres      id of genres
  */
-function add_book_has_genres($conn, int $id_book, int $id_genres){
+function add_book_has_genres($conn, int $id_book, int $id_genres)
+{
 
-    $sql = "INSERT INTO `book_has_genres`(`book_id`, `genres_id`) VALUES (". $id_book .", ". $id_genres .")";
-    $sql = $conn->prepare($sql); 
+    $sql = "INSERT INTO `book_has_genres`(`book_id`, `genres_id`) VALUES (" . $id_book . ", " . $id_genres . ")";
+    $sql = $conn->prepare($sql);
     $sql->execute();
 }
 
@@ -194,15 +198,16 @@ function add_book_has_genres($conn, int $id_book, int $id_genres){
  * @param   String  $username       username to look for
  * @return  Bool    if username exist in db return true
  */
-function username_exist($conn, String $username){
+function username_exist($conn, String $username)
+{
 
-    $sql = "SELECT * FROM `user` WHERE `username` = '". $username ."'";
+    $sql = "SELECT * FROM `user` WHERE `username` = '" . $username . "'";
     $sql = $conn->prepare($sql);
     $numrows = $sql->execute();
     $row = $sql->fetch();
-    if($row["username"] == $username){
+    if ($row["username"] == $username) {
         return true;
-    }else {
+    } else {
         return false;
     }
 }
@@ -215,15 +220,15 @@ function username_exist($conn, String $username){
  * @param   String  $username       username
  * @param   String  $password       password
  */
-function add_user($conn, string $f_name, string $l_name, string $username, string $password){
+function add_user($conn, string $f_name, string $l_name, string $username, string $password)
+{
     save_to_log(date("H:i") . ": Add user: " . $username);
     date_default_timezone_set('Europe/Prague');
     $datetime = date("Y-m-d H:i:s");
     $password = hash_password($password);
-    $sql = "INSERT INTO `user`(`f_name`, `l_name`, `username`, `password`, `last_login`, `ceated`) VALUES ('".$f_name."', '".$l_name."', '".$username."', '".$password."', '".$datetime."', '".$datetime."')";
-    $sql = $conn->prepare($sql); 
+    $sql = "INSERT INTO `user`(`f_name`, `l_name`, `username`, `password`, `last_login`, `ceated`) VALUES ('" . $f_name . "', '" . $l_name . "', '" . $username . "', '" . $password . "', '" . $datetime . "', '" . $datetime . "')";
+    $sql = $conn->prepare($sql);
     $sql->execute();
-    
 }
 
 /**
@@ -232,14 +237,14 @@ function add_user($conn, string $f_name, string $l_name, string $username, strin
  * @param   String  $username       username
  * @param   String  $password       new password
  */
-function update_password($conn, string $username, string $password){
+function update_password($conn, string $username, string $password)
+{
     date_default_timezone_set('Europe/Prague');
     $datetime = date("Y-m-d H:i:s");
     $password = hash_password($password);
-    $sql = "UPDATE `user` SET `password`= '".$password."' WHERE `username` = '".$username."'";
-    $sql = $conn->prepare($sql); 
+    $sql = "UPDATE `user` SET `password`= '" . $password . "' WHERE `username` = '" . $username . "'";
+    $sql = $conn->prepare($sql);
     $sql->execute();
-    
 }
 
 /**
@@ -250,23 +255,23 @@ function update_password($conn, string $username, string $password){
  * @param   Bool    check if is moderator or admin
  * @return  Bool    if true you can login
  */
-function login($conn, string $username, string $password, $mod_plus = false){
+function login($conn, string $username, string $password, $mod_plus = false)
+{
     $password = hash_password($password);
 
-    $sql = "SELECT * FROM `user` WHERE `username` = '". $username ."' AND`password` = '". $password ."'";
+    $sql = "SELECT * FROM `user` WHERE `username` = '" . $username . "' AND`password` = '" . $password . "'";
     $sql = $conn->prepare($sql);
     $numrows = $sql->execute();
     $row = $sql->fetch();
-    if($row["username"] == $username and $row["password"] == $password ){
+    if ($row["username"] == $username and $row["password"] == $password) {
         last_login($conn, $username);
-        if($mod_plus != false and !($row["role"] == "mod" or $row["role"] == "admin")){
+        if ($mod_plus != false and !($row["role"] == "mod" or $row["role"] == "admin")) {
             return false;
         }
         return true;
-    }else {
+    } else {
         return false;
     }
-    
 }
 
 /**
@@ -276,21 +281,21 @@ function login($conn, string $username, string $password, $mod_plus = false){
  * @param   String  $password       password
  * @return  Bool    if true you can login
  */
-function is_admin($conn, string $username, string $password){
+function is_admin($conn, string $username, string $password)
+{
     $password = hash_password($password);
 
-    $sql = "SELECT * FROM `user` WHERE `username` = '". $username ."' AND`password` = '". $password ."'";
+    $sql = "SELECT * FROM `user` WHERE `username` = '" . $username . "' AND`password` = '" . $password . "'";
     $sql = $conn->prepare($sql);
     $numrows = $sql->execute();
     $row = $sql->fetch();
-    if($row["username"] == $username and $row["password"] == $password ){
-        if($row["role"] == "admin"){
+    if ($row["username"] == $username and $row["password"] == $password) {
+        if ($row["role"] == "admin") {
             return true;
         }
-    }else {
+    } else {
         return false;
     }
-    
 }
 
 /**
@@ -299,13 +304,13 @@ function is_admin($conn, string $username, string $password){
  * @param   String  $username       username
  * @param   String  $role           role
  */
-function set_role($conn, string $username, string $role){
-    
+function set_role($conn, string $username, string $role)
+{
+
     save_to_log(date("H:i") . ": Set role: " . $role . " to: " . $username);
-    $sql = "UPDATE `user` SET `role`= '".$role."' WHERE `username` = '".$username."'";
+    $sql = "UPDATE `user` SET `role`= '" . $role . "' WHERE `username` = '" . $username . "'";
     $sql = $conn->prepare($sql);
     $sql->execute();
-    
 }
 
 /**
@@ -313,13 +318,13 @@ function set_role($conn, string $username, string $role){
  * @param   mixed   $conn           db connection
  * @param   String  $username       username
  */
-function delete_user($conn, string $username){
-    
+function delete_user($conn, string $username)
+{
+
     save_to_log(date("H:i") . ": Delete user: " . $username);
-    $sql = "DELETE FROM `user` WHERE `username` = '".$username."'";
+    $sql = "DELETE FROM `user` WHERE `username` = '" . $username . "'";
     $sql = $conn->prepare($sql);
     $sql->execute();
-    
 }
 
 /**
@@ -327,13 +332,13 @@ function delete_user($conn, string $username){
  * @param   mixed   $conn           db connection
  * @param   String  $username       username
  */
-function last_login($conn, string $username){
+function last_login($conn, string $username)
+{
     date_default_timezone_set('Europe/Prague');
     $datetime = date("Y-m-d H:i:s");
-    $sql = "UPDATE `user` SET `last_login` = '". $datetime ."' WHERE `username` = '". $username ."'";
-    $sql = $conn->prepare($sql); 
+    $sql = "UPDATE `user` SET `last_login` = '" . $datetime . "' WHERE `username` = '" . $username . "'";
+    $sql = $conn->prepare($sql);
     $sql->execute();
-    
 }
 
 /**
@@ -341,7 +346,8 @@ function last_login($conn, string $username){
  * @param   String  $password       password
  * @return  String    if true you can login
  */
-function hash_password(string $password){
+function hash_password(string $password)
+{
     return hash("sha3-512", $password);
 }
 
@@ -354,12 +360,13 @@ function hash_password(string $password){
  * @param   String  $id_get         id name what you want
  * @return  Array   return ids
  */
-function mn($conn, string $mn_table, int $id, string $id_name, string $id_get){
+function mn($conn, string $mn_table, int $id, string $id_name, string $id_get)
+{
     $ids = array();
     $mn_table = get_table($conn, $mn_table);
 
-    foreach($mn_table as $item){
-        if($item[$id_name] == $id){
+    foreach ($mn_table as $item) {
+        if ($item[$id_name] == $id) {
             $ids[] = $item[$id_get];
         }
     }
@@ -373,15 +380,16 @@ function mn($conn, string $mn_table, int $id, string $id_name, string $id_get){
  * @param   Int     $id         id
  * @return  String  return genres
  */
-function get_genre($conn, int $id){
+function get_genre($conn, int $id)
+{
 
-    $sql = "SELECT `name` FROM `genres` WHERE `id` = ". $id;
+    $sql = "SELECT `name` FROM `genres` WHERE `id` = " . $id;
     $sql = $conn->prepare($sql);
     $numrows = $sql->execute();
     $row = $sql->fetch();
-    if($numrows > 0){
+    if ($numrows > 0) {
         return $row["name"];
-    }else {
+    } else {
         return NULL;
     }
 }
@@ -392,15 +400,16 @@ function get_genre($conn, int $id){
  * @param   Int     $id         id
  * @return  String  return book
  */
-function get_book($conn, int $id){
+function get_book($conn, int $id)
+{
 
-    $sql = "SELECT `name` FROM `book` WHERE `id` = ". $id;
+    $sql = "SELECT `name` FROM `book` WHERE `id` = " . $id;
     $sql = $conn->prepare($sql);
     $numrows = $sql->execute();
     $row = $sql->fetch();
-    if($numrows > 0){
+    if ($numrows > 0) {
         return $row["name"];
-    }else {
+    } else {
         return NULL;
     }
 }
@@ -411,15 +420,16 @@ function get_book($conn, int $id){
  * @param   Int     $id         id
  * @return  Array   return author
  */
-function get_author($conn, int $id){
+function get_author($conn, int $id)
+{
 
-    $sql = "SELECT * FROM `author` WHERE `id` = ". $id;
+    $sql = "SELECT * FROM `author` WHERE `id` = " . $id;
     $sql = $conn->prepare($sql);
     $numrows = $sql->execute();
     $row = $sql->fetch();
-    if($numrows > 0){
+    if ($numrows > 0) {
         return $row;
-    }else {
+    } else {
         return NULL;
     }
 }
@@ -430,14 +440,15 @@ function get_author($conn, int $id){
  * @param   Int     $id             name to search in db
  * @return  Arry    info about book
  */
-function get_book_by_id($conn, int $id){
-    $sql = "SELECT * FROM `book` WHERE `id` = '". $id ."'";
+function get_book_by_id($conn, int $id)
+{
+    $sql = "SELECT * FROM `book` WHERE `id` = '" . $id . "'";
     $sql = $conn->prepare($sql);
     $numrows = $sql->execute();
-    if($numrows > 0){
+    if ($numrows > 0) {
         $row = $sql->fetch();
         return $row;
-    }else {
+    } else {
         return NULL;
     }
 }
@@ -447,18 +458,19 @@ function get_book_by_id($conn, int $id){
  * @param   Mixed   $conn           db connection
  * @return  Arry    info about reservation
  */
-function get_reservations($conn){
+function get_reservations($conn)
+{
     $sql = "SELECT book.id as 'book_id', reservation.id AS 'reservation_id', `s-reservation`, `e-reservation` FROM `reservation` INNER JOIN book_has_reservation ON book_has_reservation.reservation_id = reservation.id INNER JOIN book ON book.id = book_has_reservation.book_id WHERE `e-reservation` >= CURRENT_DATE() ORDER BY `e-reservation`";
     $sql = $conn->prepare($sql);
     $numrows = $sql->execute();
 
-    if($numrows > 0){
+    if ($numrows > 0) {
         $rows = array();
-        while($row = $sql->fetch()){
+        while ($row = $sql->fetch()) {
             $rows[] = $row;
         }
         return $rows;
-    }else {
+    } else {
         return NULL;
     }
 }
@@ -470,14 +482,14 @@ function get_reservations($conn){
  * @param   String  $e_reservation      end reservation date
  * @return  Bool    if reservation can be done
  */
-function reservations($conn, $s_reservation, $e_reservation, $book_id){
-    $sql = "SELECT * FROM `reservation` INNER JOIN book_has_reservation ON book_has_reservation.reservation_id = reservation.id INNER JOIN book ON book.id = book_has_reservation.book_id WHERE `e-reservation` > CURTIME() AND book.id = ". $book_id ." ORDER BY `e-reservation`";
+function reservations($conn, $s_reservation, $e_reservation, $book_id)
+{
+    $sql = "SELECT * FROM `reservation` INNER JOIN book_has_reservation ON book_has_reservation.reservation_id = reservation.id INNER JOIN book ON book.id = book_has_reservation.book_id WHERE `e-reservation` > CURTIME() AND book.id = " . $book_id . " ORDER BY `e-reservation`";
     $sql = $conn->prepare($sql);
     $numrows = $sql->execute();
-    if($numrows > 0){
-        while($row = $sql->fetch()){
-            if( ( (strtotime($row["e-reservation"]) < strtotime($s_reservation) and strtotime($row["e-reservation"]) < strtotime($e_reservation) ) or strtotime($row["s-reservation"]) > strtotime($e_reservation) ) ){
-            }else{
+    if ($numrows > 0) {
+        while ($row = $sql->fetch()) {
+            if (((strtotime($row["e-reservation"]) < strtotime($s_reservation) and strtotime($row["e-reservation"]) < strtotime($e_reservation)) or strtotime($row["s-reservation"]) > strtotime($e_reservation))) { } else {
                 return false;
             }
         }
@@ -493,11 +505,12 @@ function reservations($conn, $s_reservation, $e_reservation, $book_id){
  * @param   String  $e_reservation      end reservation date
  * @return  Bool    if reservation can be done
  */
-function add_reservations($conn, $s_reservation, $e_reservation){
+function add_reservations($conn, $s_reservation, $e_reservation)
+{
     save_to_log(date("H:i") . ": Add reservation from: " . $s_reservation . " to: " . $e_reservation);
     $id = get_user_id($conn, $_SESSION["username"]);
-    $sql = "INSERT INTO `reservation`(`s-reservation`, `e-reservation`, `user_id`) VALUES ('".$s_reservation."', '".$e_reservation."' , $id)";
-    $sql = $conn->prepare($sql); 
+    $sql = "INSERT INTO `reservation`(`s-reservation`, `e-reservation`, `user_id`) VALUES ('" . $s_reservation . "', '" . $e_reservation . "' , $id)";
+    $sql = $conn->prepare($sql);
     $sql->execute();
 }
 
@@ -507,11 +520,12 @@ function add_reservations($conn, $s_reservation, $e_reservation){
  * @param   String  $username           username
  * @return  Int     id from user
  */
-function get_user_id($conn, $username){
+function get_user_id($conn, $username)
+{
     $sql = "SELECT * FROM `user` WHERE `username` = '" . $username . "'";
     $sql = $conn->prepare($sql);
     $numrows = $sql->execute();
-    if($numrows > 0){
+    if ($numrows > 0) {
         $row = $sql->fetch();
         return $row["id"];
     }
@@ -525,11 +539,12 @@ function get_user_id($conn, $username){
  * @param   Int     $book_id            id of reservation
  * @return  Int     id from reservation
  */
-function get_reservation_id($conn, $s_reservation, $e_reservation, $book_id){
-    $sql = "SELECT * FROM `reservation` WHERE `s-reservation` = '". $s_reservation ."' AND `e-reservation` = '". $e_reservation ."' ORDER BY `reservation`.`id` DESC";
+function get_reservation_id($conn, $s_reservation, $e_reservation, $book_id)
+{
+    $sql = "SELECT * FROM `reservation` WHERE `s-reservation` = '" . $s_reservation . "' AND `e-reservation` = '" . $e_reservation . "' ORDER BY `reservation`.`id` DESC";
     $sql = $conn->prepare($sql);
     $numrows = $sql->execute();
-    if($numrows > 0){
+    if ($numrows > 0) {
         $row = $sql->fetch();
         return $row["id"];
     }
@@ -540,13 +555,14 @@ function get_reservation_id($conn, $s_reservation, $e_reservation, $book_id){
  * @param   Mixed   $conn               db connection
  * @return  Array   table with reservation and book
  */
-function get_reservation_with_book($conn){
+function get_reservation_with_book($conn)
+{
     $sql = "SELECT book.id AS 'book_id', reservation.id AS 'reservation_id', reservation.`s-reservation`, reservation.`e-reservation` FROM `book` INNER JOIN book_has_reservation ON book_has_reservation.book_id = book.id INNER JOIN reservation on reservation.id = book_has_reservation.reservation_id";
     $sql = $conn->prepare($sql);
     $numrows = $sql->execute();
-    if($numrows > 0){
+    if ($numrows > 0) {
         $rows = array();
-        while($row = $sql->fetch()){
+        while ($row = $sql->fetch()) {
             $rows[] = $row;
         }
         return $rows;
@@ -559,9 +575,10 @@ function get_reservation_with_book($conn){
  * @param   int     $id_book        id of book
  * @param   int     $id_reservation id of reservation
  */
-function add_book_has_reservation($conn, int $id_book, int $id_reservation){
-    $sql = "INSERT INTO `book_has_reservation`(`book_id`, `reservation_id`) VALUES (". $id_book .", ". $id_reservation .")";
-    $sql = $conn->prepare($sql); 
+function add_book_has_reservation($conn, int $id_book, int $id_reservation)
+{
+    $sql = "INSERT INTO `book_has_reservation`(`book_id`, `reservation_id`) VALUES (" . $id_book . ", " . $id_reservation . ")";
+    $sql = $conn->prepare($sql);
     $sql->execute();
 }
 
@@ -570,20 +587,21 @@ function add_book_has_reservation($conn, int $id_book, int $id_reservation){
  * @param   mixed   $conn           db connection
  * @param   String  $search         search in db
  * @return  Array   array
-*/
-function book($conn, String $search = "", $count_books = 1, $page = 1, $per_page = 30){
+ */
+function book($conn, String $search = "", $count_books = 1, $page = 1, $per_page = 30)
+{
     $page -= 1;
-    if($page == 0){
+    if ($page == 0) {
         $items = 0;
-    }else {
+    } else {
         $items = $page * $per_page;
     }
     $book_id = array();
     $books = array();
-    if($search == ""){
+    if ($search == "") {
         $sql = "SELECT book.id AS 'book_id' FROM book INNER JOIN book_has_genres ON book_has_genres.book_id = book.id INNER JOIN genres ON genres.id = book_has_genres.genres_id INNER JOIN book_has_author ON book_has_author.book_id = book.id INNER JOIN room ON room.name = room_name INNER JOIN author ON author.id = book_has_author.author_id WHERE `show` != '0' OR `show` IS NULL ORDER BY book.name";
-    }else{
-        $sql = "SELECT book.id AS 'book_id' FROM book INNER JOIN book_has_genres ON book_has_genres.book_id = book.id INNER JOIN genres ON genres.id = book_has_genres.genres_id INNER JOIN book_has_author ON book_has_author.book_id = book.id INNER JOIN room ON room.name = room_name INNER JOIN author ON author.id = book_has_author.author_id WHERE book.room_name = room.name AND book.id = book_has_genres.book_id AND book_has_genres.genres_id = genres.id AND book_has_author.author_id = author.id AND book.id = book_has_author.book_id AND (book.room_name LIKE '%". $search ."%' OR book.name LIKE '%". $search ."%' OR book.relase LIKE '%". $search ."%' OR book.language LIKE '%". $search ."%'OR book.ISBN LIKE '%". $search ."%'OR book.pages LIKE '%". $search ."%'OR author.f_name LIKE '%". $search ."%' OR author.l_name LIKE '%". $search ."%' OR author.bday LIKE '%". $search ."%' OR genres.name LIKE '%". $search ."%' OR room.name LIKE '%". $search ."%' OR CONCAT(author.f_name, ' ' , author.l_name) LIKE '%". $search ."%' OR CONCAT(author.l_name, ' ', author.f_name) LIKE '%". $search ."%') and `show` != '0' OR `show` IS NULL ORDER BY book.name";
+    } else {
+        $sql = "SELECT book.id AS 'book_id' FROM book INNER JOIN book_has_genres ON book_has_genres.book_id = book.id INNER JOIN genres ON genres.id = book_has_genres.genres_id INNER JOIN book_has_author ON book_has_author.book_id = book.id INNER JOIN room ON room.name = room_name INNER JOIN author ON author.id = book_has_author.author_id WHERE book.room_name = room.name AND book.id = book_has_genres.book_id AND book_has_genres.genres_id = genres.id AND book_has_author.author_id = author.id AND book.id = book_has_author.book_id AND (book.room_name LIKE '%" . $search . "%' OR book.name LIKE '%" . $search . "%' OR book.relase LIKE '%" . $search . "%' OR book.language LIKE '%" . $search . "%'OR book.ISBN LIKE '%" . $search . "%'OR book.pages LIKE '%" . $search . "%'OR author.f_name LIKE '%" . $search . "%' OR author.l_name LIKE '%" . $search . "%' OR author.bday LIKE '%" . $search . "%' OR genres.name LIKE '%" . $search . "%' OR room.name LIKE '%" . $search . "%' OR CONCAT(author.f_name, ' ' , author.l_name) LIKE '%" . $search . "%' OR CONCAT(author.l_name, ' ', author.f_name) LIKE '%" . $search . "%') and `show` != '0' OR `show` IS NULL ORDER BY book.name";
     }
     //echo $sql;
     $sql = $conn->prepare($sql);
@@ -591,15 +609,15 @@ function book($conn, String $search = "", $count_books = 1, $page = 1, $per_page
     $i = 0;
     $k = 0;
     $b = array();
-    while($row = $sql->fetch()){
-        if(!in_array($row["book_id"], $b)){
-            if($k == $items){
+    while ($row = $sql->fetch()) {
+        if (!in_array($row["book_id"], $b)) {
+            if ($k == $items) {
                 $book_id[] = $row["book_id"];
                 $i++;
-                if($i == $per_page){
+                if ($i == $per_page) {
                     break;
                 }
-            }else {
+            } else {
                 $k++;
             }
             $b[] = $row["book_id"];
@@ -607,30 +625,30 @@ function book($conn, String $search = "", $count_books = 1, $page = 1, $per_page
     }
     unset($b);
 
-    if(isset($book_id[0]) and $items <= $count_books){
+    if (isset($book_id[0]) and $items <= $count_books) {
         $sql = "SELECT `id`, `name` as 'book_name', `relase`, `language`, `ISBN`, `pages`, `img`, `room_name` FROM `book` WHERE `id` IN(";
         $i = 0;
-        foreach($book_id as $id){
-            if($i > 0){
+        foreach ($book_id as $id) {
+            if ($i > 0) {
                 $sql .= ", ";
             }
             $sql .= $id;
             $i++;
         }
         $sql .= ")";
-        $sql = $conn->prepare($sql); 
+        $sql = $conn->prepare($sql);
         $number = $sql->execute();
         $db_book = array();
-        while($row = $sql->fetch()){
+        while ($row = $sql->fetch()) {
             $db_book[$row["id"]] = $row;
         }
-        foreach($book_id as $id){
+        foreach ($book_id as $id) {
             $books[$id] = array();
             $genres_ids = mn($conn, "book_has_genres", $id, "book_id", "genres_id");
             $sql = "SELECT `name` FROM `genres` WHERE `id` IN(";
             $i = 0;
-            foreach($genres_ids as $value){
-                if($i > 0){
+            foreach ($genres_ids as $value) {
+                if ($i > 0) {
                     $sql .= ", ";
                 }
                 $sql .= $value;
@@ -640,15 +658,15 @@ function book($conn, String $search = "", $count_books = 1, $page = 1, $per_page
             $sql = $conn->prepare($sql);
             $sql->execute();
             $books[$id]["genres_name"] = array();
-            while($row = $sql->fetch()){
+            while ($row = $sql->fetch()) {
                 $books[$id]["genres_name"][] = $row["name"];
             }
 
             $author_ids = mn($conn, "book_has_author", $id, "book_id", "author_id");
             $sql = "SELECT `f_name`, `l_name` FROM `author` WHERE `id` IN(";
             $i = 0;
-            foreach($author_ids as $value){
-                if($i > 0){
+            foreach ($author_ids as $value) {
+                if ($i > 0) {
                     $sql .= ", ";
                 }
                 $sql .= $value;
@@ -658,7 +676,7 @@ function book($conn, String $search = "", $count_books = 1, $page = 1, $per_page
             $sql = $conn->prepare($sql);
             $sql->execute();
             $books[$id]["author"] = array();
-            while($row = $sql->fetch()){
+            while ($row = $sql->fetch()) {
                 $books[$id]["author"][] = $row["f_name"] . " " . $row["l_name"];
             }
 
@@ -676,17 +694,18 @@ function book($conn, String $search = "", $count_books = 1, $page = 1, $per_page
  * @param   mixed   $conn           db connection
  * @param   String  $search         search in db
  * @return  Array   array
-*/
-function users($conn, String $search = ""){
-    if($search == ""){
+ */
+function users($conn, String $search = "")
+{
+    if ($search == "") {
         $sql = "SELECT * FROM `user`";
-    }else{
-        $sql = "SELECT * FROM `user` WHERE `f_name` LIKE '%".$search."%' OR `l_name` LIKE '%".$search."%' OR `username` LIKE '%".$search."%' OR CONCAT(f_name, ' ' , l_name) LIKE '%".$search."%' OR `role` LIKE '%".$search."%'";
+    } else {
+        $sql = "SELECT * FROM `user` WHERE `f_name` LIKE '%" . $search . "%' OR `l_name` LIKE '%" . $search . "%' OR `username` LIKE '%" . $search . "%' OR CONCAT(f_name, ' ' , l_name) LIKE '%" . $search . "%' OR `role` LIKE '%" . $search . "%'";
     }
     //echo $sql;
     $sql = $conn->prepare($sql);
     $sql->execute();
-    while($row = $sql->fetch()){
+    while ($row = $sql->fetch()) {
         $users[] = $row;
     }
     return $users;
@@ -696,14 +715,15 @@ function users($conn, String $search = ""){
  * count books
  * @param   mixed   $conn           db connection
  */
-function count_books($conn){
+function count_books($conn)
+{
     $sql = "SELECT COUNT(id) as \"books\" FROM book";
     $sql = $conn->prepare($sql);
     $sql->execute();
-    while($row = $sql->fetch()){
-        if(isset($row["books"])){
+    while ($row = $sql->fetch()) {
+        if (isset($row["books"])) {
             return $row["books"];
-        }else {
+        } else {
             return 0;
         }
     }
@@ -712,7 +732,8 @@ function count_books($conn){
 /**
  * check if db is up to date or if exist
  */
-function generate_db(){
+function generate_db()
+{
     ini_set('max_execution_time', 0);
     $configs = include('config.php');
     $servername = $configs["servername"];
@@ -720,52 +741,45 @@ function generate_db(){
     $username = $configs["username"];
     $password = $configs["password"];
 
+    //connect
+    try {
+        $conn = new PDO("mysql:host=" . $servername . ";dbname=" . $dbname . ";charset=utf8", $username, $password);
+        // set the PDO error mode to exception
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $execute = false;
+    } catch (PDOException $e) {
+        $execute = true;
         //connect
         try {
-            $conn = new PDO("mysql:host=".$servername.";dbname=".$dbname.";charset=utf8", $username, $password);
+            $conn = new PDO("mysql:host=" . $servername . ";charset=utf8", $username, $password);
             // set the PDO error mode to exception
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
             $execute = false;
-            }
-        catch(PDOException $e)
-            {
-                $execute = true;
-                //connect
-                try {
-                    $conn = new PDO("mysql:host=".$servername.";charset=utf8", $username, $password);
-                    // set the PDO error mode to exception
-                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    }
-                catch(PDOException $e)
-                    {
-                        $execute = false;
-                    echo "Something goes worn give us time to fix it";
-                    }
-        
-                $sql = $conn->prepare("SET character SET UTF8");
+            echo "Something goes worn give us time to fix it";
+        }
+
+        $sql = $conn->prepare("SET character SET UTF8");
+        $sql->execute();
+    }
+
+    $sql = $conn->prepare("SET character SET UTF8");
+    $sql->execute();
+
+    if ($execute) {
+        save_to_log(date("H:i") . ": Generating DB");
+        $fileList = glob('db/*.sql');
+        $sql = load_file($fileList[0]);
+        $sql = explode("USE `Library` ;", $sql);
+        $sql = $sql[1];
+        $sql = explode(";", $sql);
+        foreach ($sql as $item) {
+            try {
+                $sql = $conn->prepare($item);
                 $sql->execute();
-            }
-        
-            $sql = $conn->prepare("SET character SET UTF8");
-            $sql->execute();
-            
-            if($execute){
-                save_to_log(date("H:i") . ": Generating DB");
-                $fileList = glob('db/*.sql');
-                $sql = load_file($fileList[0]);
-                $sql = explode("USE `Library` ;", $sql);
-                $sql = $sql[1];
-                $sql = explode(";", $sql);
-                foreach($sql as $item){
-                    try {
-                        $sql = $conn->prepare($item);
-                        $sql->execute();
-                        }
-                    catch(PDOException $e)
-                        {
-                        }
-                }
-            }
+            } catch (PDOException $e) { }
+        }
+    }
 }
 
 /**
@@ -780,7 +794,7 @@ function load_file($filename, $mode = "r")
     $handle = fopen($filename, $mode);
     $text = "";
     while (($line = fgets($handle)) !== false) {
-        $text = $text.$line;
+        $text = $text . $line;
     }
     return $text;
 }
@@ -792,7 +806,7 @@ function load_file($filename, $mode = "r")
  */
 function hide_book($conn, $id)
 {
-    $sql = "UPDATE `book` SET `show`= '0' WHERE `id` = '".$id."'";
+    $sql = "UPDATE `book` SET `show`= '0' WHERE `id` = '" . $id . "'";
     $sql = $conn->prepare($sql);
     $sql->execute();
 }

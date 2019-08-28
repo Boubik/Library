@@ -57,8 +57,7 @@ function add_book($conn, string $name, int $relase, string $language, string $IS
         $sql->execute();
     }
 
-    $sql = "INSERT INTO `book` (`name`, `relase`, `language`, `ISBN`, `room_name`, `pages`, `img`) VALUES ('". $name ."', '". $relase ."-01-01', '". $language ."', '". $ISBN ."', '". $room_name ."', ". $pages .", '" . $img . "')";
-    echo $sql;
+    $sql = "INSERT INTO `book` (`name`, `relase`, `language`, `ISBN`, `room_name`, `pages`, `img`) VALUES ('". $name ."', '". $relase ."', '". $language ."', '". $ISBN ."', '". $room_name ."', ". $pages .", '" . $img . "')";
     $sql = $conn->prepare($sql); 
     $sql->execute();
     

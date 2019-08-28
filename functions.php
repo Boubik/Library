@@ -307,7 +307,7 @@ function is_admin($conn, string $username, string $password)
 function set_role($conn, string $username, string $role)
 {
 
-    save_to_log(date("H:i") . ": Set role: " . $role . " to: " . $username);
+    save_to_log(date("H:i") . ": Set role: " . $role . " to: " . $username . " by: ". $_SESSION["username"]);
     $sql = "UPDATE `user` SET `role`= '" . $role . "' WHERE `username` = '" . $username . "'";
     $sql = $conn->prepare($sql);
     $sql->execute();
@@ -321,7 +321,7 @@ function set_role($conn, string $username, string $role)
 function delete_user($conn, string $username)
 {
 
-    save_to_log(date("H:i") . ": Delete user: " . $username);
+    save_to_log(date("H:i") . ": Delete user: " . $username . " by: ". $_SESSION["username"]);
     $sql = "DELETE FROM `user` WHERE `username` = '" . $username . "'";
     $sql = $conn->prepare($sql);
     $sql->execute();

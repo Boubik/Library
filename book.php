@@ -85,8 +85,22 @@ if(isset($_POST["search"]) and isset($_POST["q"]) and $_POST["q"] != ""){
     header("Location: /index.php?q=".$_POST["q"]);
 }
 
+if(isset($_POST["delete_book"])){
+    hide_book($conn, $_GET["id"]);
+    header("Location: /index.php");
+}
+
 echo "<div class=\"book\">";
     echo "<div class=\"name\">";
+
+    if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])){
+        if(login($conn, $_SESSION["username"], $_SESSION["password"], true)){
+            echo '<form method="POST" action="">';
+            echo '<input type="submit" name="delete_book" value="Smazat knkížku">'  . "\n";
+            echo '</form>'. "\n";
+        }
+    }
+
     echo $book["name"];
     echo "</div>";
     echo '<div id="image">';

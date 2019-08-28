@@ -256,10 +256,34 @@ function login($conn, string $username, string $password, $mod_plus = false){
     $row = $sql->fetch();
     if($row["username"] == $username and $row["password"] == $password ){
         last_login($conn, $username);
-        if($mod_plus and !($row["role"] == "mod" or $row["role"] == "admin")){
+        if($mod_plus != false and !($row["role"] == "mod" or $row["role"] == "admin")){
             return false;
         }
         return true;
+    }else {
+        return false;
+    }
+    
+}
+
+/**
+ * check if is admin
+ * @param   mixed   $conn           db connection
+ * @param   String  $username       username
+ * @param   String  $password       password
+ * @return  Bool    if true you can login
+ */
+function is_admin($conn, string $username, string $password){
+    $password = hash_password($password);
+
+    $sql = "SELECT * FROM `user` WHERE `username` = '". $username ."' AND`password` = '". $password ."'";
+    $sql = $conn->prepare($sql);
+    $numrows = $sql->execute();
+    $row = $sql->fetch();
+    if($row["username"] == $username and $row["password"] == $password ){
+        if($row["role"] == "admin"){
+            return true;
+        }
     }else {
         return false;
     }
@@ -524,9 +548,9 @@ function book($conn, String $search = "", $count_books = 1, $page = 1, $per_page
     $book_id = array();
     $books = array();
     if($search == ""){
-        $sql = "SELECT book.id AS 'book_id' FROM book INNER JOIN book_has_genres ON book_has_genres.book_id = book.id INNER JOIN genres ON genres.id = book_has_genres.genres_id INNER JOIN book_has_author ON book_has_author.book_id = book.id INNER JOIN room ON room.name = room_name INNER JOIN author ON author.id = book_has_author.author_id ORDER BY book.name";
+        $sql = "SELECT book.id AS 'book_id' FROM book INNER JOIN book_has_genres ON book_has_genres.book_id = book.id INNER JOIN genres ON genres.id = book_has_genres.genres_id INNER JOIN book_has_author ON book_has_author.book_id = book.id INNER JOIN room ON room.name = room_name INNER JOIN author ON author.id = book_has_author.author_id WHERE `show` != '0' OR `show` IS NULL ORDER BY book.name";
     }else{
-        $sql = "SELECT book.id AS 'book_id' FROM book INNER JOIN book_has_genres ON book_has_genres.book_id = book.id INNER JOIN genres ON genres.id = book_has_genres.genres_id INNER JOIN book_has_author ON book_has_author.book_id = book.id INNER JOIN room ON room.name = room_name INNER JOIN author ON author.id = book_has_author.author_id WHERE book.room_name = room.name AND book.id = book_has_genres.book_id AND book_has_genres.genres_id = genres.id AND book_has_author.author_id = author.id AND book.id = book_has_author.book_id AND (book.room_name LIKE '%". $search ."%' OR book.name LIKE '%". $search ."%' OR book.relase LIKE '%". $search ."%' OR book.language LIKE '%". $search ."%'OR book.ISBN LIKE '%". $search ."%'OR book.pages LIKE '%". $search ."%'OR author.f_name LIKE '%". $search ."%' OR author.l_name LIKE '%". $search ."%' OR author.bday LIKE '%". $search ."%' OR genres.name LIKE '%". $search ."%' OR room.name LIKE '%". $search ."%' OR CONCAT(author.f_name, ' ' , author.l_name) LIKE '%". $search ."%' OR CONCAT(author.l_name, ' ', author.f_name) LIKE '%". $search ."%') ORDER BY book.name";
+        $sql = "SELECT book.id AS 'book_id' FROM book INNER JOIN book_has_genres ON book_has_genres.book_id = book.id INNER JOIN genres ON genres.id = book_has_genres.genres_id INNER JOIN book_has_author ON book_has_author.book_id = book.id INNER JOIN room ON room.name = room_name INNER JOIN author ON author.id = book_has_author.author_id WHERE book.room_name = room.name AND book.id = book_has_genres.book_id AND book_has_genres.genres_id = genres.id AND book_has_author.author_id = author.id AND book.id = book_has_author.book_id AND (book.room_name LIKE '%". $search ."%' OR book.name LIKE '%". $search ."%' OR book.relase LIKE '%". $search ."%' OR book.language LIKE '%". $search ."%'OR book.ISBN LIKE '%". $search ."%'OR book.pages LIKE '%". $search ."%'OR author.f_name LIKE '%". $search ."%' OR author.l_name LIKE '%". $search ."%' OR author.bday LIKE '%". $search ."%' OR genres.name LIKE '%". $search ."%' OR room.name LIKE '%". $search ."%' OR CONCAT(author.f_name, ' ' , author.l_name) LIKE '%". $search ."%' OR CONCAT(author.l_name, ' ', author.f_name) LIKE '%". $search ."%') and `show` != '0' OR `show` IS NULL ORDER BY book.name";
     }
     //echo $sql;
     $sql = $conn->prepare($sql);
@@ -616,7 +640,7 @@ function book($conn, String $search = "", $count_books = 1, $page = 1, $per_page
 
 /**
  * count books
- * @param   Mixed   db
+ * @param   mixed   $conn           db connection
  */
 function count_books($conn){
     $sql = "SELECT COUNT(id) as \"books\" FROM book";
@@ -678,24 +702,15 @@ function generate_db(){
                 $update = true;
             }else {
                 try {
-                    $sql = $conn->prepare("SELECT version.version FROM version ORDER BY version.version DESC");
-                    $numrows = $sql->execute();
-                    if($numrows > 0){
-                        $row = $sql->fetch();
-                        if($row["version"] < $version){
-                            $update = true;
-                        }
-                    }else {
-                        $update = true;
-                    }
+                    $execute = true;
                     }
                 catch(PDOException $e)
                     {
-                        $update = true;
+                        $execute = true;
                     }
             }
             
-            if($update){
+            if($execute){
                 $fileList = glob('db/*.sql');
                 $sql = load_file($fileList[0]);
                 $sql = explode("USE `Library` ;", $sql);
@@ -710,9 +725,6 @@ function generate_db(){
                         {
                         }
                 }
-                $sql = "INSERT version VALUES ('".$version."')";
-                $sql = $conn->prepare($sql);
-                $sql->execute();
             }
 }
 
@@ -731,4 +743,16 @@ function load_file($filename, $mode = "r")
         $text = $text.$line;
     }
     return $text;
+}
+
+/**
+ * will load file in root folder of program
+ * @param   Mixed   $conn           db connection
+ * @param   Int     $id             id of book
+ */
+function hide_book($conn, $id)
+{
+    $sql = "UPDATE `book` SET `show`= '0' WHERE `id` = '".$id."'";
+    $sql = $conn->prepare($sql);
+    $sql->execute();
 }

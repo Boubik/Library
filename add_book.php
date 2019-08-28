@@ -49,7 +49,6 @@ echo '<div id="main">';
     echo '</div>';
 echo '</div>';
 
-
 if(isset($_POST["submit"])){
     $genres = explode(" ", $_POST["genres"]);
     add_genres($conn, $genres);

@@ -34,6 +34,9 @@ echo '<div id="header">';
         echo '<div id="monkaS">';
                 echo '<form method="POST" action="">' . "\n";
                 if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])){
+                    if(is_admin($conn, $_SESSION["username"], $_SESSION["password"])){
+                        echo '<input id="addbook" type="submit" name="users"  value="uživatelé">' . "\n";
+                    }
                     if(login($conn, $_SESSION["username"], $_SESSION["password"], true)){
                         echo '<input id="addbook" type="submit" name="add_book"  value="Přidat knížku">' . "\n";
                         echo '<input id="addautor" type="submit" name="add_author"  value="Přidat autora">' . "\n";

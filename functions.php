@@ -291,6 +291,20 @@ function is_admin($conn, string $username, string $password){
 }
 
 /**
+ * set role
+ * @param   mixed   $conn           db connection
+ * @param   String  $username       username
+ * @param   String  $role           role
+ */
+function set_role($conn, string $username, string $role){
+
+    $sql = "UPDATE `user` SET `role`= '".$role."' WHERE `username` = '".$username."'";
+    $sql = $conn->prepare($sql);
+    $sql->execute();
+    
+}
+
+/**
  * add user to db
  * @param   mixed   $conn           db connection
  * @param   String  $username       username
@@ -636,6 +650,28 @@ function book($conn, String $search = "", $count_books = 1, $page = 1, $per_page
         }
     }
     return $books;
+}
+
+/**
+ * search
+ * @param   mixed   $conn           db connection
+ * @param   String  $search         search in db
+ * @return  Array   array
+*/
+function users($conn, String $search = ""){
+    $users = array();
+    if($search == ""){
+        $sql = "SELECT * FROM `user`";
+    }else{
+        $sql = "SELECT * FROM `user` WHERE `f_name` LIKE '%".$search."%' OR `l_name` LIKE '%".$search."%' OR `username` LIKE '%".$search."%' OR CONCAT(f_name, ' ' , l_name) LIKE '%".$search."%' OR `role` LIKE '%".$search."%'";
+    }
+    //echo $sql;
+    $sql = $conn->prepare($sql);
+    $sql->execute();
+    while($row = $sql->fetch()){
+        $users[] = $row;
+    }
+    return $users;
 }
 
 /**

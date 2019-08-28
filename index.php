@@ -57,6 +57,7 @@ echo '<div id="header">';
                 echo '<form method="POST" action="">' . "\n";
                 if(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])){
                     if(login($conn, $_SESSION["username"], $_SESSION["password"], true)){
+                        echo '<input id="addbook" type="submit" name="users"  value="uživatelé">' . "\n";
                         echo '<input type="submit" name="add_book"  value="Přidat knížku">' . "\n";
                         echo '<input type="submit" name="add_author"  value="Přidat autora">' . "\n";
                     }
@@ -101,6 +102,10 @@ if(isset($_POST["add_author"])){
 
 if(isset($_POST["profile"])){
     header("Location: /profile.php");
+}
+
+if(isset($_POST["users"])){
+    header("Location: /users.php");
 }
 
 if(isset($_POST["search"]) and isset($_POST["q"]) and $_POST["q"] != ""){

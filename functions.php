@@ -806,17 +806,19 @@ function generate_db()
     $username = $configs["username"];
     $password = $configs["password"];
 
+    $dsn = "mysql:host=$servername;dbname=$dbname;";
     //connect
     try {
-        $conn = new PDO("mysql:host=" . $servername . ";dbname=" . $dbname . ";charset=utf8", $username, $password);
+        $conn = new PDO($dsn, $username, $password);
         // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $execute = false;
     } catch (PDOException $e) {
         $execute = true;
+        $dsn = "mysql:host=$servername;";
         //connect
         try {
-            $conn = new PDO("mysql:host=" . $servername . ";charset=utf8", $username, $password);
+            $conn = new PDO($dsn, $username, $password);
             // set the PDO error mode to exception
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
@@ -828,19 +830,17 @@ function generate_db()
         $sql->execute();
     }
 
+
     $sql = $conn->prepare("SET character SET UTF8");
     $sql->execute();
-
     if ($execute) {
         save_to_log("Generating DB");
         $fileList = glob('db/*.sql');
         $sql = load_file($fileList[0]);
-        $sql = explode("USE `Library` ;", $sql);
-        $sql = $sql[1];
         $sql = explode(";", $sql);
         foreach ($sql as $item) {
             try {
-                $sql = $conn->prepare($item);
+                $sql = $conn->prepare($item.";");
                 $sql->execute();
             } catch (PDOException $e) { }
         }

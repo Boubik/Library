@@ -167,6 +167,7 @@
     foreach ($reservations as $reservation) {
         if ($book["id"] == $reservation["book_id"]) {
             if($i == 0){
+                echo '<div id="table">';
                 echo '<table>';
                 echo "<tr>";
                 echo "<th>Od kdy</th><th>Do kdy</th>";
@@ -177,7 +178,8 @@
             echo "</tr>";
             $i++;
             if($i == 10){
-                echo '<div id="rev">';
+                echo '</table>';
+                echo "</div>";
                 break;
             }
         }

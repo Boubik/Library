@@ -31,6 +31,7 @@ $conn = connect_to_db($configs["servername"], $configs["dbname"], $configs["user
 if(!(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"], true))){
     header("Location: /");
 }
+$per_page = 30;
 $roles = array();
 $roles[] = "user";
 $roles[] = "mod";
@@ -44,6 +45,11 @@ if(isset($_GET["q"])){
     $search = $_GET["q"];
 }else{
     $search = "";
+}
+if (isset($_GET["page"])) {
+    $page = $_GET["page"];
+}else{
+    $page = 1;
 }
 
 echo '<div id="header">';
@@ -130,7 +136,8 @@ if(isset($_GET["delete"])){
 }
 
 
-$users = users($conn, $search);
+$users = users($conn, $search, $page, $per_page);
+$count_users = count_users($conn, $search);
 
 echo '<div id="main">';
     echo '<table>';
@@ -175,6 +182,36 @@ echo '<div id="main">';
         }
     echo "</table>";
 echo"</div>";
+
+echo '<div id="aqua">';
+$maxpage = (int)($count_users / $per_page) + 1;
+$i = 1;
+if($maxpage > 1){
+    if ($page  > 1) {
+        echo "<a href=\"/users.php?q=" . $search . "&page=" . ($page - 1) . "\">< </a>";
+    }
+    while (1) {
+        if($maxpage != 0){
+            do{
+                if ($i == 1) {
+                    echo "stránky: ";
+                    echo "<a href=\"/users.php?q=" . $search . "&page=" . $i . "\">" . $i . "</a>";
+                }
+                echo ", ";
+                echo "<a href=\"/users.php?q=" . $search . "&page=" . ($i + 1) . "\">" . ($i + 1) . "</a>";
+                $i++;
+            }while($i > $maxpage);
+            break;
+        }else{
+            break;
+        }
+    }
+
+    if ($page  < $maxpage) {
+        echo "<a href=\"/users.php?q=" . $search . "&page=" . ($page + 1) . "\"> ></a>";
+    }
+}
+echo "</div>";
 
 echo '<div id="footer">';
     echo '<div id="footercon">';

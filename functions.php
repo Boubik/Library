@@ -39,7 +39,7 @@ function connect_to_db(string $servername, string $dbname, string $username, str
 function add_book($conn, string $name, int $relase, string $language, string $ISBN, string $room_name, int $pages, string $img)
 {
 
-    save_to_log(date("H:i") . ": Add book: " . $name);
+    save_to_log("Add book: \"" . $name."\"");
     $db_room = true;
     $select_search = "SELECT * FROM `room`";
     $select_search = $conn->prepare($select_search);
@@ -75,7 +75,7 @@ function add_book($conn, string $name, int $relase, string $language, string $IS
 function add_author($conn, string $f_name, string $l_name, int $bday, string $country)
 {
 
-    save_to_log(date("H:i") . ": Add author: " . $f_name . " " . $l_name);
+    save_to_log("Add author: \"" . $f_name . " " . $l_name."\"");
     $sql = "INSERT INTO `author`(`f_name`, `l_name`, `bday`, `country`) VALUES ('" . $f_name . "', '" . $l_name . "', '" . $bday . "-01-01', '" . $country . "')";
     $sql = $conn->prepare($sql);
     $sql->execute();
@@ -222,7 +222,7 @@ function username_exist($conn, String $username)
  */
 function add_user($conn, string $f_name, string $l_name, string $username, string $password)
 {
-    save_to_log(date("H:i") . ": Add user: " . $username);
+    save_to_log("Add user: \"" . $username."\"");
     date_default_timezone_set('Europe/Prague');
     $datetime = date("Y-m-d H:i:s");
     $password = hash_password($password);
@@ -307,7 +307,7 @@ function is_admin($conn, string $username, string $password)
 function set_role($conn, string $username, string $role)
 {
 
-    save_to_log(date("H:i") . ": Set role: " . $role . " to: " . $username . " by: ". $_SESSION["username"]);
+    save_to_log("Set role: " . $role . " to: \"" . $username . "\" by: \"". $_SESSION["username"]."\"");
     $sql = "UPDATE `user` SET `role`= '" . $role . "' WHERE `username` = '" . $username . "'";
     $sql = $conn->prepare($sql);
     $sql->execute();
@@ -320,9 +320,32 @@ function set_role($conn, string $username, string $role)
  */
 function delete_user($conn, string $username)
 {
-
-    save_to_log(date("H:i") . ": Delete user: " . $username . " by: ". $_SESSION["username"]);
+    delete_reservations($conn, $username);
+    save_to_log("Delete user: \"" . $username . "\" by: \"". $_SESSION["username"]."\"");
     $sql = "DELETE FROM `user` WHERE `username` = '" . $username . "'";
+    $sql = $conn->prepare($sql);
+    $sql->execute();
+}
+
+/**
+ * set role
+ * @param   mixed   $conn           db connection
+ * @param   String  $username       username
+ */
+function delete_reservations($conn, string $username)
+{
+    save_to_log("Delete reservations for user: \"" . $username . "\" by: \"". $_SESSION["username"]."\"");
+    $user_id = get_user_id($conn, $username);
+    $sql = "SELECT * FROM `reservation` WHERE `user_id` = '".$user_id."'";
+    $sql = $conn->prepare($sql);
+    $sql->execute();
+    while($row = $sql->fetch()){
+        $reservation_id = $row["id"];
+        $sql2 = "DELETE FROM `book_has_reservation` WHERE `reservation_id` = '".$reservation_id."'";
+        $sql2 = $conn->prepare($sql2);
+        $sql2->execute();
+    }
+    $sql = "DELETE FROM `reservation` WHERE `user_id` = '".$user_id."'";
     $sql = $conn->prepare($sql);
     $sql->execute();
 }
@@ -507,7 +530,7 @@ function reservations($conn, $s_reservation, $e_reservation, $book_id)
  */
 function add_reservations($conn, $s_reservation, $e_reservation)
 {
-    save_to_log(date("H:i") . ": Add reservation from: " . $s_reservation . " to: " . $e_reservation);
+    save_to_log("Add reservation from: \"" . $s_reservation . "\" to: \"" . $e_reservation."\"");
     $id = get_user_id($conn, $_SESSION["username"]);
     $sql = "INSERT INTO `reservation`(`s-reservation`, `e-reservation`, `user_id`) VALUES ('" . $s_reservation . "', '" . $e_reservation . "' , $id)";
     $sql = $conn->prepare($sql);
@@ -767,7 +790,7 @@ function generate_db()
     $sql->execute();
 
     if ($execute) {
-        save_to_log(date("H:i") . ": Generating DB");
+        save_to_log("Generating DB");
         $fileList = glob('db/*.sql');
         $sql = load_file($fileList[0]);
         $sql = explode("USE `Library` ;", $sql);
@@ -824,7 +847,7 @@ function save_to_log(String $log_text)
     }
     $date = date("Y-m-d");
     $fa = fopen("logs/" . $date . ".log", "a");
-    fwrite($fa, $log_text . "\n");
+    fwrite($fa, (date("H:i") . ": " . $log_text) . "\n");
     fclose($fa);
 
     if ($configs["delete_log"] != null) {

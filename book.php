@@ -156,12 +156,17 @@
     echo "<br>\nnadcházející rezervace:<br>\n";
     echo "</div>";
 
+    $i = 0;
     $reservations = get_reservations($conn, $id);
     foreach ($reservations as $reservation) {
         if ($book["id"] == $reservation["book_id"]) {
             echo '<div id="rev">';
             echo "od: " . substr($reservation["s-reservation"], 0, 10) . " do " . substr($reservation["e-reservation"], 0, 10) . "<br>\n";
             echo '</div>';
+            $i++;
+            if($i == 10){
+                break;
+            }
         }
     }
 

@@ -16,6 +16,12 @@
         header("Location: /");
     }
     ?>
+    <style>
+    table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    }
+    </style>
 </head>
 
 <body>
@@ -106,32 +112,43 @@
         if ($reservation["user_id"] == $user_id) {
             $book_has_reservation = mn($conn, "book_has_reservation", $reservation["id"], "reservation_id", "book_id");
             if (strtotime($reservation["e-reservation"]) > strtotime('-' . 1 . ' days')) {
-                $new[] = " Kniha: \"" . get_book($conn, $book_has_reservation[0]) . "\" od: " . substr($reservation["s-reservation"], 0, 10) . " do " . substr($reservation["e-reservation"], 0, 10) . "<br>\n";
+                $new[] = "<th>" . get_book($conn, $book_has_reservation[0]) . "</th><th>" . substr($reservation["s-reservation"], 0, 10) . "</th><th>" . substr($reservation["e-reservation"], 0, 10) . "</th>";
             } else {
-                $old[] = " Kniha: \"" . get_book($conn, $book_has_reservation[0]) . "\" od: " . substr($reservation["s-reservation"], 0, 10) . " do " . substr($reservation["e-reservation"], 0, 10) . "<br>\n";
+                $old[] = "<th>" . get_book($conn, $book_has_reservation[0]) . "</th><th>" . substr($reservation["s-reservation"], 0, 10) . "</th><th>" . substr($reservation["e-reservation"], 0, 10) . "</th>";
             }
         }
     }
 
     if (isset($new[0])) {
         echo "Aktivní rezervace:<br>\n";
+        echo "<table>";
+        echo "<tr><th>Jménéno knihy</th><th>od kdy</th><th>do kdy</th></tr>";
+        foreach ($new as $item) {
+            echo "<tr>";
+            echo $item;
+            echo "</tr>";
+        }
+        echo "</table>";
     } else {
         echo "Nemáte žádné aktivní rezervace<br>\n";
-    }
-    foreach ($new as $item) {
-        echo $item;
     }
 
     echo '<hr>';
 
     if (isset($old[0])) {
         echo "Staré rezervace:<br>\n";
+        echo "<table>";
+        echo "<tr><th>Jménéno knihy</th><th>od kdy</th><th>do kdy</th></tr>";
+        foreach ($old as $item) {
+            echo "<tr>";
+            echo $item;
+            echo "</tr>";
+        }
+        echo "</table>";
     } else {
         echo "Nemáte žádné staré rezervace<br>\n";
     }
-    foreach ($old as $item) {
-        echo $item;
-    }
+   
 
     echo "</div>";
 

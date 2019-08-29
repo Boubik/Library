@@ -15,6 +15,12 @@
         header("Location: /");
     }
     ?>
+    <style>
+    table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    }
+    </style>
 </head>
 
 <body>
@@ -160,11 +166,18 @@
     $reservations = get_reservations($conn, $id);
     foreach ($reservations as $reservation) {
         if ($book["id"] == $reservation["book_id"]) {
-            echo '<div id="rev">';
-            echo "od: " . substr($reservation["s-reservation"], 0, 10) . " do " . substr($reservation["e-reservation"], 0, 10) . "<br>\n";
-            echo '</div>';
+            if($i == 0){
+                echo '<table>';
+                echo "<tr>";
+                echo "<th>Od kdy</th><th>Do kdy</th>";
+                echo "</tr>";
+            }
+            echo "<tr>";
+            echo "<th>" . substr($reservation["s-reservation"], 0, 10) . "</th><th>" . substr($reservation["e-reservation"], 0, 10) . "</th>";
+            echo "</tr>";
             $i++;
             if($i == 10){
+                echo '<div id="rev">';
                 break;
             }
         }

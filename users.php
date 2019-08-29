@@ -134,10 +134,12 @@ $users = users($conn, $search);
 
 echo '<div id="main">';
     echo '<table>';
+        echo "<tr>";
         echo "<th>Jméno</th><th>Přezdívka</th><th>Role</th>";
         if($is_admin){
             echo"<th>Smazat</th>";
         }
+        echo "</tr>";
         foreach($users as $value){
             echo "<tr>";
 

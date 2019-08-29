@@ -39,7 +39,7 @@ function connect_to_db(string $servername, string $dbname, string $username, str
 function add_book($conn, string $name, int $relase, string $language, string $ISBN, string $room_name, int $pages, string $img)
 {
 
-    save_to_log("Add book: \"" . $name . "\"");
+    save_to_log("Add book: \"" . $name . "\" by: \"".$_SESSION["username"]."\"");
     $db_room = true;
     $select_search = "SELECT * FROM `room`";
     $select_search = $conn->prepare($select_search);
@@ -75,7 +75,7 @@ function add_book($conn, string $name, int $relase, string $language, string $IS
 function add_author($conn, string $f_name, string $l_name, int $bday, string $country)
 {
 
-    save_to_log("Add author: \"" . $f_name . " " . $l_name . "\"");
+    save_to_log("Add author: \"" . $f_name . " " . $l_name . "\"  by: \"" .$_SESSION["username"]. "\"");
     $sql = "INSERT INTO `author`(`f_name`, `l_name`, `bday`, `country`) VALUES ('" . $f_name . "', '" . $l_name . "', '" . $bday . "-01-01', '" . $country . "')";
     $sql = $conn->prepare($sql);
     $sql->execute();
@@ -530,7 +530,7 @@ function reservations($conn, $s_reservation, $e_reservation, $book_id)
  */
 function add_reservations($conn, $s_reservation, $e_reservation)
 {
-    save_to_log("Add reservation from: \"" . $s_reservation . "\" to: \"" . $e_reservation . "\"");
+    save_to_log("Add reservation from: \"" . $s_reservation . "\" to: \"" . $e_reservation . "\" by: \"".$_SESSION["username"]."\"");
     $id = get_user_id($conn, $_SESSION["username"]);
     $sql = "INSERT INTO `reservation`(`s-reservation`, `e-reservation`, `user_id`) VALUES ('" . $s_reservation . "', '" . $e_reservation . "' , $id)";
     $sql = $conn->prepare($sql);
@@ -871,6 +871,8 @@ function load_file($filename, $mode = "r")
  */
 function hide_book($conn, $id)
 {
+    $book = get_book($conn, $id);
+    save_to_log("Hide book: \"" . $book . "\" by: \"" . $_SESSION["username"] . "\"");
     $sql = "UPDATE `book` SET `show`= '0' WHERE `id` = '" . $id . "'";
     $sql = $conn->prepare($sql);
     $sql->execute();

@@ -41,7 +41,7 @@
     echo '<form method="POST" action="">' . "\n";
     if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
         if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
-            echo '<input id="addbook" type="submit" name="users"  value="uživatelé">' . "\n";
+            echo '<input id="addbook" type="submit" name="users"  value="Uživatelé">' . "\n";
             echo '<input id="addbook" type="submit" name="add_book"  value="Přidat knížku">' . "\n";
             echo '<input id="addautor" type="submit" name="add_author"  value="Přidat autora">' . "\n";
         }
@@ -55,7 +55,7 @@
 
     echo '<div id="serch">';
     echo '<form method="GET" action="">' . "\n";
-    /*echo '<input type="text" onfocusout=" " placeholder="Hledate neco?" name="q" autocomplete="off" value="';
+    /*echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
                 if(isset($_GET["q"])){
                     echo $_GET["q"].'">' . "\n";
                 }else{

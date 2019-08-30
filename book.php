@@ -100,7 +100,14 @@
     echo "<div class=\"book\">";
     echo "<div class=\"name\">";
 
-
+    if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
+        if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
+            echo '<form method="POST" action="">';
+            echo '<a href="edit_book.php?id='.$book["id"]. "&name=" . $_GET["name"] . '">Upravit knkížku</a>'  . "\n";
+            echo '<input type="submit" name="delete_book" value="Smazat knkížku">'  . "\n";
+            echo '</form>' . "\n";
+        }
+    }
 
     echo $book["name"];
     echo "</div>";

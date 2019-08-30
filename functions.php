@@ -242,7 +242,7 @@ function update_password($conn, string $username, string $password)
     date_default_timezone_set('Europe/Prague');
     $datetime = date("Y-m-d H:i:s");
     $password = hash_password($password);
-    $sql = "UPDATE `user` SET `password`= '" . $password . "' WHERE `username` = '" . $username . "'";
+    $sql = "UPDATE `user` SET `password` = '" . $password . "' WHERE `username` = '" . $username . "'";
     $sql = $conn->prepare($sql);
     $sql->execute();
 }
@@ -308,7 +308,7 @@ function set_role($conn, string $username, string $role)
 {
 
     save_to_log("Set role: " . $role . " to: \"" . $username . "\" by: \"" . $_SESSION["username"] . "\"");
-    $sql = "UPDATE `user` SET `role`= '" . $role . "' WHERE `username` = '" . $username . "'";
+    $sql = "UPDATE `user` SET `role` = '" . $role . "' WHERE `username` = '" . $username . "'";
     $sql = $conn->prepare($sql);
     $sql->execute();
 }
@@ -535,6 +535,48 @@ function add_reservations($conn, $s_reservation, $e_reservation)
     $sql = "INSERT INTO `reservation`(`s-reservation`, `e-reservation`, `user_id`) VALUES ('" . $s_reservation . "', '" . $e_reservation . "' , $id)";
     $sql = $conn->prepare($sql);
     $sql->execute();
+}
+
+/**
+ * update book
+ * @param   Mixed   $conn               db connection
+ * @param   String  $id                 id
+ * @param   String  $name               name
+ * @param   String  $relase             relase date
+ * @param   String  $language           language
+ * @param   String  $ISBN               ISBN
+ * @param   String  $pages              pages
+ * @param   String  $img                image
+ * @param   String  $room_name          room_name
+ */
+function update_book($conn, String $id, String $name, Int $relase, String $language, String $ISBN, Int $pages, String $img, String $room_name){
+    save_to_log("Update book: \"" . $name . "\" by: \"".$_SESSION["username"]."\"");
+    $sql = "UPDATE `book` SET `name` = '".$name."',`relase` = '".$relase."',`language` = '".$language."',`ISBN` = '".$ISBN."',`pages` = '".$pages."',`img` = '".$img."',`room_name` = '".$room_name."' WHERE `id` = '".$id."'";
+    //echo $sql;
+    $sql = $conn->prepare($sql);
+    $sql->execute();
+}
+
+/**
+ * update book_has_author
+ * @param   Mixed   $conn               db connection
+ * @param   Int     $id                 book id
+ * @param   String  $author             author
+ */
+function update_book_has_author($conn, Int $id, String $author){
+    save_to_log("Update book_has_author by: \"".$_SESSION["username"]."\"");
+    $author = explode(" ", $author);
+    $sql = "SELECT * FROM `author` WHERE `f_name` = '".$author[0]."' AND `l_name` = '".$author[1]."'";
+    //echo $sql;
+    $sql = $conn->prepare($sql);
+    $sql->execute();
+    $row = $sql->fetch();
+    $author_id = $row["id"];
+    $sql = "UPDATE `book_has_author` SET `author_id` = '".$author_id."' WHERE `book_id` = '".$id."'";
+    //echo $sql;
+    $sql = $conn->prepare($sql);
+    $sql->execute();
+
 }
 
 /**
@@ -873,7 +915,7 @@ function hide_book($conn, $id)
 {
     $book = get_book($conn, $id);
     save_to_log("Hide book: \"" . $book . "\" by: \"" . $_SESSION["username"] . "\"");
-    $sql = "UPDATE `book` SET `show`= '0' WHERE `id` = '" . $id . "'";
+    $sql = "UPDATE `book` SET `show` = '0' WHERE `id` = '" . $id . "'";
     $sql = $conn->prepare($sql);
     $sql->execute();
 }

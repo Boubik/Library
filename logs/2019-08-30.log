@@ -1,0 +1,12 @@
+13:33: Generating DB
+13:34: Add user: "Ibi"
+13:48: Add book: "test" by: "Ibi"
+13:48: Add author: "Ibrahim Daghstani"  by: "Ibi"
+13:48: Add author: "Ibrahim Daghstani"  by: "Ibi"
+13:48: Add book: "test" by: "Ibi"
+13:55: Add book: "Zaklínač I. Poslední přání" by: "Ibi"
+13:56: Add user: "test"
+13:57: Add reservation from: "2019-08-31" to: "2019-09-02" by: "test"
+14:01: Add author: "jan chlouba"  by: "Ibi"
+14:26: Hide book: "Zaklínač I. Poslední přání" by: "Ibi"
+14:33: Add reservation from: "2019-08-31" to: "2019-09-08" by: "Ibi"

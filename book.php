@@ -100,13 +100,7 @@
     echo "<div class=\"book\">";
     echo "<div class=\"name\">";
 
-    if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
-        if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
-            echo '<form method="POST" action="">';
-            echo '<input type="submit" name="delete_book" value="Smazat knkížku">'  . "\n";
-            echo '</form>' . "\n";
-        }
-    }
+
 
     echo $book["name"];
     echo "</div>";
@@ -153,6 +147,8 @@
     echo "</div>";
     echo "</div>";
 
+
+
     echo "<div class=\"reservation\">";
     echo '<form method="POST" action="">' . "\nZačátek";
     echo '<input type="date" name="s_date"><br>' . "\nKonec   ";
@@ -161,6 +157,8 @@
     echo "</form>";
     echo "<br>\nnadcházející rezervace:<br>\n";
     echo "</div>";
+
+
 
     $i = 0;
     $reservations = get_reservations($conn, $id);
@@ -184,8 +182,10 @@
             }
         }
     }
+    
 
     echo "</div>";
+
 
 
     if (isset($_POST["reservation"])) {
@@ -206,6 +206,18 @@
             header("Location: /login.php");
         }
     }
+
+
+    echo '<div id="del">';
+    if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
+        if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
+            echo '<form method="POST" action="">';
+            echo '<input type="submit" name="delete_book" value="Smazat knkížku">'  . "\n";
+            echo '</form>' . "\n";
+        }
+    }
+    echo "</div>";
+
 
     echo '<div id="footer">';
     echo '<div id="footercon">';

@@ -172,3 +172,39 @@ input[type=date] {
   transition: .2s;
   position: relative;
 }
+
+#table{
+  position: absolute;
+  margin-left: 480px; 
+  border-collapse: collapse;
+  background-color: #3c1053;
+}
+
+#table td, #table th {
+  border: 1px solid rgb(255, 255, 255);
+  padding: 8px;
+
+}
+#table tr:nth-child(even){
+  background-color: #7008a8;
+}
+
+
+#table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  color: white;
+}
+
+
+#del button{
+  background-color: red;
+}
+
+#del input[type=submit]{
+  background-color: red;
+  width: 200px;
+  margin-top: 130px;
+  margin-left: 320px;
+}

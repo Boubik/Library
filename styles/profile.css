@@ -96,12 +96,16 @@ hr{
 }
 
 #monkaS{
+    display: flex;
+    width: 450px;
     float: right;
-    margin-left: 696px;
+    margin-left: 800px;
     margin-top: -60px;
     height: 25px;
-    top: 0; 
-}
+    z-index: 2;
+    justify-content: flex-end;
+  
+  }
 
 #res{
     position: absolute;

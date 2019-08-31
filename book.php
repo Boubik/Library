@@ -100,14 +100,6 @@
     echo "<div class=\"book\">";
     echo "<div class=\"name\">";
 
-    if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
-        if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
-            echo '<form method="POST" action="">';
-            echo '<a href="edit_book.php?id='.$book["id"]. "&name=" . $_GET["name"] . '">Upravit knkížku</a>'  . "\n";
-            echo '<input type="submit" name="delete_book" value="Smazat knkížku">'  . "\n";
-            echo '</form>' . "\n";
-        }
-    }
 
     echo $book["name"];
     echo "</div>";
@@ -165,7 +157,17 @@
     echo "<br>\nnadcházející rezervace:<br>\n";
     echo "</div>";
 
-
+    echo '<div id="del">';
+    if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
+        if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
+            echo '<form method="POST" action="">';
+            echo '<a href="edit_book.php?id='.$book["id"]. "&name=" . $_GET["name"] . '">Upravit knkížku</a><br>';
+            echo '<input type="submit" name="delete_book" value="Smazat knkížku"><br>';
+            echo '</form>' . "\n";
+        }
+    }
+    
+    echo "</div>";
 
     $i = 0;
     $reservations = get_reservations($conn, $id);
@@ -182,14 +184,16 @@
             echo "<th>" . substr($reservation["s-reservation"], 0, 10) . "</th><th>" . substr($reservation["e-reservation"], 0, 10) . "</th>";
             echo "</tr>";
             $i++;
+            
             if($i == 10){
-                echo '</table>';
                 echo "</div>";
                 break;
             }
         }
     }
-    
+    echo '</table>';
+
+
 
     echo "</div>";
 
@@ -214,16 +218,9 @@
         }
     }
 
-
-    echo '<div id="del">';
-    if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
-        if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
-            echo '<form method="POST" action="">';
-            echo '<input type="submit" name="delete_book" value="Smazat knkížku">'  . "\n";
-            echo '</form>' . "\n";
-        }
-    }
     echo "</div>";
+
+
 
 
     echo '<div id="footer">';

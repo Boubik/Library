@@ -293,6 +293,7 @@
         echo "<a href=\"/?q=" . $search . "&page=" . ($page + 1) . "\"> ></a>";
     }
     echo "</div>";
+    echo "</div>";
 
 
     echo '<div id="footer">';

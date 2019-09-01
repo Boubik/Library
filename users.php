@@ -3,10 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
+    <link href="styles/users.css" rel="stylesheet" type="text/css">
     <link href="styles/profile.css" rel="stylesheet" type="text/css">
     <link href="styles/header.css" rel="stylesheet" type="text/css">
     <link href="styles/footer.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="images/logo.ico">
+    <link rel="shortcut icon" href="/images/fav.png" type="image/x-icon" /> 
     <script src="js/350205fd30.js"></script>
     <title>Uživatelé</title>
     <style>
@@ -140,9 +142,9 @@ $users = users($conn, $search, $page, $per_page);
 $count_users = count_users($conn, $search);
 
 echo '<div id="main">';
-    echo '<table>';
+    echo '<table id="tab">';
         echo "<tr>";
-        echo "<th>Jméno</th><th>Přezdívka</th><th>Role</th>";
+        echo '<th>Jméno</th><th>Přezdívka</th><th>Role</th>';
         if($is_admin){
             echo"<th>Smazat</th>";
         }

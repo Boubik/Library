@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="styles/login.css">
     <link href="styles/header.css" rel="stylesheet" type="text/css">
     <link href="styles/footer.css" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="/images/fav.png" type="image/x-icon" /> 
     <script src="js/350205fd30.js"></script>
 </head>
 

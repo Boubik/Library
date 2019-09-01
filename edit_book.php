@@ -3,9 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
+    <link href="styles/bookedit.css" rel="stylesheet" type="text/css">
     <link href="styles/book.css" rel="stylesheet" type="text/css">
     <link href="styles/header.css" rel="stylesheet" type="text/css">
     <link href="styles/footer.css" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="/images/fav.png" type="image/x-icon" /> 
     <link rel="icon" href="images/logo.ico">
     <script src="js/350205fd30.js"></script>
     <?php
@@ -97,14 +99,14 @@
     }
 
     echo "<div class=\"book\">";
-        echo '<form method="POST" action="">Knížka ';
+        echo '<form method="POST" action="">Knížka<br>';
             echo '<input id="none" type="text" name="id" value="'.$book["id"].'">';
-            echo '<input type="text" name="name" value="'.$book["name"].'"><br>Rok vydání ';
-            echo '<input type="number" name="relase" value="'.$book["relase"].'"><br>Jazyk ';
-            echo '<input type="text" name="language" value="'.$book["language"].'"><br>ISBN ';
-            echo '<input type="text" name="ISBN" value="'.$book["ISBN"].'"><br>Stránek ';
-            echo '<input type="text" name="pages" value="'.$book["pages"].'"><br>Obrázek ';
-            echo '<input type="text" name="img" value="'.$book["img"].'"><br>Místnost ';
+            echo '<input type="text" name="name" value="'.$book["name"].'"><br>Rok vydání <br>';
+            echo '<input type="number" name="relase" value="'.$book["relase"].'"><br>Jazyk <br>';
+            echo '<input type="text" name="language" value="'.$book["language"].'"><br>ISBN <br>';
+            echo '<input type="text" name="ISBN" value="'.$book["ISBN"].'"><br>Stránek <br>';
+            echo '<input type="text" name="pages" value="'.$book["pages"].'"><br>Obrázek<br> ';
+            echo '<input type="text" name="img" value="'.$book["img"].'"><br>Místnost <br>';
             echo '<input type="text" name="room_name" value="'.$book["room_name"].'"><br>';
 
             $book_has_author = get_table($conn, "book_has_author");

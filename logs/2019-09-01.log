@@ -1,1 +1,5 @@
 01:07: Add reservation from: "2019-09-01" to: "2019-09-02" by: "Ibi"
+12:17: Add user: "Furer"
+12:17: Set role: mod to: "Furer" by: "Ibi"
+12:23: Set role: user to: "test" by: "Ibi"
+13:03: Add book: "ad" by: "Ibi"

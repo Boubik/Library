@@ -7,6 +7,7 @@
     <link href="styles/header.css" rel="stylesheet" type="text/css">
     <link href="styles/footer.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="images/logo.ico">
+    <link rel="shortcut icon" href="/images/fav.png" type="image/x-icon" /> 
     <script src="js/350205fd30.js"></script>
     <?php
     session_start();
@@ -121,7 +122,7 @@
 
     if (isset($new[0])) {
         echo "Aktivní rezervace:<br>\n";
-        echo "<table>";
+        echo '<table id="tab">';
         echo "<tr><th>Jménéno knihy</th><th>od kdy</th><th>do kdy</th></tr>";
         foreach ($new as $item) {
             echo "<tr>";
@@ -137,7 +138,7 @@
 
     if (isset($old[0])) {
         echo "Staré rezervace:<br>\n";
-        echo "<table>";
+        echo '<table id="tab">';
         echo "<tr><th>Jménéno knihy</th><th>od kdy</th><th>do kdy</th></tr>";
         foreach ($old as $item) {
             echo "<tr>";

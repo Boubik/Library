@@ -1,0 +1,19 @@
+#monkaS{
+    margin-top: -110px !important;
+}
+
+input[type=text], input[type=number]{
+    background-color:  rgb(211, 211, 211);
+    border-radius: 5px;
+    width: 30%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 3px solid  rgb(211, 211, 211);
+    outline: none;
+  }
+
+  .book{
+      padding-top: 50px;
+      text-align:  center;
+  }

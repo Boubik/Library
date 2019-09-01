@@ -104,9 +104,9 @@ input[type=date] {
   }
 
   input[type=submit]:hover {
-    background-color: #00d9ff;
+    background-color: #ff2dae;
     transition-duration: 0.5s;
-    color: black;
+    color: white;
   }
 
   #serch input[type=text]:focus  {
@@ -229,4 +229,9 @@ input[type=date] {
 #del input[type=submit]#edit {
   background-color: #3c1053;
   width: 200px;
+}
+
+#del input[type=submit]#edit:hover {
+color: white;
+background-color: #ff2dae;
 }

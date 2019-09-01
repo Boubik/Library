@@ -224,3 +224,9 @@ input[type=date] {
   margin-left: 100px;
   margin-top: 50px;
 }
+
+
+#del input[type=submit]#edit {
+  background-color: #3c1053;
+  width: 200px;
+}

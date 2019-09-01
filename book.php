@@ -166,7 +166,7 @@
     if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
         if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
             echo '<form method="POST" action="">';
-            echo '<input type="submit" name="edit"  value="Upravit knkížku">' . "\n";
+            echo '<input type="submit"  id="edit" name="edit"  value="Upravit knkížku"><br>';
             echo '<input type="submit" name="delete_book" value="Smazat knkížku"><br>';
             echo '</form>' . "\n";
         }

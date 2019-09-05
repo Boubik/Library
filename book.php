@@ -100,9 +100,12 @@
     if (isset($_POST["users"])) {
         header("Location: /users.php");
     }
-
+    
     if (isset($_POST["edit"])) {
         header("Location: /edit_book.php?id=".$book["id"]."&name=".$_GET["name"]);
+    }
+    if (isset($_POST["delete_reservation"])) {
+        delete_reservation($conn, $_POST["reservation_id"]);
     }
 
     echo "<div class=\"book\">";
@@ -169,7 +172,7 @@
     if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
         if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
             echo '<form method="POST" action="">';
-            echo '<input type="submit"  id="edit" name="edit"  value="Upravit knkížku"><br>';
+            echo '<input type="submit" id="edit" name="edit"  value="Upravit knkížku"><br>';
             echo '<input type="submit" name="delete_book" value="Smazat knkížku"><br>';
             echo '</form>' . "\n";
         }
@@ -209,7 +212,8 @@
             if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
                 if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
                     echo '<form method="POST" action="">';
-                    echo '<input type="submit" name="delete_reservation" value="Smazat rezervaci"><br>';
+                    echo '<input type="text" id="none" name="reservation_id" value="'.$reservation["reservation_id"].'">';
+                    echo '<input type="submit" name="delete_reservation" value="Smazat rezervaci">';
                     echo '</form>' . "\n";
                 }
             }

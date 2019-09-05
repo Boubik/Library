@@ -921,6 +921,22 @@ function hide_book($conn, $id)
 }
 
 /**
+ * will delete reservation 
+ * @param   Mixed   $conn           db connection
+ * @param   Int     $id             id of book
+ */
+function delete_reservation($conn, $id)
+{
+    $sql = "DELETE FROM `book_has_reservation` WHERE `reservation_id` = '".$id."'";
+    $sql = $conn->prepare($sql);
+    $sql->execute();
+    
+    $sql = "DELETE FROM `reservation` WHERE `id` = '".$id."'";
+    $sql = $conn->prepare($sql);
+    $sql->execute();
+}
+
+/**
  * will get user by reservation id 
  * @param   Mixed   $conn           db connection
  * @param   Int     $id             id of book

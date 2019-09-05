@@ -21,6 +21,9 @@
     border: 1px solid black;
     border-collapse: collapse;
     }
+    #none{
+        display: none;
+    }
     </style>
 </head>
 
@@ -183,10 +186,29 @@
                 echo '<table>';
                 echo "<tr>";
                 echo "<th>Od kdy</th><th>Do kdy</th>";
+                if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
+                    if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
+                        echo "<th>kdo</th><th>Smazat</th>";
+                    }
+                }
                 echo "</tr>";
             }
             echo "<tr>";
             echo "<th>" . substr($reservation["s-reservation"], 0, 10) . "</th><th>" . substr($reservation["e-reservation"], 0, 10) . "</th>";
+            $user = get_user_by_reservation_id($conn, $reservation["reservation_id"]);
+            echo "<th>";
+            echo $user["username"];
+            echo "</th>";
+
+            echo "<th>";
+            if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
+                if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
+                    echo '<form method="POST" action="">';
+                    echo '<input type="submit" name="delete_reservation" value="Smazat rezervaci"><br>';
+                    echo '</form>' . "\n";
+                }
+            }
+            echo "</th>";
             echo "</tr>";
             $i++;
             

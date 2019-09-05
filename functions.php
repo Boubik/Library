@@ -921,6 +921,26 @@ function hide_book($conn, $id)
 }
 
 /**
+ * will get user by reservation id 
+ * @param   Mixed   $conn           db connection
+ * @param   Int     $id             id of book
+ * @return  Array   text in file
+ */
+function get_user_by_reservation_id($conn, $id)
+{
+    $sql = "SELECT * FROM `reservation` WHERE `id` = '".$id."'";
+    $sql = $conn->prepare($sql);
+    $sql->execute();
+    $reservation = $sql->fetch();
+    $user_id = $reservation["user_id"];
+    $sql = "SELECT * FROM `user` WHERE `id` = '".$user_id."'";
+    $sql = $conn->prepare($sql);
+    $sql->execute();
+
+    return $sql->fetch();
+}
+
+/**
  * save text to .log and delete old
  * @param   String  $log_text   text that will be putet to log
  */

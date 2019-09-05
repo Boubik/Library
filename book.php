@@ -194,7 +194,12 @@
                 echo "</tr>";
             }
             echo "<tr>";
-            echo "<th>" . substr($reservation["s-reservation"], 0, 10) . "</th><th>" . substr($reservation["e-reservation"], 0, 10) . "</th>";
+            $start = substr($reservation["s-reservation"], 0, 10);
+            $start = explode("-", $start);
+            $stop = substr($reservation["e-reservation"], 0, 10);
+            $stop = explode("-", $stop);
+
+            echo "<th>" . $start[2] . ". " . $start[1] . ". " . $start[0] . "</th><th>" . $stop[2] . ". " . $stop[1] . ". " . $stop[0] . "</th>";
             $user = get_user_by_reservation_id($conn, $reservation["reservation_id"]);
             echo "<th>";
             echo $user["username"];

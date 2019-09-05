@@ -181,6 +181,8 @@ input[type=date] {
   margin-left: 480px; 
   border-collapse: collapse;
   background-color: #3c1053;
+  height: 200px;
+  overflow: auto;
 }
 
 #table td, #table th {

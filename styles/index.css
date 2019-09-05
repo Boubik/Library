@@ -205,7 +205,6 @@ a{
 
   #category:hover{
       background-color: #ff2dae;
-      /* border-radius: 25px 0px 0px 25px; */
       transition: 0.3s;
   }
 
@@ -277,11 +276,7 @@ a{
  
  }
 
-/* test area */
 
-  
-/* end of test area */
- 
 #sel {
     margin-top: 5px;
     border: 1px solid rgb(0, 0, 0);
@@ -330,7 +325,8 @@ a{
     width: 100px;
     color: white;
     background-color: red;
-    border-radius: 25px;
+    border-radius: 25px;    
+    padding-top: 2px;
 }
 
 #booked::before{
@@ -351,4 +347,24 @@ a{
     width: 100px;
     background-color:green;
     border-radius: 25px;
+    padding-top: 2px;
  }
+
+/* 
+
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+
+  ::-webkit-scrollbar-thumb {
+    background: #00c3ff; 
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(255, 0, 200); 
+  } */

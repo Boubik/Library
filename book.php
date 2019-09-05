@@ -203,14 +203,15 @@
             $stop = explode("-", $stop);
 
             echo "<th>" . $start[2] . ". " . $start[1] . ". " . $start[0] . "</th><th>" . $stop[2] . ". " . $stop[1] . ". " . $stop[0] . "</th>";
-            $user = get_user_by_reservation_id($conn, $reservation["reservation_id"]);
-            echo "<th>";
-            echo $user["username"];
-            echo "</th>";
-
-            echo "<th>";
+            
             if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
                 if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
+                    $user = get_user_by_reservation_id($conn, $reservation["reservation_id"]);
+                    echo "<th>";
+                    echo $user["username"];
+                    echo "</th>";
+        
+                    echo "<th>";
                     echo '<form method="POST" action="">';
                     echo '<input type="text" id="none" name="reservation_id" value="'.$reservation["reservation_id"].'">';
                     echo '<input type="submit" name="delete_reservation" value="Smazat rezervaci">';

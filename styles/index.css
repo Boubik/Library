@@ -350,7 +350,7 @@ a{
     padding-top: 2px;
  }
 
-/* 
+
 
 ::-webkit-scrollbar {
     width: 10px;
@@ -362,9 +362,9 @@ a{
    
 
   ::-webkit-scrollbar-thumb {
-    background: #00c3ff; 
+    background: #686868; 
   }
 
   ::-webkit-scrollbar-thumb:hover {
     background: rgb(255, 0, 200); 
-  } */
+  }

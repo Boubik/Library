@@ -178,11 +178,16 @@ input[type=date] {
 
 #table{
   position: absolute;
-  margin-left: 480px; 
+  margin-left: 385px; 
   border-collapse: collapse;
-  background-color: #3c1053;
-  height: 200px;
+  height: 150px;
   overflow: auto;
+  width: 400px;
+}
+
+table{
+  background-color: #3c1053;
+  margin: auto;
 }
 
 #table td, #table th {

@@ -263,7 +263,6 @@
 
             echo "</div></a>";
             echo "</div>";
-            // echo "</div>";
         }
     }
     echo "</div>";

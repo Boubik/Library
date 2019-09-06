@@ -165,6 +165,7 @@
     echo '<input type="date" name="e_date"><br>' . "\n";
     echo '<input type="submit" name="reservation"  value="zarezervovat">' . "\n";
     echo "</form>";
+    echo '<br><br>';
     echo "<br>\nnadcházející rezervace:<br>\n";
     echo "</div>";
 
@@ -214,7 +215,7 @@
                     echo "<th>";
                     echo '<form method="POST" action="">';
                     echo '<input type="text" id="none" name="reservation_id" value="'.$reservation["reservation_id"].'">';
-                    echo '<input type="submit" name="delete_reservation" value="Smazat rezervaci">';
+                    echo '<input type="submit" name="delete_reservation" value="Smazat">';
                     echo '</form>' . "\n";
                 }
             }
@@ -235,7 +236,7 @@
     echo "</div>";
 
 
-
+echo '<div id="rez">';
     if (isset($_POST["reservation"])) {
         if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
             $date = $_POST["s_date"];
@@ -255,6 +256,7 @@
         }
     }
 
+    echo "</div>";
     echo "</div>";
 
 

@@ -22,7 +22,7 @@ body{
     background-color: white; 
     margin-bottom: 200px;
     padding-bottom: 200px;
-    height: 500px;
+    height: 550px;
 }
 
 #info{
@@ -177,8 +177,10 @@ input[type=date] {
 }
 
 #table{
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   position: absolute;
   margin-left: 385px; 
+  /* margin-top: 50px; */
   border-collapse: collapse;
   height: 150px;
   overflow: auto;
@@ -186,17 +188,16 @@ input[type=date] {
 }
 
 table{
-  background-color: #3c1053;
   margin: auto;
 }
 
 #table td, #table th {
-  border: 1px solid rgb(255, 255, 255);
+  border: 1px solid rgb(182, 182, 182);
   padding: 8px;
 
 }
 #table tr:nth-child(even){
-  background-color: #7008a8;
+  background-color: #dfdfdf;
 }
 
 
@@ -204,7 +205,7 @@ table{
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  color: white;
+  color: black;
 }
 
 
@@ -241,4 +242,11 @@ table{
 #del input[type=submit]#edit:hover {
 color: white;
 background-color: #ff2dae;
+}
+
+#rez{
+  text-align: center;
+  margin-top: -50px;
+  margin-left: 400px;
+  color: red;
 }

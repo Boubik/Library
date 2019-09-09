@@ -1,4 +1,15 @@
-#header{
+/* #header{
 margin: auto;
 padding-top: 10px;
-}
+} */
+#header{
+    margin: auto;
+    width: 100%;
+    padding-top: 10px;
+    margin-bottom: 10px;
+    }
+    
+    #inheader{
+        width: 100%;
+    }
+    

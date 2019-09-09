@@ -37,11 +37,11 @@
     echo '<select name="room" id="sel">' . "\n";
     echo '<option>Místnost</option>' . "\n";
     foreach (get_table($conn, "room") as $row) {
-        echo '<option>' . $row["name"] . '</option>' . "\n";
+        echo '<option>' . $row["name"] . '</option>' ;
     }
-    echo '</select>' . "<br> nebo <br>";
+    echo '</select> nebo <input type="text" name="room_name" placeholder="Místnost"><br>';
 
-    echo '<input type="text" name="room_name" placeholder="Místnost"><br>';
+    // echo '<input type="text" name="room_name" placeholder="Místnost"><br>';
 
     echo '<input type="number" name="pages" placeholder="Počet stran"><br>';
     echo '<input type="text" maxlength="45" name="genres" placeholder="Žánry"><br>(mezera rozděluje žánry)<br>';

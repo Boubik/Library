@@ -2,7 +2,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <link href="styles/index.css" rel="stylesheet" type="text/css">
+    <link href="styles/index.scss" rel="stylesheet" type="text/css">
     <link href="styles/header.css" rel="stylesheet" type="text/css">
     <link href="styles/footer.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="images/logo.ico">
@@ -54,8 +54,8 @@
     $books = book($conn, $search, $count_books, $page, $per_page);
 
     echo '<div id="header">';
-    echo "<a href=\"/\"><image src=\"/images/logo_1.png\" style=\"height: 100px\"></a>";
     echo '<div id="inheader">';
+    echo "<a href=\"/\"><image src=\"/images/logo_1.png\" style=\"height: 100px\"></a>";
     echo '<div id="monkaS">';
     echo '<form method="POST" action="">' . "\n";
     if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {

@@ -10,20 +10,19 @@
  */
 function connect_to_db(string $servername, string $dbname, string $username, string $password)
 {
-
     //connect
     try {
         $conn = new PDO("mysql:host=" . $servername . ";dbname=" . $dbname . ";charset=utf8", $username, $password);
         // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $sql = $conn->prepare("SET character SET UTF8");
+        $sql->execute();
+    
+        return $conn;
     } catch (PDOException $e) {
         echo "Something goes worn give us time to fix it";
     }
 
-    $sql = $conn->prepare("SET character SET UTF8");
-    $sql->execute();
-
-    return $conn;
 }
 
 /**

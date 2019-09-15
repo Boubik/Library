@@ -370,7 +370,8 @@ function last_login($conn, string $username)
  */
 function hash_password(string $password)
 {
-    return hash("sha3-512", $password);
+    //$password = hash("sha3-512", $password);
+    return $password;
 }
 
 /**

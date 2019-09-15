@@ -7,7 +7,7 @@
     <link href="styles/header.css" rel="stylesheet" type="text/css">
     <link href="styles/footer.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="images/logo.ico">
-    <link rel="shortcut icon" href="/images/fav.png" type="image/x-icon" /> 
+    <link rel="shortcut icon" href="/images/fav.png" type="image/x-icon" />
     <script src="js/350205fd30.js"></script>
     <?php
     if (isset($_GET["name"])) {
@@ -17,13 +17,16 @@
     }
     ?>
     <style>
-    table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-    }
-    #none{
-        display: none;
-    }
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        #none {
+            display: none;
+        }
     </style>
 </head>
 
@@ -100,9 +103,9 @@
     if (isset($_POST["users"])) {
         header("Location: /users.php");
     }
-    
+
     if (isset($_POST["edit"])) {
-        header("Location: /edit_book.php?id=".$book["id"]."&name=".$_GET["name"]);
+        header("Location: /edit_book.php?id=" . $book["id"] . "&name=" . $_GET["name"]);
     }
     if (isset($_POST["delete_reservation"])) {
         delete_reservation($conn, $_POST["reservation_id"]);
@@ -178,14 +181,14 @@
             echo '</form>' . "\n";
         }
     }
-    
+
     echo "</div>";
 
     $i = 0;
     $reservations = get_reservations($conn, $id);
     foreach ($reservations as $reservation) {
         if ($book["id"] == $reservation["book_id"]) {
-            if($i == 0){
+            if ($i == 0) {
                 echo '<div id="table">';
                 echo '<table>';
                 echo "<tr>";
@@ -204,17 +207,17 @@
             $stop = explode("-", $stop);
 
             echo "<th>" . $start[2] . ". " . $start[1] . ". " . $start[0] . "</th><th>" . $stop[2] . ". " . $stop[1] . ". " . $stop[0] . "</th>";
-            
+
             if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
                 if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
                     $user = get_user_by_reservation_id($conn, $reservation["reservation_id"]);
                     echo "<th>";
                     echo $user["username"];
                     echo "</th>";
-        
+
                     echo "<th>";
                     echo '<form method="POST" action="">';
-                    echo '<input type="text" id="none" name="reservation_id" value="'.$reservation["reservation_id"].'">';
+                    echo '<input type="text" id="none" name="reservation_id" value="' . $reservation["reservation_id"] . '">';
                     echo '<input type="submit" name="delete_reservation" value="Smazat">';
                     echo '</form>' . "\n";
                 }
@@ -222,8 +225,8 @@
             echo "</th>";
             echo "</tr>";
             $i++;
-            
-            if($i == 10){
+
+            if ($i == 10) {
                 echo "</div>";
                 break;
             }
@@ -236,7 +239,7 @@
     echo "</div>";
 
 
-echo '<div id="rez">';
+    echo '<div id="rez">';
     if (isset($_POST["reservation"])) {
         if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
             $date = $_POST["s_date"];

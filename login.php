@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="styles/login.css">
     <link href="styles/header.css" rel="stylesheet" type="text/css">
     <link href="styles/footer.css" rel="stylesheet" type="text/css">
-    <link rel="shortcut icon" href="/images/fav.png" type="image/x-icon" /> 
+    <link rel="shortcut icon" href="/images/fav.png" type="image/x-icon" />
     <script src="js/350205fd30.js"></script>
     <script src="js/jquery-2.1.1.min.js" type="text/javascript"></script>
     <script src="/js/sha3.js"></script>
@@ -57,7 +57,7 @@
                 echo '<div id="2" style="display:none;">
                         My Dynamic Content
                         </div>';
-            }else{
+            } else {
 
 
                 echo '<div id="Reg">';
@@ -153,16 +153,18 @@
 
     ?>
     <script type="text/javascript">
-        $('.form-signin').submit(function () {
+        $('.form-signin').submit(function() {
             if ($("#password").val().length !== 0) {
-                var hash = CryptoJS.SHA3($("#password").val(), { outputLength: 512 });
+                var hash = CryptoJS.SHA3($("#password").val(), {
+                    outputLength: 512
+                });
                 $("#passwordHMAC").val(hash);
             } else {
                 $("#passwordHMAC").val("");
             }
             $("#password").val("");
         });
-    </script> 
+    </script>
 </body>
 <script>
     function myFunction() {

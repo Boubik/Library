@@ -92,3 +92,7 @@ input[type=text] {
   input[type=submit]:hover {
     background-color: #ff2dae;
   }
+
+  #inheader img{
+    margin-left: 200px; 
+}

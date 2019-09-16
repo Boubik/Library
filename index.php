@@ -55,7 +55,7 @@
 
     echo '<div id="header">';
     echo '<div id="inheader">';
-    echo "<a href=\"/\"><image src=\"/images/logo_1.png\" style=\"height: 100px\"></a>";
+    echo "<a href=\"/\"><image id='fav' src=\"/images/logo_1.png\" style=\"height: 100px\"></a>";
     echo '<div id="monkaS">';
     echo '<form method="POST" action="">' . "\n";
     if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
@@ -72,16 +72,7 @@
     echo '</form>' . "\n";
     echo '</div>';
 
-    echo '<div id="serch">';
-    echo '<form method="GET" action="">' . "\n";
-    echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
-    if (isset($_GET["q"])) {
-        echo $_GET["q"] . '">' . "\n";
-    } else {
-        echo '">' . "\n";
-    }
-    echo '</form>' . "\n";
-    echo '</div>';
+
     echo '</div>';
     echo '</div>';
 
@@ -196,6 +187,18 @@
 
     echo '<div id="bookcon">';
     // echo '<div data-aos="fade-in" data-aos-duration="2000">';
+ 
+    echo '<div id="serch">';
+    echo '<form method="GET" action="">' . "\n";
+    echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
+    if (isset($_GET["q"])) {
+        echo $_GET["q"] . '">' . "\n";
+    } else {
+        echo '">' . "\n";
+    }
+    echo '</form>' . "\n";
+    echo '</div>';
+
 
     if (!isset($books)) {
         echo '<div id="warning>';

@@ -90,7 +90,7 @@ input[type=text] {
     padding: 12px 20px;
     margin: 8px 0;
     border: none;
-    border-radius: 5px;
+    border-radius: 25px;
     color: white;
     transition: 0.3s;
   }
@@ -241,4 +241,8 @@ input[type=password]#reset:focus {
 input[type=submit]#konec:hover{
   background-color: #ff2dae;
 
+}
+
+#header img{
+  margin-left: 200px; 
 }

@@ -17,3 +17,7 @@ input[type=text], input[type=number]{
       padding-top: 50px;
       text-align:  center;
   }
+
+  #inheader img{
+    margin-left: 200px; 
+}

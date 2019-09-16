@@ -10,20 +10,18 @@
  */
 function connect_to_db(string $servername, string $dbname, string $username, string $password)
 {
-
     //connect
     try {
         $conn = new PDO("mysql:host=" . $servername . ";dbname=" . $dbname . ";charset=utf8", $username, $password);
         // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $sql = $conn->prepare("SET character SET UTF8");
+        $sql->execute();
+
+        return $conn;
     } catch (PDOException $e) {
         echo "Something goes worn give us time to fix it";
     }
-
-    $sql = $conn->prepare("SET character SET UTF8");
-    $sql->execute();
-
-    return $conn;
 }
 
 /**
@@ -39,7 +37,7 @@ function connect_to_db(string $servername, string $dbname, string $username, str
 function add_book($conn, string $name, int $relase, string $language, string $ISBN, string $room_name, int $pages, string $img)
 {
 
-    save_to_log("Add book: \"" . $name . "\" by: \"".$_SESSION["username"]."\"");
+    save_to_log("Add book: \"" . $name . "\" by: \"" . $_SESSION["username"] . "\"");
     $db_room = true;
     $select_search = "SELECT * FROM `room`";
     $select_search = $conn->prepare($select_search);
@@ -75,7 +73,7 @@ function add_book($conn, string $name, int $relase, string $language, string $IS
 function add_author($conn, string $f_name, string $l_name, int $bday, string $country)
 {
 
-    save_to_log("Add author: \"" . $f_name . " " . $l_name . "\"  by: \"" .$_SESSION["username"]. "\"");
+    save_to_log("Add author: \"" . $f_name . " " . $l_name . "\"  by: \"" . $_SESSION["username"] . "\"");
     $sql = "INSERT INTO `author`(`f_name`, `l_name`, `bday`, `country`) VALUES ('" . $f_name . "', '" . $l_name . "', '" . $bday . "-01-01', '" . $country . "')";
     $sql = $conn->prepare($sql);
     $sql->execute();
@@ -371,7 +369,8 @@ function last_login($conn, string $username)
  */
 function hash_password(string $password)
 {
-    return hash("sha3-512", $password);
+    //$password = hash("sha3-512", $password);
+    return $password;
 }
 
 /**
@@ -530,7 +529,7 @@ function reservations($conn, $s_reservation, $e_reservation, $book_id)
  */
 function add_reservations($conn, $s_reservation, $e_reservation)
 {
-    save_to_log("Add reservation from: \"" . $s_reservation . "\" to: \"" . $e_reservation . "\" by: \"".$_SESSION["username"]."\"");
+    save_to_log("Add reservation from: \"" . $s_reservation . "\" to: \"" . $e_reservation . "\" by: \"" . $_SESSION["username"] . "\"");
     $id = get_user_id($conn, $_SESSION["username"]);
     $sql = "INSERT INTO `reservation`(`s-reservation`, `e-reservation`, `user_id`) VALUES ('" . $s_reservation . "', '" . $e_reservation . "' , $id)";
     $sql = $conn->prepare($sql);
@@ -549,9 +548,10 @@ function add_reservations($conn, $s_reservation, $e_reservation)
  * @param   String  $img                image
  * @param   String  $room_name          room_name
  */
-function update_book($conn, String $id, String $name, Int $relase, String $language, String $ISBN, Int $pages, String $img, String $room_name){
-    save_to_log("Update book: \"" . $name . "\" by: \"".$_SESSION["username"]."\"");
-    $sql = "UPDATE `book` SET `name` = '".$name."',`relase` = '".$relase."',`language` = '".$language."',`ISBN` = '".$ISBN."',`pages` = '".$pages."',`img` = '".$img."',`room_name` = '".$room_name."' WHERE `id` = '".$id."'";
+function update_book($conn, String $id, String $name, Int $relase, String $language, String $ISBN, Int $pages, String $img, String $room_name)
+{
+    save_to_log("Update book: \"" . $name . "\" by: \"" . $_SESSION["username"] . "\"");
+    $sql = "UPDATE `book` SET `name` = '" . $name . "',`relase` = '" . $relase . "',`language` = '" . $language . "',`ISBN` = '" . $ISBN . "',`pages` = '" . $pages . "',`img` = '" . $img . "',`room_name` = '" . $room_name . "' WHERE `id` = '" . $id . "'";
     //echo $sql;
     $sql = $conn->prepare($sql);
     $sql->execute();
@@ -563,20 +563,20 @@ function update_book($conn, String $id, String $name, Int $relase, String $langu
  * @param   Int     $id                 book id
  * @param   String  $author             author
  */
-function update_book_has_author($conn, Int $id, String $author){
-    save_to_log("Update book_has_author by: \"".$_SESSION["username"]."\"");
+function update_book_has_author($conn, Int $id, String $author)
+{
+    save_to_log("Update book_has_author by: \"" . $_SESSION["username"] . "\"");
     $author = explode(" ", $author);
-    $sql = "SELECT * FROM `author` WHERE `f_name` = '".$author[0]."' AND `l_name` = '".$author[1]."'";
+    $sql = "SELECT * FROM `author` WHERE `f_name` = '" . $author[0] . "' AND `l_name` = '" . $author[1] . "'";
     //echo $sql;
     $sql = $conn->prepare($sql);
     $sql->execute();
     $row = $sql->fetch();
     $author_id = $row["id"];
-    $sql = "UPDATE `book_has_author` SET `author_id` = '".$author_id."' WHERE `book_id` = '".$id."'";
+    $sql = "UPDATE `book_has_author` SET `author_id` = '" . $author_id . "' WHERE `book_id` = '" . $id . "'";
     //echo $sql;
     $sql = $conn->prepare($sql);
     $sql->execute();
-
 }
 
 /**
@@ -882,7 +882,7 @@ function generate_db()
         $sql = explode(";", $sql);
         foreach ($sql as $item) {
             try {
-                $sql = $conn->prepare($item.";");
+                $sql = $conn->prepare($item . ";");
                 $sql->execute();
             } catch (PDOException $e) { }
         }
@@ -927,11 +927,11 @@ function hide_book($conn, $id)
  */
 function delete_reservation($conn, $id)
 {
-    $sql = "DELETE FROM `book_has_reservation` WHERE `reservation_id` = '".$id."'";
+    $sql = "DELETE FROM `book_has_reservation` WHERE `reservation_id` = '" . $id . "'";
     $sql = $conn->prepare($sql);
     $sql->execute();
-    
-    $sql = "DELETE FROM `reservation` WHERE `id` = '".$id."'";
+
+    $sql = "DELETE FROM `reservation` WHERE `id` = '" . $id . "'";
     $sql = $conn->prepare($sql);
     $sql->execute();
 }
@@ -944,12 +944,12 @@ function delete_reservation($conn, $id)
  */
 function get_user_by_reservation_id($conn, $id)
 {
-    $sql = "SELECT * FROM `reservation` WHERE `id` = '".$id."'";
+    $sql = "SELECT * FROM `reservation` WHERE `id` = '" . $id . "'";
     $sql = $conn->prepare($sql);
     $sql->execute();
     $reservation = $sql->fetch();
     $user_id = $reservation["user_id"];
-    $sql = "SELECT * FROM `user` WHERE `id` = '".$user_id."'";
+    $sql = "SELECT * FROM `user` WHERE `id` = '" . $user_id . "'";
     $sql = $conn->prepare($sql);
     $sql->execute();
 

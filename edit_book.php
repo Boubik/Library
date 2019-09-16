@@ -7,7 +7,7 @@
     <link href="styles/book.css" rel="stylesheet" type="text/css">
     <link href="styles/header.css" rel="stylesheet" type="text/css">
     <link href="styles/footer.css" rel="stylesheet" type="text/css">
-    <link rel="shortcut icon" href="/images/fav.png" type="image/x-icon" /> 
+    <link rel="shortcut icon" href="/images/fav.png" type="image/x-icon" />
     <link rel="icon" href="images/logo.ico">
     <script src="js/350205fd30.js"></script>
     <?php
@@ -18,13 +18,16 @@
     }
     ?>
     <style>
-    table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-    }
-    #none{
-        display: none;
-    }
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        #none {
+            display: none;
+        }
     </style>
 </head>
 
@@ -94,43 +97,43 @@
 
     if (isset($_POST["save"])) {
         update_book($conn, $_POST["id"], $_POST["name"], $_POST["relase"], $_POST["language"], $_POST["ISBN"], $_POST["pages"], $_POST["img"], $_POST["room_name"]);
-        update_book_has_author($conn, $_POST["id"] , $_POST["author"]);
+        update_book_has_author($conn, $_POST["id"], $_POST["author"]);
         echo "Uloženo";
     }
 
     echo "<div class=\"book\">";
-        echo '<form method="POST" action="">Knížka<br>';
-            echo '<input id="none" type="text" name="id" value="'.$book["id"].'">';
-            echo '<input type="text" name="name" value="'.$book["name"].'"><br>Rok vydání <br>';
-            echo '<input type="number" name="relase" value="'.$book["relase"].'"><br>Jazyk <br>';
-            echo '<input type="text" name="language" value="'.$book["language"].'"><br>ISBN <br>';
-            echo '<input type="text" name="ISBN" value="'.$book["ISBN"].'"><br>Stránek <br>';
-            echo '<input type="text" name="pages" value="'.$book["pages"].'"><br>Obrázek<br> ';
-            echo '<input type="text" name="img" value="'.$book["img"].'"><br>Místnost <br>';
-            echo '<input type="text" name="room_name" value="'.$book["room_name"].'"><br>';
+    echo '<form method="POST" action="">Knížka<br>';
+    echo '<input id="none" type="text" name="id" value="' . $book["id"] . '">';
+    echo '<input type="text" name="name" value="' . $book["name"] . '"><br>Rok vydání <br>';
+    echo '<input type="number" name="relase" value="' . $book["relase"] . '"><br>Jazyk <br>';
+    echo '<input type="text" name="language" value="' . $book["language"] . '"><br>ISBN <br>';
+    echo '<input type="text" name="ISBN" value="' . $book["ISBN"] . '"><br>Stránek <br>';
+    echo '<input type="text" name="pages" value="' . $book["pages"] . '"><br>Obrázek<br> ';
+    echo '<input type="text" name="img" value="' . $book["img"] . '"><br>Místnost <br>';
+    echo '<input type="text" name="room_name" value="' . $book["room_name"] . '"><br>';
 
-            $book_has_author = get_table($conn, "book_has_author");
-            $authors = get_table($conn, "author");
-            echo '<select name="author" id="sel">' . "\n";
-                foreach ($authors as $author) {
-                    foreach($book_has_author as $key => $item){
-                        if($item["author_id"] == $author["id"]){
-                            break;
-                        }else{
-                            $key = null;
-                        }
-                    }
-                    if($book["id"] == $book_has_author[$key]["book_id"]){
-                        echo '<option selected>';
-                    }else{
-                        echo '<option>';
-                    }
-                    echo $author["f_name"]. " ".$author["l_name"].'</option>' . "\n";
-                }
-            echo '</select>' . "<br>\n";
+    $book_has_author = get_table($conn, "book_has_author");
+    $authors = get_table($conn, "author");
+    echo '<select name="author" id="sel">' . "\n";
+    foreach ($authors as $author) {
+        foreach ($book_has_author as $key => $item) {
+            if ($item["author_id"] == $author["id"]) {
+                break;
+            } else {
+                $key = null;
+            }
+        }
+        if ($book["id"] == $book_has_author[$key]["book_id"]) {
+            echo '<option selected>';
+        } else {
+            echo '<option>';
+        }
+        echo $author["f_name"] . " " . $author["l_name"] . '</option>' . "\n";
+    }
+    echo '</select>' . "<br>\n";
 
-            echo '<input type="submit" name="save"  value="Uložit">';
-        echo "</form>";
+    echo '<input type="submit" name="save"  value="Uložit">';
+    echo "</form>";
     echo "</div>";
     echo "</div>";
 

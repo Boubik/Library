@@ -5,7 +5,7 @@
     <title>Přidání autora</title>
     <link rel="stylesheet" type="text/css" href="styles/add_author.css">
     <link href="styles/header.css" rel="stylesheet" type="text/css">
-    <link rel="shortcut icon" href="/images/fav.png" type="image/x-icon" /> 
+    <link rel="shortcut icon" href="/images/fav.png" type="image/x-icon" />
     <link href="styles/footer.css" rel="stylesheet" type="text/css">
     <script src="js/350205fd30.js"></script>
 </head>

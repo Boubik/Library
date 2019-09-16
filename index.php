@@ -8,7 +8,7 @@
     <link rel="icon" href="images/logo.ico">
     <script src="js/350205fd30.js"></script>
     <link href="styles/aos.css" rel="stylesheet">
-    <link rel="shortcut icon" href="/images/fav.png" type="image/x-icon" /> 
+    <link rel="shortcut icon" href="/images/fav.png" type="image/x-icon" />
     <script src="js/aos.js"></script>
     <title>Knihovna</title>
 </head>

@@ -7,7 +7,7 @@
     <link href="styles/header.css" rel="stylesheet" type="text/css">
     <link href="styles/footer.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="images/logo.ico">
-    <link rel="shortcut icon" href="/images/fav.png" type="image/x-icon" /> 
+    <link rel="shortcut icon" href="/images/fav.png" type="image/x-icon" />
     <script src="js/350205fd30.js"></script>
     <?php
     session_start();
@@ -18,10 +18,12 @@
     }
     ?>
     <style>
-    table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-    }
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
     </style>
 </head>
 
@@ -149,7 +151,7 @@
     } else {
         echo "Nemáte žádné staré rezervace<br>\n";
     }
-   
+
 
     echo "</div>";
 

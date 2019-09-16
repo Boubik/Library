@@ -6,8 +6,10 @@
     <link rel="stylesheet" type="text/css" href="styles/login.css">
     <link href="styles/header.css" rel="stylesheet" type="text/css">
     <link href="styles/footer.css" rel="stylesheet" type="text/css">
-    <link rel="shortcut icon" href="/images/fav.png" type="image/x-icon" /> 
+    <link rel="shortcut icon" href="/images/fav.png" type="image/x-icon" />
     <script src="js/350205fd30.js"></script>
+    <script src="js/jquery-2.1.1.min.js" type="text/javascript"></script>
+    <script src="/js/sha3.js"></script>
 </head>
 
 <body>
@@ -29,48 +31,58 @@
 
 
         if (!isset($_GET["reset"])) {
-            echo '<div id="main">';
-            echo '<div id="img">';
-            echo '<img src="images/img1.png" alt="Login images">';
-            echo '</div>';
-            echo
-                '<div id="Log">';
-            echo "login";
-            echo '<form method="POST" placeholder="" action="">';
-            echo '<input type="text" name="login_username" placeholder="Přezdívka"><br>';
-            echo '<input type="password" name="login_password" placeholder="Heslo"><br>' . "\n";
-            echo "<br>";
-            echo '<input type="submit" name="login"  value="Přihlásit se">' . "\n";
-            echo '</form>' . "\n";
-            echo '</div>';
 
-            echo '<div id="swap">';
-            echo 'mate učet?<button onclick="myFunction()">Zaregistruj se!</button>';
-            echo '</div>';
+            if (!isset($_GET["register"])) {
+                echo '<div id="main">';
+                echo '<div id="img">';
+                echo '<img src="images/img1.png" alt="Login images">';
+                echo '</div>';
+                echo
+                    '<div id="Log">';
+                echo "login";
+                echo '<form class="form-signin" method="POST" role="form" action="">';
+                echo '<input type="text" name="username" class="form-control" placeholder="Přezdívka" required autofocus><br>' . "\n";
+                echo '<input type="hidden" id="passwordHMAC" name="passwordHMAC" value="">';
+                echo '<input type="password" id="password" name="password" class="form-control" placeholder="Heslo" required><br>' . "\n";
+                echo "<br>";
+                echo '<input type="submit" name="login"  value="Přihlásit se">' . "\n";
+                echo '</form>' . "\n";
+                echo '</div>';
 
-
-            echo '<div id="2" style="display:none;">
-                    My Dynamic Content
-                    </div>';
+                echo '<div id="swap">';
+                echo 'mate učet?<a href="/login.php?register=yes">Zaregistruj se!</a>';
+                echo '</div>';
 
 
-            echo '<div id="Reg" style="display:none;" >';
-            echo "Registrace";
-            echo '<form method="POST" action="">';
-            echo '<input type="text" maxlength="45" name="f_name" placeholder="Jméno"><br>';
-            echo '<input type="text" maxlength="45" name="l_name" placeholder="Přímení"><br>';
-            echo '<input type="text" name="username" placeholder="Přezdívka"><br>';
-            echo '<input type="password" name="password" placeholder="Heslo"><br>';
-            echo "<br>";
-            echo '<input type="submit" name="register"  value="Registrovat">' . "\n";
-            echo '</form>' . "\n";
+                echo '<div id="2" style="display:none;">
+                        My Dynamic Content
+                        </div>';
+            } else {
+
+
+                echo '<div id="Reg">';
+                echo "Registrace";
+                echo '<form class="form-signin" method="POST" role="form" action="">';
+                echo '<input type="text" maxlength="45" name="f_name" placeholder="Jméno" required><br>';
+                echo '<input type="text" maxlength="45" name="l_name" placeholder="Přímení" required><br>';
+                echo '<input type="text" name="username" placeholder="Přezdívka" required><br>';
+                echo '<input type="password" id="password" name="password" class="form-control" placeholder="Heslo" required><br>' . "\n";
+                echo '<input type="hidden" id="passwordHMAC" name="passwordHMAC" value="">';
+                echo "<br>";
+                echo '<input type="submit" name="register"  value="Registrovat">' . "\n";
+                echo '</form>' . "\n";
+                echo '<div id="swap">';
+                echo 'mate učet?<a href="/login.php">Přihlaš se!</a>';
+                echo '</div>';
+            }
         } else {
             echo '<div id="main2">';
             echo '<div id="reset">';
             echo "Reset hesla pro uživatele \"" . $_SESSION["username"] . "\"";
-            echo '<form method="POST" action="">';
+            echo '<form class="form-signin" method="POST" role="form" action="">';
             echo '<input id="reset" type="password" maxlength="45" name="old_pass" placeholder="staré heslo"><br>';
-            echo '<input id="reset" type="password" maxlength="45" name="new_pass" placeholder="nové heslo"><br>';
+            echo '<input id="reset" id="password" type="password" maxlength="45" class="form-control" name="password" placeholder="nové heslo"><br>';
+            echo '<input type="hidden" id="passwordHMAC" name="passwordHMAC" value="">';
             echo '<input id="reset" type="password" maxlength="45" name="new2_pass" placeholder="potvrzení nové heslo"><br>';
             echo "<br>";
             echo '<input id="konec" type="submit" name="reset"  value="Změnit">' . "\n";
@@ -83,7 +95,7 @@
     if (isset($_POST["reset"])) {
         if (login($conn, $_SESSION["username"], $_POST["old_pass"])) {
             if ($_POST["new_pass"] == $_POST["new2_pass"]) {
-                update_password($conn, $_SESSION["username"], $_POST["new_pass"]);
+                update_password($conn, $_SESSION["username"], $_POST["passwordHMAC"]);
                 $_SESSION["password"] = $_POST["new_pass"];
                 header("Location: /profile.php");
             } else {
@@ -96,10 +108,10 @@
 
     if (isset($_POST["register"])) {
         if (!(username_exist($conn, $_POST["username"]))) {
-            add_user($conn, $_POST["f_name"], $_POST["l_name"], $_POST["username"], $_POST["password"]);
+            add_user($conn, $_POST["f_name"], $_POST["l_name"], $_POST["username"], $_POST["passwordHMAC"]);
             echo "jsi přihlášený";
             $_SESSION["username"] = $_POST["username"];
-            $_SESSION["password"] = $_POST["password"];
+            $_SESSION["password"] = $_POST["passwordHMAC"];
             header("Location: /");
         } else {
             echo '<div class="nicktaken">';
@@ -109,10 +121,10 @@
     }
 
     if (isset($_POST["login"])) {
-        if (login($conn, $_POST["login_username"], $_POST["login_password"])) {
+        if (login($conn, $_POST["username"], $_POST["passwordHMAC"])) {
             echo "jsi přihlášený";
-            $_SESSION["username"] = $_POST["login_username"];
-            $_SESSION["password"] = $_POST["login_password"];
+            $_SESSION["username"] = $_POST["username"];
+            $_SESSION["password"] = $_POST["passwordHMAC"];
             header("Location: /");
         } else {
             echo '<div class="warning">';
@@ -140,6 +152,19 @@
     echo "</div>";
 
     ?>
+    <script type="text/javascript">
+        $('.form-signin').submit(function() {
+            if ($("#password").val().length !== 0) {
+                var hash = CryptoJS.SHA3($("#password").val(), {
+                    outputLength: 512
+                });
+                $("#passwordHMAC").val(hash);
+            } else {
+                $("#passwordHMAC").val("");
+            }
+            $("#password").val("");
+        });
+    </script>
 </body>
 <script>
     function myFunction() {

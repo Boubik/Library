@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="styles/add.css">
     <link href="styles/header.css" rel="stylesheet" type="text/css">
     <link href="styles/footer.css" rel="stylesheet" type="text/css">
-    <link rel="shortcut icon" href="/images/fav.png" type="image/x-icon" /> 
+    <link rel="shortcut icon" href="/images/fav.png" type="image/x-icon" />
     <script src="js/350205fd30.js"></script>
 </head>
 
@@ -37,7 +37,7 @@
     echo '<select name="room" id="sel">' . "\n";
     echo '<option>Místnost</option>' . "\n";
     foreach (get_table($conn, "room") as $row) {
-        echo '<option>' . $row["name"] . '</option>' ;
+        echo '<option>' . $row["name"] . '</option>';
     }
     echo '</select> nebo <input type="text" name="room_name" placeholder="Místnost"><br>';
 

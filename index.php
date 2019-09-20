@@ -9,6 +9,7 @@
     <script src="js/350205fd30.js"></script>
     <link href="styles/aos.css" rel="stylesheet">
     <link rel="shortcut icon" href="/images/fav.png" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="js/aos.js"></script>
     <title>Knihovna</title>
 </head>

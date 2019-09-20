@@ -19,7 +19,7 @@ body{
   width: 200px;
   float: right;
   margin-right: 50px; 
-  margin-top: -400px;
+  /* margin-top: -400px; */
 }
 
 #Log{
@@ -53,11 +53,10 @@ body{
 }
 
 #swap{
-  position: relative;
-  display: block;
+  position: absolute;
   width: 200px;
-  margin-top: 460px;
-  margin-left: 550px; 
+   margin-top: 460px;
+   margin-left: 550px;
 }
 
 

@@ -500,11 +500,29 @@ function get_reservations($conn)
 /**
  * add reservation to db
  * @param   Mixed   $conn               db connection
+ * @return  Array    reservations
+ */
+function get_actual_reservations($conn)
+{
+    $sql = "SELECT * FROM `reservation` INNER JOIN book_has_reservation ON book_has_reservation.reservation_id = reservation.id INNER JOIN book ON book.id = book_has_reservation.book_id INNER JOIN user ON user.id = reservation.user_id WHERE `s-reservation` < CURTIME() AND `e-reservation` > CURTIME() ORDER BY `e-reservation`";
+    $sql = $conn->prepare($sql);
+    $sql->execute();
+    $rows = array();
+    while ($row = $sql->fetch()) {
+        $rows[] = $row;
+    }
+    return $rows;
+}
+
+/**
+ * add reservation to db
+ * @param   Mixed   $conn               db connection
  * @param   String  $s_reservation      start reservation date
  * @param   String  $e_reservation      end reservation date
+ * @param   String  $user               username
  * @return  Bool    if reservation can be done
  */
-function reservations($conn, $s_reservation, $e_reservation, $book_id)
+function reservations($conn, $s_reservation, $e_reservation, $book_id, $user)
 {
     $sql = "SELECT * FROM `reservation` INNER JOIN book_has_reservation ON book_has_reservation.reservation_id = reservation.id INNER JOIN book ON book.id = book_has_reservation.book_id WHERE `e-reservation` > CURTIME() AND book.id = " . $book_id . " ORDER BY `e-reservation`";
     $sql = $conn->prepare($sql);
@@ -516,7 +534,7 @@ function reservations($conn, $s_reservation, $e_reservation, $book_id)
             }
         }
     }
-    add_reservations($conn, $s_reservation, $e_reservation);
+    add_reservations($conn, $s_reservation, $e_reservation, $user);
     return true;
 }
 
@@ -525,12 +543,18 @@ function reservations($conn, $s_reservation, $e_reservation, $book_id)
  * @param   Mixed   $conn               db connection
  * @param   String  $s_reservation      start reservation date
  * @param   String  $e_reservation      end reservation date
+ * @param   String  $user               username
  * @return  Bool    if reservation can be done
  */
-function add_reservations($conn, $s_reservation, $e_reservation)
+function add_reservations($conn, $s_reservation, $e_reservation, $user)
 {
-    save_to_log("Add reservation from: \"" . $s_reservation . "\" to: \"" . $e_reservation . "\" by: \"" . $_SESSION["username"] . "\"");
-    $id = get_user_id($conn, $_SESSION["username"]);
+    if ($user == $_SESSION["username"]) {
+        save_to_log("Add reservation from: \"" . $s_reservation . "\" to: \"" . $e_reservation . "\" by: \"" . $user . "\"");
+    } else {
+        save_to_log("Add reservation from: \"" . $s_reservation . "\" to: \"" . $e_reservation . "\" reservation for: \"" . $user . "\" by: \"" . $_SESSION["username"] . "\"");
+    }
+
+    $id = get_user_id($conn, $user);
     $sql = "INSERT INTO `reservation`(`s-reservation`, `e-reservation`, `user_id`) VALUES ('" . $s_reservation . "', '" . $e_reservation . "' , $id)";
     $sql = $conn->prepare($sql);
     $sql->execute();
@@ -594,6 +618,23 @@ function get_user_id($conn, $username)
         $row = $sql->fetch();
         return $row["id"];
     }
+}
+
+/**
+ * get usr id
+ * @param   Mixed   $conn               db connection
+ * @return  Array   users
+ */
+function get_users($conn)
+{
+    $sql = "SELECT * FROM `user`";
+    $sql = $conn->prepare($sql);
+    $rows = array();
+    $sql->execute();
+    while ($row = $sql->fetch()) {
+        $rows[] = $row;
+    }
+    return $rows;
 }
 
 /**

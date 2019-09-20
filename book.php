@@ -48,6 +48,7 @@
     echo '<form method="POST" action="">' . "\n";
     if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
         if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
+            echo '<input id="reservations" type="submit" name="reservations"  value="Rezervace">' . "\n";
             echo '<input id="addbook" type="submit" name="users"  value="Uživatelé">' . "\n";
             echo '<input id="addbook" type="submit" name="add_book"  value="Přidat knížku">' . "\n";
             echo '<input id="addautor" type="submit" name="add_author"  value="Přidat autora">' . "\n";
@@ -111,6 +112,10 @@
         delete_reservation($conn, $_POST["reservation_id"]);
     }
 
+    if (isset($_POST["reservations"])) {
+        header("Location: /reservations.php");
+    }
+
     echo "<div class=\"book\">";
     echo "<div class=\"name\">";
 
@@ -166,6 +171,28 @@
     echo '<form method="POST" action="">' . "\nZačátek";
     echo '<input type="date" name="s_date"><br>' . "\nKonec   ";
     echo '<input type="date" name="e_date"><br>' . "\n";
+
+    if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
+        if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
+            $users = get_users($conn);
+            echo '<select name="user" id="sel">' . "\n";
+            foreach ($users as $user) {
+                if ($user["username"] == $_SESSION["username"]) {
+                    echo '<option selected>';
+                } else {
+                    echo '<option>';
+                }
+                echo $user["username"] . '</option>' . "\n";
+            }
+            echo '</select>' . "<br>\n";
+        } else {
+            echo '<select class="none" name="user" id="sel">' . "\n";
+            echo '<option selected>';
+            echo $_SESSION["username"] . '</option>' . "\n";
+            echo '</select>' . "<br>\n";
+        }
+    }
+
     echo '<input type="submit" name="reservation"  value="zarezervovat">' . "\n";
     echo "</form>";
     echo '<br><br>';
@@ -244,7 +271,7 @@
         if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
             $date = $_POST["s_date"];
             if (strtotime($date) > strtotime('-' . 1 . ' days') and isset($_SESSION["username"]) and isset($_SESSION["password"]) and strtotime($_POST["s_date"]) < strtotime($_POST["e_date"])) {
-                if (reservations($conn, $_POST["s_date"], $_POST["e_date"], $_GET["id"])) {
+                if (reservations($conn, $_POST["s_date"], $_POST["e_date"], $_GET["id"], $_POST["user"])) {
                     $reservation_id = get_reservation_id($conn, $_POST["s_date"], $_POST["e_date"], $_GET["id"]);
                     add_book_has_reservation($conn, (int) $_GET["id"], (int) $reservation_id);
                     header("Location: /book.php?id=" . $_GET["id"] . "&name=" . $_GET["name"]);

@@ -3,26 +3,24 @@
 
 <head>
     <meta charset="UTF-8">
+    <link href="styles/users.css" rel="stylesheet" type="text/css">
     <link href="styles/profile.css" rel="stylesheet" type="text/css">
     <link href="styles/header.css" rel="stylesheet" type="text/css">
     <link href="styles/footer.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="images/logo.ico">
     <link rel="shortcut icon" href="/images/fav.png" type="image/x-icon" />
     <script src="js/350205fd30.js"></script>
-    <?php
-    session_start();
-    if (isset($_SESSION["username"])) {
-        echo "<title>Učet: " . $_SESSION["username"] . "</title>";
-    } else {
-        header("Location: /");
-    }
-    ?>
+    <title>Uživatelé</title>
     <style>
         table,
         th,
         td {
             border: 1px solid black;
             border-collapse: collapse;
+        }
+
+        #none {
+            display: none;
         }
     </style>
 </head>
@@ -33,7 +31,31 @@
     ini_set('max_execution_time', 0);
     $configs = include('config.php');
     date_default_timezone_set('Europe/Prague');
+    session_start();
     $conn = connect_to_db($configs["servername"], $configs["dbname"], $configs["username"], $configs["password"]);
+    if (!(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"], true))) {
+        header("Location: /");
+    }
+    $per_page = 30;
+    $roles = array();
+    $roles[] = "user";
+    $roles[] = "mod";
+    if (is_admin($conn, $_SESSION["username"], $_SESSION["password"])) {
+        $is_admin = true;
+        $roles[] = "admin";
+    } else {
+        $is_admin = false;
+    }
+    if (isset($_GET["q"])) {
+        $search = $_GET["q"];
+    } else {
+        $search = "";
+    }
+    if (isset($_GET["page"])) {
+        $page = $_GET["page"];
+    } else {
+        $page = 1;
+    }
 
     echo '<div id="header">';
     echo "<a href=\"/\"><image src=\"/images/logo_1.png\" style=\"height: 100px\"></a>";
@@ -41,11 +63,9 @@
     echo '<div id="monkaS">';
     echo '<form method="POST" action="">' . "\n";
     if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
-        if (is_admin($conn, $_SESSION["username"], $_SESSION["password"])) {
-            echo '<input id="addbook" type="submit" name="users"  value="Uživatelé">' . "\n";
-        }
         if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
             echo '<input id="reservations" type="submit" name="reservations"  value="Rezervace">' . "\n";
+            echo '<input id="addbook" type="submit" name="users"  value="Uživatelé">' . "\n";
             echo '<input type="submit" name="add_book"  value="Přidat knížku">' . "\n";
             echo '<input type="submit" name="add_author"  value="Přidat autora">' . "\n";
         }
@@ -60,7 +80,7 @@
 
     echo '<div id="serch">';
     echo '<form method="GET" action="">' . "\n";
-    echo '<input type="text" onfocusout=" " placeholder="Hledate neco?" name="q" autocomplete="off" value="';
+    echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
     if (isset($_GET["q"])) {
         echo $_GET["q"] . '">' . "\n";
     } else {
@@ -103,61 +123,76 @@
         header("Location: /index.php?q=" . $_POST["q"]);
     }
 
+    if (isset($_GET["set_role"])) {
+        if (!($is_admin) and $_GET["role"] == "admin") {
+            header("Location: /users.php");
+        } else {
+            set_role($conn, $_GET["username"], $_GET["role"]);
+            header("Location: /users.php");
+        }
+    }
+
     if (isset($_POST["reservations"])) {
         header("Location: /reservations.php");
     }
 
+    if (isset($_GET["delete"])) {
+        if ($is_admin) {
+            delete_user($conn, $_GET["username"]);
+            header("Location: /users.php");
+        } else {
+            header("Location: /users.php");
+        }
+    }
+
+
+    $actual_reservations = get_actual_reservations($conn);
 
     echo '<div id="main">';
-    echo '<div id="res">';
-    echo "<a href=\"/login.php?reset=" . $_SESSION["username"] . "\">Change password</a><br>";
-    echo '</div>';
-    $new = array();
-    $old = array();
-    $user_id = get_user_id($conn, $_SESSION["username"]);
-    $k = get_table($conn, "reservation");
-    foreach ($k as $reservation) {
-        if ($reservation["user_id"] == $user_id) {
-            $book_has_reservation = mn($conn, "book_has_reservation", $reservation["id"], "reservation_id", "book_id");
-            if (strtotime($reservation["e-reservation"]) > strtotime('-' . 1 . ' days')) {
-                $new[] = "<th>" . get_book($conn, $book_has_reservation[0]) . "</th><th>" . substr($reservation["s-reservation"], 0, 10) . "</th><th>" . substr($reservation["e-reservation"], 0, 10) . "</th>";
+    echo '<table id="tab">';
+    echo "<tr>";
+    echo '<th>Knížka</th><th>Jméno</th><th>od</th><th>do</th><th>status</th>';
+    if ($is_admin) {
+        echo "<th>Smazat</th>";
+    }
+    echo "</tr>";
+    foreach ($actual_reservations as $value) {
+        echo "<tr>";
+
+        echo "<th>" . $value["name"] . "</th><th> " . $value["f_name"] . " " . $value["l_name"] . "</th><th>" . substr($value["s-reservation"], 0, 10) . "</th><th>" . substr($value["e-reservation"], 0, 10) . "</th>";
+        echo "</tr>";
+    }
+    echo "</table>";
+    echo "</div>";
+
+    echo '<div id="aqua">';
+    $maxpage = (int) ($count_users / $per_page) + 1;
+    $i = 1;
+    if ($maxpage > 1) {
+        if ($page  > 1) {
+            echo "<a href=\"/users.php?q=" . $search . "&page=" . ($page - 1) . "\">< </a>";
+        }
+        while (1) {
+            if ($maxpage != 0) {
+                do {
+                    if ($i == 1) {
+                        echo "stránky: ";
+                        echo "<a href=\"/users.php?q=" . $search . "&page=" . $i . "\">" . $i . "</a>";
+                    }
+                    echo ", ";
+                    echo "<a href=\"/users.php?q=" . $search . "&page=" . ($i + 1) . "\">" . ($i + 1) . "</a>";
+                    $i++;
+                } while ($i > $maxpage);
+                break;
             } else {
-                $old[] = "<th>" . get_book($conn, $book_has_reservation[0]) . "</th><th>" . substr($reservation["s-reservation"], 0, 10) . "</th><th>" . substr($reservation["e-reservation"], 0, 10) . "</th>";
+                break;
             }
         }
-    }
 
-    if (isset($new[0])) {
-        echo "Aktivní rezervace:<br>\n";
-        echo '<table id="tab">';
-        echo "<tr><th>Jménéno knihy</th><th>od kdy</th><th>do kdy</th></tr>";
-        foreach ($new as $item) {
-            echo "<tr>";
-            echo $item;
-            echo "</tr>";
+        if ($page  < $maxpage) {
+            echo "<a href=\"/users.php?q=" . $search . "&page=" . ($page + 1) . "\"> ></a>";
         }
-        echo "</table>";
-    } else {
-        echo "Nemáte žádné aktivní rezervace<br>\n";
     }
-
-    echo '<hr>';
-
-    if (isset($old[0])) {
-        echo "Staré rezervace:<br>\n";
-        echo '<table id="tab">';
-        echo "<tr><th>Jménéno knihy</th><th>od kdy</th><th>do kdy</th></tr>";
-        foreach ($old as $item) {
-            echo "<tr>";
-            echo $item;
-            echo "</tr>";
-        }
-        echo "</table>";
-    } else {
-        echo "Nemáte žádné staré rezervace<br>\n";
-    }
-
-
     echo "</div>";
 
     echo '<div id="footer">';

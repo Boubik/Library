@@ -500,6 +500,23 @@ function get_reservations($conn)
 /**
  * add reservation to db
  * @param   Mixed   $conn               db connection
+ * @return  Array    reservations
+ */
+function get_actual_reservations($conn)
+{
+    $sql = "SELECT * FROM `reservation` INNER JOIN book_has_reservation ON book_has_reservation.reservation_id = reservation.id INNER JOIN book ON book.id = book_has_reservation.book_id INNER JOIN user ON user.id = reservation.user_id WHERE `s-reservation` < CURTIME() AND `e-reservation` > CURTIME() ORDER BY `e-reservation`";
+    $sql = $conn->prepare($sql);
+    $sql->execute();
+    $rows = array();
+    while ($row = $sql->fetch()) {
+        $rows[] = $row;
+    }
+    return $rows;
+}
+
+/**
+ * add reservation to db
+ * @param   Mixed   $conn               db connection
  * @param   String  $s_reservation      start reservation date
  * @param   String  $e_reservation      end reservation date
  * @param   String  $user               username

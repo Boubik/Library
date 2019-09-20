@@ -64,6 +64,7 @@
     echo '<form method="POST" action="">' . "\n";
     if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
         if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
+            echo '<input id="reservations" type="submit" name="reservations"  value="Rezervace">' . "\n";
             echo '<input id="addbook" type="submit" name="users"  value="Uživatelé">' . "\n";
             echo '<input type="submit" name="add_book"  value="Přidat knížku">' . "\n";
             echo '<input type="submit" name="add_author"  value="Přidat autora">' . "\n";
@@ -138,6 +139,10 @@
         } else {
             header("Location: /users.php");
         }
+    }
+
+    if (isset($_POST["reservations"])) {
+        header("Location: /reservations.php");
     }
 
 

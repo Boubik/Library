@@ -49,6 +49,7 @@
     echo '<form method="POST" action="">' . "\n";
     if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
         if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
+            echo '<input id="reservations" type="submit" name="reservations"  value="Rezervace">' . "\n";
             echo '<input id="addbook" type="submit" name="users"  value="Uživatelé">' . "\n";
             echo '<input id="addbook" type="submit" name="add_book"  value="Přidat knížku">' . "\n";
             echo '<input id="addautor" type="submit" name="add_author"  value="Přidat autora">' . "\n";
@@ -99,6 +100,10 @@
         update_book($conn, $_POST["id"], $_POST["name"], $_POST["relase"], $_POST["language"], $_POST["ISBN"], $_POST["pages"], $_POST["img"], $_POST["room_name"]);
         update_book_has_author($conn, $_POST["id"], $_POST["author"]);
         echo "Uloženo";
+    }
+
+    if (isset($_POST["reservations"])) {
+        header("Location: /reservations.php");
     }
 
     echo "<div class=\"book\">";

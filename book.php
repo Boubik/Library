@@ -48,6 +48,7 @@
     echo '<form method="POST" action="">' . "\n";
     if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
         if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
+            echo '<input id="reservations" type="submit" name="reservations"  value="Rezervace">' . "\n";
             echo '<input id="addbook" type="submit" name="users"  value="Uživatelé">' . "\n";
             echo '<input id="addbook" type="submit" name="add_book"  value="Přidat knížku">' . "\n";
             echo '<input id="addautor" type="submit" name="add_author"  value="Přidat autora">' . "\n";
@@ -109,6 +110,10 @@
     }
     if (isset($_POST["delete_reservation"])) {
         delete_reservation($conn, $_POST["reservation_id"]);
+    }
+
+    if (isset($_POST["reservations"])) {
+        header("Location: /reservations.php");
     }
 
     echo "<div class=\"book\">";

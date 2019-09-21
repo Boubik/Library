@@ -2,11 +2,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <link href="styles/frontend.scss" rel="stylesheet">
+    <link href="styles/frontend.scss" rel="stylesheet" type="text/css">
+    <link href="styles/header.css" rel="stylesheet" type="text/css">
+    <link href="styles/footer.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="images/logo.ico">
     <script src="js/350205fd30.js"></script>
     <link href="styles/aos.css" rel="stylesheet">
-    <link rel="shortcut icon" href="/images/skola_logo_mono.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="/images/fav.png" type="image/x-icon" />
     <script src="js/aos.js"></script>
     <title>Knihovna</title>
 </head>
@@ -51,61 +53,29 @@
     }
     $books = book($conn, $search, $count_books, $page, $per_page);
 
-
- echo '<div id="header">';
- echo '<div id="logo"><a href="index.php"><img src="/images/skola_logo_mono.png" alt="logo"></a></div>';
- echo '<div id="searchsmol">';
- echo '<form method="GET" action="">' . "\n";
- echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
- if (isset($_GET["q"])) {
-     echo $_GET["q"] . '">' . "\n";
- } else {
-     echo '">' . "\n";
- }
- echo '</form>' . "\n";
- echo'</div>';
-
-
+    echo '<div id="header">';
+    echo '<div id="inheader">';
+    echo "<a href=\"/\"><image id='fav' src=\"/images/logo_1.png\" style=\"height: 100px\"></a>";
+    echo '<div id="monkaS">';
     echo '<form method="POST" action="">' . "\n";
     if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
         if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
-            echo '<div id="admin">';
-            echo '<a name="admin"  value="Administrace"><i class="fas fa-cog"></i></a>' . "\n";
-            echo '<div id="adminhid">';
             echo '<input id="reservations" type="submit" name="reservations"  value="Rezervace">' . "\n";
-            echo '<input id="addbook" type="submit" name="users"  value="Uživatelé"><br>';
-            echo '<input type="submit" name="add_book"  value="Přidat knížku"><br>';
-            echo '<input type="submit" name="add_author"  value="Přidat autora"><br>';
-            echo'</div>';
-            echo'</div>';
+            echo '<input id="addbook" type="submit" name="users"  value="Uživatelé">' . "\n";
+            echo '<input type="submit" name="add_book"  value="Přidat knížku">' . "\n";
+            echo '<input type="submit" name="add_author"  value="Přidat autora">' . "\n";
         }
-        echo '<div id="klient">';
         echo '<input type="submit" name="profile"  value="Můj profil">' . "\n";
         echo '<input type="submit" name="logout"  value="Odhlásit se">' . "\n";
     } else {
-        echo '<input type="submit" name="login"  value="Přihrásit se"></input>' . "\n";
-    }
-    echo'</div>';
-    echo '</form>' . "\n";
-echo '<div id="fullmenue">';
-    echo '<form method="POST" action="">' . "\n";
-    if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
-        if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
-            echo '<input id="reservations" type="submit" name="reservations"  value="Rezervace">';
-            echo '<input id="addbook" type="submit" name="users"  value="Uživatelé">';
-            echo '<input type="submit" name="add_book"  value="Přidat knížku">';
-            echo '<input type="submit" name="add_author"  value="Přidat autora">';
-        }
-        echo '<input type="submit" name="profile"  value="Můj profil">';
-        echo '<input type="submit" name="logout"  value="Odhlásit se">';
-    } else {
-        echo '<input type="submit" name="login"  value="Přihrásit se"></input>';
+        echo '<input type="submit" name="login"  value="Přihrásit se">' . "\n";
     }
     echo '</form>' . "\n";
-echo'</div>';
-echo'</div>';
+    echo '</div>';
 
 
+    echo '</div>';
+    echo '</div>';
 
     if (isset($_POST["logout"])) {
         unset($_SESSION["username"]);
@@ -139,33 +109,40 @@ echo'</div>';
         header("Location: /?q=" . $q);
     }
 
-    echo'</div>';
-    echo'</div>';
-    echo'</div>';
+    if (isset($_POST["reservations"])) {
+        header("Location: /reservations.php");
+    }
 
-    echo '<div id="filtercon">';
+    echo "<div class=\"filtr\">";
 
+    echo '<div id="side">';
 
+    echo '<div id="no_clue">';
+    echo '<div class="dropdown">';
     echo '<a id="category" id="zanr">Žánr</a>';
     echo '<div class="dropdown-content" class="zanr">';
     $genres = get_table($conn, "genres");
     foreach ($genres as $item) {
         echo "<a href=\"/index.php?q=" . $item["name"] . "\">" . $item["name"] . "</a><br>\n";
     }
-    echo'</div>';
+    echo "</div>";
+    echo "</div>";
+    echo "</div>";
 
-
-
+    echo '<div id="no_clue">';
+    echo '<div class="dropdown">';
     echo '<a id="category" id="autor">Autor</a>';
     echo '<div class="dropdown-content" class="autor">';
     $author = get_table($conn, "author");
     foreach ($author as $item) {
         echo "<a href=\"/index.php?q=" . $item["f_name"] . " " . $item["l_name"] . "\">" . $item["f_name"] . " " . $item["l_name"] . "</a><br>\n";
     }
-    echo'</div>';
+    echo "</div>";
+    echo "</div>";
+    echo "</div>";
 
-
-
+    echo '<div id="no_clue">';
+    echo '<div class="dropdown">';
     echo '<a id="category" id="language">Jazyk</a>';
     echo '<div class="dropdown-content" class="language">';
     $language = get_table($conn, "book");
@@ -176,16 +153,22 @@ echo'</div>';
             $k[] = $item["language"];
         }
     }
-    echo'</div>';
+    echo "</div>";
+    echo "</div>";
+    echo "</div>";
 
-
+    echo '<div id="no_clue">';
+    echo '<div class="dropdown">';
     echo '<a id="category" id="room">Mistnost</a>';
     echo '<div class="dropdown-content" class="room">';
     $room = get_table($conn, "room");
     foreach ($room as $item) {
         echo "<a href=\"/index.php?q=" . $item["name"] . "\">" . $item["name"] . "</a><br>\n";
     }
+    echo "</div>";
+    echo "</div>";
 
+    echo '<div class="sideset">';
 
     echo 'řádků na strácne:';
 
@@ -203,19 +186,25 @@ echo'</div>';
     echo '</select><br>';
     echo '<input type="submit" name="per_page"  value="nastavit">' . "\n";
     echo '</form>' . "\n";
+    echo '</div>';
+    echo '</div>';
+    echo "</div>";
+
+    echo '<div id="bookcon">';
+    // echo '<div data-aos="fade-in" data-aos-duration="2000">';
+
+    echo '<div id="serch">';
+    echo '<form method="GET" action="">' . "\n";
+    echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
+    if (isset($_GET["q"])) {
+        echo $_GET["q"] . '">' . "\n";
+    } else {
+        echo '">' . "\n";
+    }
+    echo '</form>' . "\n";
+    echo '</div>';
 
 
-
-echo'</div>';
-echo'</div>';
-
-
-
-
-
-
-    
-    echo '<div id="maincon">';
     if (!isset($books)) {
         echo '<div id="warning>';
         echo "Žádná taková knížka tu není<br>\n";
@@ -239,8 +228,7 @@ echo'</div>';
                     }
                 }
             }
-
-            echo '<div id="book">';
+            // echo '<div class="focus-in-expand ">';
             echo "<div class=\"status\" id=\"" . $status . "\"></div>";
 
             echo '<div id="img">';
@@ -287,9 +275,9 @@ echo'</div>';
     }
     echo "</div>";
     echo "</div>";
-    echo "</div>";
 
 
+    echo '<div id="aqua">';
     $i = 1;
     if (($i * (3 * $books_rows)) <= $count_books) {
         if ($page  > 1) {
@@ -313,7 +301,7 @@ echo'</div>';
         echo "<a href=\"/?q=" . $search . "&page=" . ($page + 1) . "\"> ></a>";
     }
     echo "</div>";
-
+    echo "</div>";
 
 
     echo '<div id="footer">';

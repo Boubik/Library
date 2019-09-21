@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prihlášení</title>
-    <link rel="stylesheet" type="text/css" href="styles/login.css">
+    <link rel="stylesheet" type="text/css" href="styles/frontend.scss">
     <link href="styles/header.css" rel="stylesheet" type="text/css">
     <link href="styles/footer.css" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="/images/fav.png" type="image/x-icon" />
@@ -21,9 +21,6 @@
     $conn = connect_to_db($configs["servername"], $configs["dbname"], $configs["username"], $configs["password"]);
     session_start();
 
-    echo '<div id="header">';
-    echo "<a href=\"/\"><image src=\"/images/logo_1.png\" style=\"height: 100px\"></a>";
-    echo "</div>";
 
     if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"]) and !isset($_GET["reset"])) {
         header("Location: /");
@@ -33,18 +30,15 @@
         if (!isset($_GET["reset"])) {
 
             if (!isset($_GET["register"])) {
-                echo '<div id="main">';
-                echo '<div id="img">';
-                echo '<img src="images/img1.png" alt="Login images">';
-                echo '</div>';
-                echo
-                    '<div id="Log">';
+                echo '<div id="logincon">';
                 echo "login";
                 echo '<form class="form-signin" method="POST" role="form" action="">';
-                echo '<input type="text" name="username" class="form-control" placeholder="Přezdívka" required autofocus><br>' . "\n";
+                echo '<input type="text" name="username" class="form-control" placeholder="Přezdívka" required autofocus><br>';
                 echo '<input type="hidden" id="passwordHMAC" name="passwordHMAC" value="">';
-                echo '<input type="password" id="password" name="password" class="form-control" placeholder="Heslo" required><br>' . "\n";
+                echo '<div id="form">';
+                echo '<input type="password" id="password" name="password" class="form-control" required><br>';
                 echo "<br>";
+                echo '</div>';
                 echo '<input type="submit" name="login"  value="Přihlásit se">' . "\n";
                 echo '</form>' . "\n";
                 echo '</div>';
@@ -52,6 +46,15 @@
                 echo '<div id="swap">';
                 echo 'mate učet?<a href="/login.php?register=yes">Zaregistruj se!</a>';
                 echo '</div>';
+
+                echo'<div class="form-group">
+                <input type="text" id="name" class="form-control" required>
+                <label class="form-control-placeholder" for="name">Name</label>
+              </div>
+              <div class="form-group">
+                <input type="password" id="password" class="form-control" required>
+                <label class="form-control-placeholder" for="password">Password</label>
+              </div>';
 
 
                 echo '<div id="2" style="display:none;">

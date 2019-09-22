@@ -52,18 +52,18 @@
     $books = book($conn, $search, $count_books, $page, $per_page);
 
 
- echo '<div id="header">';
- echo '<div id="logo"><a href="index.php"><img src="/images/skola_logo_mono.png" alt="logo"></a></div>';
- echo '<div id="searchsmol">';
- echo '<form method="GET" action="">' . "\n";
- echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
- if (isset($_GET["q"])) {
-     echo $_GET["q"] . '">' . "\n";
- } else {
-     echo '">' . "\n";
- }
- echo '</form>' . "\n";
- echo'</div>';
+    echo '<div id="header">';
+    echo '<div id="logo"><a href="index.php"><img src="/images/skola_logo_mono.png" alt="logo"></a></div>';
+    echo '<div id="searchsmol">';
+    echo '<form method="GET" action="">' . "\n";
+    echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
+    if (isset($_GET["q"])) {
+        echo $_GET["q"] . '">' . "\n";
+    } else {
+        echo '">' . "\n";
+    }
+    echo '</form>' . "\n";
+    echo '</div>';
 
 
     echo '<form method="POST" action="">' . "\n";
@@ -76,8 +76,8 @@
             echo '<input id="addbook" type="submit" name="users"  value="Uživatelé"><br>';
             echo '<input type="submit" name="add_book"  value="Přidat knížku"><br>';
             echo '<input type="submit" name="add_author"  value="Přidat autora"><br>';
-            echo'</div>';
-            echo'</div>';
+            echo '</div>';
+            echo '</div>';
         }
         echo '<div id="klient">';
         echo '<input type="submit" name="profile"  value="Můj profil">' . "\n";
@@ -85,9 +85,9 @@
     } else {
         echo '<input type="submit" name="login"  value="Přihrásit se"></input>' . "\n";
     }
-    echo'</div>';
+    echo '</div>';
     echo '</form>' . "\n";
-echo '<div id="fullmenue">';
+    echo '<div id="fullmenue">';
     echo '<form method="POST" action="">' . "\n";
     if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
         if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
@@ -102,8 +102,8 @@ echo '<div id="fullmenue">';
         echo '<input type="submit" name="login"  value="Přihrásit se"></input>';
     }
     echo '</form>' . "\n";
-echo'</div>';
-echo'</div>';
+    echo '</div>';
+    echo '</div>';
 
 
 
@@ -139,9 +139,9 @@ echo'</div>';
         header("Location: /?q=" . $q);
     }
 
-    echo'</div>';
-    echo'</div>';
-    echo'</div>';
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
 
     echo '<div id="filtercon">';
 
@@ -152,7 +152,7 @@ echo'</div>';
     foreach ($genres as $item) {
         echo "<a href=\"/index.php?q=" . $item["name"] . "\">" . $item["name"] . "</a><br>\n";
     }
-    echo'</div>';
+    echo '</div>';
 
 
 
@@ -162,7 +162,7 @@ echo'</div>';
     foreach ($author as $item) {
         echo "<a href=\"/index.php?q=" . $item["f_name"] . " " . $item["l_name"] . "\">" . $item["f_name"] . " " . $item["l_name"] . "</a><br>\n";
     }
-    echo'</div>';
+    echo '</div>';
 
 
 
@@ -176,7 +176,7 @@ echo'</div>';
             $k[] = $item["language"];
         }
     }
-    echo'</div>';
+    echo '</div>';
 
 
     echo '<a id="category" id="room">Mistnost</a>';
@@ -206,15 +206,15 @@ echo'</div>';
 
 
 
-echo'</div>';
-echo'</div>';
+    echo '</div>';
+    echo '</div>';
 
 
 
 
 
 
-    
+
     echo '<div id="maincon">';
     if (!isset($books)) {
         echo '<div id="warning>';
@@ -233,7 +233,7 @@ echo'</div>';
             $status = "free";
             foreach ($k as $reservation) {
                 if ($reservation["book_id"] == $key) {
-                    if (strtotime($reservation["e-reservation"]) > strtotime('-' . 1 . ' days') and strtotime($reservation["s-reservation"]) < strtotime('-' . 0 . ' days')) {
+                    if (strtotime($reservation["e-reservation"]) > strtotime('-' . 1 . ' days') and strtotime($reservation["s-reservation"]) < strtotime('-' . 0 . ' days') or $reservation["taken"] == 1) {
                         $status = "booked";
                         break;
                     }

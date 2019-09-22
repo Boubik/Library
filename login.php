@@ -62,7 +62,7 @@
                         </div>';
             } else {
 
-
+                echo '<div id="main">';
                 echo '<div id="Reg">';
                 echo "Registrace";
                 echo '<form class="form-signin" method="POST" role="form" action="">';
@@ -76,6 +76,7 @@
                 echo '</form>' . "\n";
                 echo '<div id="swap">';
                 echo 'mate učet?<a href="/login.php">Přihlaš se!</a>';
+                echo '</div>';
                 echo '</div>';
             }
         } else {

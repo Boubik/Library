@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
-
 body{
     display: grid;
     font-family: 'Muli', sans-serif;
@@ -45,7 +44,7 @@ body{
     position: absolute;
     color: white;
     height: 35px;
-    margin-top: -160px;
+    margin-top: -69px;
     margin-left: 500px;
     width: 400px;
 }
@@ -127,7 +126,6 @@ a{
     margin-bottom: 50px;
     padding-bottom: 250px;
     margin-top: -550px; 
-    padding-top: 100px;
 } 
 
 
@@ -355,25 +353,3 @@ a{
  #inheader img{
      margin-left: 200px; 
  }
-
-/* ::-webkit-scrollbar {
-    width: 10px;
-  }
-  
-  ::-webkit-scrollbar-track {
-    background: #f1f1f1; 
-  }
-   
-
-  ::-webkit-scrollbar-thumb {
-    background: #686868; 
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgb(255, 0, 200); 
-  } */
-
-
-//   #inheader img{
-//       margin-right: 50px;
-//   }

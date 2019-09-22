@@ -12,15 +12,17 @@
     <script src="js/350205fd30.js"></script>
     <title>Uživatelé</title>
     <style>
-        table,
-        th,
-        td {
+        table, th, td {
             border: 1px solid black;
             border-collapse: collapse;
         }
 
-        #none {
+        .none {
             display: none;
+        }
+
+        .taken {
+            color: red;
         }
     </style>
 </head>
@@ -68,12 +70,14 @@
             echo '<input id="addbook" type="submit" name="users"  value="Uživatelé">' . "\n";
             echo '<input type="submit" name="add_book"  value="Přidat knížku">' . "\n";
             echo '<input type="submit" name="add_author"  value="Přidat autora">' . "\n";
+        }else{
+            header("Location: /index.php");
         }
         echo '<input type="submit" name="profile"  value="Můj profil">' . "\n";
 
         echo '<input type="submit" name="logout"  value="Odhlásit se">' . "\n";
     } else {
-        echo '<input type="submit" name="login"  value="Přihrásit se">' . "\n";
+        header("Location: /index.php");
     }
     echo '</form>' . "\n";
     echo '</div>';
@@ -119,6 +123,14 @@
         header("Location: /users.php");
     }
 
+    if (isset($_POST["return"])) {
+        change_reservation_status($conn, $_POST["id"], $_POST["taken"]);
+    }
+
+    if (isset($_POST["take"])) {
+        change_reservation_status($conn, $_POST["id"], $_POST["taken"]);
+    }
+
     if (isset($_POST["search"]) and isset($_POST["q"]) and $_POST["q"] != "") {
         header("Location: /index.php?q=" . $_POST["q"]);
     }
@@ -136,13 +148,8 @@
         header("Location: /reservations.php");
     }
 
-    if (isset($_GET["delete"])) {
-        if ($is_admin) {
-            delete_user($conn, $_GET["username"]);
-            header("Location: /users.php");
-        } else {
-            header("Location: /users.php");
-        }
+    if (isset($_POST["delete"])) {
+        delete_reservation($conn, $_POST["id"]);
     }
 
 
@@ -151,15 +158,54 @@
     echo '<div id="main">';
     echo '<table id="tab">';
     echo "<tr>";
-    echo '<th>Knížka</th><th>Jméno</th><th>od</th><th>do</th><th>status</th>';
-    if ($is_admin) {
-        echo "<th>Smazat</th>";
-    }
+    echo '<th>Knížka</th><th>Jméno</th><th>od</th><th>do</th><th>status</th><th>Smazat</th>';
     echo "</tr>";
     foreach ($actual_reservations as $value) {
         echo "<tr>";
 
-        echo "<th>" . $value["name"] . "</th><th> " . $value["f_name"] . " " . $value["l_name"] . "</th><th>" . substr($value["s-reservation"], 0, 10) . "</th><th>" . substr($value["e-reservation"], 0, 10) . "</th>";
+        if($value["taken"]){
+            echo "<th>" . $value["book_name"] . "</th><th> " . $value["f_name"] . " " . $value["l_name"] . "</th><th>" . substr($value["s-reservation"], 0, 10) . "</th>";
+            if(strtotime(date("Y-m-d")) >= strtotime(substr($value["e-reservation"], 0, 10))){
+                echo "<th class='taken'>";
+            }else{
+                echo "<th>";
+            }
+            echo substr($value["e-reservation"], 0, 10) . "</th>";
+             
+            echo "<th>";
+            echo "je vyzvednuta";
+            echo '<form method="POST" action="">';
+            echo '<input class="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
+            echo '<input class="none" type="number" name="taken" value="0">';
+            echo '<input type="submit" name="return" value="Vrátil">';
+            echo '</form>';
+            echo "</th>";
+
+            echo "<th>";
+            echo '<form method="POST" action="">';
+            echo '<input class="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
+            echo '<input type="submit" name="delete" value="smazat">';
+            echo '</form>';
+            echo "</th>";
+        }else{
+            echo "<th>" . $value["book_name"] . "</th><th> " . $value["f_name"] . " " . $value["l_name"] . "</th><th>" . substr($value["s-reservation"], 0, 10) . "</th><th>" . substr($value["e-reservation"], 0, 10) . "</th>";
+            
+            echo "<th>";
+            echo "Je v místnosti: " . $value["room_name"];
+            echo '<form method="POST" action="">';
+            echo '<input class="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
+            echo '<input class="none" type="number" name="taken" value="1">';
+            echo '<input type="submit" name="take" value="Vyzvednul si">';
+            echo '</form>';
+            echo "</th>";
+
+            echo "<th>";
+            echo '<form method="POST" action="">';
+            echo '<input class="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
+            echo '<input type="submit" name="delete" value="smazat">';
+            echo '</form>';
+            echo "</th>";
+        }
         echo "</tr>";
     }
     echo "</table>";

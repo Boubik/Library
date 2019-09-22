@@ -500,11 +500,24 @@ function get_reservations($conn)
 /**
  * add reservation to db
  * @param   Mixed   $conn               db connection
+ * @param   Int     $id                 id of reservation
+ * @param   Bool    $taken              0 is not taken 1 is taken
+ */
+function change_reservation_status($conn, $id, $taken)
+{
+    $sql = "UPDATE `reservation` SET `taken`= '" . $taken . "' WHERE `id` = '" . $id . "'";
+    $sql = $conn->prepare($sql);
+    $sql->execute();
+}
+
+/**
+ * add reservation to db
+ * @param   Mixed   $conn               db connection
  * @return  Array    reservations
  */
 function get_actual_reservations($conn)
 {
-    $sql = "SELECT * FROM `reservation` INNER JOIN book_has_reservation ON book_has_reservation.reservation_id = reservation.id INNER JOIN book ON book.id = book_has_reservation.book_id INNER JOIN user ON user.id = reservation.user_id WHERE `s-reservation` < CURTIME() AND `e-reservation` > CURTIME() ORDER BY `e-reservation`";
+    $sql = "SELECT reservation.id as 'reservation_id', `s-reservation`, `e-reservation`, `taken`, `user_id`, book.name as 'book_name', user.f_name, user.l_name, book.room_name FROM `reservation` INNER JOIN book_has_reservation ON book_has_reservation.reservation_id = reservation.id INNER JOIN book ON book.id = book_has_reservation.book_id INNER JOIN user ON user.id = reservation.user_id WHERE (`s-reservation` <= CURDATE() AND `e-reservation` >= CURDATE()) OR reservation.taken = true ORDER BY `e-reservation`";
     $sql = $conn->prepare($sql);
     $sql->execute();
     $rows = array();
@@ -966,8 +979,9 @@ function hide_book($conn, $id)
  * @param   Mixed   $conn           db connection
  * @param   Int     $id             id of book
  */
-function delete_reservation($conn, $id)
+function delete_reservation($conn, $id, $reservation_id = false)
 {
+    save_to_log("Detele reservation by: \"" . $_SESSION["username"] . "\"");
     $sql = "DELETE FROM `book_has_reservation` WHERE `reservation_id` = '" . $id . "'";
     $sql = $conn->prepare($sql);
     $sql->execute();

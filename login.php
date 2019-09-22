@@ -21,7 +21,7 @@
     $conn = connect_to_db($configs["servername"], $configs["dbname"], $configs["username"], $configs["password"]);
     session_start();
 
-
+    echo '<div id="logincon">';
     if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"]) and !isset($_GET["reset"])) {
         header("Location: /");
     } else {
@@ -30,41 +30,24 @@
         if (!isset($_GET["reset"])) {
 
             if (!isset($_GET["register"])) {
-                echo '<div id="logincon">';
-                echo "login";
+                
+                echo '<a href="index.php"><img src="/images/skola_logo_mono.png" alt="logo"></a>';
                 echo '<form class="form-signin" method="POST" role="form" action="">';
                 echo '<input type="text" name="username" class="form-control" placeholder="Přezdívka" required autofocus><br>';
                 echo '<input type="hidden" id="passwordHMAC" name="passwordHMAC" value="">';
                 echo '<div id="form">';
-                echo '<input type="password" id="password" name="password" class="form-control" required><br>';
+                echo '<input type="password" id="password" placeholder="Heslo" name="password" class="form-control" required><br>';
                 echo "<br>";
                 echo '</div>';
                 echo '<input type="submit" name="login"  value="Přihlásit se">' . "\n";
                 echo '</form>' . "\n";
-                echo '</div>';
 
                 echo '<div id="swap">';
-                echo 'mate učet?<a href="/login.php?register=yes">Zaregistruj se!</a>';
+                echo 'mate učet?<a href="/login.php?register=yes"> Zaregistruj se!</a>';
                 echo '</div>';
 
-                echo'<div class="form-group">
-                <input type="text" id="name" class="form-control" required>
-                <label class="form-control-placeholder" for="name">Name</label>
-              </div>
-              <div class="form-group">
-                <input type="password" id="password" class="form-control" required>
-                <label class="form-control-placeholder" for="password">Password</label>
-              </div>';
-
-
-                echo '<div id="2" style="display:none;">
-                        My Dynamic Content
-                        </div>';
             } else {
-
-                echo '<div id="main">';
-                echo '<div id="Reg">';
-                echo "Registrace";
+                echo '<a href="index.php"><img src="/images/skola_logo_mono.png" alt="logo"></a>';
                 echo '<form class="form-signin" method="POST" role="form" action="">';
                 echo '<input type="text" maxlength="45" name="f_name" placeholder="Jméno" required><br>';
                 echo '<input type="text" maxlength="45" name="l_name" placeholder="Přímení" required><br>';
@@ -75,13 +58,11 @@
                 echo '<input type="submit" name="register"  value="Registrovat">' . "\n";
                 echo '</form>' . "\n";
                 echo '<div id="swap">';
-                echo 'mate učet?<a href="/login.php">Přihlaš se!</a>';
-                echo '</div>';
-                echo '</div>';
+                echo 'mate učet?<a href="/login.php"> Přihlaš se!</a>';
+                echo'</div>';
             }
         } else {
-            echo '<div id="main2">';
-            echo '<div id="reset">';
+
             echo "Reset hesla pro uživatele \"" . $_SESSION["username"] . "\"";
             echo '<form class="form-signin" method="POST" role="form" action="">';
             echo '<input id="reset" type="password" maxlength="45" name="old_pass" placeholder="staré heslo"><br>';
@@ -91,10 +72,11 @@
             echo "<br>";
             echo '<input id="konec" type="submit" name="reset"  value="Změnit">' . "\n";
             echo '</form>' . "\n";
-            echo '</div>';
-            echo '</div>';
+
         }
+        
     }
+    echo'</div>';
 
     if (isset($_POST["reset"])) {
         if (login($conn, $_SESSION["username"], $_POST["old_pass"])) {
@@ -141,19 +123,20 @@
     echo '</div>';
     echo '</div>';
 
-    echo '<div id="footer">';
-    echo '<div id="footercon">';
-    echo '<div id="social">';
-    echo '<a href="https://www.facebook.com/skolavdf/?ref=bookmarks" target="_blank" class="fab fa-facebook-f"></a>';
-    echo '<a href="https://www.instagram.com/skolavdf/" target="_blank" class="fab fa-instagram"></a>';
-    echo "</div>";
-    echo '<div id="splitter"></div>';
-    echo '<div id="team">';
-    echo 'Code: Jan Chlouba <br>';
-    echo 'Designe: Ibrahim Daghstani';
-    echo "</div>";
-    echo "</div>";
-    echo "</div>";
+    echo'<div id="footer">
+<div id="footercon">
+<div id="social">
+<a href="https://www.facebook.com/skolavdf/?ref=bookmarks" target="_blank" class="fab fa-facebook-f"></a>
+<a href="https://www.instagram.com/skolavdf/" target="_blank" class="fab fa-instagram"></a>
+</div>
+<div id="splitter"></div>
+    <div id="team">
+    <a href="https://github.com/Boubik" target="_blank">Code: Jan Chlouba</a><br>
+    <a href="https://github.com/JINXisHERE" target="_blank">Designe: Ibrahim Daghstai</a>
+
+</div>
+</div>
+</div>';
 
     ?>
     <script type="text/javascript">

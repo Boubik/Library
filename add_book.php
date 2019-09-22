@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Přidání knížky</title>
-    <link rel="stylesheet" type="text/css" href="styles/add.css">
+    <link rel="stylesheet" type="text/css" href="styles/frontend.scss">
     <link href="styles/header.css" rel="stylesheet" type="text/css">
     <link href="styles/footer.css" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="/images/fav.png" type="image/x-icon" />
@@ -19,15 +19,12 @@
     $conn = connect_to_db($configs["servername"], $configs["dbname"], $configs["username"], $configs["password"]);
     session_start();
 
-    echo '<div id="header">';
-    echo "<a href=\"/\"><image src=\"/images/logo_1.png\" style=\"height: 100px\"></a>";
-    echo "</div>";
 
     if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"], true)) { } else {
         header("Location: /login.php");
     }
-    echo '<div id="main">';
-    echo '<div id="inner">';
+    echo '<div id="logincon">';
+    echo '<a href="index.php"><img src="/images/skola_logo_mono.png" alt="logo"></a>';
     echo '<form method="POST" action="">';
     echo '<input type="text" maxlength="45" name="name" placeholder="Název knihy"><br>';
     echo '<input type="number"  name="relase" placeholder="Rok vydán"><br>';
@@ -48,7 +45,6 @@
     echo '<input type="text" maxlength="200" name="img" placeholder="url obrázku"><br>' . "\n";
     echo '<input type="submit" name="submit" value="Přidat">'  . "\n";
     echo '</form>' . "\n";
-    echo '</div>';
     echo '</div>';
 
     if (isset($_POST["submit"])) {

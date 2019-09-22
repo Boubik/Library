@@ -83,7 +83,9 @@
         echo '<input type="submit" name="profile"  value="Můj profil">' . "\n";
         echo '<input type="submit" name="logout"  value="Odhlásit se">' . "\n";
     } else {
+        echo '<div id="fullmenue">';
         echo '<input type="submit" name="login"  value="Přihrásit se"></input>' . "\n";
+        echo '</div>';
     }
     echo '</div>';
     echo '</form>' . "\n";
@@ -320,22 +322,26 @@
 
 
 
-    echo '<div id="footer">';
-    echo '<div id="footercon">';
-    echo '<div id="social">';
-    echo '<a href="https://www.facebook.com/skolavdf/?ref=bookmarks" target="_blank" class="fab fa-facebook-f"></a>';
-    echo '<a href="https://www.instagram.com/skolavdf/" target="_blank" class="fab fa-instagram"></a>';
-    echo "</div>";
-    echo '<div id="splitter"></div>';
-    echo '<div id="team">';
-    echo 'Code: Jan Chlouba <br>';
-    echo 'Designe: Ibrahim Daghstani';
-    echo "</div>";
-    echo "</div>";
-    echo "</div>";
+
 
     ?>
 </body>
+<footer>
+<div id="footer">
+<div id="footercon">
+<div id="social">
+<a href="https://www.facebook.com/skolavdf/?ref=bookmarks" target="_blank" class="fab fa-facebook-f"></a>
+<a href="https://www.instagram.com/skolavdf/" target="_blank" class="fab fa-instagram"></a>
+</div>
+<div id="splitter"></div>
+    <div id="team">
+    <a href="https://github.com/Boubik" target="_blank">Code: Jan Chlouba</a><br>
+    <a href="https://github.com/JINXisHERE" target="_blank">Designe: Ibrahim Daghstai</a>
+
+</div>
+</div>
+</div>
+</footer>
 <script>
     AOS.init();
 </script>

@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!DOCTYPE html
 
 <head>
     <meta charset="UTF-8">
     <title>Přidání autora</title>
-    <link rel="stylesheet" type="text/css" href="styles/add_author.css">
+    <link rel="stylesheet" type="text/css" href="styles/frontend.scss">
     <link href="styles/header.css" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="/images/fav.png" type="image/x-icon" />
     <link href="styles/footer.css" rel="stylesheet" type="text/css">
@@ -18,19 +18,16 @@
     date_default_timezone_set('Europe/Prague');
     $conn = connect_to_db($configs["servername"], $configs["dbname"], $configs["username"], $configs["password"]);
     session_start();
-
-    echo '<div id="header">';
-    echo "<a href=\"/\"><image src=\"/images/logo_1.png\" style=\"height: 100px\"></a>";
-    echo "</div>";
-    echo '<div id="main">';
-
+    
     if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"], true)) { } else {
         header("Location: /login.php");
     }
-
+    echo '<div id="logincon">';
+    echo '<a href="index.php"><img src="/images/skola_logo_mono.png" alt="logo"></a>';
     if (isset($_GET["name"]) and isset($_GET["relase"]) and isset($_GET["language"]) and isset($_GET["ISBN"]) and isset($_GET["room_name"]) and isset($_GET["pages"]) and isset($_GET["genres"]) and isset($_GET["img"])) {
 
 
+       
         echo "Přiřadte autora k \"" . $_GET["name"] . "\"<br>\n";
         echo '<form method="POST" action="">';
         echo '<input type="text" maxlength="45" name="f_name" placeholder="Jméno"><br>';
@@ -132,21 +129,21 @@
         }
     }
     echo '</div>';
-
-    echo '<div id="footer">';
-    echo '<div id="footercon">';
-    echo '<div id="social">';
-    echo '<a href="https://www.facebook.com/skolavdf/?ref=bookmarks" target="_blank" class="fab fa-facebook-f"></a>';
-    echo '<a href="https://www.instagram.com/skolavdf/" target="_blank" class="fab fa-instagram"></a>';
-    echo "</div>";
-    echo '<div id="splitter"></div>';
-    echo '<div id="team">';
-    echo 'Code: Jan Chlouba <br>';
-    echo 'Designe: Ibrahim Daghstani';
-    echo "</div>";
-    echo "</div>";
-    echo "</div>";
-
+    echo '</div>';
+    echo '<div id="footer">
+    <div id="footercon">
+    <div id="social">
+    <a href="https://www.facebook.com/skolavdf/?ref=bookmarks" target="_blank" class="fab fa-facebook-f"></a>
+    <a href="https://www.instagram.com/skolavdf/" target="_blank" class="fab fa-instagram"></a>
+    </div>
+    <div id="splitter"></div>
+        <div id="team">
+        <a href="https://github.com/Boubik" target="_blank">Code: Jan Chlouba</a><br>
+        <a href="https://github.com/JINXisHERE" target="_blank">Designe: Ibrahim Daghstai</a>
+    
+    </div>
+    </div>
+    </div>';
     ?>
 </body>
 

@@ -108,8 +108,10 @@ body{
 #adminhid{
     display: none;
 }
+#logincon p {
+    text-align: center;
 
-
+}
 #footer{
     margin: auto;
     background-color: black;
@@ -308,6 +310,7 @@ body{
       border: none; 
       margin-left: 160px;
       outline: none;
+      margin-top: 25px;
   }
 
   #swap{

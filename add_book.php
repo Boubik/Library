@@ -31,17 +31,18 @@
     echo '<input type="text" maxlength="2" name="language" placeholder="Jazyk"><br>';
     echo '<input type="text" name="ISBN" placeholder="ISBN"><br>';
 
-    echo '<select name="room" id="sel">' . "\n";
-    echo '<option>Místnost</option>' . "\n";
-    foreach (get_table($conn, "room") as $row) {
-        echo '<option>' . $row["name"] . '</option>';
-    }
-    echo '</select> nebo <input type="text" name="room_name" placeholder="Místnost"><br>';
-
+    // echo '<select name="room" id="sel">' . "\n";
+    // echo '<option>Místnost</option>' . "\n";
+    // foreach (get_table($conn, "room") as $row) {
+    //     echo '<option>' . $row["name"] . '</option>';
+    // } 
+    // echo '</select> nebo 
+    echo '<input type="text" name="room_name" placeholder="Místnost"><br>';
+    
     // echo '<input type="text" name="room_name" placeholder="Místnost"><br>';
 
     echo '<input type="number" name="pages" placeholder="Počet stran"><br>';
-    echo '<input type="text" maxlength="45" name="genres" placeholder="Žánry"><br>(mezera rozděluje žánry)<br>';
+    echo '<input type="text" maxlength="45" name="genres" placeholder="Žánry"><br><p>    (mezera rozděluje žánry)</p><br>';
     echo '<input type="text" maxlength="200" name="img" placeholder="url obrázku"><br>' . "\n";
     echo '<input type="submit" name="submit" value="Přidat">'  . "\n";
     echo '</form>' . "\n";

@@ -92,7 +92,7 @@
             header("Location: /");
         }
     } else {
-        echo "Přiřadte autora <br>\n";
+        echo "<p>Přiřadte autora</p> <br>\n";
         echo '<form method="POST" action="">';
         echo '<input type="text" maxlength="45" name="f_name" placeholder="Jméno"><br>';
         echo '<input type="text" maxlength="45" name="l_name" placeholder="Přímen"><br>';

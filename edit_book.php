@@ -25,7 +25,7 @@
             border-collapse: collapse;
         }
 
-        #none {
+        .none {
             display: none;
         }
     </style>
@@ -108,7 +108,7 @@
 
     echo "<div class=\"book\">";
     echo '<form method="POST" action="">Knížka<br>';
-    echo '<input id="none" type="text" name="id" value="' . $book["id"] . '">';
+    echo '<input class="none" type="text" name="id" value="' . $book["id"] . '">';
     echo '<input type="text" name="name" value="' . $book["name"] . '"><br>Rok vydání <br>';
     echo '<input type="number" name="relase" value="' . $book["relase"] . '"><br>Jazyk <br>';
     echo '<input type="text" name="language" value="' . $book["language"] . '"><br>ISBN <br>';

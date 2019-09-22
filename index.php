@@ -222,7 +222,7 @@
             $status = "free";
             foreach ($k as $reservation) {
                 if ($reservation["book_id"] == $key) {
-                    if (strtotime($reservation["e-reservation"]) > strtotime('-' . 1 . ' days') and strtotime($reservation["s-reservation"]) < strtotime('-' . 0 . ' days')) {
+                    if (strtotime($reservation["e-reservation"]) > strtotime('-' . 1 . ' days') and strtotime($reservation["s-reservation"]) < strtotime('-' . 0 . ' days') or $reservation["taken"] == 1) {
                         $status = "booked";
                         break;
                     }

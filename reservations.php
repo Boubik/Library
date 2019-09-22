@@ -12,15 +12,17 @@
     <script src="js/350205fd30.js"></script>
     <title>Uživatelé</title>
     <style>
-        table,
-        th,
-        td {
+        table, th, td {
             border: 1px solid black;
             border-collapse: collapse;
         }
 
-        #none {
+        .none {
             display: none;
+        }
+
+        .taken {
+            color: red;
         }
     </style>
 </head>
@@ -156,45 +158,50 @@
     echo '<div id="main">';
     echo '<table id="tab">';
     echo "<tr>";
-    echo '<th>Knížka</th><th>Jméno</th><th>od</th><th>do</th><th>status</th>';
-    if ($is_admin) {
-        echo "<th>Smazat</th>";
-    }
+    echo '<th>Knížka</th><th>Jméno</th><th>od</th><th>do</th><th>status</th><th>Smazat</th>';
     echo "</tr>";
     foreach ($actual_reservations as $value) {
         echo "<tr>";
 
         if($value["taken"]){
-            echo "<th>" . $value["book_name"] . "</th><th> " . $value["f_name"] . " " . $value["l_name"] . "</th><th>" . substr($value["s-reservation"], 0, 10) . "</th><th>" . substr($value["e-reservation"], 0, 10) . "</th><th>";
+            echo "<th>" . $value["book_name"] . "</th><th> " . $value["f_name"] . " " . $value["l_name"] . "</th><th>" . substr($value["s-reservation"], 0, 10) . "</th>";
+            if(strtotime(date("Y-m-d")) >= strtotime(substr($value["e-reservation"], 0, 10))){
+                echo "<th class='taken'>";
+            }else{
+                echo "<th>";
+            }
+            echo substr($value["e-reservation"], 0, 10) . "</th>";
              
+            echo "<th>";
             echo "je vyzvednuta";
             echo '<form method="POST" action="">';
-            echo '<input id="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
-            echo '<input id="none" type="number" name="taken" value="0">';
+            echo '<input class="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
+            echo '<input class="none" type="number" name="taken" value="0">';
             echo '<input type="submit" name="return" value="Vrátil">';
             echo '</form>';
             echo "</th>";
 
             echo "<th>";
             echo '<form method="POST" action="">';
-            echo '<input id="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
+            echo '<input class="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
             echo '<input type="submit" name="delete" value="smazat">';
             echo '</form>';
             echo "</th>";
         }else{
-            echo "<th>" . $value["book_name"] . "</th><th> " . $value["f_name"] . " " . $value["l_name"] . "</th><th>" . substr($value["s-reservation"], 0, 10) . "</th><th>" . substr($value["e-reservation"], 0, 10) . "</th><th>";
+            echo "<th>" . $value["book_name"] . "</th><th> " . $value["f_name"] . " " . $value["l_name"] . "</th><th>" . substr($value["s-reservation"], 0, 10) . "</th><th>" . substr($value["e-reservation"], 0, 10) . "</th>";
             
+            echo "<th>";
             echo "Je v místnosti: " . $value["room_name"];
             echo '<form method="POST" action="">';
-            echo '<input id="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
-            echo '<input id="none" type="number" name="taken" value="1">';
+            echo '<input class="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
+            echo '<input class="none" type="number" name="taken" value="1">';
             echo '<input type="submit" name="take" value="Vyzvednul si">';
             echo '</form>';
             echo "</th>";
 
             echo "<th>";
             echo '<form method="POST" action="">';
-            echo '<input id="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
+            echo '<input class="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
             echo '<input type="submit" name="delete" value="smazat">';
             echo '</form>';
             echo "</th>";

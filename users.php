@@ -19,7 +19,7 @@
             border-collapse: collapse;
         }
 
-        #none {
+        .none {
             display: none;
         }
     </style>
@@ -164,7 +164,7 @@
         echo "<th>";
 
         echo '<form method="GET" action="">';
-        echo '<input type="text" name="username" value="' . $value["username"] . '" id="none">';
+        echo '<input type="text" name="username" value="' . $value["username"] . '" class="none">';
         echo '<select name="role" id="sel">' . "\n";
         foreach ($roles as $item) {
             if ($item == $value["role"]) {
@@ -182,7 +182,7 @@
         if ($is_admin) {
             echo "<th>";
             echo '<form method="GET" action="">';
-            echo '<input type="text" name="username" value="' . $value["username"] . '" id="none">';
+            echo '<input type="text" name="username" value="' . $value["username"] . '" class="none">';
             echo '<input type="submit" name="delete" value="smazat">';
             echo '</form>';
             echo '</th>';

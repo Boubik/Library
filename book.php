@@ -24,7 +24,7 @@
             border-collapse: collapse;
         }
 
-        #none {
+        .none {
             display: none;
         }
     </style>
@@ -185,6 +185,7 @@
                 echo $user["username"] . '</option>' . "\n";
             }
             echo '</select>' . "<br>\n";
+            echo '<input type="checkbox" name="taken"> Vyzvednuta<br>' . "\n";
         } else {
             echo '<select class="none" name="user" id="sel">' . "\n";
             echo '<option selected>';
@@ -193,7 +194,7 @@
         }
     }
 
-    echo '<input type="submit" name="reservation"  value="zarezervovat">' . "\n";
+    echo '<input type="submit" name="add_reservation"  value="zarezervovat">' . "\n";
     echo "</form>";
     echo '<br><br>';
     echo "<br>\nnadcházející rezervace:<br>\n";
@@ -244,7 +245,7 @@
 
                     echo "<th>";
                     echo '<form method="POST" action="">';
-                    echo '<input type="text" id="none" name="reservation_id" value="' . $reservation["reservation_id"] . '">';
+                    echo '<input type="text" class="none" name="reservation_id" value="' . $reservation["reservation_id"] . '">';
                     echo '<input type="submit" name="delete_reservation" value="Smazat">';
                     echo '</form>' . "\n";
                 }
@@ -267,11 +268,15 @@
 
 
     echo '<div id="rez">';
-    if (isset($_POST["reservation"])) {
+    if (isset($_POST["add_reservation"])) {
         if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
-            $date = $_POST["s_date"];
-            if (strtotime($date) > strtotime('-' . 1 . ' days') and isset($_SESSION["username"]) and isset($_SESSION["password"]) and strtotime($_POST["s_date"]) < strtotime($_POST["e_date"])) {
-                if (reservations($conn, $_POST["s_date"], $_POST["e_date"], $_GET["id"], $_POST["user"])) {
+            if (isset($_POST["taken"])) {
+                $taken = 1;
+            } else {
+                $taken = 0;
+            }
+            if (strtotime($_POST["s_date"]) >= strtotime(date("Y-m-d")) and isset($_SESSION["username"]) and isset($_SESSION["password"]) and strtotime($_POST["s_date"]) < strtotime($_POST["e_date"])) {
+                if (reservations($conn, $_POST["s_date"], $_POST["e_date"], $_GET["id"], $_POST["user"], $taken)) {
                     $reservation_id = get_reservation_id($conn, $_POST["s_date"], $_POST["e_date"], $_GET["id"]);
                     add_book_has_reservation($conn, (int) $_GET["id"], (int) $reservation_id);
                     header("Location: /book.php?id=" . $_GET["id"] . "&name=" . $_GET["name"]);

@@ -533,21 +533,23 @@ function get_actual_reservations($conn)
  * @param   String  $s_reservation      start reservation date
  * @param   String  $e_reservation      end reservation date
  * @param   String  $user               username
+ * @param   Int     $taken              if is taken
  * @return  Bool    if reservation can be done
  */
-function reservations($conn, $s_reservation, $e_reservation, $book_id, $user)
+function reservations($conn, $s_reservation, $e_reservation, $book_id, $user, $taken = 0)
 {
     $sql = "SELECT * FROM `reservation` INNER JOIN book_has_reservation ON book_has_reservation.reservation_id = reservation.id INNER JOIN book ON book.id = book_has_reservation.book_id WHERE `e-reservation` > CURTIME() AND book.id = " . $book_id . " ORDER BY `e-reservation`";
     $sql = $conn->prepare($sql);
     $numrows = $sql->execute();
     if ($numrows > 0) {
         while ($row = $sql->fetch()) {
-            if (((strtotime($row["e-reservation"]) < strtotime($s_reservation) and strtotime($row["e-reservation"]) < strtotime($e_reservation)) or strtotime($row["s-reservation"]) > strtotime($e_reservation))) { } else {
+            //save_to_log(strtotime($row["e-reservation"]) . " <= " . strtotime($s_reservation) . " and " . strtotime($row["e-reservation"]) . " < " . strtotime($e_reservation) . " or " . strtotime($row["s-reservation"]) . " >= " . strtotime($e_reservation));
+            if (((strtotime($row["e-reservation"]) <= strtotime($s_reservation) and strtotime($row["e-reservation"]) < strtotime($e_reservation)) or strtotime($row["s-reservation"]) >= strtotime($e_reservation))) { } else {
                 return false;
             }
         }
     }
-    add_reservations($conn, $s_reservation, $e_reservation, $user);
+    add_reservations($conn, $s_reservation, $e_reservation, $user, $taken);
     return true;
 }
 
@@ -557,9 +559,10 @@ function reservations($conn, $s_reservation, $e_reservation, $book_id, $user)
  * @param   String  $s_reservation      start reservation date
  * @param   String  $e_reservation      end reservation date
  * @param   String  $user               username
+ * @param   Int     $taken              if is taken
  * @return  Bool    if reservation can be done
  */
-function add_reservations($conn, $s_reservation, $e_reservation, $user)
+function add_reservations($conn, $s_reservation, $e_reservation, $user, $taken)
 {
     if ($user == $_SESSION["username"]) {
         save_to_log("Add reservation from: \"" . $s_reservation . "\" to: \"" . $e_reservation . "\" by: \"" . $user . "\"");
@@ -568,7 +571,8 @@ function add_reservations($conn, $s_reservation, $e_reservation, $user)
     }
 
     $id = get_user_id($conn, $user);
-    $sql = "INSERT INTO `reservation`(`s-reservation`, `e-reservation`, `user_id`) VALUES ('" . $s_reservation . "', '" . $e_reservation . "' , $id)";
+    $sql = "INSERT INTO `reservation`(`s-reservation`, `e-reservation`, `taken`, `user_id`) VALUES ('" . $s_reservation . "', '" . $e_reservation . "' , '$taken', $id)";
+    echo $sql;
     $sql = $conn->prepare($sql);
     $sql->execute();
 }
@@ -676,7 +680,7 @@ function get_reservation_id($conn, $s_reservation, $e_reservation, $book_id)
  */
 function get_reservation_with_book($conn)
 {
-    $sql = "SELECT book.id AS 'book_id', reservation.id AS 'reservation_id', reservation.`s-reservation`, reservation.`e-reservation` FROM `book` INNER JOIN book_has_reservation ON book_has_reservation.book_id = book.id INNER JOIN reservation on reservation.id = book_has_reservation.reservation_id";
+    $sql = "SELECT book.id AS 'book_id', reservation.id AS 'reservation_id', reservation.`s-reservation`, reservation.`e-reservation`, reservation.`taken` as 'taken' FROM `book` INNER JOIN book_has_reservation ON book_has_reservation.book_id = book.id INNER JOIN reservation on reservation.id = book_has_reservation.reservation_id";
     $sql = $conn->prepare($sql);
     $numrows = $sql->execute();
     if ($numrows > 0) {

@@ -133,6 +133,10 @@
         header("Location: /users.php");
     }
 
+    if (isset($_POST["reservations"])) {
+        header("Location: /reservations.php");
+    }
+
     if (isset($_POST["search"]) and isset($_POST["q"]) and $_POST["q"] != "") {
         $q = $_POST["q"];
         unset($_POST["search"]);

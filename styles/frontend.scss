@@ -13,7 +13,7 @@ body{
     position: fixed;
     top: 0;
     z-index: 2;
-    background-color: rgba(0, 0, 0, 0.644);  
+    background-color: rgba(0, 0, 0, 0.753);  
     backdrop-filter: blur(5px);
     width: 100%;
 }
@@ -128,6 +128,19 @@ body{
 }
 
 
+#footer img {
+    width: auto;
+    height: 35px;
+    transition: transform .2s;
+
+}
+
+#footer img:hover {
+    transform: scale(1.2); 
+
+}
+
+
 
 #footercon{
     margin: auto;
@@ -142,7 +155,7 @@ body{
     position: absolute;
     height: 50px;
     width: 200px;
-    padding-left: 150px;
+    margin-left: 100px;
     padding-top: 20px;
 }
 
@@ -197,6 +210,13 @@ body{
     border: 1px solid white;
     margin-top: 100px;
 
+}
+
+#usermain{
+    margin: auto;
+    margin-top: 100px;
+    width: 800px;
+    min-height: 300px;
 }
 
 
@@ -365,3 +385,50 @@ body{
 
     }  
   }
+
+
+
+  #tab{
+    width: 90%;
+    margin: auto;
+  }
+  
+  #tab {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 90%;
+    margin: auto;
+    color: white;
+  }
+
+  #tab td, #tab th {
+    border: 1px solid transparent;
+    outline: none;
+    padding: 8px;
+  }
+  #tab tr:nth-child(even){
+      background-color: #dfdfdf;
+    }
+  
+  #tab tr:hover {
+    background-color:#ebebeb70;
+    color: white;
+  }
+  
+  
+  
+  #tab input[type=submit] {
+    font-family: 'Muli', sans-serif;
+    background-color: #ffffff;
+    padding: 5px 5px;
+    width: 100px;
+    transition: 0.3s;
+    border: none;
+    border-radius: 25px;
+    color:black;
+  }
+  
+  #tab input[type=submit]:hover {
+    background-color: #5DADE2;
+  }
+  

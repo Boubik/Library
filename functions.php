@@ -554,6 +554,18 @@ function reservations($conn, $s_reservation, $e_reservation, $book_id, $user, $t
 }
 
 /**
+ * to cz date
+ * @param   String      $date      date
+ * @return  String      date in cz
+ */
+function to_cz_date($date)
+{
+    $date = explode("-", $date);
+    $date = $date[2] . ". " . $date[1] . ". " . $date[0];
+    return $date;
+}
+
+/**
  * add reservation to db
  * @param   Mixed   $conn               db connection
  * @param   String  $s_reservation      start reservation date

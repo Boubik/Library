@@ -164,16 +164,16 @@
         echo "<tr>";
 
         if($value["taken"]){
-            echo "<th>" . $value["book_name"] . "</th><th> " . $value["f_name"] . " " . $value["l_name"] . "</th><th>" . substr($value["s-reservation"], 0, 10) . "</th>";
+            echo "<th>" . $value["book_name"] . "</th><th> " . $value["f_name"] . " " . $value["l_name"] . "</th><th>" . to_cz_date(substr($value["s-reservation"], 0, 10)) . "</th>";
             if(strtotime(date("Y-m-d")) >= strtotime(substr($value["e-reservation"], 0, 10))){
                 echo "<th class='taken'>";
             }else{
                 echo "<th>";
             }
-            echo substr($value["e-reservation"], 0, 10) . "</th>";
+            echo to_cz_date(substr($value["e-reservation"], 0, 10)) . "</th>";
              
             echo "<th>";
-            echo "je vyzvednuta";
+            echo "Je zapůjčena";
             echo '<form method="POST" action="">';
             echo '<input class="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
             echo '<input class="none" type="number" name="taken" value="0">';
@@ -188,7 +188,7 @@
             echo '</form>';
             echo "</th>";
         }else{
-            echo "<th>" . $value["book_name"] . "</th><th> " . $value["f_name"] . " " . $value["l_name"] . "</th><th>" . substr($value["s-reservation"], 0, 10) . "</th><th>" . substr($value["e-reservation"], 0, 10) . "</th>";
+            echo "<th>" . $value["book_name"] . "</th><th> " . $value["f_name"] . " " . $value["l_name"] . "</th><th>" . to_cz_date(substr($value["s-reservation"], 0, 10)) . "</th><th>" . to_cz_date(substr($value["e-reservation"], 0, 10)) . "</th>";
             
             echo "<th>";
             echo "Je v místnosti: " . $value["room_name"];

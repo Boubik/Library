@@ -118,9 +118,9 @@
         if ($reservation["user_id"] == $user_id) {
             $book_has_reservation = mn($conn, "book_has_reservation", $reservation["id"], "reservation_id", "book_id");
             if (strtotime($reservation["e-reservation"]) > strtotime('-' . 1 . ' days')) {
-                $new[] = "<th>" . get_book($conn, $book_has_reservation[0]) . "</th><th>" . substr($reservation["s-reservation"], 0, 10) . "</th><th>" . substr($reservation["e-reservation"], 0, 10) . "</th>";
+                $new[] = "<th>" . get_book($conn, $book_has_reservation[0]) . "</th><th>" . to_cz_date(substr($reservation["s-reservation"], 0, 10)) . "</th><th>" . to_cz_date(substr($reservation["e-reservation"], 0, 10)) . "</th>";
             } else {
-                $old[] = "<th>" . get_book($conn, $book_has_reservation[0]) . "</th><th>" . substr($reservation["s-reservation"], 0, 10) . "</th><th>" . substr($reservation["e-reservation"], 0, 10) . "</th>";
+                $old[] = "<th>" . get_book($conn, $book_has_reservation[0]) . "</th><th>" . to_cz_date(substr($reservation["s-reservation"], 0, 10)) . "</th><th>" . to_cz_date(substr($reservation["e-reservation"], 0, 10)) . "</th>";
             }
         }
     }

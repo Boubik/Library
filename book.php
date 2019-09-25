@@ -229,12 +229,8 @@
                 echo "</tr>";
             }
             echo "<tr>";
-            $start = substr($reservation["s-reservation"], 0, 10);
-            $start = explode("-", $start);
-            $stop = substr($reservation["e-reservation"], 0, 10);
-            $stop = explode("-", $stop);
 
-            echo "<th>" . $start[2] . ". " . $start[1] . ". " . $start[0] . "</th><th>" . $stop[2] . ". " . $stop[1] . ". " . $stop[0] . "</th>";
+            echo "<th>" . to_cz_date(substr($reservation["s-reservation"], 0, 10)) . "</th><th>" . to_cz_date(substr($reservation["e-reservation"], 0, 10)) . "</th>";
 
             if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
                 if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <link href="styles/frontend.scss" rel="stylesheet" type="text/css">
     <link rel="icon" href="images/logo.ico">
-    <link rel="shortcut icon" href="/images/fav.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="/images/skola_logo_mono.png" type="image/x-icon" />
     <script src="js/350205fd30.js"></script>
     <title>Uživatelé</title>
     <style>
@@ -180,7 +180,7 @@ $count_users = count_users($conn, $search);
 
 echo '<div id="usermain">';
 echo '<table id="tab">';
-echo "<tr>";
+echo '<tr id="no">';
 echo '<th>Jméno</th><th>Přezdívka</th><th>Role</th>';
 if ($is_admin) {
     echo "<th>Smazat</th>";
@@ -212,7 +212,7 @@ foreach ($users as $value) {
         echo "<th>";
         echo '<form method="GET" action="">';
         echo '<input type="text" name="username" value="' . $value["username"] . '" class="none">';
-        echo '<input type="submit" name="delete" value="smazat">';
+        echo '<input id="del" type="submit" name="delete" value="smazat">';
         echo '</form>';
         echo '</th>';
     }
@@ -256,18 +256,17 @@ echo '<div id="footer">
 <div id="footercon">
 <div id="social">
 <a href="http://www.skolavdf.cz" target="_blank"><img src="/images/skola_logo_color.png" alt="logo"></a>
-<a href="https://www.facebook.com/skolavdf/?ref=bookmarks" target="_blank" class="fab fa-facebook-f"></a>
-<a href="https://www.instagram.com/skolavdf/" target="_blank" class="fab fa-instagram"></a>
+<a href="https://www.facebook.com/skolavdf/?ref=bookmarks"><img src="/images/facebook.png" alt="logo"></a>
+<a href="https://www.instagram.com/skolavdf/" target="_blank"><img src="/images/instagram.png" alt="logo"></a>
 </div>
 <div id="splitter"></div>
     <div id="team">
-    <a href="https://github.com/Boubik" target="_blank">Code: Jan Chlouba</a><br>
-    <a href="https://github.com/JINXisHERE" target="_blank">Designe: Ibrahim Daghstani</a>
+    <a href="https://github.com/Boubik" target="_blank">Coder: Jan Chlouba</a><br>
+    <a href="https://github.com/JINXisHERE" target="_blank">Designer: Ibrahim Daghstani</a>
 
 </div>
 </div>
 </div>';
-
 ?>
 </body>
 

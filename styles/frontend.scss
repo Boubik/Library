@@ -102,9 +102,11 @@ body{
 }
 
 #klient{
+    font-family: 'Montserrat', sans-serif;
     float: right;
-    margin-top: -40px; 
+    margin-top: -60px; 
 }
+
 #adminhid{
     display: none;
 }
@@ -156,7 +158,10 @@ body{
     height: 50px;
     width: 200px;
     margin-left: 100px;
-    padding-top: 20px;
+    padding-top: 32px;
+}
+#social img{
+    padding-left: 5px;
 }
 
 #splitter{
@@ -333,6 +338,7 @@ body{
       margin-top: 25px;
   }
 
+
   #swap{
       font-family: 'Montserrat', sans-serif;
       color: white;
@@ -348,7 +354,53 @@ body{
       text-decoration: none;
   }
 
-@media only screen and (min-width: 1000px) {
+  #tab{
+    width: 90%;
+    margin: auto;
+  }
+  
+  #tab {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 90%;
+    margin: auto;
+    color: white;
+  }
+
+  #tab td, #tab th {
+    border: 1px solid transparent;
+    outline: none;
+    padding: 8px;
+  }
+  #tab tr:nth-child(even){
+      background-color: #dfdfdf4f;
+    }
+
+  #tab input[type=submit] {
+    font-family: 'Muli', sans-serif;
+    background-color: #ffffff;
+    padding: 5px 5px;
+    width: 100px;
+    transition: 0.3s;
+    border: none;
+    border-radius: 25px;
+    color:black;
+  }
+  
+  #tab input[type=submit]:hover {
+    background-color: #5DADE2;
+  }
+
+  #tab input[type=submit]#del:hover{
+      color: white;
+      background-color: red;
+      padding-left: -20px !important;
+  }
+  
+
+
+
+  @media only screen and (min-width: 1000px) {
     #logo{
         margin-left: 100px;
     }
@@ -385,50 +437,3 @@ body{
 
     }  
   }
-
-
-
-  #tab{
-    width: 90%;
-    margin: auto;
-  }
-  
-  #tab {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
-    width: 90%;
-    margin: auto;
-    color: white;
-  }
-
-  #tab td, #tab th {
-    border: 1px solid transparent;
-    outline: none;
-    padding: 8px;
-  }
-  #tab tr:nth-child(even){
-      background-color: #dfdfdf;
-    }
-  
-  #tab tr:hover {
-    background-color:#ebebeb70;
-    color: white;
-  }
-  
-  
-  
-  #tab input[type=submit] {
-    font-family: 'Muli', sans-serif;
-    background-color: #ffffff;
-    padding: 5px 5px;
-    width: 100px;
-    transition: 0.3s;
-    border: none;
-    border-radius: 25px;
-    color:black;
-  }
-  
-  #tab input[type=submit]:hover {
-    background-color: #5DADE2;
-  }
-  

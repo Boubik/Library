@@ -124,13 +124,13 @@ echo '<div id="footer">
 <div id="footercon">
 <div id="social">
 <a href="http://www.skolavdf.cz" target="_blank"><img src="/images/skola_logo_color.png" alt="logo"></a>
-<a href="https://www.facebook.com/skolavdf/?ref=bookmarks" target="_blank" class="fab fa-facebook-f"></a>
-<a href="https://www.instagram.com/skolavdf/" target="_blank" class="fab fa-instagram"></a>
+<a href="https://www.facebook.com/skolavdf/?ref=bookmarks"><img src="/images/facebook.png" alt="logo"></a>
+<a href="https://www.instagram.com/skolavdf/" target="_blank"><img src="/images/instagram.png" alt="logo"></a>
 </div>
 <div id="splitter"></div>
     <div id="team">
-    <a href="https://github.com/Boubik" target="_blank">Code: Jan Chlouba</a><br>
-    <a href="https://github.com/JINXisHERE" target="_blank">Designe: Ibrahim Daghstani</a>
+    <a href="https://github.com/Boubik" target="_blank">Coder: Jan Chlouba</a><br>
+    <a href="https://github.com/JINXisHERE" target="_blank">Designer: Ibrahim Daghstani</a>
 
 </div>
 </div>

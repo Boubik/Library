@@ -22,6 +22,7 @@ session_start();
 if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"], true)) {} else {
     header("Location: /login.php");
 }
+echo '<div class="container">';
 echo '<div id="logincon">';
 echo '<a href="index.php"><img src="/images/skola_logo_mono.png" alt="logo"></a>';
 if (isset($_GET["name"]) and isset($_GET["relase"]) and isset($_GET["language"]) and isset($_GET["ISBN"]) and isset($_GET["room_name"]) and isset($_GET["pages"]) and isset($_GET["genres"]) and isset($_GET["img"])) {
@@ -128,22 +129,25 @@ if (isset($_GET["name"]) and isset($_GET["relase"]) and isset($_GET["language"])
 }
 echo '</div>';
 echo '</div>';
-echo '<div id="footer">
-    <div id="footercon">
-    <div id="social">
-    <a href="http://www.skolavdf.cz" target="_blank"><img src="/images/skola_logo_color.png" alt="logo"></a>
-    <a href="https://www.facebook.com/skolavdf/?ref=bookmarks"><img src="/images/facebook.png" alt="logo"></a>
-    <a href="https://www.instagram.com/skolavdf/" target="_blank"><img src="/images/instagram.png" alt="logo"></a>
-    </div>
-    <div id="splitter"></div>
-        <div id="team">
-        <a href="https://github.com/Boubik" target="_blank">Coder: Jan Chlouba</a><br>
-        <a href="https://github.com/JINXisHERE" target="_blank">Designer: Ibrahim Daghstani</a>
+echo '<div id="footer" style="margin-top:100px;">
+<div id="footercon">
+<div id="social">
+<a href="http://www.skolavdf.cz" target="_blank"><img src="/images/skola_logo_color.png" alt="logo"></a>
+<a href="https://www.facebook.com/skolavdf/?ref=bookmarks"><img src="/images/facebook.png" alt="logo"></a>
+<a href="https://www.instagram.com/skolavdf/" target="_blank"><img src="/images/instagram.png" alt="logo"></a>
+</div>
+<div id="splitter"></div>
+    <div id="team">
+    <a href="https://github.com/Boubik" target="_blank">Coder: Jan Chlouba</a><br>
+    <a href="https://github.com/JINXisHERE" target="_blank">Designer: Ibrahim Daghstani</a>
 
-    </div>
-    </div>
-    </div>';
+</div>
+</div>
+</div>';
+echo '</div>';
+
 ?>
 </body>
+
 
 </html>

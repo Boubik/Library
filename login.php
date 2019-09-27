@@ -18,7 +18,7 @@ $configs = include 'config.php';
 date_default_timezone_set('Europe/Prague');
 $conn = connect_to_db($configs["servername"], $configs["dbname"], $configs["username"], $configs["password"]);
 session_start();
-
+echo '<div class="container">';
 echo '<div id="logincon">';
 if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"]) and !isset($_GET["reset"])) {
     header("Location: /");
@@ -119,8 +119,7 @@ if (isset($_POST["login"])) {
 }
 echo '</div>';
 echo '</div>';
-
-echo '<div id="footer">
+echo '<div id="footer" style="margin-top:100px;">
 <div id="footercon">
 <div id="social">
 <a href="http://www.skolavdf.cz" target="_blank"><img src="/images/skola_logo_color.png" alt="logo"></a>
@@ -135,6 +134,7 @@ echo '<div id="footer">
 </div>
 </div>
 </div>';
+echo '</div>';
 
 ?>
     <script type="text/javascript">
@@ -164,5 +164,6 @@ echo '<div id="footer">
         }
     }
 </script>
+
 
 </html>

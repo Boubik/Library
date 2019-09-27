@@ -41,6 +41,7 @@ $conn = connect_to_db($configs["servername"], $configs["dbname"], $configs["user
 session_start();
 
 $book = get_book_by_id($conn, $_GET["id"]);
+echo '<div class="container">';
 
 echo '<div id="header">';
 echo "<a href=\"/\"><image src=\"/images/logo_1.png\" style=\"height: 100px\"></a>";
@@ -141,23 +142,25 @@ echo '<input type="submit" name="save"  value="Uložit">';
 echo "</form>";
 echo "</div>";
 echo "</div>";
+echo '<div id="footer" style="margin-top:100px;">
+<div id="footercon">
+<div id="social">
+<a href="http://www.skolavdf.cz" target="_blank"><img src="/images/skola_logo_color.png" alt="logo"></a>
+<a href="https://www.facebook.com/skolavdf/?ref=bookmarks"><img src="/images/facebook.png" alt="logo"></a>
+<a href="https://www.instagram.com/skolavdf/" target="_blank"><img src="/images/instagram.png" alt="logo"></a>
+</div>
+<div id="splitter"></div>
+    <div id="team">
+    <a href="https://github.com/Boubik" target="_blank">Coder: Jan Chlouba</a><br>
+    <a href="https://github.com/JINXisHERE" target="_blank">Designer: Ibrahim Daghstani</a>
 
-echo '<div id="footer">
-    <div id="footercon">
-    <div id="social">
-    <a href="http://www.skolavdf.cz" target="_blank"><img src="/images/skola_logo_color.png" alt="logo"></a>
-    <a href="https://www.facebook.com/skolavdf/?ref=bookmarks"><img src="/images/facebook.png" alt="logo"></a>
-    <a href="https://www.instagram.com/skolavdf/" target="_blank"><img src="/images/instagram.png" alt="logo"></a>
-    </div>
-    <div id="splitter"></div>
-        <div id="team">
-        <a href="https://github.com/Boubik" target="_blank">Coder: Jan Chlouba</a><br>
-        <a href="https://github.com/JINXisHERE" target="_blank">Designer: Ibrahim Daghstani</a>
+</div>
+</div>
+</div>';
+echo '</div>';
 
-    </div>
-    </div>
-    </div>';
 ?>
 </body>
+
 
 </html>

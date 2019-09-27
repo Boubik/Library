@@ -20,6 +20,7 @@ session_start();
 if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"], true)) {} else {
     header("Location: /login.php");
 }
+echo '<div class="container">';
 echo '<div id="logincon">';
 echo '<a href="index.php"><img src="/images/skola_logo_mono.png" alt="logo"></a>';
 echo '<form method="POST" action="">';
@@ -65,23 +66,22 @@ if (isset($_POST["submit"])) {
     add_book($conn, $_POST["name"], $_POST["relase"], $_POST["language"], $_POST["ISBN"], $room, $_POST["pages"], $_POST["img"]);
     header("Location: /add_author.php?name=" . $_POST["name"] . "&relase=" . $_POST["relase"] . "&language=" . $_POST["language"] . "&ISBN=" . $_POST["ISBN"] . "&room_name=" . $room . "&pages=" . $_POST["pages"] . "&genres=" . $gendrs_get . "&img=" . $_POST["img"]);
 }
+echo '<div id="footer" style="margin-top:100px;">
+<div id="footercon">
+<div id="social">
+<a href="http://www.skolavdf.cz" target="_blank"><img src="/images/skola_logo_color.png" alt="logo"></a>
+<a href="https://www.facebook.com/skolavdf/?ref=bookmarks"><img src="/images/facebook.png" alt="logo"></a>
+<a href="https://www.instagram.com/skolavdf/" target="_blank"><img src="/images/instagram.png" alt="logo"></a>
+</div>
+<div id="splitter"></div>
+    <div id="team">
+    <a href="https://github.com/Boubik" target="_blank">Coder: Jan Chlouba</a><br>
+    <a href="https://github.com/JINXisHERE" target="_blank">Designer: Ibrahim Daghstani</a>
 
-echo '<div id="footer">
-    <div id="footercon">
-    <div id="social">
-    <a href="http://www.skolavdf.cz" target="_blank"><img src="/images/skola_logo_color.png" alt="logo"></a>
-    <a href="https://www.facebook.com/skolavdf/?ref=bookmarks"><img src="/images/facebook.png" alt="logo"></a>
-    <a href="https://www.instagram.com/skolavdf/" target="_blank"><img src="/images/instagram.png" alt="logo"></a>
-    </div>
-    <div id="splitter"></div>
-        <div id="team">
-        <a href="https://github.com/Boubik" target="_blank">Coder: Jan Chlouba</a><br>
-        <a href="https://github.com/JINXisHERE" target="_blank">Designer: Ibrahim Daghstani</a>
-
-    </div>
-    </div>
-    </div>';
-
+</div>
+</div>
+</div>';
+echo '</div>';
 ?>
 </body>
 

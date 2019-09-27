@@ -51,6 +51,7 @@ if (isset($_GET["page"])) {
 }
 $books = book($conn, $search, $count_books, $page, $per_page);
 
+echo '<div class="container">';
 echo '<div id="header">';
 echo '<div id="logo"><a href="index.php"><img src="/images/skola_logo_color.png" alt="logo"></a></div>';
 echo '<div id="searchnormal">';
@@ -211,7 +212,7 @@ if (!isset($books)) {
     $k = get_reservation_with_book($conn);
     foreach ($books as $key => $book) {
         echo "<a href=\"/book.php?id=" . $key . "&name=" . $book["book_name"] . "\"><div class=\"book\">";
-        echo '<div data-aos="zoom-in" data-aos-once="true" data-aos-easing="linear" data-aos-duration="30">';
+        // echo '<div data-aos="zoom-in" data-aos-once="true" data-aos-easing="linear" data-aos-duration="30">';
         echo "<div class=\"name\">";
         echo $book["book_name"];
         echo "</div>";
@@ -273,7 +274,7 @@ if (!isset($books)) {
 }
 echo "</div>";
 echo "</div>";
-echo "</div>";
+// echo "</div>";
 
 $i = 1;
 if (($i * (3 * $books_rows)) <= $count_books) {
@@ -299,7 +300,7 @@ if ($page < $i) {
 }
 echo "</div>";
 
-echo '<div id="footer">
+echo '<div id="footer" style="margin-top:100px;">
 <div id="footercon">
 <div id="social">
 <a href="http://www.skolavdf.cz" target="_blank"><img src="/images/skola_logo_color.png" alt="logo"></a>
@@ -314,9 +315,9 @@ echo '<div id="footer">
 </div>
 </div>
 </div>';
+echo '</div>';
 ?>
 </body>
-
 <script>
     AOS.init();
 </script>

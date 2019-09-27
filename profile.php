@@ -15,7 +15,7 @@ if (isset($_SESSION["username"])) {
     header("Location: /");
 }
 ?>
-    <style>
+    <!-- <style>
         table,
         th,
         td {
@@ -23,7 +23,7 @@ if (isset($_SESSION["username"])) {
             border-collapse: collapse;
         }
     </style>
-</head>
+</head> -->
 
 <body>
     <?php
@@ -32,9 +32,11 @@ ini_set('max_execution_time', 0);
 $configs = include 'config.php';
 date_default_timezone_set('Europe/Prague');
 $conn = connect_to_db($configs["servername"], $configs["dbname"], $configs["username"], $configs["password"]);
+
+echo '<div class="container">';
 echo '<div id="header">';
-echo '<div id="logo"><a href="index.php"><img src="/images/skola_logo_mono.png" alt="logo"></a></div>';
-echo '<div id="searchsmol">';
+echo '<div id="logo"><a href="index.php"><img src="/images/skola_logo_color.png" alt="logo"></a></div>';
+echo '<div id="searchnormal">';
 echo '<form method="GET" action="">' . "\n";
 echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
 if (isset($_GET["q"])) {
@@ -59,7 +61,7 @@ if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($con
         echo '</div>';
     }
     echo '<div id="klient">';
-    echo '<input type="submit" name="profile"  value="Můj profil">' . "\n";
+    echo '<input type="submit" name="profile" id="profil" value="Můj profil">' . "\n";
     echo '<input type="submit" name="logout"  value="Odhlásit se">' . "\n";
 } else {
     echo '<div id="fullmenue">';
@@ -170,8 +172,7 @@ if (isset($old[0])) {
 }
 
 echo "</div>";
-
-echo '<div id="footer">
+echo '<div id="footer" style="margin-top:100px !important;">
 <div id="footercon">
 <div id="social">
 <a href="http://www.skolavdf.cz" target="_blank"><img src="/images/skola_logo_color.png" alt="logo"></a>
@@ -186,7 +187,9 @@ echo '<div id="footer">
 </div>
 </div>
 </div>';
+echo '</div>';
+
 ?>
-</body>
+
 
 </html>

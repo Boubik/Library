@@ -3,12 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <link href="styles/users.css" rel="stylesheet" type="text/css">
-    <link href="styles/profile.css" rel="stylesheet" type="text/css">
-    <link href="styles/header.css" rel="stylesheet" type="text/css">
-    <link href="styles/footer.css" rel="stylesheet" type="text/css">
+    <link href="styles/frontend.scss" rel="stylesheet" type="text/css">
     <link rel="icon" href="images/logo.ico">
-    <link rel="shortcut icon" href="/images/fav.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="/images/skola_logo_mono.png" type="image/x-icon" />
     <script src="js/350205fd30.js"></script>
     <title>Uživatelé</title>
     <style>
@@ -59,30 +56,10 @@ if (isset($_GET["page"])) {
     $page = 1;
 }
 
+echo '<div class="container">';
 echo '<div id="header">';
-echo "<a href=\"/\"><image src=\"/images/logo_1.png\" style=\"height: 100px\"></a>";
-echo '<div id="inheader">';
-echo '<div id="monkaS">';
-echo '<form method="POST" action="">' . "\n";
-if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
-    if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
-        echo '<input id="reservations" type="submit" name="reservations"  value="Rezervace">' . "\n";
-        echo '<input id="addbook" type="submit" name="users"  value="Uživatelé">' . "\n";
-        echo '<input type="submit" name="add_book"  value="Přidat knížku">' . "\n";
-        echo '<input type="submit" name="add_author"  value="Přidat autora">' . "\n";
-    } else {
-        header("Location: /index.php");
-    }
-    echo '<input type="submit" name="profile"  value="Můj profil">' . "\n";
-
-    echo '<input type="submit" name="logout"  value="Odhlásit se">' . "\n";
-} else {
-    header("Location: /index.php");
-}
-echo '</form>' . "\n";
-echo '</div>';
-
-echo '<div id="serch">';
+echo '<div id="logo"><a href="index.php"><img src="/images/skola_logo_color.png" alt="logo"></a></div>';
+echo '<div id="searchnormal">';
 echo '<form method="GET" action="">' . "\n";
 echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
 if (isset($_GET["q"])) {
@@ -90,10 +67,47 @@ if (isset($_GET["q"])) {
 } else {
     echo '">' . "\n";
 }
-// echo '<button type="submit" name="search"><i class="fa fa-search"></i></button>' . "\n";
-// echo '<input type="submit" name="search"  value="Hledat">' . "\n";
 echo '</form>' . "\n";
 echo '</div>';
+
+echo '<form method="POST" action="">' . "\n";
+if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
+    if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
+        echo '<div id="admin">';
+        echo '<a name="admin"  value="Administrace"><i class="fas fa-cog"></i></a>' . "\n";
+        echo '<div id="adminhid">';
+        echo '<input id="reservations" type="submit" name="reservations"  value="Rezervace">' . "\n";
+        echo '<input id="addbook" type="submit" name="users"  value="Uživatelé"><br>';
+        echo '<input type="submit" name="add_book"  value="Přidat knížku"><br>';
+        echo '<input type="submit" name="add_author"  value="Přidat autora"><br>';
+        echo '</div>';
+        echo '</div>';
+    }
+    echo '<div id="klient">';
+    echo '<input type="submit" name="profile" id="profil" value="Můj profil">' . "\n";
+    echo '<input type="submit" name="logout"  value="Odhlásit se">' . "\n";
+} else {
+    echo '<div id="fullmenue">';
+    echo '<input type="submit" name="login"  value="Přihrásit se"></input>' . "\n";
+    echo '</div>';
+}
+echo '</div>';
+echo '</form>' . "\n";
+echo '<div id="fullmenue">';
+echo '<form method="POST" action="">' . "\n";
+if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
+    if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
+        echo '<input id="reservations" type="submit" name="reservations"  value="Rezervace">';
+        echo '<input id="addbook" type="submit" name="users"  value="Uživatelé">';
+        echo '<input type="submit" name="add_book"  value="Přidat knížku">';
+        echo '<input type="submit" name="add_author"  value="Přidat autora">';
+    }
+    echo '<input type="submit" name="profile"  value="Můj profil">';
+    echo '<input type="submit" name="logout"  value="Odhlásit se">';
+} else {
+    echo '<input type="submit" name="login"  value="Přihrásit se"></input>';
+}
+echo '</form>' . "\n";
 echo '</div>';
 echo '</div>';
 
@@ -154,7 +168,7 @@ if (isset($_POST["delete"])) {
 
 $actual_reservations = get_actual_reservations($conn);
 
-echo '<div id="main">';
+echo '<div id="main" style="margin-top:100px;margin-bottom:100px;">';
 echo '<table id="tab">';
 echo "<tr>";
 echo '<th>Knížka</th><th>Jméno</th><th>od</th><th>do</th><th>status</th><th>Smazat</th>';
@@ -239,24 +253,23 @@ if ($maxpage > 1) {
     }
 }
 echo "</div>";
+echo '<div id="footer" style="margin-top:100px;">
+<div id="footercon">
+<div id="social">
+<a href="http://www.skolavdf.cz" target="_blank"><img src="/images/skola_logo_color.png" alt="logo"></a>
+<a href="https://www.facebook.com/skolavdf/?ref=bookmarks"><img src="/images/facebook.png" alt="logo"></a>
+<a href="https://www.instagram.com/skolavdf/" target="_blank"><img src="/images/instagram.png" alt="logo"></a>
+</div>
+<div id="splitter"></div>
+    <div id="team">
+    <a href="https://github.com/Boubik" target="_blank">Coder: Jan Chlouba</a><br>
+    <a href="https://github.com/JINXisHERE" target="_blank">Designer: Ibrahim Daghstani</a>
 
-echo '<div id="footer">
-    <div id="footercon">
-    <div id="social">
-    <a href="http://www.skolavdf.cz" target="_blank"><img src="/images/skola_logo_color.png" alt="logo"></a>
-    <a href="https://www.facebook.com/skolavdf/?ref=bookmarks"><img src="/images/facebook.png" alt="logo"></a>
-    <a href="https://www.instagram.com/skolavdf/" target="_blank"><img src="/images/instagram.png" alt="logo"></a>
-    </div>
-    <div id="splitter"></div>
-        <div id="team">
-        <a href="https://github.com/Boubik" target="_blank">Coder: Jan Chlouba</a><br>
-        <a href="https://github.com/JINXisHERE" target="_blank">Designer: Ibrahim Daghstani</a>
-
-    </div>
-    </div>
-    </div>';
-
+</div>
+</div>
+</div>';
+echo '</div>';
 ?>
-</body>
 
+</body>
 </html>

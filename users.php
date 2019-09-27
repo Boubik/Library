@@ -54,9 +54,10 @@ if (isset($_GET["page"])) {
     $page = 1;
 }
 
+echo '<div class="container">';
 echo '<div id="header">';
-echo '<div id="logo"><a href="index.php"><img src="/images/skola_logo_mono.png" alt="logo"></a></div>';
-echo '<div id="searchsmol">';
+echo '<div id="logo"><a href="index.php"><img src="/images/skola_logo_color.png" alt="logo"></a></div>';
+echo '<div id="searchnormal">';
 echo '<form method="GET" action="">' . "\n";
 echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
 if (isset($_GET["q"])) {
@@ -81,7 +82,7 @@ if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($con
         echo '</div>';
     }
     echo '<div id="klient">';
-    echo '<input type="submit" name="profile"  value="Můj profil">' . "\n";
+    echo '<input type="submit" name="profile" id="profil" value="Můj profil">' . "\n";
     echo '<input type="submit" name="logout"  value="Odhlásit se">' . "\n";
 } else {
     echo '<div id="fullmenue">';
@@ -251,8 +252,7 @@ if ($maxpage > 1) {
     }
 }
 echo "</div>";
-
-echo '<div id="footer">
+echo '<div id="footer" style="margin-top:100px;">
 <div id="footercon">
 <div id="social">
 <a href="http://www.skolavdf.cz" target="_blank"><img src="/images/skola_logo_color.png" alt="logo"></a>
@@ -267,7 +267,7 @@ echo '<div id="footer">
 </div>
 </div>
 </div>';
+echo '</div>';
 ?>
 </body>
-
 </html>

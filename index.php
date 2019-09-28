@@ -54,6 +54,7 @@ $books = book($conn, $search, $count_books, $page, $per_page);
 echo '<div class="container">';
 echo '<div id="header">';
 echo '<div id="logo"><a href="index.php"><img src="/images/skola_logo_color.png" alt="logo"></a></div>';
+echo '<div id="loop"><img onclick="myFunction()" src="/images/search.png" alt="logo"></div>';
 echo '<div id="searchnormal">';
 echo '<form method="GET" action="">' . "\n";
 echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
@@ -234,7 +235,7 @@ if (!isset($books)) {
         echo "<img src=\"" . $book["img"] . "\">";
         echo "</div>";
 
-        echo '<div id="info">';
+        echo '<div class="info">';
         echo "<div class=\"class\">";
         echo "Místnost: " . $book["room_name"];
         echo "</div>";
@@ -300,7 +301,7 @@ if ($page < $i) {
 }
 echo "</div>";
 
-echo '<div id="footer" style="margin-top:100px;">
+echo '<div id="footer" style="margin-top:150px !important;">
 <div id="footercon">
 <div id="social">
 <a href="http://www.skolavdf.cz" target="_blank"><img src="/images/skola_logo_color.png" alt="logo"></a>
@@ -320,6 +321,19 @@ echo '</div>';
 </body>
 <script>
     AOS.init();
+</script>
+<script>
+function myFunction() {
+  var x = document.getElementById("searchnormal");
+  var y = document.getElementById("fullmenue");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+    y.style.display = "none";
+  } else {
+    x.style.display = "none";
+    y.style.display = "block";
+  }
+}
 </script>
 
 </html>

@@ -3,9 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <link href="styles/book.css" rel="stylesheet" type="text/css">
-    <link href="styles/header.css" rel="stylesheet" type="text/css">
-    <link href="styles/footer.css" rel="stylesheet" type="text/css">
+    <link href="styles/frontend.scss" rel="stylesheet" type="text/css">
     <link rel="icon" href="images/logo.ico">
     <link rel="shortcut icon" href="/images/fav.png" type="image/x-icon" />
     <script src="js/350205fd30.js"></script>
@@ -137,8 +135,8 @@ if (isset($_POST["delete_reservation"])) {
 if (isset($_POST["reservations"])) {
     header("Location: /reservations.php");
 }
-
-echo "<div class=\"book\">";
+echo '<div id="bookmain">';
+echo "<div id=\"book\">";
 echo "<div class=\"name\">";
 
 echo $book["name"];
@@ -187,9 +185,9 @@ echo "</div>";
 echo "</div>";
 
 echo "<div class=\"reservation\">";
-echo '<form method="POST" action="">' . "\nZačátek";
-echo '<input type="date" name="s_date"><br>' . "\nKonec   ";
-echo '<input type="date" name="e_date"><br>' . "\n";
+echo '<form method="POST" action="">';
+echo 'Začátek:<input type="date" name="s_date"><br>';
+echo 'Konec:   <input type="date" name="e_date"><br>';
 
 if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
     if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
@@ -219,12 +217,13 @@ echo '<br><br>';
 echo "<br>\nnadcházející rezervace:<br>\n";
 echo "</div>";
 
-echo '<div id="del">';
+echo '<div id="administrace">';
+echo 'Administrace';
 if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
     if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
         echo '<form method="POST" action="">';
-        echo '<input type="submit" id="edit" name="edit"  value="Upravit knkížku"><br>';
-        echo '<input type="submit" name="delete_book" value="Smazat knkížku"><br>';
+        echo '<input type="submit"  name="edit"  value="Upravit knkížku"><br>';
+        echo '<input type="submit" id="del" name="delete_book" value="Smazat knkížku"><br>';
         echo '</form>' . "\n";
     }
 }
@@ -236,7 +235,8 @@ $reservations = get_reservations($conn, $id);
 foreach ($reservations as $reservation) {
     if ($book["id"] == $reservation["book_id"]) {
         if ($i == 0) {
-            echo '<div id="table">';
+            echo '<div id="booktab">';
+            echo '<div id="tab">';
             echo '<table>';
             echo "<tr>";
             echo "<th>Od kdy</th><th>Do kdy</th>";
@@ -280,7 +280,7 @@ foreach ($reservations as $reservation) {
     }
 }
 echo '</table>';
-
+echo "</div>";
 echo "</div>";
 
 echo '<div id="rez">';
@@ -297,19 +297,24 @@ if (isset($_POST["add_reservation"])) {
                 add_book_has_reservation($conn, (int) $_GET["id"], (int) $reservation_id);
                 header("Location: /book.php?id=" . $_GET["id"] . "&name=" . $_GET["name"]);
             } else {
+                echo '<div id="rezz">';
                 echo "Vaše rezervace nenímožná kryje se s jinou";
+                echo "</div>";
             }
         } else {
+            echo '<div id="rezz">';
             echo "špatně zadaný datum";
+            echo "</div>";
         }
     } else {
         header("Location: /login.php");
     }
 }
+echo "</div>";
 
 echo "</div>";
 echo "</div>";
-echo '<div id="footer" style="margin-top:100px;">
+echo '<div id="footer" style="margin-top:250px !important;">
 <div id="footercon">
 <div id="social">
 <a href="http://www.skolavdf.cz" target="_blank"><img src="/images/skola_logo_color.png" alt="logo"></a>

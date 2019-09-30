@@ -49,12 +49,12 @@
         $is_admin = false;
     }
     if (isset($_GET["q"])) {
-        $search = $_GET["q"];
+        $search = filter_input(INPUT_GET, 'q');
     } else {
         $search = "";
     }
     if (isset($_GET["page"])) {
-        $page = $_GET["page"];
+        $page = filter_input(INPUT_GET, 'page');
     } else {
         $page = 1;
     }
@@ -85,8 +85,8 @@
     echo '<div id="serch">';
     echo '<form method="GET" action="">' . "\n";
     echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
-    if (isset($_GET["q"])) {
-        echo $_GET["q"] . '">' . "\n";
+    if ($search != "") {
+        echo $search . '">' . "\n";
     } else {
         echo '">' . "\n";
     }
@@ -131,15 +131,15 @@
         change_reservation_status($conn, $_POST["id"], $_POST["taken"]);
     }
 
-    if (isset($_POST["search"]) and isset($_POST["q"]) and $_POST["q"] != "") {
+    if ($search != "") {
         header("Location: /index.php?q=" . $_POST["q"]);
     }
 
     if (isset($_GET["set_role"])) {
-        if (!($is_admin) and $_GET["role"] == "admin") {
+        if (!($is_admin) and filter_input(INPUT_GET, 'role') == "admin") {
             header("Location: /users.php");
         } else {
-            set_role($conn, $_GET["username"], $_GET["role"]);
+            set_role($conn, filter_input(INPUT_GET, 'username'), filter_input(INPUT_GET, 'role'));
             header("Location: /users.php");
         }
     }
@@ -149,7 +149,7 @@
     }
 
     if (isset($_POST["delete"])) {
-        delete_reservation($conn, $_POST["id"]);
+        delete_reservation($conn, filter_input(INPUT_POST, 'id'));
     }
 
 
@@ -173,7 +173,7 @@
             echo to_cz_date(substr($value["e-reservation"], 0, 10)) . "</th>";
              
             echo "<th>";
-            echo "Je zapůjčena";
+            echo "Je zapůjčenat";
             echo '<form method="POST" action="">';
             echo '<input class="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
             echo '<input class="none" type="number" name="taken" value="0">';

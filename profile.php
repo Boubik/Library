@@ -60,7 +60,8 @@
     echo '<form method="GET" action="">' . "\n";
     echo '<input type="text" onfocusout=" " placeholder="Hledate neco?" name="q" autocomplete="off" value="';
     if (isset($_GET["q"])) {
-        echo $_GET["q"] . '">' . "\n";
+        $search = filter_input(INPUT_GET, 'q');
+        echo $search . '">' . "\n";
     } else {
         echo '">' . "\n";
     }
@@ -95,10 +96,6 @@
 
     if (isset($_POST["users"])) {
         header("Location: /users.php");
-    }
-
-    if (isset($_POST["search"]) and isset($_POST["q"]) and $_POST["q"] != "") {
-        header("Location: /index.php?q=" . $_POST["q"]);
     }
 
     if (isset($_POST["reservations"])) {

@@ -146,6 +146,13 @@
     echo "</div>";
 
     echo '<div id="info";>';
+    $status = get_status_by_book($conn, $book["id"]);
+    if ($status) {
+        echo '<div class="status" id="free">';
+    } else {
+        echo '<div class="status" id="booked">';
+    }
+    echo "</div>";
 
     echo "<div class=\"language\">";
     echo "Jazyk: " . $book["language"];

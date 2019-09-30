@@ -54,8 +54,19 @@ $books = book($conn, $search, $count_books, $page, $per_page);
 echo '<div class="container">';
 echo '<div id="header">';
 echo '<div id="logo"><a href="index.php"><img src="/images/skola_logo_color.png" alt="logo"></a></div>';
-echo '<div id="loop"><img onclick="myFunction()" src="/images/search.png" alt="logo"></div>';
-echo '<div id="searchnormal">';
+// echo '<div id="loop"><img onclick="myFunction()" src="/images/search.png" alt="logo"></div>';
+// echo '<div id="searchnormal">';
+// echo '<form method="GET" action="">' . "\n";
+// echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
+// if (isset($_GET["q"])) {
+//     echo $_GET["q"] . '">' . "\n";
+// } else {
+//     echo '">' . "\n";
+// }
+// echo '</form>' . "\n";
+// echo '</div>';
+
+echo '<div id="searchfull">';
 echo '<form method="GET" action="">' . "\n";
 echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
 if (isset($_GET["q"])) {
@@ -147,8 +158,9 @@ echo '</div>';
 echo '</div>';
 echo '</div>';
 
+echo '<div id="filter">';
 echo '<div id="filtercon">';
-
+echo '<div class="dropdown">';
 echo '<a id="category" id="zanr">Žánr</a>';
 echo '<div class="dropdown-content" class="zanr">';
 $genres = get_table($conn, "genres");
@@ -156,17 +168,20 @@ foreach ($genres as $item) {
     echo "<a href=\"/index.php?q=" . $item["name"] . "\">" . $item["name"] . "</a><br>\n";
 }
 echo '</div>';
-
-echo '<a id="category" id="autor">Autor</a>';
+echo '</div>';
+echo '<div class="dropdown">';
+echo '<br><a id="category" id="autor">Autor</a><br>';
 echo '<div class="dropdown-content" class="autor">';
 $author = get_table($conn, "author");
 foreach ($author as $item) {
     echo "<a href=\"/index.php?q=" . $item["f_name"] . " " . $item["l_name"] . "\">" . $item["f_name"] . " " . $item["l_name"] . "</a><br>\n";
 }
 echo '</div>';
+echo '</div>';
+echo '<div class="dropdown">';
+echo '<a id="category" id="language">Jazyk</a><br>';
 
-echo '<a id="category" id="language">Jazyk</a>';
-echo '<div class="dropdown-content" class="language">';
+echo '<div class="dropdown-content" class="language"><br>';
 $language = get_table($conn, "book");
 $k = array();
 foreach ($language as $item) {
@@ -176,13 +191,17 @@ foreach ($language as $item) {
     }
 }
 echo '</div>';
-
-echo '<a id="category" id="room">Mistnost</a>';
+echo '</div>';
+echo '<div class="dropdown">';
+echo '<a id="category" id="room">Mistnost</a><br>';
 echo '<div class="dropdown-content" class="room">';
 $room = get_table($conn, "room");
 foreach ($room as $item) {
     echo "<a href=\"/index.php?q=" . $item["name"] . "\">" . $item["name"] . "</a><br>\n";
 }
+echo '</div>';
+echo '</div>';
+echo '</div>';
 
 echo 'řádků na strácne:';
 

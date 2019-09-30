@@ -1,10 +1,26 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+$baground: rgb(36, 36, 36);
+$text-color-white: white;
+// $text-color-gold: #ffbf00;
+$text-color-gold: #fff;
+
+
 body {
 	font-family: 'Montserrat', sans-serif;
-	background-color: rgb(36, 36, 36);
+	background-color: $baground;
 	overflow-x: hidden;
 	min-height: 100%;
 	width: 100%;
+}
+p{
+	color: $text-color-white;
+	text-align: center;
+}
+hr{
+	width: 90%;
+}
+#main{
+	margin-top: 100px;
 }
 .container{
 	min-height:100%;
@@ -66,7 +82,8 @@ body {
 // }
  #header input[type=submit] {
 	border: none;
-	color: white;
+	// color: white;
+	color: $text-color-gold;
 	background-color: rgba(0, 0, 0, 0);
 }
 #header input[type=submit]:focus {
@@ -83,7 +100,7 @@ body {
 	transition: all 0.2s linear;
 }
 .fas {
-	color: white;
+	color: $text-color-white;
 	font-size: 25px;
 }
 #admin:hover .fas {
@@ -119,7 +136,7 @@ body {
 #footer #team a {
 	font-family: 'Montserrat', sans-serif;
 	text-decoration: none;
-	color: white;
+	color: $text-color-white;
 }
 #footer img {
 	width: auto;
@@ -154,7 +171,7 @@ body {
 	margin-left: 250px;
 }
 #team {
-	color: white;
+	color: $text-color-white;
 	padding-top: 10px;
 	padding-left: 270px;
 	padding-top: 30px;
@@ -163,7 +180,7 @@ body {
 	margin: auto;
 }
 .fab {
-	color: white;
+	color: $text-color-white;
 	padding: 10px;
 	font-size: 35px;
 	text-align: center;
@@ -193,7 +210,8 @@ body {
 	margin: 32px;
 	padding: 25px;
 	transition: transform .5s;
-	color: white;
+	// color: $text-color-white;
+	color: $text-color-gold;
     text-align: center;
 	transition: transform .5s;
 }
@@ -208,7 +226,7 @@ body {
 
 }
 .book a{
-	color: white;
+	color: $text-color-white;
 	text-decoration: none;
 }
 .book img {
@@ -229,7 +247,7 @@ body {
 	height: 50px;
 	width: 200px;
 	border-radius: 25px;
-	color: white;
+	color: $text-color-white;
 	border: none;
 	outline: none;
 	margin: 20px;
@@ -249,7 +267,7 @@ body {
 	background-color: red;
 }
 #bookmain .name{
-	color: white;
+	color: $text-color-white;
 	text-align: center;
 	font-size: 50px;
 	padding-bottom: 20px;
@@ -260,7 +278,7 @@ body {
 	width: 800px;
 }
 #info{
-	color: white;
+	color: $text-color-white;
 	width: 50%;
 	margin-left: 400px;
 	margin-top: -400px;
@@ -270,7 +288,7 @@ body {
 .reservation{
 	width: 400px;
 	margin-left: 400px;
-	color: white;
+	color: $text-color-white;
 }
 .reservation input[type=submit]{
 	margin-top: 20px;
@@ -278,7 +296,7 @@ body {
 	height: 50px;
 	width: 200px;
 	border-radius: 25px;
-	color: white;
+	color: $text-color-white;
 	border: none;
 	outline: none;
 	margin-top: 25px;
@@ -288,7 +306,7 @@ body {
 }
 .reservation input[type=date]{
 	padding-top: 20px;
-	color: white;
+	color: $text-color-white;
 	outline: none;
 	border-width: 0 0 2px;
 	border-color: rgb(255, 255, 255);
@@ -344,10 +362,10 @@ body {
 }
 
 #search::placeholder {
-	color: white;
+	color: $text-color-white;
 }
 #logincon::placeholder {
-	color: white;
+	color: $text-color-white;
 	;
 }
 #search input[type=text] {
@@ -355,7 +373,7 @@ body {
 	-webkit-transition: width 0.4s ease-in-out;
 	transition: width 0.4s ease-in-out;
 	background-color: rgba(0, 0, 0, 0);
-	color: white;
+	color: $text-color-white;
 	border: 1px solid white;
 }
 #search input[type=text]:focus {
@@ -371,7 +389,7 @@ body {
 	margin-left: 200px;
 }
 #logincon {
-	color: white;
+	color: $text-color-white;
 	// border: 1px solid white;
 	margin: auto;
 	width: 500px;
@@ -382,7 +400,7 @@ body {
 #logincon input[type=password],
 #logincon input[type=number] {
 	padding-top: 20px;
-	color: white;
+	color: $text-color-white;
 	outline: none;
 	border-width: 0 0 2px;
 	border-color: rgb(255, 255, 255);
@@ -412,7 +430,7 @@ body {
 	height: 50px;
 	width: 200px;
 	border-radius: 25px;
-	color: white;
+	color: $text-color-white;
 	border: none;
 	margin-left: 160px;
 	outline: none;
@@ -420,7 +438,7 @@ body {
 }
 #swap {
 	font-family: 'Montserrat', sans-serif;
-	color: white;
+	color: $text-color-white;
 	text-decoration: #fff;
 	text-align: center;
 	padding-top: 20px;
@@ -439,7 +457,7 @@ body {
 	border-collapse: collapse;
 	width: 90%;
 	margin: auto;
-	color: white;
+	color: $text-color-white;
 }
 #tab td,
 #tab th {
@@ -464,7 +482,7 @@ body {
 	background-color: #5DADE2;
 }
 #tab input[type=submit]#del:hover {
-	color: white;
+	color: $text-color-white;
 	background-color: red;
 	padding-left: -20px !important;
 }
@@ -479,11 +497,17 @@ body {
 #filter{
 	display: none;
 }
+#searchfull ::placeholder{
+	color: $text-color-white;
+}
 @media only screen and (min-width: 1000px) {
 	// #footer{
 	// 	float: right!important;
 	// 	width: 86%!important
 	// }
+	#sel{
+		width: 50px;
+	}
 	.dropdown-content{
 		display: none;
 	}
@@ -494,7 +518,7 @@ body {
 		margin-top: 50px !important;
 	}
 	#category{
-		color: 	#ffbf00 !important;
+		color: 	$text-color-gold !important;
 		text-align: center;
 		display: block;
 		width: 100%;
@@ -523,7 +547,7 @@ body {
 	  width: auto;
 	}
 	.dropdown-content a {
-	  color: 	#ffbf00 !important; 
+	  color: $text-color-gold !important; 
 	  text-decoration: none;
 	  display: block;
 	  cursor: pointer;
@@ -536,17 +560,17 @@ body {
 		backdrop-filter: blur(5px);
 		height: 100%;
 		margin-top: -50px;
-		color: white;
+		color: $text-color-white;
 	}
 	#filter a{
 		text-decoration: none;
-		color: white;
+		color: $text-color-white;
 	}
 	#administrace{
 		position: absolute;
 		text-align: center;
 		display: block;
-		color: white;
+		color: $text-color-white;
 		margin-left: -250px;
 		margin-top: -400px;
 	}
@@ -557,6 +581,7 @@ body {
 		width: 50%;
 		margin: auto;
 		margin-top: 100px;
+		margin-left: 400px;
 	}
 	#logo {
 		margin-left: 100px;
@@ -590,7 +615,7 @@ body {
 	#searchfull input[type=text] {
 		border-width: 0 0 2px;
 		border-color: rgb(255, 255, 255);
-		color: white;
+		color: $text-color-white;
 		outline: none;
 		background: transparent;
 		width: 100%;
@@ -600,7 +625,7 @@ body {
 		border: none;
 	}
 	#searchnormal ::placeholder{
-		color: white;
+		color: $text-color-white;
 	}
 	#fullmenue {
 		display: block;

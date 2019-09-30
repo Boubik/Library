@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Přidání autora</title>
-    <link rel="stylesheet" type="text/css" href="styles/frontend.scss">
-    <link href="styles/header.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="styles/frontend.css">
     <link rel="shortcut icon" href="/images/skola_logo_mono.png" type="image/x-icon" />
-    <link href="styles/footer.css" rel="stylesheet" type="text/css">
     <script src="js/350205fd30.js"></script>
 </head>
 
@@ -128,8 +126,7 @@ if (isset($_GET["name"]) and isset($_GET["relase"]) and isset($_GET["language"])
     }
 }
 echo '</div>';
-echo '</div>';
-echo '<div id="footer" style="margin-top:100px;">
+echo '<div id="footer">
 <div id="footercon">
 <div id="social">
 <a href="http://www.skolavdf.cz" target="_blank"><img src="/images/skola_logo_color.png" alt="logo"></a>

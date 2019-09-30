@@ -2,7 +2,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <link href="styles/frontend.scss" rel="stylesheet">
+    <link href="styles/frontend.css" rel="stylesheet">
     <link rel="icon" href="images/logo.ico">
     <script src="js/350205fd30.js"></script>
     <link href="styles/aos.css" rel="stylesheet">

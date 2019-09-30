@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <link href="styles/frontend.scss" rel="stylesheet" type="text/css">
+    <link href="styles/frontend.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="images/logo.ico">
     <link rel="shortcut icon" href="/images/skola_logo_mono.png" type="image/x-icon" />
     <script src="js/350205fd30.js"></script>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prihlášení</title>
-    <link rel="stylesheet" type="text/css" href="styles/frontend.scss">
+    <link rel="stylesheet" type="text/css" href="styles/frontend.css">
     <link rel="shortcut icon" href="/images/skola_logo_mono.png" type="image/x-icon" />
     <script src="js/350205fd30.js"></script>
     <script src="js/jquery-2.1.1.min.js" type="text/javascript"></script>

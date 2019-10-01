@@ -457,6 +457,26 @@ function get_author($conn, int $id)
 }
 
 /**
+ * get author
+ * @param   Mixed   $conn       db connection
+ * @param   Int     $id         id book
+ * @return  Book    return status
+ */
+function get_status_by_book($conn, int $id)
+{
+
+    $sql = "SELECT reservation.taken FROM `reservation` INNER JOIN book_has_reservation ON reservation.id = book_has_reservation.reservation_id INNER JOIN book ON book.id = book_has_reservation.book_id WHERE `e-reservation` >= CURRENT_DATE() AND `s-reservation` <= CURRENT_DATE() AND book.id = '1'";
+    $sql = $conn->prepare($sql);
+    $numrows = $sql->execute();
+    $row = $sql->fetch();
+    if ($numrows > 0) {
+        return $row["taken"];
+    } else {
+        return false;
+    }
+}
+
+/**
  * get book by id from db
  * @param   Mixed   $conn           db connection
  * @param   Int     $id             name to search in db

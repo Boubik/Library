@@ -85,85 +85,50 @@ if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($con
         echo '<input type="submit" name="add_book"  value="Přidat knížku">';
         echo '<input type="submit" name="add_author"  value="Přidat autora">';
     }
-    echo '<input type="submit" name="profile"  value="Můj profil">';
-    echo '<input type="submit" name="logout"  value="Odhlásit se">';
-} else {
-    echo '<input type="submit" name="login"  value="Přihrásit se"></input>';
-}
-echo '</form>' . "\n";
-echo '</div>';
-echo '</div>';
+    if (isset($_POST["delete_reservation"])) {
+        delete_reservation($conn, $_POST["reservation_id"]);
+    }
 
-if (isset($_POST["logout"])) {
-    unset($_SESSION["username"]);
-    unset($_SESSION["password"]);
-    header("Location: /index.php");
-}
+    if (isset($_POST["reservations"])) {
+        header("Location: /reservations.php");
+    }
+    echo '<div id="bookmain">';
+    echo "<div id=\"book\">";
+    echo "<div class=\"name\">";
 
-if (isset($_POST["login"])) {
-    header("Location: /login.php");
-}
+    echo $book["name"];
+    echo "</div>";
+    echo '<div id="image">';
+    echo "<img src=\"" . $book["img"] . "\">";
+    echo "</div>";
 
-if (isset($_POST["add_book"])) {
-    header("Location: /add_book.php");
-}
-
-if (isset($_POST["add_author"])) {
-    header("Location: /add_author.php");
-}
-
-if (isset($_POST["profile"])) {
-    header("Location: /profile.php");
-}
-
-if (isset($_POST["delete_book"])) {
-    hide_book($conn, $_GET["id"]);
-    header("Location: /index.php");
-}
-
-if (isset($_POST["users"])) {
-    header("Location: /users.php");
-}
-
-if (isset($_POST["edit"])) {
-    header("Location: /edit_book.php?id=" . $book["id"] . "&name=" . $_GET["name"]);
-}
-if (isset($_POST["delete_reservation"])) {
-    delete_reservation($conn, $_POST["reservation_id"]);
-}
-
-if (isset($_POST["reservations"])) {
-    header("Location: /reservations.php");
-}
-echo '<div id="bookmain">';
-echo "<div id=\"book\">";
-echo "<div class=\"name\">";
-
-echo $book["name"];
-echo "</div>";
-echo '<div id="image">';
-echo "<img src=\"" . $book["img"] . "\">";
-echo "</div>";
-
-echo '<div id="info";>';
-
-echo "<div class=\"language\">";
-echo "Jazyk: " . $book["language"];
-echo "</div>";
-
-echo "<div class=\"class\">";
-echo "Místnost: " . $book["room_name"];
-echo "</div>";
-
-echo "<div class=\"genres\">";
-$k = mn($conn, "book_has_genres", $book["id"], "book_id", "genres_id");
-$genres = null;
-foreach ($k as $id) {
-    $genre = get_genre($conn, $id);
-    if ($genres != null) {
-        $genres = $genre . ", " . $genres;
+    echo '<div id="info";>';
+    $status = get_status_by_book($conn, $book["id"]);
+    if ($status) {
+        echo '<div class="status" id="free">';
     } else {
-        $genres = $genre;
+        echo '<div class="status" id="booked">';
+    }
+    echo "</div>";
+
+    echo "<div class=\"language\">";
+    echo "Jazyk: " . $book["language"];
+    echo "</div>";
+
+    echo "<div class=\"class\">";
+    echo "Místnost: " . $book["room_name"];
+    echo "</div>";
+
+    echo "<div class=\"genres\">";
+    $k = mn($conn, "book_has_genres", $book["id"], "book_id", "genres_id");
+    $genres = null;
+    foreach ($k as $id) {
+        $genre = get_genre($conn, $id);
+        if ($genres != null) {
+            $genres = $genre . ", " . $genres;
+        } else {
+            $genres = $genre;
+        }
     }
 }
 echo "Žánr: " . $genres;

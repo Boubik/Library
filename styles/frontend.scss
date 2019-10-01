@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
 $baground: rgb(36, 36, 36);
 $text-color-white: white;
-// $text-color-gold: #ffbf00;
+// $text-color-gold: ;
 $text-color-gold: #fff;
 
 
@@ -244,8 +244,8 @@ body {
 
 #administrace input[type=submit]{
 	background-color: green;
-	height: 50px;
-	width: 200px;
+	height: 30px;
+	width: 150px;
 	border-radius: 25px;
 	color: $text-color-white;
 	border: none;
@@ -368,21 +368,9 @@ body {
 	color: $text-color-white;
 	;
 }
-#search input[type=text] {
-	width: 130px;
-	-webkit-transition: width 0.4s ease-in-out;
-	transition: width 0.4s ease-in-out;
-	background-color: rgba(0, 0, 0, 0);
-	color: $text-color-white;
-	border: 1px solid white;
-}
-#search input[type=text]:focus {
-	width: 100%;
-}
 #fullmenue {
 	display: none;
 }
-
 #logincon img {
 	width: auto;
 	height: 100px;
@@ -500,22 +488,90 @@ body {
 #searchfull ::placeholder{
 	color: $text-color-white;
 }
+#searchfull{
+	display: none;
+}
+#search{
+	display: block;
+	position: absolute;
+	margin-left: 80px;
+	margin-top: -35px;
+
+}
+#search input[type=text]{
+	font-family: 'Montserrat', sans-serif;
+	border: none;
+	outline: none;
+	background-color: transparent;
+	color: white;
+}
+#klient{
+	margin-top: 20px;
+}
+#filtersmall{
+	display: block;
+}
+.dropbtn {
+	font-family: 'Montserrat', sans-serif;
+	position: absolute;
+	background-color: transparent;
+	color: white;
+	padding: 16px;
+	font-size: 16px;
+	border: none;
+	cursor: pointer;
+	margin-top: -50px;
+  }
+  
+  .dropbtn:hover, .dropbtn:focus {
+	color:$text-color-gold;
+	outline: none;
+  }
+  
+  .dropdownmenue {
+	position: relative;
+	display: block;
+  }
+  
+  .menuecontent {
+	font-family: 'Montserrat', sans-serif;
+	display: none;
+	position: absolute;
+	background-color: rgba(0, 0, 0, 0.753);
+	backdrop-filter: blur(5px);
+	min-width: 100%;
+	overflow: auto;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	z-index: 1;
+  }
+  
+  .menuecontent a {
+	color: black;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+  }
+  
+  .dropdownmenue a:hover {background-color: #ddd;}
+  
+  .show {display: block;}
 @media only screen and (min-width: 1000px) {
 	// #footer{
 	// 	float: right!important;
 	// 	width: 86%!important
 	// }
+	
+	.dropdownmenue{
+		display: none;
+	}
+	#search{
+		display: none;
+	}
 	#sel{
 		width: 50px;
 	}
 	.dropdown-content{
 		display: none;
-	}
-	#filter{
-		display: block;
-	}
-	#filtercon{
-		margin-top: 50px !important;
 	}
 	#category{
 		color: 	$text-color-gold !important;
@@ -525,7 +581,6 @@ body {
 		border: none;
 		padding: 5px;
 	}
-
 	#category:hover{
 		transition: 0.3s;
 	}
@@ -552,6 +607,16 @@ body {
 	  display: block;
 	  cursor: pointer;
 	}
+	#klient input[type=submit]:hover {
+		color: rgb(218, 218, 218);
+		transition: 0.3s;
+	}
+	#filter{
+		display: block;
+	}
+	#filtercon{
+		margin-top: 50px !important;
+	}
 	#filter{
 		position: fixed;
 		width: 200px;
@@ -559,8 +624,9 @@ body {
 		background-color: rgba(0, 0, 0, 0.753);
 		backdrop-filter: blur(5px);
 		height: 100%;
-		margin-top: -50px;
 		color: $text-color-white;
+		top:0;
+		margin-top: 50px;
 	}
 	#filter a{
 		text-decoration: none;
@@ -571,8 +637,8 @@ body {
 		text-align: center;
 		display: block;
 		color: $text-color-white;
-		margin-left: -250px;
-		margin-top: -400px;
+		margin-left: 50px;
+		margin-top: 50px;
 	}
 	#maincon {
 		margin: auto;
@@ -596,22 +662,15 @@ body {
 	#klient {
 		display: none;
 	}
-	#searchnormal,
-	#searchfull {
-		display: none;
-		// position: absolute;
+	#searchfull{
 		width: 50%;
 		margin-left: 25%;
 		margin-top: -50px;
-	}
-	#searchfull{
 		display: block;
 		width: 200px;
 		height: 50px;
 		float: right;
-		margin-right: 30px;
 	}
-	#searchnormal input[type=text],
 	#searchfull input[type=text] {
 		border-width: 0 0 2px;
 		border-color: rgb(255, 255, 255);
@@ -644,6 +703,41 @@ body {
 		color: rgb(218, 218, 218);
 		transition: 0.3s;
 	}
+}
+#category{
+	color: 	$text-color-gold !important;
+	text-align: center;
+	display: block;
+	width: 100%;
+	border: none;
+	padding: 5px;
+}
+
+#category:hover{
+	transition: 0.3s;
+}
+.dropdown:hover 
+.dropdown-content {
+  display: block;
+  margin-left: 200px;
+  margin-top: -50px;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.753);
+  backdrop-filter: blur(5px);
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+  width: auto;
+}
+.dropdown-content a {
+  color: $text-color-gold !important; 
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
 }
 #klient input[type=submit]:hover {
 	color: rgb(218, 218, 218);

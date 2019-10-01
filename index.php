@@ -54,18 +54,6 @@ $books = book($conn, $search, $count_books, $page, $per_page);
 echo '<div class="container">';
 echo '<div id="header">';
 echo '<div id="logo"><a href="index.php"><img src="/images/skola_logo_color.png" alt="logo"></a></div>';
-// echo '<div id="loop"><img onclick="myFunction()" src="/images/search.png" alt="logo"></div>';
-// echo '<div id="searchnormal">';
-// echo '<form method="GET" action="">' . "\n";
-// echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
-// if (isset($_GET["q"])) {
-//     echo $_GET["q"] . '">' . "\n";
-// } else {
-//     echo '">' . "\n";
-// }
-// echo '</form>' . "\n";
-// echo '</div>';
-
 echo '<div id="searchfull">';
 echo '<form method="GET" action="">' . "\n";
 echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
@@ -75,6 +63,87 @@ if (isset($_GET["q"])) {
     echo '">' . "\n";
 }
 echo '</form>' . "\n";
+echo '</div>';
+
+echo '<div id="search">';
+echo '<form method="GET" action="">' . "\n";
+echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
+if (isset($_GET["q"])) {
+    echo $_GET["q"] . '">' . "\n";
+} else {
+    echo '">' . "\n";
+}
+echo '</form>' . "\n";
+echo '</div>';
+
+echo '<div class="dropdownmenue">';
+echo '<button onclick="myFunction()" class="dropbtn">Menu</button>';
+echo '<div id="menuecontent" class="menuecontent">';
+echo '<div id="filtersmall">';
+echo '<div id="filtercon">';
+echo '<div class="dropdown">';
+echo '<a id="category" id="zanr">Žánr</a>';
+echo '<div class="dropdown-content" class="zanr">';
+$genres = get_table($conn, "genres");
+foreach ($genres as $item) {
+    echo "<a href=\"/index.php?q=" . $item["name"] . "\">" . $item["name"] . "</a><br>\n";
+}
+echo '</div>';
+echo '</div>';
+echo '<div class="dropdown">';
+echo '<br><a id="category" id="autor">Autor</a><br>';
+echo '<div class="dropdown-content" class="autor">';
+$author = get_table($conn, "author");
+foreach ($author as $item) {
+    echo "<a href=\"/index.php?q=" . $item["f_name"] . " " . $item["l_name"] . "\">" . $item["f_name"] . " " . $item["l_name"] . "</a><br>\n";
+}
+echo '</div>';
+echo '</div>';
+echo '<div class="dropdown">';
+echo '<a id="category" id="language">Jazyk</a><br>';
+
+echo '<div class="dropdown-content" class="language"><br>';
+$language = get_table($conn, "book");
+$k = array();
+foreach ($language as $item) {
+    if (!in_array($item["language"], $k)) {
+        echo "<a href=\"/index.php?q=" . $item["language"] . "\">" . $item["language"] . "</a><br>\n";
+        $k[] = $item["language"];
+    }
+}
+echo '</div>';
+echo '</div>';
+echo '<div class="dropdown">';
+echo '<a id="category" id="room">Mistnost</a><br>';
+echo '<div class="dropdown-content" class="room">';
+$room = get_table($conn, "room");
+foreach ($room as $item) {
+    echo "<a href=\"/index.php?q=" . $item["name"] . "\">" . $item["name"] . "</a><br>\n";
+}
+echo '</div>';
+echo '</div>';
+echo '</div>';
+
+// echo 'řádků na strácne:';
+
+// echo '<form method="POST" action="/"><select id="sel" name="rows">' . "\n";
+// $i = 1;
+// while ($i != 21) {
+//     if ($i == ($per_page / 3)) {
+//         echo '<option selected>';
+//     } else {
+//         echo '<option>';
+//     }
+//     echo $i . '</option>' . "\n";
+//     $i++;
+// }
+// echo '</select><br>';
+// echo '<input type="submit" name="per_page"  value="nastavit">' . "\n";
+// echo '</form>' . "\n";
+
+// echo '</div>';
+echo '</div>';
+echo '</div>';
 echo '</div>';
 
 echo '<form method="POST" action="">' . "\n";
@@ -100,10 +169,11 @@ if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($con
 }
 echo '</div>';
 echo '</form>' . "\n";
-echo '<div id="fullmenue">';
+
 echo '<form method="POST" action="">' . "\n";
 if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
     if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
+        echo '<div id="fullmenue">';
         echo '<input id="reservations" type="submit" name="reservations"  value="Rezervace">';
         echo '<input id="addbook" type="submit" name="users"  value="Uživatelé">';
         echo '<input type="submit" name="add_book"  value="Přidat knížku">';
@@ -112,6 +182,7 @@ if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($con
     echo '<input type="submit" name="profile"  value="Můj profil">';
     echo '<input type="submit" name="logout"  value="Odhlásit se">';
 } else {
+    echo '<div id="fullmenue">';
     echo '<input type="submit" name="login"  value="Přihrásit se"></input>';
 }
 echo '</form>' . "\n";
@@ -153,7 +224,6 @@ if (isset($_POST["search"]) and isset($_POST["q"]) and $_POST["q"] != "") {
     unset($_POST["search"]);
     header("Location: /?q=" . $q);
 }
-
 echo '</div>';
 echo '</div>';
 echo '</div>';
@@ -201,25 +271,6 @@ foreach ($room as $item) {
 }
 echo '</div>';
 echo '</div>';
-echo '</div>';
-
-echo 'řádků na strácne:';
-
-echo '<form method="POST" action="/"><select id="sel" name="rows">' . "\n";
-$i = 1;
-while ($i != 21) {
-    if ($i == ($per_page / 3)) {
-        echo '<option selected>';
-    } else {
-        echo '<option>';
-    }
-    echo $i . '</option>' . "\n";
-    $i++;
-}
-echo '</select><br>';
-echo '<input type="submit" name="per_page"  value="nastavit">' . "\n";
-echo '</form>' . "\n";
-
 echo '</div>';
 echo '</div>';
 
@@ -342,15 +393,23 @@ echo '</div>';
     AOS.init();
 </script>
 <script>
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
 function myFunction() {
-  var x = document.getElementById("searchnormal");
-  var y = document.getElementById("fullmenue");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-    y.style.display = "none";
-  } else {
-    x.style.display = "none";
-    y.style.display = "block";
+  document.getElementById("menuecontent").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("menuecontent");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
   }
 }
 </script>

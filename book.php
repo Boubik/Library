@@ -42,7 +42,7 @@ $book = get_book_by_id($conn, $_GET["id"]);
 echo '<div class="container">';
 echo '<div id="header">';
 echo '<div id="logo"><a href="index.php"><img src="/images/skola_logo_color.png" alt="logo"></a></div>';
-echo '<div id="searchnormal">';
+echo '<div id="searchfull">';
 echo '<form method="GET" action="">' . "\n";
 echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
 if (isset($_GET["q"])) {
@@ -85,50 +85,51 @@ if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($con
         echo '<input type="submit" name="add_book"  value="Přidat knížku">';
         echo '<input type="submit" name="add_author"  value="Přidat autora">';
     }
-    if (isset($_POST["delete_reservation"])) {
-        delete_reservation($conn, $_POST["reservation_id"]);
-    }
+    echo '<input type="submit" name="profile"  value="Můj profil">';
+    echo '<input type="submit" name="logout"  value="Odhlásit se">';
+} else {
+    echo '<input type="submit" name="login"  value="Přihrásit se"></input>';
+}
+echo '</form>' . "\n";
+echo '</div>';
+echo '</div>';
 
-    if (isset($_POST["reservations"])) {
-        header("Location: /reservations.php");
-    }
-    echo '<div id="bookmain">';
-    echo "<div id=\"book\">";
-    echo "<div class=\"name\">";
+echo '<div id="bookmain">';
+echo "<div id=\"book\">";
+echo "<div class=\"name\">";
 
-    echo $book["name"];
-    echo "</div>";
-    echo '<div id="image">';
-    echo "<img src=\"" . $book["img"] . "\">";
-    echo "</div>";
+echo $book["name"];
+echo "</div>";
+echo '<div id="image">';
+echo "<img src=\"" . $book["img"] . "\">";
+echo "</div>";
 
-    echo '<div id="info";>';
-    $status = get_status_by_book($conn, $book["id"]);
-    if ($status) {
-        echo '<div class="status" id="free">';
+echo '<div id="info";>';
+$status = get_status_by_book($conn, $book["id"]);
+if ($status) {
+    echo '<div class="status" id="free">';
+} else {
+    echo '<div class="status" id="booked">';
+}
+echo "</div>";
+
+echo "<div class=\"language\">";
+echo "Jazyk: " . $book["language"];
+echo "</div>";
+
+echo "<div class=\"class\">";
+echo "Místnost: " . $book["room_name"];
+echo "</div>";
+
+echo "<div class=\"genres\">";
+$k = mn($conn, "book_has_genres", $book["id"], "book_id", "genres_id");
+$genres = null;
+foreach ($k as $id) {
+    $genre = get_genre($conn, $id);
+    if ($genres != null) {
+        $genres = $genre . ", " . $genres;
     } else {
-        echo '<div class="status" id="booked">';
-    }
-    echo "</div>";
-
-    echo "<div class=\"language\">";
-    echo "Jazyk: " . $book["language"];
-    echo "</div>";
-
-    echo "<div class=\"class\">";
-    echo "Místnost: " . $book["room_name"];
-    echo "</div>";
-
-    echo "<div class=\"genres\">";
-    $k = mn($conn, "book_has_genres", $book["id"], "book_id", "genres_id");
-    $genres = null;
-    foreach ($k as $id) {
-        $genre = get_genre($conn, $id);
-        if ($genres != null) {
-            $genres = $genre . ", " . $genres;
-        } else {
-            $genres = $genre;
-        }
+        $genres = $genre;
     }
 }
 echo "Žánr: " . $genres;
@@ -182,10 +183,10 @@ echo '<br><br>';
 echo "<br>\nnadcházející rezervace:<br>\n";
 echo "</div>";
 
-echo '<div id="administrace">';
-echo 'Administrace';
 if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
     if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
+        echo '<div id="administrace">';
+        echo 'Administrace';
         echo '<form method="POST" action="">';
         echo '<input type="submit"  name="edit"  value="Upravit knkížku"><br>';
         echo '<input type="submit" id="del" name="delete_book" value="Smazat knkížku"><br>';

@@ -35,18 +35,6 @@ $conn = connect_to_db($configs["servername"], $configs["dbname"], $configs["user
 
 echo '<div id="header">';
 echo '<div id="logo"><a href="index.php"><img src="/images/skola_logo_color.png" alt="logo"></a></div>';
-// echo '<div id="loop"><img onclick="myFunction()" src="/images/search.png" alt="logo"></div>';
-// echo '<div id="searchnormal">';
-// echo '<form method="GET" action="">' . "\n";
-// echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
-// if (isset($_GET["q"])) {
-//     echo $_GET["q"] . '">' . "\n";
-// } else {
-//     echo '">' . "\n";
-// }
-// echo '</form>' . "\n";
-// echo '</div>';
-
 echo '<div id="searchfull">';
 echo '<form method="GET" action="">' . "\n";
 echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
@@ -80,7 +68,6 @@ if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($con
     echo '</div>';
 }
 echo '</div>';
-echo '</div>';
 echo '</form>' . "\n";
 echo '<div id="fullmenue">';
 echo '<form method="POST" action="">' . "\n";
@@ -99,21 +86,6 @@ if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($con
 echo '</form>' . "\n";
 echo '</div>';
 echo '</div>';
-
-echo '<div id="serch">';
-echo '<form method="GET" action="">' . "\n";
-echo '<input type="text" onfocusout=" " placeholder="Hledate neco?" name="q" autocomplete="off" value="';
-if (isset($_GET["q"])) {
-    $search = filter_input(INPUT_GET, 'q');
-    echo $search . '">' . "\n";
-} else {
-    echo '">' . "\n";
-}
-echo '</div>';
-
-echo '<div id="klient">';
-echo '<input type="submit" name="profile" id="profil" value="Můj profil">' . "\n";
-echo '<input type="submit" name="logout"  value="Odhlásit se">' . "\n";
 
 if (isset($_POST["logout"])) {
     unset($_SESSION["username"]);
@@ -182,7 +154,7 @@ if (isset($new[0])) {
 echo '<hr>';
 
 if (isset($old[0])) {
-    echo "Staré rezervace:<br>\n";
+    echo "<p>Staré rezervace:</p><br>\n";
     echo '<table id="tab">';
     echo "<tr><th>Jménéno knihy</th><th>od kdy</th><th>do kdy</th></tr>";
     foreach ($old as $item) {

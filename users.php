@@ -57,7 +57,7 @@ if (isset($_GET["page"])) {
 echo '<div class="container">';
 echo '<div id="header">';
 echo '<div id="logo"><a href="index.php"><img src="/images/skola_logo_color.png" alt="logo"></a></div>';
-echo '<div id="searchnormal">';
+echo '<div id="searchfull">';
 echo '<form method="GET" action="">' . "\n";
 echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
 if (isset($_GET["q"])) {

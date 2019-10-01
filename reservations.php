@@ -59,7 +59,7 @@ if (isset($_GET["page"])) {
 echo '<div class="container">';
 echo '<div id="header">';
 echo '<div id="logo"><a href="index.php"><img src="/images/skola_logo_color.png" alt="logo"></a></div>';
-echo '<div id="searchnormal">';
+echo '<div id="searchfull">';
 echo '<form method="GET" action="">' . "\n";
 echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
 if (isset($_GET["q"])) {
@@ -90,17 +90,22 @@ if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($con
     echo '<div id="fullmenue">';
     echo '<input type="submit" name="login"  value="Přihrásit se"></input>' . "\n";
     echo '</div>';
-
-    echo '<div id="serch">';
-    echo '<form method="GET" action="">' . "\n";
-    echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
-    if ($search != "") {
-        echo $search . '">' . "\n";
-    } else {
-        echo '">' . "\n";
+}
+echo '</div>';
+echo '</form>' . "\n";
+echo '<div id="fullmenue">';
+echo '<form method="POST" action="">' . "\n";
+if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
+    if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
+        echo '<input id="reservations" type="submit" name="reservations"  value="Rezervace">';
+        echo '<input id="addbook" type="submit" name="users"  value="Uživatelé">';
+        echo '<input type="submit" name="add_book"  value="Přidat knížku">';
+        echo '<input type="submit" name="add_author"  value="Přidat autora">';
     }
     echo '<input type="submit" name="profile"  value="Můj profil">';
     echo '<input type="submit" name="logout"  value="Odhlásit se">';
+} else {
+    echo '<input type="submit" name="login"  value="Přihrásit se"></input>';
 }
 echo '</form>' . "\n";
 echo '</div>';
@@ -196,7 +201,7 @@ foreach ($actual_reservations as $value) {
         echo "<th>";
         echo '<form method="POST" action="">';
         echo '<input class="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
-        echo '<input type="submit" name="delete" value="smazat">';
+        echo '<input type="submit" id="del" name="delete" value="smazat">';
         echo '</form>';
         echo "</th>";
     } else {
@@ -214,7 +219,7 @@ foreach ($actual_reservations as $value) {
         echo "<th>";
         echo '<form method="POST" action="">';
         echo '<input class="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
-        echo '<input type="submit" name="delete" value="smazat">';
+        echo '<input type="submit" id="del" name="delete" value="smazat">';
         echo '</form>';
         echo "</th>";
         echo "</tr>";

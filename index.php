@@ -40,14 +40,133 @@
             $_SESSION["rows"] = $per_page;
         }
     }
-    unset($_POST["rows"]);
-    unset($_POST["per_page"]);
+}
+unset($_POST["rows"]);
+unset($_POST["per_page"]);
 
-    if (isset($_GET["q"])) {
-        $search = $_GET["q"];
+if (isset($_GET["q"])) {
+    $search = $_GET["q"];
+}
+if (isset($_GET["page"])) {
+    $page = $_GET["page"];
+}
+$books = book($conn, $search, $count_books, $page, $per_page);
+
+echo '<div class="container">';
+echo '<div id="header">';
+echo '<div id="logo"><a href="index.php"><img src="images/skola_logo_color.png" alt="logo"></a></div>';
+echo '<div id="searchfull">';
+echo '<form method="GET" action="">' . "\n";
+echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
+if (isset($_GET["q"])) {
+    echo $_GET["q"] . '">' . "\n";
+} else {
+    echo '">' . "\n";
+}
+echo '</form>' . "\n";
+echo '</div>';
+
+echo '<div id="search">';
+echo '<form method="GET" action="">' . "\n";
+echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
+if (isset($_GET["q"])) {
+    echo $_GET["q"] . '">' . "\n";
+} else {
+    echo '">' . "\n";
+}
+echo '</form>' . "\n";
+echo '</div>';
+
+echo '<div class="dropdownmenue">';
+echo '<button onclick="myFunction()" class="dropbtn">Menu</button>';
+echo '<div id="menuecontent" class="menuecontent">';
+echo '<div id="filtersmall">';
+echo '<div id="filtercon">';
+echo '<div class="dropdown">';
+echo '<div class="category">';
+echo '<a id="category" id="zanr">Žánr</a>';
+echo '<div class="dropdown-content" class="zanr">';
+$genres = get_table($conn, "genres");
+foreach ($genres as $item) {
+    echo "<a href=\"index.php?q=" . $item["name"] . "\">" . $item["name"] . "</a><br>\n";
+}
+echo '</div>';
+echo '</div>';
+echo '</div>';
+echo '<div class="dropdown">';
+echo '<div class="category">';
+echo '<br><a id="category" id="autor">Autor</a><br>';
+echo '<div class="dropdown-content" class="autor">';
+$author = get_table($conn, "author");
+foreach ($author as $item) {
+    echo "<a href=\"index.php?q=" . $item["f_name"] . " " . $item["l_name"] . "\">" . $item["f_name"] . " " . $item["l_name"] . "</a><br>\n";
+}
+echo '</div>';
+echo '</div>';
+echo '</div>';
+echo '<div class="dropdown">';
+echo '<div class="category">';
+echo '<a id="category" id="language">Jazyk</a><br>';
+
+echo '<div class="dropdown-content" class="language"><br>';
+$language = get_table($conn, "book");
+$k = array();
+foreach ($language as $item) {
+    if (!in_array($item["language"], $k)) {
+        echo "<a href=\"index.php?q=" . $item["language"] . "\">" . $item["language"] . "</a><br>\n";
+        $k[] = $item["language"];
     }
-    if (isset($_GET["page"])) {
-        $page = $_GET["page"];
+}
+echo '</div>';
+echo '</div>';
+echo '</div>';
+echo '<div class="dropdown">';
+echo '<div class="category">';
+echo '<a id="category" id="room">Mistnost</a><br>';
+echo '<div class="dropdown-content" class="room">';
+$room = get_table($conn, "room");
+foreach ($room as $item) {
+    echo "<a href=\"index.php?q=" . $item["name"] . "\">" . $item["name"] . "</a><br>\n";
+}
+echo '</div>';
+echo '</div>';
+echo '</div>';
+echo '</div>';
+
+// echo 'řádků na strácne:';
+
+// echo '<form method="POST" action=""><select id="sel" name="rows">' . "\n";
+// $i = 1;
+// while ($i != 21) {
+//     if ($i == ($per_page / 3)) {
+//         echo '<option selected>';
+//     } else {
+//         echo '<option>';
+//     }
+//     echo $i . '</option>' . "\n";
+//     $i++;
+// }
+// echo '</select><br>';
+// echo '<input type="submit" name="per_page"  value="nastavit">' . "\n";
+// echo '</form>' . "\n";
+
+// echo '</div>';
+echo '</div>';
+echo '</div>';
+echo '</div>';
+
+echo '<form method="POST" action="">' . "\n";
+if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
+    if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
+        echo '<div id="admin">';
+        echo '<a name="admin"  value="Administrace"><i class="fas fa-cog"></i></a>' . "\n";
+        echo '<div id="adminhid">';
+        echo '<input id="reservations" type="submit" name="reservations"  value="Rezervace">' . "\n";
+        echo '<input id="addbook" type="submit" name="users"  value="Uživatelé"><br>';
+        echo '<input type="submit" name="add_book"  value="Přidat knížku"><br>';
+        echo '<input type="submit" name="add_author"  value="Přidat autora"><br>';
+        echo '</div>';
+        echo '</div>';
     }
     $books = book($conn, $search, $count_books, $page, $per_page);
 

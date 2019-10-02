@@ -82,6 +82,7 @@ echo '<div id="menuecontent" class="menuecontent">';
 echo '<div id="filtersmall">';
 echo '<div id="filtercon">';
 echo '<div class="dropdown">';
+echo '<div class="category">';
 echo '<a id="category" id="zanr">Žánr</a>';
 echo '<div class="dropdown-content" class="zanr">';
 $genres = get_table($conn, "genres");
@@ -90,7 +91,9 @@ foreach ($genres as $item) {
 }
 echo '</div>';
 echo '</div>';
+echo '</div>';
 echo '<div class="dropdown">';
+echo '<div class="category">';
 echo '<br><a id="category" id="autor">Autor</a><br>';
 echo '<div class="dropdown-content" class="autor">';
 $author = get_table($conn, "author");
@@ -99,7 +102,9 @@ foreach ($author as $item) {
 }
 echo '</div>';
 echo '</div>';
+echo '</div>';
 echo '<div class="dropdown">';
+echo '<div class="category">';
 echo '<a id="category" id="language">Jazyk</a><br>';
 
 echo '<div class="dropdown-content" class="language"><br>';
@@ -113,13 +118,16 @@ foreach ($language as $item) {
 }
 echo '</div>';
 echo '</div>';
+echo '</div>';
 echo '<div class="dropdown">';
+echo '<div class="category">';
 echo '<a id="category" id="room">Mistnost</a><br>';
 echo '<div class="dropdown-content" class="room">';
 $room = get_table($conn, "room");
 foreach ($room as $item) {
     echo "<a href=\"/index.php?q=" . $item["name"] . "\">" . $item["name"] . "</a><br>\n";
 }
+echo '</div>';
 echo '</div>';
 echo '</div>';
 echo '</div>';

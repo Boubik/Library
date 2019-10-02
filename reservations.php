@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <link href="styles/frontend.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="images/logo.ico">
-    <link rel="shortcut icon" href="/images/skola_logo_mono.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="images/skola_logo_mono.png" type="image/x-icon" />
     <script src="js/350205fd30.js"></script>
     <title>Uživatelé</title>
     <style>
@@ -58,7 +58,7 @@ if (isset($_GET["page"])) {
 
 echo '<div class="container">';
 echo '<div id="header">';
-echo '<div id="logo"><a href="index.php"><img src="/images/skola_logo_color.png" alt="logo"></a></div>';
+echo '<div id="logo"><a href="index.php"><img src="images/skola_logo_color.png" alt="logo"></a></div>';
 echo '<div id="searchfull">';
 echo '<form method="GET" action="">' . "\n";
 echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
@@ -114,27 +114,27 @@ echo '</div>';
 if (isset($_POST["logout"])) {
     unset($_SESSION["username"]);
     unset($_SESSION["password"]);
-    header("Location: /index.php");
+    header("Location: index.php");
 }
 
 if (isset($_POST["login"])) {
-    header("Location: /login.php");
+    header("Location: login.php");
 }
 
 if (isset($_POST["add_book"])) {
-    header("Location: /add_book.php");
+    header("Location: add_book.php");
 }
 
 if (isset($_POST["add_author"])) {
-    header("Location: /add_author.php");
+    header("Location: add_author.php");
 }
 
 if (isset($_POST["profile"])) {
-    header("Location: /profile.php");
+    header("Location: profile.php");
 }
 
 if (isset($_POST["users"])) {
-    header("Location: /users.php");
+    header("Location: users.php");
 }
 
 if (isset($_POST["return"])) {
@@ -146,20 +146,20 @@ if (isset($_POST["take"])) {
 }
 
 if ($search != "") {
-    header("Location: /index.php?q=" . $_POST["q"]);
+    header("Location: index.php?q=" . $_POST["q"]);
 }
 
 if (isset($_GET["set_role"])) {
     if (!($is_admin) and filter_input(INPUT_GET, 'role') == "admin") {
-        header("Location: /users.php");
+        header("Location: users.php");
     } else {
         set_role($conn, filter_input(INPUT_GET, 'username'), filter_input(INPUT_GET, 'role'));
-        header("Location: /users.php");
+        header("Location: users.php");
     }
 }
 
 if (isset($_POST["reservations"])) {
-    header("Location: /reservations.php");
+    header("Location: reservations.php");
 }
 
 if (isset($_POST["delete"])) {
@@ -233,17 +233,17 @@ $maxpage = (int) ($count_users / $per_page) + 1;
 $i = 1;
 if ($maxpage > 1) {
     if ($page > 1) {
-        echo "<a href=\"/users.php?q=" . $search . "&page=" . ($page - 1) . "\">< </a>";
+        echo "<a href=\"users.php?q=" . $search . "&page=" . ($page - 1) . "\">< </a>";
     }
     while (1) {
         if ($maxpage != 0) {
             do {
                 if ($i == 1) {
                     echo "stránky: ";
-                    echo "<a href=\"/users.php?q=" . $search . "&page=" . $i . "\">" . $i . "</a>";
+                    echo "<a href=\"users.php?q=" . $search . "&page=" . $i . "\">" . $i . "</a>";
                 }
                 echo ", ";
-                echo "<a href=\"/users.php?q=" . $search . "&page=" . ($i + 1) . "\">" . ($i + 1) . "</a>";
+                echo "<a href=\"users.php?q=" . $search . "&page=" . ($i + 1) . "\">" . ($i + 1) . "</a>";
                 $i++;
             } while ($i > $maxpage);
             break;
@@ -253,16 +253,16 @@ if ($maxpage > 1) {
     }
 
     if ($page < $maxpage) {
-        echo "<a href=\"/users.php?q=" . $search . "&page=" . ($page + 1) . "\"> ></a>";
+        echo "<a href=\"users.php?q=" . $search . "&page=" . ($page + 1) . "\"> ></a>";
     }
 }
 echo "</div>";
 echo '<div id="footer" style="margin-top:100px;">
 <div id="footercon">
 <div id="social">
-<a href="http://www.skolavdf.cz" target="_blank"><img src="/images/skola_logo_color.png" alt="logo"></a>
-<a href="https://www.facebook.com/skolavdf/?ref=bookmarks"><img src="/images/facebook.png" alt="logo"></a>
-<a href="https://www.instagram.com/skolavdf/" target="_blank"><img src="/images/instagram.png" alt="logo"></a>
+<a href="http://www.skolavdf.cz" target="_blank"><img src="images/skola_logo_color.png" alt="logo"></a>
+<a href="https://www.facebook.com/skolavdf/?ref=bookmarks"><img src="images/facebook.png" alt="logo"></a>
+<a href="https://www.instagram.com/skolavdf/" target="_blank"><img src="images/instagram.png" alt="logo"></a>
 </div>
 <div id="splitter"></div>
     <div id="team">

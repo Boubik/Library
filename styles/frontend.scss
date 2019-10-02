@@ -30,7 +30,7 @@ hr{
 	height: 50px;
 	position: fixed;
 	top: 0;
-	z-index: 2;
+	z-index: 1;
 	background-color: rgba(0, 0, 0, 0.753);
 	backdrop-filter: blur(5px);
 	width: 100%;
@@ -483,7 +483,9 @@ body {
 	cursor: pointer;
 }
 #filter{
-	display: none;
+	// display: none;
+	width: 70%;
+	border: 1px solid white;
 }
 #searchfull ::placeholder{
 	color: $text-color-white;
@@ -523,46 +525,46 @@ body {
 	margin-top: -50px;
   }
   
-//   .dropbtn:hover, .dropbtn:focus {
-// 	color:$text-color-gold;
-// 	outline: none;
-//   }
+  .dropbtn:hover, .dropbtn:focus {
+	color:$text-color-gold;
+	outline: none;
+  }
   
-//   .dropdownmenue {
-// 	position: relative;
-// 	display: block;
-//   }
+  .dropdownmenue {
+	position: relative;
+	display: block;
+  }
   
-//   .menuecontent {
-// 	font-family: 'Montserrat', sans-serif;
-// 	display: none;
-// 	position: absolute;
-// 	background-color: rgba(0, 0, 0, 0.753);
-// 	backdrop-filter: blur(5px);
-// 	min-width: 100%;
-// 	overflow: auto;
-// 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-// 	z-index: 1;
-//   }
-//   .category{
-// 	  width: 200px;
-//   }
-//   .dropdown-content{
-// 	  position: absolute;
-// 	  border: 1px solid white;
+  .menuecontent {
+	font-family: 'Montserrat', sans-serif;
+	display: none;
+	position: absolute;
+	background-color: rgba(0, 0, 0, 0.753);
+	backdrop-filter: blur(5px);
+	min-width: 100%;
+	overflow: auto;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	z-index: 1;
+  }
+  .category{
+	  width: 200px;
+  }
+  .dropdown-content{
+	  position: absolute;
+	  border: 1px solid white;
 
-//   }
+  }
   
-//   .menuecontent a {
-// 	color: black;
-// 	padding: 12px 16px;
-// 	text-decoration: none;
-// 	display: block;
-//   }
+  .menuecontent a {
+	color: black;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+  }
   
-//   .dropdownmenue a:hover {background-color: #ddd;}
+  .dropdownmenue a:hover {background-color: #ddd;}
   
-//   .show {display: block;}
+  .show {display: block;}
 @media only screen and (min-width: 1000px) {
 	// #footer{
 	// 	float: right!important;

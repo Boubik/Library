@@ -3,7 +3,7 @@ return array(
     //DB
     "servername" => "127.0.0.1",
     "username" => "root",
-    "password" => "root",
+    "password" => "",
     "dbname" => "Library",
 
     //Log

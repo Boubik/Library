@@ -118,54 +118,54 @@ function add_book_has_author($conn, int $id_book, int $id_author)
 }
 
 /**
- * add genres
+ * add genre
  * @param   mixed   $conn           db connection
  * @param   String  $id_book        id of book
  * @param   String  $id_author      id of author
  */
-function add_genres($conn, array $names)
+function add_genre($conn, array $names)
 {
-    $genres = get_table($conn, "genres");
-    if ($genres != NULL) {
-        $i = $genres;
-        $genres = array();
+    $genre = get_table($conn, "genre");
+    if ($genre != NULL) {
+        $i = $genre;
+        $genre = array();
         foreach ($i as $item) {
-            $genres[] = $item["name"];
+            $genre[] = $item["name"];
         }
 
         foreach ($names as $item) {
-            if (!(in_array($item, $genres))) {
-                insert_genres($conn, $item);
+            if (!(in_array($item, $genre))) {
+                insert_genre($conn, $item);
             }
         }
     } else {
         foreach ($names as $item) {
-            insert_genres($conn, $item);
+            insert_genre($conn, $item);
         }
     }
 }
 
 /**
- * insert genres
+ * insert genre
  * @param   mixed   $conn           db connection
  * @param   String  $name           name to insert
  */
-function insert_genres($conn, string $name)
+function insert_genre($conn, string $name)
 {
-    $sql = "INSERT INTO `genres`(`name`) VALUES ('" . $name . "')";
+    $sql = "INSERT INTO `genre`(`name`) VALUES ('" . $name . "')";
     $sql = $conn->prepare($sql);
     $sql->execute();
 }
 
 /**
- * get genres id from db
+ * get genre id from db
  * @param   mixed   $conn           db connection
  * @param   String  $name           name to search in db
  * @return  int     id
  */
-function get_genres_id($conn, string $name)
+function get_genre_id($conn, string $name)
 {
-    $sql = "SELECT * FROM `genres` WHERE `name` = '" . $name . "'";
+    $sql = "SELECT * FROM `genre` WHERE `name` = '" . $name . "'";
     $sql = $conn->prepare($sql);
     $numrows = $sql->execute();
     if ($numrows > 0) {
@@ -177,15 +177,15 @@ function get_genres_id($conn, string $name)
 }
 
 /**
- * add ids to table book_has_genres
+ * add ids to table book_has_genre
  * @param   mixed   $conn           db connection
  * @param   int     $id_book        id of book
- * @param   int     $id_genres      id of genres
+ * @param   int     $id_genre      id of genre
  */
-function add_book_has_genres($conn, int $id_book, int $id_genres)
+function add_book_has_genre($conn, int $id_book, int $id_genre)
 {
 
-    $sql = "INSERT INTO `book_has_genres`(`book_id`, `genres_id`) VALUES (" . $id_book . ", " . $id_genres . ")";
+    $sql = "INSERT INTO `book_has_genre`(`book_id`, `genre_id`) VALUES (" . $id_book . ", " . $id_genre . ")";
     $sql = $conn->prepare($sql);
     $sql->execute();
 }
@@ -224,7 +224,7 @@ function add_user($conn, string $f_name, string $l_name, string $username, strin
     date_default_timezone_set('Europe/Prague');
     $datetime = date("Y-m-d H:i:s");
     $password = hash_password($password);
-    $sql = "INSERT INTO `user`(`f_name`, `l_name`, `username`, `password`, `last_login`, `ceated`) VALUES ('" . $f_name . "', '" . $l_name . "', '" . $username . "', '" . $password . "', '" . $datetime . "', '" . $datetime . "')";
+    $sql = "INSERT INTO `user`(`f_name`, `l_name`, `username`, `password`, `last_login`, `created`) VALUES ('" . $f_name . "', '" . $l_name . "', '" . $username . "', '" . $password . "', '" . $datetime . "', '" . $datetime . "')";
     $sql = $conn->prepare($sql);
     $sql->execute();
 }
@@ -397,15 +397,15 @@ function mn($conn, string $mn_table, int $id, string $id_name, string $id_get)
 }
 
 /**
- * get genres
+ * get genre
  * @param   Mixed   $conn       db connection
  * @param   Int     $id         id
- * @return  String  return genres
+ * @return  String  return genre
  */
 function get_genre($conn, int $id)
 {
 
-    $sql = "SELECT `name` FROM `genres` WHERE `id` = " . $id;
+    $sql = "SELECT `name` FROM `genre` WHERE `id` = " . $id;
     $sql = $conn->prepare($sql);
     $numrows = $sql->execute();
     $row = $sql->fetch();
@@ -754,9 +754,9 @@ function book($conn, String $search = "", $count_books = 1, $page = 1, $per_page
     $book_id = array();
     $books = array();
     if ($search == "") {
-        $sql = "SELECT book.id AS 'book_id' FROM book INNER JOIN book_has_genres ON book_has_genres.book_id = book.id INNER JOIN genres ON genres.id = book_has_genres.genres_id INNER JOIN book_has_author ON book_has_author.book_id = book.id INNER JOIN room ON room.name = room_name INNER JOIN author ON author.id = book_has_author.author_id WHERE `show` != '0' OR `show` IS NULL ORDER BY book.name";
+        $sql = "SELECT book.id AS 'book_id' FROM book INNER JOIN book_has_genre ON book_has_genre.book_id = book.id INNER JOIN genre ON genre.id = book_has_genre.genre_id INNER JOIN book_has_author ON book_has_author.book_id = book.id INNER JOIN room ON room.name = room_name INNER JOIN author ON author.id = book_has_author.author_id WHERE `show` != '0' OR `show` IS NULL ORDER BY book.name";
     } else {
-        $sql = "SELECT book.id AS 'book_id' FROM book INNER JOIN book_has_genres ON book_has_genres.book_id = book.id INNER JOIN genres ON genres.id = book_has_genres.genres_id INNER JOIN book_has_author ON book_has_author.book_id = book.id INNER JOIN room ON room.name = room_name INNER JOIN author ON author.id = book_has_author.author_id WHERE book.room_name = room.name AND book.id = book_has_genres.book_id AND book_has_genres.genres_id = genres.id AND book_has_author.author_id = author.id AND book.id = book_has_author.book_id AND (book.room_name LIKE '%" . $search . "%' OR book.name LIKE '%" . $search . "%' OR book.relase LIKE '%" . $search . "%' OR book.language LIKE '%" . $search . "%'OR book.ISBN LIKE '%" . $search . "%'OR book.pages LIKE '%" . $search . "%'OR author.f_name LIKE '%" . $search . "%' OR author.l_name LIKE '%" . $search . "%' OR author.bday LIKE '%" . $search . "%' OR genres.name LIKE '%" . $search . "%' OR room.name LIKE '%" . $search . "%' OR CONCAT(author.f_name, ' ' , author.l_name) LIKE '%" . $search . "%' OR CONCAT(author.l_name, ' ', author.f_name) LIKE '%" . $search . "%') and (`show` != '0' OR `show` IS NULL) ORDER BY book.name";
+        $sql = "SELECT book.id AS 'book_id' FROM book INNER JOIN book_has_genre ON book_has_genre.book_id = book.id INNER JOIN genre ON genre.id = book_has_genre.genre_id INNER JOIN book_has_author ON book_has_author.book_id = book.id INNER JOIN room ON room.name = room_name INNER JOIN author ON author.id = book_has_author.author_id WHERE book.room_name = room.name AND book.id = book_has_genre.book_id AND book_has_genre.genre_id = genre.id AND book_has_author.author_id = author.id AND book.id = book_has_author.book_id AND (book.room_name LIKE '%" . $search . "%' OR book.name LIKE '%" . $search . "%' OR book.relase LIKE '%" . $search . "%' OR book.language LIKE '%" . $search . "%'OR book.ISBN LIKE '%" . $search . "%'OR book.pages LIKE '%" . $search . "%'OR author.f_name LIKE '%" . $search . "%' OR author.l_name LIKE '%" . $search . "%' OR author.bday LIKE '%" . $search . "%' OR genre.name LIKE '%" . $search . "%' OR room.name LIKE '%" . $search . "%' OR CONCAT(author.f_name, ' ' , author.l_name) LIKE '%" . $search . "%' OR CONCAT(author.l_name, ' ', author.f_name) LIKE '%" . $search . "%') and (`show` != '0' OR `show` IS NULL) ORDER BY book.name";
     }
     //echo $sql;
     $sql = $conn->prepare($sql);
@@ -799,10 +799,10 @@ function book($conn, String $search = "", $count_books = 1, $page = 1, $per_page
         }
         foreach ($book_id as $id) {
             $books[$id] = array();
-            $genres_ids = mn($conn, "book_has_genres", $id, "book_id", "genres_id");
-            $sql = "SELECT `name` FROM `genres` WHERE `id` IN(";
+            $genre_ids = mn($conn, "book_has_genre", $id, "book_id", "genre_id");
+            $sql = "SELECT `name` FROM `genre` WHERE `id` IN(";
             $i = 0;
-            foreach ($genres_ids as $value) {
+            foreach ($genre_ids as $value) {
                 if ($i > 0) {
                     $sql .= ", ";
                 }
@@ -812,9 +812,9 @@ function book($conn, String $search = "", $count_books = 1, $page = 1, $per_page
             $sql .= ")";
             $sql = $conn->prepare($sql);
             $sql->execute();
-            $books[$id]["genres_name"] = array();
+            $books[$id]["genre_name"] = array();
             while ($row = $sql->fetch()) {
-                $books[$id]["genres_name"][] = $row["name"];
+                $books[$id]["genre_name"][] = $row["name"];
             }
 
             $author_ids = mn($conn, "book_has_author", $id, "book_id", "author_id");

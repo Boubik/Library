@@ -568,7 +568,6 @@ body {
 
 #filter {
   width: 70%;
-  border: 1px solid white;
 }
 
 #searchfull ::-webkit-input-placeholder {

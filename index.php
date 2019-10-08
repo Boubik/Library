@@ -256,7 +256,7 @@ if (!isset($books)) {
 }
 echo "</div>";
 echo "</div>";
-// echo "</div>";
+echo "</div>";
 
 $i = 1;
 if (($i * (3 * $books_rows)) <= $count_books) {
@@ -282,7 +282,26 @@ if ($page < $i) {
 }
 echo "</div>";
 
-echo '<div id="footer" style="margin-top:150px !important;">
+// echo '<div id="footer" style="margin-top:150px !important;">
+// <div id="footercon">
+// <div id="social">
+// <a href="http://www.skolavdf.cz" target="_blank"><img src="images/skola_logo_color.png" alt="logo"></a>
+// <a href="https://www.facebook.com/skolavdf/?ref=bookmarks"><img src="images/facebook.png" alt="logo"></a>
+// <a href="https://www.instagram.com/skolavdf/" target="_blank"><img src="images/instagram.png" alt="logo"></a>
+// </div>
+// <div id="splitter"></div>
+//     <div id="team">
+//     <a href="https://github.com/Boubik" target="_blank">Coder: Jan Chlouba</a><br>
+//     <a href="https://github.com/JINXisHERE" target="_blank">Designer: Ibrahim Daghstani</a>
+
+// </div>
+// </div>
+// </div>';
+echo '</div>';
+?>
+</body>
+<footer>
+<div id="footer" style="margin-top:150px !important;">
 <div id="footercon">
 <div id="social">
 <a href="http://www.skolavdf.cz" target="_blank"><img src="images/skola_logo_color.png" alt="logo"></a>
@@ -296,10 +315,8 @@ echo '<div id="footer" style="margin-top:150px !important;">
 
 </div>
 </div>
-</div>';
-echo '</div>';
-?>
-</body>
+</div>
+</footer>
 <script>
     AOS.init();
 </script>

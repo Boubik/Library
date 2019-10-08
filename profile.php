@@ -12,7 +12,7 @@
     if (isset($_SESSION["username"])) {
         echo "<title>Učet: " . $_SESSION["username"] . "</title>";
     } else {
-        header("Location: /");
+        header("Location: index.php");
     }
     ?>
     <!-- <style>
@@ -90,31 +90,31 @@
     if (isset($_POST["logout"])) {
         unset($_SESSION["username"]);
         unset($_SESSION["password"]);
-        header("Location: /index.php");
+        header("Location: index.php");
     }
 
     if (isset($_POST["login"])) {
-        header("Location: /login.php");
+        header("Location: login.php");
     }
 
     if (isset($_POST["add_book"])) {
-        header("Location: /add_book.php");
+        header("Location: add_book.php");
     }
 
     if (isset($_POST["add_author"])) {
-        header("Location: /add_author.php");
+        header("Location: add_author.php");
     }
 
     if (isset($_POST["profile"])) {
-        header("Location: /profile.php");
+        header("Location: profile.php");
     }
 
     if (isset($_POST["users"])) {
-        header("Location: /users.php");
+        header("Location: users.php");
     }
 
     if (isset($_POST["reservations"])) {
-        header("Location: /reservations.php");
+        header("Location: reservations.php");
     }
     echo '</div>';
 

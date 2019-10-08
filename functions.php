@@ -111,7 +111,6 @@ function get_table($conn, string $name)
  */
 function add_book_has_author($conn, int $id_book, int $id_author)
 {
-
     $sql = "INSERT INTO `book_has_author`(`book_id`, `author_id`) VALUES (" . $id_book . ", " . $id_author . ")";
     $sql = $conn->prepare($sql);
     $sql->execute();
@@ -758,6 +757,7 @@ function book($conn, String $search = "", $count_books = 1, $page = 1, $per_page
     } else {
         $sql = "SELECT book.id AS 'book_id' FROM book INNER JOIN book_has_genre ON book_has_genre.book_id = book.id INNER JOIN genre ON genre.id = book_has_genre.genre_id INNER JOIN book_has_author ON book_has_author.book_id = book.id INNER JOIN room ON room.name = room_name INNER JOIN author ON author.id = book_has_author.author_id WHERE book.room_name = room.name AND book.id = book_has_genre.book_id AND book_has_genre.genre_id = genre.id AND book_has_author.author_id = author.id AND book.id = book_has_author.book_id AND (book.room_name LIKE '%" . $search . "%' OR book.name LIKE '%" . $search . "%' OR book.relase LIKE '%" . $search . "%' OR book.language LIKE '%" . $search . "%'OR book.ISBN LIKE '%" . $search . "%'OR book.pages LIKE '%" . $search . "%'OR author.f_name LIKE '%" . $search . "%' OR author.l_name LIKE '%" . $search . "%' OR author.bday LIKE '%" . $search . "%' OR genre.name LIKE '%" . $search . "%' OR room.name LIKE '%" . $search . "%' OR CONCAT(author.f_name, ' ' , author.l_name) LIKE '%" . $search . "%' OR CONCAT(author.l_name, ' ', author.f_name) LIKE '%" . $search . "%') and (`show` != '0' OR `show` IS NULL) ORDER BY book.name";
     }
+    save_to_log($sql);
     //echo $sql;
     $sql = $conn->prepare($sql);
     $sql->execute();
@@ -791,6 +791,7 @@ function book($conn, String $search = "", $count_books = 1, $page = 1, $per_page
             $i++;
         }
         $sql .= ")";
+        save_to_log($sql);
         $sql = $conn->prepare($sql);
         $number = $sql->execute();
         $db_book = array();

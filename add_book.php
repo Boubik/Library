@@ -36,9 +36,6 @@
     // }
     // echo '</select> nebo
     echo '<input type="text" name="room_name" placeholder="Místnost"><br>';
-
-    // echo '<input type="text" name="room_name" placeholder="Místnost"><br>';
-
     echo '<input type="number" name="pages" placeholder="Počet stran"><br>';
     echo '<input type="text" maxlength="45" name="genres" placeholder="Žánry"><br><p>    (mezera rozděluje žánry)</p><br>';
     echo '<input type="text" maxlength="200" name="img" placeholder="url obrázku"><br>' . "\n";
@@ -47,11 +44,11 @@
     echo '</div>';
 
     if (isset($_POST["submit"])) {
-        $genres = explode(" ", $_POST["genres"]);
-        add_genres($conn, $genres);
+        $genres = explode(" ", filter_input(INPUT_POST, $_POST["genres"]));
+        add_genre($conn, $genres);
         $gendrs_get = null;
         foreach ($genres as $item) {
-            $item = get_genres_id($conn, $item);
+            $item = get_genre_id($conn, $item);
             if ($gendrs_get != null) {
                 $gendrs_get = $gendrs_get . "," . $item;
             } else {
@@ -64,24 +61,24 @@
             $room = $_POST["room"];
         }
         add_book($conn, $_POST["name"], $_POST["relase"], $_POST["language"], $_POST["ISBN"], $room, $_POST["pages"], $_POST["img"]);
-        header("Location: /add_author.php?name=" . $_POST["name"] . "&relase=" . $_POST["relase"] . "&language=" . $_POST["language"] . "&ISBN=" . $_POST["ISBN"] . "&room_name=" . $room . "&pages=" . $_POST["pages"] . "&genres=" . $gendrs_get . "&img=" . $_POST["img"]);
+        header("Location: add_author.php?name=" . $_POST["name"] . "&relase=" . $_POST["relase"] . "&language=" . $_POST["language"] . "&ISBN=" . $_POST["ISBN"] . "&room_name=" . $room . "&pages=" . $_POST["pages"] . "&genres=" . $gendrs_get . "&img=" . $_POST["img"]);
     }
     echo '<div id="footer" style="margin-top:100px;">
-<div id="footercon">
-<div id="social">
-<a href="http://www.skolavdf.cz" target="_blank"><img src="images/skola_logo_color.png" alt="logo"></a>
-<a href="https://www.facebook.com/skolavdf/?ref=bookmarks"><img src="images/facebook.png" alt="logo"></a>
-<a href="https://www.instagram.com/skolavdf/" target="_blank"><img src="images/instagram.png" alt="logo"></a>
-</div>
-<div id="splitter"></div>
-    <div id="team">
-    <a href="https://github.com/Boubik" target="_blank">Coder: Jan Chlouba</a><br>
-    <a href="https://github.com/JINXisHERE" target="_blank">Designer: Ibrahim Daghstani</a>
+    <div id="footercon">
+    <div id="social">
+    <a href="http://www.skolavdf.cz" target="_blank"><img src="images/skola_logo_color.png" alt="logo"></a>
+    <a href="https://www.facebook.com/skolavdf/?ref=bookmarks"><img src="images/facebook.png" alt="logo"></a>
+    <a href="https://www.instagram.com/skolavdf/" target="_blank"><img src="images/instagram.png" alt="logo"></a>
+    </div>
+    <div id="splitter"></div>
+        <div id="team">
+        <a href="https://github.com/Boubik" target="_blank">Coder: Jan Chlouba</a><br>
+        <a href="https://github.com/JINXisHERE" target="_blank">Designer: Ibrahim Daghstani</a>
 
-</div>
-</div>
-</div>';
-    echo '</div>';
+    </div>
+    </div>
+    </div>
+    </div>';
     ?>
 </body>
 

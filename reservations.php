@@ -9,7 +9,9 @@
     <script src="js/350205fd30.js"></script>
     <title>Uživatelé</title>
     <style>
-        table, th, td {
+        table,
+        th,
+        td {
             border: 1px solid black;
             border-collapse: collapse;
         }
@@ -26,238 +28,238 @@
 
 <body>
     <?php
-include "functions.php";
-ini_set('max_execution_time', 0);
-$configs = include 'config.php';
-date_default_timezone_set('Europe/Prague');
-session_start();
-$conn = connect_to_db($configs["servername"], $configs["dbname"], $configs["username"], $configs["password"]);
-if (!(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"], true))) {
-    header("Location: /");
-}
-$per_page = 30;
-$roles = array();
-$roles[] = "user";
-$roles[] = "mod";
-if (is_admin($conn, $_SESSION["username"], $_SESSION["password"])) {
-    $is_admin = true;
-    $roles[] = "admin";
-} else {
-    $is_admin = false;
-}
-if (isset($_GET["q"])) {
-    $search = filter_input(INPUT_GET, 'q');
-} else {
-    $search = "";
-}
-if (isset($_GET["page"])) {
-    $page = filter_input(INPUT_GET, 'page');
-} else {
-    $page = 1;
-}
-
-echo '<div class="container">';
-echo '<div id="header">';
-echo '<div id="logo"><a href="index.php"><img src="images/skola_logo_color.png" alt="logo"></a></div>';
-echo '<div id="searchfull">';
-echo '<form method="GET" action="">' . "\n";
-echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
-if (isset($_GET["q"])) {
-    echo $_GET["q"] . '">' . "\n";
-} else {
-    echo '">' . "\n";
-}
-echo '</form>' . "\n";
-echo '</div>';
-
-echo '<form method="POST" action="">' . "\n";
-if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
-    if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
-        echo '<div id="admin">';
-        echo '<a name="admin"  value="Administrace"><i class="fas fa-cog"></i></a>' . "\n";
-        echo '<div id="adminhid">';
-        echo '<input id="reservations" type="submit" name="reservations"  value="Rezervace">' . "\n";
-        echo '<input id="addbook" type="submit" name="users"  value="Uživatelé"><br>';
-        echo '<input type="submit" name="add_book"  value="Přidat knížku"><br>';
-        echo '<input type="submit" name="add_author"  value="Přidat autora"><br>';
-        echo '</div>';
-        echo '</div>';
+    include "functions.php";
+    ini_set('max_execution_time', 0);
+    $configs = include 'config.php';
+    date_default_timezone_set('Europe/Prague');
+    session_start();
+    $conn = connect_to_db($configs["servername"], $configs["dbname"], $configs["username"], $configs["password"]);
+    if (!(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"], true))) {
+        header("Location: index.php");
     }
-    echo '<div id="klient">';
-    echo '<input type="submit" name="profile" id="profil" value="Můj profil">' . "\n";
-    echo '<input type="submit" name="logout"  value="Odhlásit se">' . "\n";
-} else {
-    echo '<div id="fullmenue">';
-    echo '<input type="submit" name="login"  value="Přihrásit se"></input>' . "\n";
+    $per_page = 30;
+    $roles = array();
+    $roles[] = "user";
+    $roles[] = "mod";
+    if (is_admin($conn, $_SESSION["username"], $_SESSION["password"])) {
+        $is_admin = true;
+        $roles[] = "admin";
+    } else {
+        $is_admin = false;
+    }
+    if (isset($_GET["q"])) {
+        $search = filter_input(INPUT_GET, 'q');
+    } else {
+        $search = "";
+    }
+    if (isset($_GET["page"])) {
+        $page = filter_input(INPUT_GET, 'page');
+    } else {
+        $page = 1;
+    }
+
+    echo '<div class="container">';
+    echo '<div id="header">';
+    echo '<div id="logo"><a href="index.php"><img src="images/skola_logo_color.png" alt="logo"></a></div>';
+    echo '<div id="searchfull">';
+    echo '<form method="GET" action="">' . "\n";
+    echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
+    if (isset($_GET["q"])) {
+        echo $_GET["q"] . '">' . "\n";
+    } else {
+        echo '">' . "\n";
+    }
+    echo '</form>' . "\n";
     echo '</div>';
-}
-echo '</div>';
-echo '</form>' . "\n";
-echo '<div id="fullmenue">';
-echo '<form method="POST" action="">' . "\n";
-if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
-    if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
-        echo '<input id="reservations" type="submit" name="reservations"  value="Rezervace">';
-        echo '<input id="addbook" type="submit" name="users"  value="Uživatelé">';
-        echo '<input type="submit" name="add_book"  value="Přidat knížku">';
-        echo '<input type="submit" name="add_author"  value="Přidat autora">';
-    }
-    echo '<input type="submit" name="profile"  value="Můj profil">';
-    echo '<input type="submit" name="logout"  value="Odhlásit se">';
-} else {
-    echo '<input type="submit" name="login"  value="Přihrásit se"></input>';
-}
-echo '</form>' . "\n";
-echo '</div>';
-echo '</div>';
 
-if (isset($_POST["logout"])) {
-    unset($_SESSION["username"]);
-    unset($_SESSION["password"]);
-    header("Location: index.php");
-}
-
-if (isset($_POST["login"])) {
-    header("Location: login.php");
-}
-
-if (isset($_POST["add_book"])) {
-    header("Location: add_book.php");
-}
-
-if (isset($_POST["add_author"])) {
-    header("Location: add_author.php");
-}
-
-if (isset($_POST["profile"])) {
-    header("Location: profile.php");
-}
-
-if (isset($_POST["users"])) {
-    header("Location: users.php");
-}
-
-if (isset($_POST["return"])) {
-    change_reservation_status($conn, $_POST["id"], $_POST["taken"]);
-}
-
-if (isset($_POST["take"])) {
-    change_reservation_status($conn, $_POST["id"], $_POST["taken"]);
-}
-
-if ($search != "") {
-    header("Location: index.php?q=" . $_POST["q"]);
-}
-
-if (isset($_GET["set_role"])) {
-    if (!($is_admin) and filter_input(INPUT_GET, 'role') == "admin") {
-        header("Location: users.php");
+    echo '<form method="POST" action="">' . "\n";
+    if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
+        if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
+            echo '<div id="admin">';
+            echo '<a name="admin"  value="Administrace"><i class="fas fa-cog"></i></a>' . "\n";
+            echo '<div id="adminhid">';
+            echo '<input id="reservations" type="submit" name="reservations"  value="Rezervace">' . "\n";
+            echo '<input id="addbook" type="submit" name="users"  value="Uživatelé"><br>';
+            echo '<input type="submit" name="add_book"  value="Přidat knížku"><br>';
+            echo '<input type="submit" name="add_author"  value="Přidat autora"><br>';
+            echo '</div>';
+            echo '</div>';
+        }
+        echo '<div id="klient">';
+        echo '<input type="submit" name="profile" id="profil" value="Můj profil">' . "\n";
+        echo '<input type="submit" name="logout"  value="Odhlásit se">' . "\n";
     } else {
-        set_role($conn, filter_input(INPUT_GET, 'username'), filter_input(INPUT_GET, 'role'));
+        echo '<div id="fullmenue">';
+        echo '<input type="submit" name="login"  value="Přihrásit se"></input>' . "\n";
+        echo '</div>';
+    }
+    echo '</div>';
+    echo '</form>' . "\n";
+    echo '<div id="fullmenue">';
+    echo '<form method="POST" action="">' . "\n";
+    if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
+        if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
+            echo '<input id="reservations" type="submit" name="reservations"  value="Rezervace">';
+            echo '<input id="addbook" type="submit" name="users"  value="Uživatelé">';
+            echo '<input type="submit" name="add_book"  value="Přidat knížku">';
+            echo '<input type="submit" name="add_author"  value="Přidat autora">';
+        }
+        echo '<input type="submit" name="profile"  value="Můj profil">';
+        echo '<input type="submit" name="logout"  value="Odhlásit se">';
+    } else {
+        echo '<input type="submit" name="login"  value="Přihrásit se"></input>';
+    }
+    echo '</form>' . "\n";
+    echo '</div>';
+    echo '</div>';
+
+    if (isset($_POST["logout"])) {
+        unset($_SESSION["username"]);
+        unset($_SESSION["password"]);
+        header("Location: index.php");
+    }
+
+    if (isset($_POST["login"])) {
+        header("Location: login.php");
+    }
+
+    if (isset($_POST["add_book"])) {
+        header("Location: add_book.php");
+    }
+
+    if (isset($_POST["add_author"])) {
+        header("Location: add_author.php");
+    }
+
+    if (isset($_POST["profile"])) {
+        header("Location: profile.php");
+    }
+
+    if (isset($_POST["users"])) {
         header("Location: users.php");
     }
-}
 
-if (isset($_POST["reservations"])) {
-    header("Location: reservations.php");
-}
+    if (isset($_POST["return"])) {
+        change_reservation_status($conn, $_POST["id"], $_POST["taken"]);
+    }
 
-if (isset($_POST["delete"])) {
-    delete_reservation($conn, filter_input(INPUT_POST, 'id'));
-}
+    if (isset($_POST["take"])) {
+        change_reservation_status($conn, $_POST["id"], $_POST["taken"]);
+    }
 
-if (isset($_POST["delete"])) {
-    delete_reservation($conn, $_POST["id"]);
-}
+    if ($search != "") {
+        header("Location: index.php?q=" . $_POST["q"]);
+    }
 
-$actual_reservations = get_actual_reservations($conn);
+    if (isset($_GET["set_role"])) {
+        if (!($is_admin) and filter_input(INPUT_GET, 'role') == "admin") {
+            header("Location: users.php");
+        } else {
+            set_role($conn, filter_input(INPUT_GET, 'username'), filter_input(INPUT_GET, 'role'));
+            header("Location: users.php");
+        }
+    }
 
-echo '<div id="main" style="margin-top:100px;margin-bottom:100px;">';
-echo '<table id="tab">';
-echo "<tr>";
-echo '<th>Knížka</th><th>Jméno</th><th>od</th><th>do</th><th>status</th><th>Smazat</th>';
-echo "</tr>";
-foreach ($actual_reservations as $value) {
+    if (isset($_POST["reservations"])) {
+        header("Location: reservations.php");
+    }
+
+    if (isset($_POST["delete"])) {
+        delete_reservation($conn, filter_input(INPUT_POST, 'id'));
+    }
+
+    if (isset($_POST["delete"])) {
+        delete_reservation($conn, $_POST["id"]);
+    }
+
+    $actual_reservations = get_actual_reservations($conn);
+
+    echo '<div id="main" style="margin-top:100px;margin-bottom:100px;">';
+    echo '<table id="tab">';
     echo "<tr>";
+    echo '<th>Knížka</th><th>Jméno</th><th>od</th><th>do</th><th>status</th><th>Smazat</th>';
+    echo "</tr>";
+    foreach ($actual_reservations as $value) {
+        echo "<tr>";
 
-    if ($value["taken"]) {
-        echo "<th>" . $value["book_name"] . "</th><th> " . $value["f_name"] . " " . $value["l_name"] . "</th><th>" . to_cz_date(substr($value["s-reservation"], 0, 10)) . "</th>";
-        if (strtotime(date("Y-m-d")) >= strtotime(substr($value["e-reservation"], 0, 10))) {
-            echo "<th class='taken'>";
-        } else {
+        if ($value["taken"]) {
+            echo "<th>" . $value["book_name"] . "</th><th> " . $value["f_name"] . " " . $value["l_name"] . "</th><th>" . to_cz_date(substr($value["s-reservation"], 0, 10)) . "</th>";
+            if (strtotime(date("Y-m-d")) >= strtotime(substr($value["e-reservation"], 0, 10))) {
+                echo "<th class='taken'>";
+            } else {
+                echo "<th>";
+            }
+            echo to_cz_date(substr($value["e-reservation"], 0, 10)) . "</th>";
+
             echo "<th>";
-        }
-        echo to_cz_date(substr($value["e-reservation"], 0, 10)) . "</th>";
+            echo "Je zapůjčenat";
+            echo '<form method="POST" action="">';
+            echo '<input class="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
+            echo '<input class="none" type="number" name="taken" value="0">';
+            echo '<input type="submit" name="return" value="Vrátil">';
+            echo '</form>';
+            echo "</th>";
 
-        echo "<th>";
-        echo "Je zapůjčenat";
-        echo '<form method="POST" action="">';
-        echo '<input class="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
-        echo '<input class="none" type="number" name="taken" value="0">';
-        echo '<input type="submit" name="return" value="Vrátil">';
-        echo '</form>';
-        echo "</th>";
-
-        echo "<th>";
-        echo '<form method="POST" action="">';
-        echo '<input class="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
-        echo '<input type="submit" id="del" name="delete" value="smazat">';
-        echo '</form>';
-        echo "</th>";
-    } else {
-        echo "<th>" . $value["book_name"] . "</th><th> " . $value["f_name"] . " " . $value["l_name"] . "</th><th>" . to_cz_date(substr($value["s-reservation"], 0, 10)) . "</th><th>" . to_cz_date(substr($value["e-reservation"], 0, 10)) . "</th>";
-
-        echo "<th>";
-        echo "Je v místnosti: " . $value["room_name"];
-        echo '<form method="POST" action="">';
-        echo '<input class="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
-        echo '<input class="none" type="number" name="taken" value="1">';
-        echo '<input type="submit" name="take" value="Vyzvednul si">';
-        echo '</form>';
-        echo "</th>";
-
-        echo "<th>";
-        echo '<form method="POST" action="">';
-        echo '<input class="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
-        echo '<input type="submit" id="del" name="delete" value="smazat">';
-        echo '</form>';
-        echo "</th>";
-        echo "</tr>";
-    }
-}
-echo "</table>";
-echo "</div>";
-
-echo '<div id="aqua">';
-$maxpage = (int) ($count_users / $per_page) + 1;
-$i = 1;
-if ($maxpage > 1) {
-    if ($page > 1) {
-        echo "<a href=\"users.php?q=" . $search . "&page=" . ($page - 1) . "\">< </a>";
-    }
-    while (1) {
-        if ($maxpage != 0) {
-            do {
-                if ($i == 1) {
-                    echo "stránky: ";
-                    echo "<a href=\"users.php?q=" . $search . "&page=" . $i . "\">" . $i . "</a>";
-                }
-                echo ", ";
-                echo "<a href=\"users.php?q=" . $search . "&page=" . ($i + 1) . "\">" . ($i + 1) . "</a>";
-                $i++;
-            } while ($i > $maxpage);
-            break;
+            echo "<th>";
+            echo '<form method="POST" action="">';
+            echo '<input class="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
+            echo '<input type="submit" id="del" name="delete" value="smazat">';
+            echo '</form>';
+            echo "</th>";
         } else {
-            break;
+            echo "<th>" . $value["book_name"] . "</th><th> " . $value["f_name"] . " " . $value["l_name"] . "</th><th>" . to_cz_date(substr($value["s-reservation"], 0, 10)) . "</th><th>" . to_cz_date(substr($value["e-reservation"], 0, 10)) . "</th>";
+
+            echo "<th>";
+            echo "Je v místnosti: " . $value["room_name"];
+            echo '<form method="POST" action="">';
+            echo '<input class="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
+            echo '<input class="none" type="number" name="taken" value="1">';
+            echo '<input type="submit" name="take" value="Vyzvednul si">';
+            echo '</form>';
+            echo "</th>";
+
+            echo "<th>";
+            echo '<form method="POST" action="">';
+            echo '<input class="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
+            echo '<input type="submit" id="del" name="delete" value="smazat">';
+            echo '</form>';
+            echo "</th>";
+            echo "</tr>";
         }
     }
+    echo "</table>";
+    echo "</div>";
 
-    if ($page < $maxpage) {
-        echo "<a href=\"users.php?q=" . $search . "&page=" . ($page + 1) . "\"> ></a>";
+    echo '<div id="aqua">';
+    $maxpage = (int) ($count_users / $per_page) + 1;
+    $i = 1;
+    if ($maxpage > 1) {
+        if ($page > 1) {
+            echo "<a href=\"users.php?q=" . $search . "&page=" . ($page - 1) . "\">< </a>";
+        }
+        while (1) {
+            if ($maxpage != 0) {
+                do {
+                    if ($i == 1) {
+                        echo "stránky: ";
+                        echo "<a href=\"users.php?q=" . $search . "&page=" . $i . "\">" . $i . "</a>";
+                    }
+                    echo ", ";
+                    echo "<a href=\"users.php?q=" . $search . "&page=" . ($i + 1) . "\">" . ($i + 1) . "</a>";
+                    $i++;
+                } while ($i > $maxpage);
+                break;
+            } else {
+                break;
+            }
+        }
+
+        if ($page < $maxpage) {
+            echo "<a href=\"users.php?q=" . $search . "&page=" . ($page + 1) . "\"> ></a>";
+        }
     }
-}
-echo "</div>";
-echo '<div id="footer" style="margin-top:100px;">
+    echo "</div>";
+    echo '<div id="footer" style="margin-top:100px;">
 <div id="footercon">
 <div id="social">
 <a href="http://www.skolavdf.cz" target="_blank"><img src="images/skola_logo_color.png" alt="logo"></a>
@@ -272,8 +274,9 @@ echo '<div id="footer" style="margin-top:100px;">
 </div>
 </div>
 </div>';
-echo '</div>';
-?>
+    echo '</div>';
+    ?>
 
 </body>
+
 </html>

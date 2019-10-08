@@ -81,10 +81,10 @@
 
             $genres = explode(",", $_GET["genres"]);
             foreach ($genres as $id_genres) {
-                add_book_has_genres($conn, (int) $id_book, (int) $id_genres);
+                add_book_has_genre($conn, (int) $id_book, (int) $id_genres);
             }
             add_book_has_author($conn, (int) $id_book, (int) $id_author);
-            header("Location: /");
+            header("Location: index.php");
         }
     } else {
         echo "<p>Přiřadte autora</p> <br>\n";
@@ -93,34 +93,34 @@
         echo '<input type="text" maxlength="45" name="l_name" placeholder="Přímen"><br>';
         echo '<input type="number" name="bday" placeholder="Rok narozen"><br>' . "\n";
         echo '<input type="text" maxlength="2" name="country" placeholder="Země narození"><br>';
-        /*echo '<select id="sel" name="books">' . "\n";
-    echo '<option>k nikomu</option>' . "\n";
-    $books = book($conn);
-    foreach($books as $author){
-    echo '<option>'. $author["book_id"] . ", " . $author["book_name"].'</option>' . "\n";
-    }
-    echo '</select><br>'. "\n";*/
+        echo '<select id="sel" name="books">' . "\n";
+        echo '<option>k nikomu</option>' . "\n";
+        $books = book($conn);
+        foreach ($books as $author) {
+            echo '<option>' . $author["book_id"] . ", " . $author["book_name"] . '</option>' . "\n";
+        }
+        echo '</select><br>' . "\n";
         echo '<input type="submit" name="add_author"  value="Přidat">';
         echo '</form>' . "\n";
 
         if (isset($_POST["add_author"])) {
             add_author($conn, $_POST["f_name"], $_POST["l_name"], $_POST["bday"], $_POST["country"]);
-            header("Location: /");
-            /*if(isset($_POST["books"]) and $_POST["books"] != "k nikomu"){
-    foreach(get_table($conn, "author") as $items){
-    $bday = explode("-", $items["bday"]);
-    $bday = $bday[0];
-    if($_POST["f_name"] == $items["f_name"] and $_POST["l_name"] == $items["l_name"] and $_POST["bday"] == $bday and $_POST["country"] == $items["country"]){
-    $id_author = $items["id"];
-    break;
-    }
-    }
+            header("Location: index.php");
+            if (isset($_POST["books"]) and $_POST["books"] != "k nikomu") {
+                foreach (get_table($conn, "author") as $items) {
+                    $bday = explode("-", $items["bday"]);
+                    $bday = $bday[0];
+                    if ($_POST["f_name"] == $items["f_name"] and $_POST["l_name"] == $items["l_name"] and $_POST["bday"] == $bday and $_POST["country"] == $items["country"]) {
+                        $id_author = $items["id"];
+                        break;
+                    }
+                }
 
-    $slecect = explode(", ", $_POST["books"]);
-    $id_book = $slecect[0];
-    add_book_has_author($conn, (int)$id_book, (int)$id_author);
-    header("Location: /");
-    }*/
+                $slecect = explode(", ", $_POST["books"]);
+                $id_book = $slecect[0];
+                add_book_has_author($conn, (int) $id_book, (int) $id_author);
+                header("Location: index.php");
+            }
         }
     }
     echo '</div>';

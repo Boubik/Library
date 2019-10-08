@@ -31,7 +31,7 @@
     session_start();
     $conn = connect_to_db($configs["servername"], $configs["dbname"], $configs["username"], $configs["password"]);
     if (!(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"], true))) {
-        header("Location: /");
+        header("Location: index.php");
     }
     $per_page = 30;
     $roles = array();

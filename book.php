@@ -262,7 +262,7 @@
                 if (reservations($conn, $_POST["s_date"], $_POST["e_date"], $_GET["id"], $_POST["user"], $taken)) {
                     $reservation_id = get_reservation_id($conn, $_POST["s_date"], $_POST["e_date"], $_GET["id"]);
                     add_book_has_reservation($conn, (int) $_GET["id"], (int) $reservation_id);
-                    header("Location: /book.php?id=" . $_GET["id"] . "&name=" . $_GET["name"]);
+                    header("Location: book.php?id=" . $_GET["id"] . "&name=" . $_GET["name"]);
                 } else {
                     echo '<div id="rezz">';
                     echo "Vaše rezervace nenímožná kryje se s jinou";
@@ -274,7 +274,7 @@
                 echo "</div>";
             }
         } else {
-            header("Location: /login.php");
+            header("Location: login.php");
         }
     }
     echo "</div>";

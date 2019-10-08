@@ -21,7 +21,7 @@
     echo '<div class="container">';
     echo '<div id="logincon">';
     if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"]) and !isset($_GET["reset"])) {
-        header("Location: /");
+        header("Location: index.php");
     } else {
 
         if (!isset($_GET["reset"])) {
@@ -92,7 +92,7 @@
             echo "jsi přihlášený";
             $_SESSION["username"] = $_POST["username"];
             $_SESSION["password"] = $_POST["passwordHMAC"];
-            header("Location: /");
+            header("Location: index.php");
         } else {
             echo '<div class="nicktaken">';
             echo "Přezdívka již existuje";
@@ -105,7 +105,7 @@
             echo "jsi přihlášený";
             $_SESSION["username"] = $_POST["username"];
             $_SESSION["password"] = $_POST["passwordHMAC"];
-            header("Location: /");
+            header("Location: index.php");
         } else {
             echo '<div class="warning">';
             echo "Špatné přihlašovací údaje";

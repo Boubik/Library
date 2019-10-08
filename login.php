@@ -73,10 +73,10 @@
     echo '</div>';
 
     if (isset($_POST["reset"])) {
-        if (login($conn, $_SESSION["username"], $_POST["old_pass"])) {
+        if (login($conn, $_SESSION["username"], filter_input(INPUT_POST, "old_pass"))) {
             if ($_POST["new_pass"] == $_POST["new2_pass"]) {
-                update_password($conn, $_SESSION["username"], $_POST["passwordHMAC"]);
-                $_SESSION["password"] = $_POST["new_pass"];
+                update_password($conn, $_SESSION["username"], filter_input(INPUT_POST, "passwordHMAC"));
+                $_SESSION["password"] = filter_input(INPUT_POST, "new_pass");
                 header("Location: profile.php");
             } else {
                 echo "Hesla se neschodují";
@@ -87,11 +87,11 @@
     }
 
     if (isset($_POST["register"])) {
-        if (!(username_exist($conn, $_POST["username"]))) {
-            add_user($conn, $_POST["f_name"], $_POST["l_name"], $_POST["username"], $_POST["passwordHMAC"]);
+        if (!(username_exist($conn, filter_input(INPUT_POST, "username")))) {
+            add_user($conn, filter_input(INPUT_POST, "f_name"), filter_input(INPUT_POST, "l_name"), filter_input(INPUT_POST, "username"), filter_input(INPUT_POST, "passwordHMAC"));
             echo "jsi přihlášený";
-            $_SESSION["username"] = $_POST["username"];
-            $_SESSION["password"] = $_POST["passwordHMAC"];
+            $_SESSION["username"] = filter_input(INPUT_POST, "username");
+            $_SESSION["password"] = filter_input(INPUT_POST, "passwordHMAC");
             header("Location: index.php");
         } else {
             echo '<div class="nicktaken">';
@@ -101,10 +101,10 @@
     }
 
     if (isset($_POST["login"])) {
-        if (login($conn, $_POST["username"], $_POST["passwordHMAC"])) {
+        if (login($conn, filter_input(INPUT_POST, "username"), filter_input(INPUT_POST, "passwordHMAC"))) {
             echo "jsi přihlášený";
-            $_SESSION["username"] = $_POST["username"];
-            $_SESSION["password"] = $_POST["passwordHMAC"];
+            $_SESSION["username"] = filter_input(INPUT_POST, "username");
+            $_SESSION["password"] = filter_input(INPUT_POST, "passwordHMAC");
             header("Location: index.php");
         } else {
             echo '<div class="warning">';

@@ -39,7 +39,7 @@
     echo '<form method="GET" action="">' . "\n";
     echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
     if (isset($_GET["q"])) {
-        echo $_GET["q"] . '">' . "\n";
+        echo filter_input(INPUT_GET, "q") . '">' . "\n";
     } else {
         echo '">' . "\n";
     }

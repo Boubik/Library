@@ -44,7 +44,7 @@
     echo '</div>';
 
     if (isset($_POST["submit"])) {
-        $genres = explode(" ", filter_input(INPUT_POST, $_POST["genres"]));
+        $genres = explode(" ", filter_input(INPUT_POST, "genres"));
         add_genre($conn, $genres);
         $gendrs_get = null;
         foreach ($genres as $item) {
@@ -56,12 +56,12 @@
             }
         }
         if ($_POST["room_name"] != "") {
-            $room = $_POST["room_name"];
+            $room = filter_input(INPUT_POST, "room_name");
         } else {
-            $room = $_POST["room"];
+            $room = filter_input(INPUT_POST, "room");
         }
-        add_book($conn, $_POST["name"], $_POST["relase"], $_POST["language"], $_POST["ISBN"], $room, $_POST["pages"], $_POST["img"]);
-        header("Location: add_author.php?name=" . $_POST["name"] . "&relase=" . $_POST["relase"] . "&language=" . $_POST["language"] . "&ISBN=" . $_POST["ISBN"] . "&room_name=" . $room . "&pages=" . $_POST["pages"] . "&genres=" . $gendrs_get . "&img=" . $_POST["img"]);
+        add_book($conn, filter_input(INPUT_POST, "name"), filter_input(INPUT_POST, "relase"), filter_input(INPUT_POST, "language"), filter_input(INPUT_POST, "ISBN"), $room, filter_input(INPUT_POST, "pages"), filter_input(INPUT_POST, "img"));
+        header("Location: add_author.php?name=" . filter_input(INPUT_POST, "name") . "&relase=" . filter_input(INPUT_POST, "relase") . "&language=" . filter_input(INPUT_POST, "language") . "&ISBN=" . filter_input(INPUT_POST, "ISBN") . "&room_name=" . $room . "&pages=" . filter_input(INPUT_POST, "pages") . "&genres=" . $gendrs_get . "&img=" . filter_input(INPUT_POST, "img"));
     }
     echo '<div id="footer" style="margin-top:100px;">
     <div id="footercon">

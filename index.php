@@ -24,14 +24,14 @@
     $page = 1;
     $count_books = count_books($conn);
     if (isset($_SESSION["rows"])) {
-        if (isset($_POST["rows"]) and $_POST["rows"] != $_SESSION["rows"]) {
-            $_SESSION["rows"] = $_POST["rows"];
+        if (isset($_POST["rows"]) and filter_input(INPUT_POST, "rows") != $_SESSION["rows"]) {
+            $_SESSION["rows"] = filter_input(INPUT_POST, "rows");
         }
         $per_page = $_SESSION["rows"] * 3;
         $books_rows = $_SESSION["rows"];
     } else {
         if (isset($_POST["rows"])) {
-            $_SESSION["rows"] = $_POST["rows"];
+            $_SESSION["rows"] = filter_input(INPUT_POST, "rows");
             $per_page = $_SESSION["rows"] * 3;
             $books_rows = $_SESSION["rows"];
         } else {
@@ -45,10 +45,10 @@
     unset($_POST["per_page"]);
 
     if (isset($_GET["q"])) {
-        $search = $_GET["q"];
+        $search = filter_input(INPUT_GET, "q");
     }
     if (isset($_GET["page"])) {
-        $page = $_GET["page"];
+        $page = filter_input(INPUT_GET, "page");
     }
     $books = book($conn, $search, $count_books, $page, $per_page);
 
@@ -59,7 +59,7 @@
     echo '<form method="GET" action="">' . "\n";
     echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
     if (isset($_GET["q"])) {
-        echo $_GET["q"] . '">' . "\n";
+        echo filter_input(INPUT_GET, "q") . '">' . "\n";
     } else {
         echo '">' . "\n";
     }

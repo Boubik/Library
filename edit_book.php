@@ -9,7 +9,7 @@
     <script src="js/350205fd30.js"></script>
     <?php
     if (isset($_GET["name"])) {
-        echo "<title>Kniha: " . $_GET["name"] . "</title>";
+        echo "<title>Kniha: " . filter_input(INPUT_GET, "name") . "</title>";
     } else {
         header("Location: index.php");
     }
@@ -37,7 +37,7 @@
     $conn = connect_to_db($configs["servername"], $configs["dbname"], $configs["username"], $configs["password"]);
     session_start();
 
-    $book = get_book_by_id($conn, $_GET["id"]);
+    $book = get_book_by_id($conn, filter_input(INPUT_GET, "id"));
     echo '<div class="container">';
 
     echo '<div id="header">';
@@ -128,7 +128,7 @@
     }
 
     if (isset($_POST["delete_book"])) {
-        hide_book($conn, $_GET["id"]);
+        hide_book($conn, filter_input(INPUT_GET, "id"));
         header("Location: index.php");
     }
 
@@ -137,8 +137,8 @@
     }
 
     if (isset($_POST["save"])) {
-        update_book($conn, $_POST["id"], $_POST["name"], $_POST["relase"], $_POST["language"], $_POST["ISBN"], $_POST["pages"], $_POST["img"], $_POST["room_name"]);
-        update_book_has_author($conn, $_POST["id"], $_POST["author"]);
+        update_book($conn, filter_input(INPUT_POST, "id"), filter_input(INPUT_POST, "name"), filter_input(INPUT_POST, "relase"), filter_input(INPUT_POST, "language"), filter_input(INPUT_POST, "ISBN"), filter_input(INPUT_POST, "pages"), $_POST["img"], filter_input(INPUT_POST, "room_name"));
+        update_book_has_author($conn, filter_input(INPUT_POST, "id"), filter_input(INPUT_POST, "author"));
         echo "Uloženo";
     }
 

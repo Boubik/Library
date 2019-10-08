@@ -61,7 +61,7 @@
     echo '<form method="GET" action="">' . "\n";
     echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
     if (isset($_GET["q"])) {
-        echo $_GET["q"] . '">' . "\n";
+        echo filter_input(INPUT_GET, "q") . '">' . "\n";
     } else {
         echo '">' . "\n";
     }
@@ -151,11 +151,11 @@
     }
 
     if (isset($_POST["search"]) and isset($_POST["q"]) and $_POST["q"] != "") {
-        header("Location: index.php?q=" . $_POST["q"]);
+        header("Location: index.php?q=" . filter_input(INPUT_POST, "q"));
     }
 
     if (isset($_GET["set_role"])) {
-        if (!($is_admin) and $_GET["role"] == "admin") {
+        if (!($is_admin) and filter_input(INPUT_GET, "role") == "admin") {
             header("Location: users.php");
         } else {
             set_role($conn, $_GET["username"], $_GET["role"]);
@@ -165,7 +165,7 @@
 
     if (isset($_GET["delete"])) {
         if ($is_admin) {
-            delete_user($conn, $_GET["username"]);
+            delete_user($conn, filter_input(INPUT_GET, "username"));
             header("Location: users.php");
         } else {
             header("Location: users.php");

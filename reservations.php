@@ -140,15 +140,15 @@
     }
 
     if (isset($_POST["return"])) {
-        change_reservation_status($conn, $_POST["id"], $_POST["taken"]);
+        change_reservation_status($conn, filter_input(INPUT_POST, "id"), filter_input(INPUT_POST, "taken"));
     }
 
     if (isset($_POST["take"])) {
-        change_reservation_status($conn, $_POST["id"], $_POST["taken"]);
+        change_reservation_status($conn, filter_input(INPUT_POST, "id"), filter_input(INPUT_POST, "taken"));
     }
 
     if ($search != "") {
-        header("Location: index.php?q=" . $_POST["q"]);
+        header("Location: index.php?q=" . filter_input(INPUT_POST, "q"));
     }
 
     if (isset($_GET["set_role"])) {
@@ -169,7 +169,7 @@
     }
 
     if (isset($_POST["delete"])) {
-        delete_reservation($conn, $_POST["id"]);
+        delete_reservation($conn, filter_input(INPUT_POST, "id"));
     }
 
     $actual_reservations = get_actual_reservations($conn);

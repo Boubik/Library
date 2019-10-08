@@ -37,7 +37,7 @@
     $conn = connect_to_db($configs["servername"], $configs["dbname"], $configs["username"], $configs["password"]);
     session_start();
 
-    $book = get_book_by_id($conn, $_GET["id"]);
+    $book = get_book_by_id($conn, filter_input(INPUT_GET, "id"));
 
     echo '<div class="container">';
     echo '<div id="header">';
@@ -46,7 +46,7 @@
     echo '<form method="GET" action="">' . "\n";
     echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
     if (isset($_GET["q"])) {
-        echo $_GET["q"] . '">' . "\n";
+        echo filter_input(INPUT_GET, "q") . '">' . "\n";
     } else {
         echo '">' . "\n";
     }
@@ -258,11 +258,11 @@
             } else {
                 $taken = 0;
             }
-            if (strtotime($_POST["s_date"]) >= strtotime(date("Y-m-d")) and isset($_SESSION["username"]) and isset($_SESSION["password"]) and strtotime($_POST["s_date"]) < strtotime($_POST["e_date"])) {
-                if (reservations($conn, $_POST["s_date"], $_POST["e_date"], $_GET["id"], $_POST["user"], $taken)) {
-                    $reservation_id = get_reservation_id($conn, $_POST["s_date"], $_POST["e_date"], $_GET["id"]);
+            if (strtotime(filter_input(INPUT_POST, "s_date")) >= strtotime(date("Y-m-d")) and isset($_SESSION["username"]) and isset($_SESSION["password"]) and strtotime(filter_input(INPUT_POST, "s_date")) < strtotime(filter_input(INPUT_POST, "e_date"))) {
+                if (reservations($conn, filter_input(INPUT_POST, "s_date"), filter_input(INPUT_POST, "e_date"), filter_input(INPUT_GET, "id"), filter_input(INPUT_POST, "user"), $taken)) {
+                    $reservation_id = get_reservation_id($conn, filter_input(INPUT_POST, "s_date"), filter_input(INPUT_POST, "e_date"), filter_input(INPUT_GET, "id"));
                     add_book_has_reservation($conn, (int) $_GET["id"], (int) $reservation_id);
-                    header("Location: book.php?id=" . $_GET["id"] . "&name=" . $_GET["name"]);
+                    header("Location: book.php?id=" . filter_input(INPUT_GET, "id") . "&name=" . filter_input(INPUT_GET, "name"));
                 } else {
                     echo '<div id="rezz">';
                     echo "Vaše rezervace nenímožná kryje se s jinou";

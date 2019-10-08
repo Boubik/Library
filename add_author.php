@@ -23,7 +23,7 @@
     echo '<a href="index.php"><img src="images/skola_logo_mono.png" alt="logo"></a>';
     if (isset($_GET["name"]) and isset($_GET["relase"]) and isset($_GET["language"]) and isset($_GET["ISBN"]) and isset($_GET["room_name"]) and isset($_GET["pages"]) and isset($_GET["genres"]) and isset($_GET["img"])) {
 
-        echo "<p>Přiřadte autora k \"" . $_GET["name"] . "\"</p><br>\n";
+        echo "<p>Přiřadte autora k \"" . filter_input(INPUT_GET, "name") . "\"</p><br>\n";
         echo '<form method="POST" action="">';
         echo '<input type="text" maxlength="45" name="f_name" placeholder="Jméno"><br>';
         echo '<input type="text" maxlength="45" name="l_name" placeholder="Přímen"><br>';
@@ -49,7 +49,7 @@
             foreach (get_table($conn, "author") as $items) {
                 $bday = explode("-", $items["bday"]);
                 $bday = $bday[0];
-                if ($_POST["f_name"] == $items["f_name"] and $_POST["l_name"] == $items["l_name"] and $_POST["bday"] == $bday and $_POST["country"] == $items["country"]) {
+                if (filter_input(INPUT_POST, "f_name") == $items["f_name"] and filter_input(INPUT_POST, "l_name") == $items["l_name"] and filter_input(INPUT_POST, "bday") == $bday and filter_input(INPUT_POST, "country") == $items["country"]) {
                     $id_author = $items["id"];
                     break;
                 }
@@ -57,7 +57,7 @@
         }
 
         if (isset($_POST['submit2'])) {
-            $author = explode(", ", $_POST['authors']);
+            $author = explode(", ", filter_input(INPUT_POST, 'authors'));
 
             echo "<br><br><br>";
             foreach (get_table($conn, "author") as $items) {
@@ -73,13 +73,13 @@
         if (isset($_POST['submit1']) or isset($_POST['submit2'])) {
             echo "<br><br><br>";
             foreach (get_table($conn, "book") as $items) {
-                if ($_GET["name"] == $items["name"] and $_GET["language"] == $items["language"] and $_GET["ISBN"] == $items["ISBN"] and $_GET["room_name"] == $items["room_name"] and $_GET["pages"] == $items["pages"]) {
+                if (filter_input(INPUT_GET, "name") == $items["name"] and filter_input(INPUT_GET, "language") == $items["language"] and filter_input(INPUT_GET, "ISBN") == $items["ISBN"] and filter_input(INPUT_GET, "room_name") == $items["room_name"] and filter_input(INPUT_GET, "pages") == $items["pages"]) {
                     $id_book = $items["id"];
                     break;
                 }
             }
 
-            $genres = explode(",", $_GET["genres"]);
+            $genres = explode(",", filter_input(INPUT_GET, "genres"));
             foreach ($genres as $id_genres) {
                 add_book_has_genre($conn, (int) $id_book, (int) $id_genres);
             }
@@ -104,19 +104,19 @@
         echo '</form>' . "\n";
 
         if (isset($_POST["add_author"])) {
-            add_author($conn, $_POST["f_name"], $_POST["l_name"], $_POST["bday"], $_POST["country"]);
+            add_author($conn, filter_input(INPUT_POST, "f_name"), filter_input(INPUT_POST, "l_name"), filter_input(INPUT_POST, "bday"), filter_input(INPUT_POST, "country"));
             header("Location: index.php");
             if (isset($_POST["books"]) and $_POST["books"] != "k nikomu") {
                 foreach (get_table($conn, "author") as $items) {
                     $bday = explode("-", $items["bday"]);
                     $bday = $bday[0];
-                    if ($_POST["f_name"] == $items["f_name"] and $_POST["l_name"] == $items["l_name"] and $_POST["bday"] == $bday and $_POST["country"] == $items["country"]) {
+                    if (filter_input(INPUT_POST, "f_name") == $items["f_name"] and filter_input(INPUT_POST, "l_name") == $items["l_name"] and filter_input(INPUT_POST, "bday") == $bday and filter_input(INPUT_POST, "country") == $items["country"]) {
                         $id_author = $items["id"];
                         break;
                     }
                 }
 
-                $slecect = explode(", ", $_POST["books"]);
+                $slecect = explode(", ", filter_input(INPUT_POST, "books"));
                 $id_book = $slecect[0];
                 add_book_has_author($conn, (int) $id_book, (int) $id_author);
                 header("Location: index.php");

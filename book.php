@@ -122,7 +122,7 @@ echo "Místnost: " . $book["room_name"];
 echo "</div>";
 
 echo "<div class=\"genres\">";
-$k = mn($conn, "book_has_genres", $book["id"], "book_id", "genres_id");
+$k = mn($conn, "book_has_genre", $book["id"], "book_id", "genre_id");
 $genres = null;
 foreach ($k as $id) {
     $genre = get_genre($conn, $id);

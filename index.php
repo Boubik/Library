@@ -227,7 +227,7 @@
 
             echo "<div class=\"genres\">";
             $genres = null;
-            foreach ($book["genres_name"] as $value) {
+            foreach ($book["genre_name"] as $value) {
                 if ($genres == null) {
                     $genres = $value;
                 } else {

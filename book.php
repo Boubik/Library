@@ -124,6 +124,14 @@
         header("Location: reservations.php");
     }
 
+    if (isset($_POST["edit"])) {
+        header("Location: edit_book.php?id=" . $book["id"] . "&name=" . $book["name"]);
+    }
+
+    if (isset($_POST["reservations"])) {
+        header("Location: reservations.php");
+    }
+
     echo '<div id="bookmain">';
     echo "<div id=\"book\">";
     echo "<div class=\"name\">";

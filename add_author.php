@@ -94,10 +94,10 @@
         echo '<input type="number" name="bday" placeholder="Rok narozen"><br>' . "\n";
         echo '<input type="text" maxlength="2" name="country" placeholder="Země narození"><br>';
         echo '<select id="sel" name="books">' . "\n";
-        echo '<option>k nikomu</option>' . "\n";
+        echo '<option>ke knížce</option>' . "\n";
         $books = book($conn);
         foreach ($books as $author) {
-            echo '<option>' . $author["book_id"] . ", " . $author["book_name"] . '</option>' . "\n";
+            echo '<option>' . $author["book_name"] . '</option>' . "\n";
         }
         echo '</select><br>' . "\n";
         echo '<input type="submit" name="add_author"  value="Přidat">';

@@ -534,9 +534,13 @@ function change_reservation_status($conn, $id, $taken)
  * @param   Mixed   $conn               db connection
  * @return  Array    reservations
  */
-function get_actual_reservations($conn)
+function get_actual_reservations($conn, $search = "")
 {
-    $sql = "SELECT reservation.id as 'reservation_id', `s-reservation`, `e-reservation`, `taken`, `user_id`, book.name as 'book_name', user.f_name, user.l_name, book.room_name FROM `reservation` INNER JOIN book_has_reservation ON book_has_reservation.reservation_id = reservation.id INNER JOIN book ON book.id = book_has_reservation.book_id INNER JOIN user ON user.id = reservation.user_id WHERE (`s-reservation` <= CURDATE() AND `e-reservation` >= CURDATE()) OR reservation.taken = true ORDER BY `e-reservation`";
+    if ($search == "") {
+        $sql = "SELECT reservation.id as 'reservation_id', `s-reservation`, `e-reservation`, `taken`, `user_id`, book.name as 'book_name', user.f_name, user.l_name, book.room_name FROM `reservation` INNER JOIN book_has_reservation ON book_has_reservation.reservation_id = reservation.id INNER JOIN book ON book.id = book_has_reservation.book_id INNER JOIN user ON user.id = reservation.user_id WHERE (`s-reservation` <= CURDATE() AND `e-reservation` >= CURDATE()) OR reservation.taken = true ORDER BY `e-reservation`";
+    } else {
+        $sql = "SELECT reservation.id as 'reservation_id', `s-reservation`, `e-reservation`, `taken`, `user_id`, book.name as 'book_name', user.f_name, user.l_name, book.room_name FROM `reservation` INNER JOIN book_has_reservation ON book_has_reservation.reservation_id = reservation.id INNER JOIN book ON book.id = book_has_reservation.book_id INNER JOIN user ON user.id = reservation.user_id WHERE (reservation.taken = true OR (`s-reservation` <= CURDATE() AND `e-reservation` >= CURDATE())) AND (book.name LIKE '%" . $search . "%' OR user.f_name LIKE '%" . $search . "%' OR user.l_name LIKE '%" . $search . "%' OR CONCAT(user.f_name, ' ' , user.l_name) LIKE '%" . $search . "%' OR CONCAT(user.l_name, ' ' , user.f_name) LIKE '%" . $search . "%') ORDER BY `e-reservation`";
+    }
     $sql = $conn->prepare($sql);
     $sql->execute();
     $rows = array();

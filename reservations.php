@@ -37,7 +37,6 @@
     if (!(isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"], true))) {
         header("Location: index.php");
     }
-    $per_page = 30;
     $roles = array();
     $roles[] = "user";
     $roles[] = "mod";
@@ -52,11 +51,6 @@
     } else {
         $search = "";
     }
-    if (isset($_GET["page"])) {
-        $page = filter_input(INPUT_GET, 'page');
-    } else {
-        $page = 1;
-    }
 
     echo '<div class="container">';
     echo '<div id="header">';
@@ -65,7 +59,7 @@
     echo '<form method="GET" action="">' . "\n";
     echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
     if (isset($_GET["q"])) {
-        echo $_GET["q"] . '">' . "\n";
+        echo filter_input(INPUT_GET, 'q') . '">' . "\n";
     } else {
         echo '">' . "\n";
     }
@@ -147,10 +141,6 @@
         change_reservation_status($conn, filter_input(INPUT_POST, "id"), filter_input(INPUT_POST, "taken"));
     }
 
-    if ($search != "") {
-        header("Location: index.php?q=" . filter_input(INPUT_POST, "q"));
-    }
-
     if (isset($_GET["set_role"])) {
         if (!($is_admin) and filter_input(INPUT_GET, 'role') == "admin") {
             header("Location: users.php");
@@ -172,93 +162,68 @@
         delete_reservation($conn, filter_input(INPUT_POST, "id"));
     }
 
-    $actual_reservations = get_actual_reservations($conn);
+    $actual_reservations = get_actual_reservations($conn, $search);
 
     echo '<div id="main" style="margin-top:100px;margin-bottom:100px;">';
-    echo '<table id="tab">';
-    echo "<tr>";
-    echo '<th>Knížka</th><th>Jméno</th><th>od</th><th>do</th><th>status</th><th>Smazat</th>';
-    echo "</tr>";
-    foreach ($actual_reservations as $value) {
+    if (isset($actual_reservations[0])) {
+        echo '<table id="tab">';
         echo "<tr>";
+        echo '<th>Knížka</th><th>Jméno</th><th>od</th><th>do</th><th>status</th><th>Smazat</th>';
+        echo "</tr>";
+        foreach ($actual_reservations as $value) {
+            echo "<tr>";
 
-        if ($value["taken"]) {
-            echo "<th>" . $value["book_name"] . "</th><th> " . $value["f_name"] . " " . $value["l_name"] . "</th><th>" . to_cz_date(substr($value["s-reservation"], 0, 10)) . "</th>";
-            if (strtotime(date("Y-m-d")) >= strtotime(substr($value["e-reservation"], 0, 10))) {
-                echo "<th class='taken'>";
-            } else {
+            if ($value["taken"]) {
+                echo "<th>" . $value["book_name"] . "</th><th> " . $value["f_name"] . " " . $value["l_name"] . "</th><th>" . to_cz_date(substr($value["s-reservation"], 0, 10)) . "</th>";
+                if (strtotime(date("Y-m-d")) >= strtotime(substr($value["e-reservation"], 0, 10))) {
+                    echo "<th class='taken'>";
+                } else {
+                    echo "<th>";
+                }
+                echo to_cz_date(substr($value["e-reservation"], 0, 10)) . "</th>";
+
                 echo "<th>";
-            }
-            echo to_cz_date(substr($value["e-reservation"], 0, 10)) . "</th>";
+                echo "Je zapůjčenat";
+                echo '<form method="POST" action="">';
+                echo '<input class="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
+                echo '<input class="none" type="number" name="taken" value="0">';
+                echo '<input type="submit" name="return" value="Vrátil">';
+                echo '</form>';
+                echo "</th>";
 
-            echo "<th>";
-            echo "Je zapůjčenat";
-            echo '<form method="POST" action="">';
-            echo '<input class="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
-            echo '<input class="none" type="number" name="taken" value="0">';
-            echo '<input type="submit" name="return" value="Vrátil">';
-            echo '</form>';
-            echo "</th>";
-
-            echo "<th>";
-            echo '<form method="POST" action="">';
-            echo '<input class="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
-            echo '<input type="submit" id="del" name="delete" value="smazat">';
-            echo '</form>';
-            echo "</th>";
-        } else {
-            echo "<th>" . $value["book_name"] . "</th><th> " . $value["f_name"] . " " . $value["l_name"] . "</th><th>" . to_cz_date(substr($value["s-reservation"], 0, 10)) . "</th><th>" . to_cz_date(substr($value["e-reservation"], 0, 10)) . "</th>";
-
-            echo "<th>";
-            echo "Je v místnosti: " . $value["room_name"];
-            echo '<form method="POST" action="">';
-            echo '<input class="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
-            echo '<input class="none" type="number" name="taken" value="1">';
-            echo '<input type="submit" name="take" value="Vyzvednul si">';
-            echo '</form>';
-            echo "</th>";
-
-            echo "<th>";
-            echo '<form method="POST" action="">';
-            echo '<input class="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
-            echo '<input type="submit" id="del" name="delete" value="smazat">';
-            echo '</form>';
-            echo "</th>";
-            echo "</tr>";
-        }
-    }
-    echo "</table>";
-    echo "</div>";
-
-    echo '<div id="aqua">';
-    $maxpage = (int) ($count_users / $per_page) + 1;
-    $i = 1;
-    if ($maxpage > 1) {
-        if ($page > 1) {
-            echo "<a href=\"users.php?q=" . $search . "&page=" . ($page - 1) . "\">< </a>";
-        }
-        while (1) {
-            if ($maxpage != 0) {
-                do {
-                    if ($i == 1) {
-                        echo "stránky: ";
-                        echo "<a href=\"users.php?q=" . $search . "&page=" . $i . "\">" . $i . "</a>";
-                    }
-                    echo ", ";
-                    echo "<a href=\"users.php?q=" . $search . "&page=" . ($i + 1) . "\">" . ($i + 1) . "</a>";
-                    $i++;
-                } while ($i > $maxpage);
-                break;
+                echo "<th>";
+                echo '<form method="POST" action="">';
+                echo '<input class="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
+                echo '<input type="submit" id="del" name="delete" value="smazat">';
+                echo '</form>';
+                echo "</th>";
             } else {
-                break;
+                echo "<th>" . $value["book_name"] . "</th><th> " . $value["f_name"] . " " . $value["l_name"] . "</th><th>" . to_cz_date(substr($value["s-reservation"], 0, 10)) . "</th><th>" . to_cz_date(substr($value["e-reservation"], 0, 10)) . "</th>";
+
+                echo "<th>";
+                echo "Je v místnosti: " . $value["room_name"];
+                echo '<form method="POST" action="">';
+                echo '<input class="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
+                echo '<input class="none" type="number" name="taken" value="1">';
+                echo '<input type="submit" name="take" value="Vyzvednul si">';
+                echo '</form>';
+                echo "</th>";
+
+                echo "<th>";
+                echo '<form method="POST" action="">';
+                echo '<input class="none" type="text" name="id" value="' . $value["reservation_id"] . '">';
+                echo '<input type="submit" id="del" name="delete" value="smazat">';
+                echo '</form>';
+                echo "</th>";
+                echo "</tr>";
             }
         }
-
-        if ($page < $maxpage) {
-            echo "<a href=\"users.php?q=" . $search . "&page=" . ($page + 1) . "\"> ></a>";
-        }
+        echo "</table>";
+    } else {
+        echo "Žádné rezervace";
     }
     echo "</div>";
+
     echo '<div id="footer" style="margin-top:100px;">
 <div id="footercon">
 <div id="social">

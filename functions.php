@@ -627,6 +627,16 @@ function add_reservations($conn, $s_reservation, $e_reservation, $user, $taken)
 function update_book($conn, String $id, String $name, Int $relase, String $language, String $ISBN, Int $pages, String $img, String $room_name)
 {
     save_to_log("Update book: \"" . $name . "\" by: \"" . $_SESSION["username"] . "\"");
+    $sql = 'SELECT room.name FROM room WHERE room.name = "' . $room_name . '"';
+    $sql = $conn->prepare($sql);
+    $sql->execute();
+    $row = $sql->fetch();
+    if (!isset($row[0])) {
+        $sql = "INSERT INTO `room`(`name`) VALUES ('" . $room_name . "')";
+        $sql = $conn->prepare($sql);
+        $sql->execute();
+    }
+
     $sql = "UPDATE `book` SET `name` = '" . $name . "',`relase` = '" . $relase . "',`language` = '" . $language . "',`ISBN` = '" . $ISBN . "',`pages` = '" . $pages . "',`img` = '" . $img . "',`room_name` = '" . $room_name . "' WHERE `id` = '" . $id . "'";
     //echo $sql;
     $sql = $conn->prepare($sql);

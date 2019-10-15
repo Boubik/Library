@@ -277,11 +277,17 @@ body {
 	margin-top: 100px;
 	width: 800px;
 }
+ #image img{
+	height: 350px;
+	width: 210px;
+	margin-left: 75px;
+	margin-top: 50px;
+}
 #info{
 	color: $text-color-white;
 	width: 50%;
 	margin-left: 400px;
-	margin-top: -400px;
+	margin-top: -350px;
 	margin-bottom: 20px;
 	z-index: 2;
 }
@@ -351,7 +357,11 @@ body {
 #sel{
 	margin-left: 50px;
 	margin-top: 20px;
-	width: 200px;
+	width: 80px!important;
+}
+#bookmain #sel{
+	position: absolute;
+	margin-left: -10px;
 }
 
 #usermain {
@@ -550,7 +560,7 @@ body {
   }
   .dropdown-content{
 	  position: absolute;
-	  border: 1px solid white;
+	//   border: 1px solid white;
 
   }
   

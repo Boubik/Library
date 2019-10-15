@@ -125,12 +125,22 @@
     }
 
     if (isset($_POST["edit"])) {
-        header("Location: edit_book.php?id=" . $book["id"] . "&name=" . $book["name"]);
+        header("Location: edit_book.php?id=" . $book["id"] . "&name=" . $_GET["name"]);
+    }
+
+    if (isset($_POST["delete_reservation"])) {
+        delete_reservation($conn, $_POST["reservation_id"]);
     }
 
     if (isset($_POST["reservations"])) {
         header("Location: reservations.php");
     }
+
+    if (isset($_POST["delete_book"])) {
+        hide_book($conn, $book["id"]);
+        header("Location: index.php");
+    }
+
 
     echo '<div id="bookmain">';
     echo "<div id=\"book\">";

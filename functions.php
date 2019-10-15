@@ -794,7 +794,6 @@ function book($conn, String $search = "", $count_books = 1, $page = 1, $per_page
             $i++;
         }
         $sql .= ")";
-        save_to_log($sql);
         $sql = $conn->prepare($sql);
         $number = $sql->execute();
         $db_book = array();

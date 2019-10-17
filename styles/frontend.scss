@@ -492,10 +492,7 @@ body {
 	margin-top: -40px;
 	cursor: pointer;
 }
-#filter{
-	// display: none;
-	width: 70%;
-}
+
 #searchfull ::placeholder{
 	color: $text-color-white;
 }
@@ -574,11 +571,29 @@ body {
   .dropdownmenue a:hover {background-color: #ddd;}
   
   .show {display: block;}
+  #menu{
+	display: block;
+}
+#showhide{
+	display: block;
+	position: fixed;
+
+}
+#filter{
+	display: none;
+	width: 70%;
+}
 @media only screen and (min-width: 1000px) {
 	// #footer{
 	// 	float: right!important;
 	// 	width: 86%!important
 	// }
+	#showhide{
+		display: none;
+	}
+	#menu{
+		display: none;
+	}
 	
 	.dropdownmenue{
 		display: none;

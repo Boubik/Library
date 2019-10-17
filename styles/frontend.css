@@ -578,10 +578,6 @@ body {
   cursor: pointer;
 }
 
-#filter {
-  width: 70%;
-}
-
 #searchfull ::-webkit-input-placeholder {
   color: white;
 }
@@ -684,7 +680,27 @@ body {
   display: block;
 }
 
+#menu {
+  display: block;
+}
+
+#showhide {
+  display: block;
+  position: fixed;
+}
+
+#filter {
+  display: none;
+  width: 70%;
+}
+
 @media only screen and (min-width: 1000px) {
+  #showhide {
+    display: none;
+  }
+  #menu {
+    display: none;
+  }
   .dropdownmenue {
     display: none;
   }

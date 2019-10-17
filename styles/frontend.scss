@@ -579,9 +579,14 @@ body {
 	position: fixed;
 
 }
+.dropdown{
+	margin: auto;
+	display: inline-block;
+}
 #filter{
 	display: none;
-	width: 70%;
+	width: 100vw;
+	border: 1px solid white;
 }
 @media only screen and (min-width: 1000px) {
 	// #footer{
@@ -684,6 +689,7 @@ body {
 		margin-left: 400px;
 	}
 	#logo {
+		display: block !important;
 		margin-left: 100px;
 	}
 	#logo img {

@@ -37,9 +37,13 @@ hr {
 }
 
 #logo {
-  margin: auto;
   width: 58px;
   height: 50px;
+  position: absolute;
+  margin: auto !important;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 #logo img {
@@ -663,6 +667,7 @@ body {
 
 .dropdown-content {
   position: absolute;
+  border: 1px solid white;
 }
 
 .menuecontent a {
@@ -684,20 +689,39 @@ body {
   display: block;
 }
 
-#showhide {
-  display: block;
-  position: fixed;
-}
-
 .dropdown {
   margin: auto;
   display: inline-block;
 }
 
 #filter {
-  display: none;
-  width: 100vw;
+  position: absolute;
+  margin: auto !important;
+}
+
+#filtercon {
   border: 1px solid white;
+  width: 500px;
+  height: 50px;
+  margin-left: 50%;
+}
+
+#showhide {
+  display: block;
+  position: absolute;
+  margin-top: 13px;
+  background: transparent;
+  border: none;
+  color: white;
+  outline: none;
+}
+
+#category {
+  width: 50px !important;
+  height: 10px !important;
+  margin: auto !important;
+  padding: 20px !important;
+  border: 1px solid white !important;
 }
 
 @media only screen and (min-width: 1000px) {
@@ -766,6 +790,10 @@ body {
   }
   #filtercon {
     margin-top: 50px !important;
+    width: 100px;
+    margin: auto;
+    border: none;
+    margin-top: 100px !important;
   }
   #filter {
     position: fixed;
@@ -776,7 +804,7 @@ body {
     height: 100%;
     color: white;
     top: 0;
-    margin-top: 50px;
+    margin-top: 50px !important;
   }
   #filter a {
     text-decoration: none;
@@ -801,7 +829,7 @@ body {
   }
   #logo {
     display: block !important;
-    margin-left: 100px;
+    margin-left: 100px !important;
   }
   #logo img {
     -webkit-filter: grayscale(1);
@@ -818,7 +846,6 @@ body {
   #searchfull {
     width: 50%;
     margin-left: 25%;
-    margin-top: -50px;
     display: block;
     width: 200px;
     height: 50px;
@@ -850,10 +877,12 @@ body {
   }
   #fullmenue {
     display: block;
+    position: absolute;
     text-align: center;
     width: 70%;
-    margin-top: -35px;
+    margin: auto;
     margin-left: 15%;
+    margin-top: 13px;
   }
   #fullmenue input[type=submit] {
     padding: 15px;

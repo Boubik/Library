@@ -105,42 +105,8 @@ if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($con
 }
 echo '</form>' . "\n";
 echo '</div>';
-echo '<button id="showhide" onclick="myFunction()">MENU</button>';
-echo '</div>';
 
-if (isset($_POST["logout"])) {
-    unset($_SESSION["username"]);
-    unset($_SESSION["password"]);
-    header("Location: index.php");
-}
-
-if (isset($_POST["login"])) {
-    header("Location: login.php");
-}
-
-if (isset($_POST["add_book"])) {
-    header("Location: add_book.php");
-}
-
-if (isset($_POST["add_author"])) {
-    header("Location: add_author.php");
-}
-
-if (isset($_POST["profile"])) {
-    header("Location: profile.php");
-}
-
-if (isset($_POST["users"])) {
-    header("Location: users.php");
-}
-
-if (isset($_POST["reservations"])) {
-    header("Location: reservations.php");
-}
-
-echo '</div>';
-
-echo '<div id="filter">';
+echo '<div id="filter" style="z-index: -1;display: none;">';
 echo '<div id="filtercon">';
 echo '<div class="dropdown">';
 echo '<a id="category" id="zanr">Žánr</a>';
@@ -186,6 +152,47 @@ echo '</div>';
 echo '</div>';
 echo '</div>';
 echo '</div>';
+
+echo '</div>';
+
+
+
+
+echo '<button id="showhide" onclick="myFunction()">MENU</button>';
+
+if (isset($_POST["logout"])) {
+    unset($_SESSION["username"]);
+    unset($_SESSION["password"]);
+    header("Location: index.php");
+}
+
+if (isset($_POST["login"])) {
+    header("Location: login.php");
+}
+
+if (isset($_POST["add_book"])) {
+    header("Location: add_book.php");
+}
+
+if (isset($_POST["add_author"])) {
+    header("Location: add_author.php");
+}
+
+if (isset($_POST["profile"])) {
+    header("Location: profile.php");
+}
+
+if (isset($_POST["users"])) {
+    header("Location: users.php");
+}
+
+if (isset($_POST["reservations"])) {
+    header("Location: reservations.php");
+}
+
+echo '</div>';
+
+
 
 echo '<div id="maincon">';
 if (!isset($books)) {
@@ -284,21 +291,6 @@ if ($page < $i) {
 }
 echo "</div>";
 
-// echo '<div id="footer" style="margin-top:150px !important;">
-// <div id="footercon">
-// <div id="social">
-// <a href="http://www.skolavdf.cz" target="_blank"><img src="images/skola_logo_color.png" alt="logo"></a>
-// <a href="https://www.facebook.com/skolavdf/?ref=bookmarks"><img src="images/facebook.png" alt="logo"></a>
-// <a href="https://www.instagram.com/skolavdf/" target="_blank"><img src="images/instagram.png" alt="logo"></a>
-// </div>
-// <div id="splitter"></div>
-//     <div id="team">
-//     <a href="https://github.com/Boubik" target="_blank">Coder: Jan Chlouba</a><br>
-//     <a href="https://github.com/JINXisHERE" target="_blank">Designer: Ibrahim Daghstani</a>
-
-// </div>
-// </div>
-// </div>';
 echo '</div>';
 ?>
 </body>
@@ -327,11 +319,11 @@ function myFunction() {
   var x = document.getElementById("filter");
   var y = document.getElementById("logo");
   if (x.style.display === "none") {
-    x.style.display = "block";
+    x.style.display = "inline-block";
     y.style.display = "none";
   } else {
     x.style.display = "none";
-    y.style.display = "block";
+    y.style.display = "inline-block";
   }
 }
 </script>

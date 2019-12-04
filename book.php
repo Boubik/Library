@@ -329,7 +329,7 @@
 
     echo "</div>";
     echo "</div>";
-    echo '<div id="footer" style="margin-top:250px !important;">
+    echo '<div id="footer" style="margin-top:250 !important;">
 <div id="footercon">
 <div id="social">
 <a href="http://www.skolavdf.cz" target="_blank"><img src="images/skola_logo_color.png" alt="logo"></a>

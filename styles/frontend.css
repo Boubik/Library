@@ -18,11 +18,14 @@ hr {
 
 #main {
   margin-top: 100px;
+  height: 100vh;
+  padding-top: 5%;
 }
 
 .container {
   min-height: 100%;
   position: relative;
+  height: 100vh;
 }
 
 #header {
@@ -211,6 +214,7 @@ body {
   width: 600px;
   margin: auto;
   margin-top: 100px;
+  height: 100vh;
 }
 
 .book {
@@ -413,6 +417,7 @@ body {
   margin-top: 100px;
   width: 800px;
   min-height: 300px;
+  height: 100vh;
 }
 
 #search::-webkit-input-placeholder {
@@ -462,7 +467,8 @@ body {
   margin: auto;
   width: 500px;
   margin-top: 100px;
-  margin-bottom: 100px;
+  height: 100vh;
+  padding-top: 6%;
 }
 
 #logincon input[type=text],
@@ -667,7 +673,7 @@ body {
 
 .dropdown-content {
   position: absolute;
-  border: 1px solid white;
+  margin-left: -60px !important;
 }
 
 .menuecontent a {
@@ -696,14 +702,16 @@ body {
 
 #filter {
   position: absolute;
-  margin: auto !important;
 }
 
 #filtercon {
-  border: 1px solid white;
+  position: absolute;
+  text-align: center;
   width: 500px;
-  height: 50px;
-  margin-left: 50%;
+  margin: auto;
+  margin-left: 100px !important;
+  margin-top: 13px;
+  border: 1px solid white;
 }
 
 #showhide {
@@ -721,7 +729,6 @@ body {
   height: 10px !important;
   margin: auto !important;
   padding: 20px !important;
-  border: 1px solid white !important;
 }
 
 @media only screen and (min-width: 1000px) {
@@ -745,9 +752,9 @@ body {
   }
   #category {
     color: #fff !important;
-    text-align: center;
-    display: block;
-    width: 100%;
+    text-align: center !important;
+    display: block !important;
+    width: 100% !important;
     border: none;
     padding: 5px;
   }
@@ -758,7 +765,7 @@ body {
   .dropdown:hover
 .dropdown-content {
     display: block;
-    margin-left: 200px;
+    margin-left: 200px !important;
     margin-top: -50px;
   }
   .dropdown-content {
@@ -789,11 +796,11 @@ body {
     display: block !important;
   }
   #filtercon {
-    margin-top: 50px !important;
     width: 100px;
     margin: auto;
     border: none;
     margin-top: 100px !important;
+    margin-top: 50px !important;
   }
   #filter {
     position: fixed;
@@ -801,7 +808,7 @@ body {
     background-color: rgba(0, 0, 0, 0.753);
     -webkit-backdrop-filter: blur(5px);
             backdrop-filter: blur(5px);
-    height: 100%;
+    height: 100vh;
     color: white;
     top: 0;
     margin-top: 50px !important;
@@ -826,6 +833,7 @@ body {
     margin: auto;
     margin-top: 100px;
     margin-left: 400px;
+    height: 100vh;
   }
   #logo {
     display: block !important;
@@ -895,15 +903,6 @@ body {
     -webkit-transition: 0.3s;
     transition: 0.3s;
   }
-}
-
-#category {
-  color: #fff !important;
-  text-align: center;
-  display: block;
-  width: 100%;
-  border: none;
-  padding: 5px;
 }
 
 #category:hover {

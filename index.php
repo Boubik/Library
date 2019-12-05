@@ -101,10 +101,7 @@ if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($con
     }
     echo '<input type="submit" name="profile"  value="Můj profil">';
     echo '<input type="submit" name="logout"  value="Odhlásit se">';
-} 
-// else {
-//     echo '<input type="submit" name="login"  value="Přihrásit se"></input>';
-// }
+}
 echo '</form>' . "\n";
 echo '</div>';
 
@@ -321,11 +318,11 @@ function myFunction() {
   var x = document.getElementById("filter");
   var y = document.getElementById("logo");
   if (x.style.display === "none") {
-    x.style.display = "inline-block";
+    x.style.display = "block";
     y.style.display = "none";
   } else {
     x.style.display = "none";
-    y.style.display = "inline-block";
+    y.style.display = "block";
   }
 //   $(document).click(function(){
 //     y.style.display = "none";   

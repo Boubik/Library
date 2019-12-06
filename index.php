@@ -151,13 +151,13 @@ echo '</div>';
 echo '</div>';
 echo '</div>';
 echo '</div>';
-
+echo '<button id="showhide" onclick="myFunction()">MENU</button>';
 echo '</div>';
 
 
 
 
-echo '<button id="showhide" onclick="myFunction()">MENU</button>';
+
 
 if (isset($_POST["logout"])) {
     unset($_SESSION["username"]);
@@ -305,7 +305,6 @@ echo '</div>';
             <div id="team">
                 <a href="https://github.com/Boubik" target="_blank">Coder: Jan Chlouba</a><br>
                 <a href="https://github.com/JINXisHERE" target="_blank">Designer: Ibrahim Daghstani</a>
-
             </div>
         </div>
     </div>

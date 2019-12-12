@@ -40,9 +40,11 @@ hr {
 }
 
 #logo {
-  width: 58px;
-  height: 50px;
-  margin: auto !important;
+  width: 55px;
+  height: 48px;
+  position: relative;
+  margin: auto;
+  margin-top: -32px;
 }
 
 #logo img {
@@ -104,11 +106,15 @@ hr {
 #klient input[type=submit] {
   font-family: 'Montserrat', sans-serif;
   float: right;
-  margin-top: -55px;
+  margin-top: -55px !important;
 }
 
-#klient input[type=submit]#profil {
-  padding-right: 100px;
+#klient input[type=submit]#profile {
+  padding-right: 100px !important;
+}
+
+#profile, #out {
+  position: relative;
 }
 
 #adminhid {
@@ -122,6 +128,7 @@ hr {
 #footer {
   width: 100%;
   background-color: black;
+  margin-top: 100px;
 }
 
 #footer #team a {
@@ -172,14 +179,38 @@ hr {
   margin-left: 250px;
 }
 
+#splitterv2 {
+  position: absolute;
+  border-left: 3px solid white;
+  height: 100px;
+  margin: auto;
+  margin-left: 510px;
+  margin-top: -80px;
+}
+
 #team {
+  display: none;
+  position: absolute;
+  color: white;
+  font-size: small;
+  height: 50px;
+  width: 300px;
+  margin-bottom: -700px;
+}
+
+#kontakt {
   color: white;
   padding-top: 10px;
   padding-left: 270px;
-  padding-top: 30px;
   height: 50px;
   width: 300px;
   margin: auto;
+}
+
+#kontakt a {
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  text-decoration: none;
 }
 
 .fab {
@@ -207,10 +238,10 @@ body {
   margin: auto;
   min-height: 500px;
   background-color: transparent;
-  width: 600px;
   margin: auto;
   margin-top: 100px;
   height: 100vh;
+  padding-bottom: 150px;
 }
 
 .book {
@@ -702,15 +733,17 @@ body {
   margin: auto;
   border: none;
   margin-left: 20%;
-  margin-top: -20px;
+  margin-top: -55px;
   color: white;
+  z-index: 2 !important;
+  font-family: 'Montserrat', sans-serif;
 }
 
 #showhide {
   font-family: 'Montserrat', sans-serif;
   display: block;
-  position: absolute;
-  margin-top: -55px;
+  position: relative;
+  margin-top: 15px;
   background: transparent;
   border: none;
   color: white;
@@ -857,22 +890,24 @@ body {
     text-align: center;
     display: block;
     color: white;
-    margin-left: 50px;
+    margin-left: 80px;
     margin-top: 50px;
   }
   #maincon {
     margin: auto;
     min-height: 500px;
     background-color: transparent;
-    width: 53%;
+    width: 65vw;
     margin: auto;
     margin-top: 100px;
     margin-left: 400px;
     height: 100vh;
+    padding-bottom: 150px;
   }
   #logo {
     display: block !important;
     margin-left: 100px !important;
+    margin-top: 2px;
   }
   #logo img {
     -webkit-filter: grayscale(1);
@@ -944,5 +979,24 @@ body {
 #category:hover {
   -webkit-transition: 0.3s;
   transition: 0.3s;
+}
+
+@media only screen and (max-width: 1110px) {
+  #maincon {
+    width: 65vw;
+    margin: auto;
+    margin-top: 100px;
+    margin-left: 30%;
+    padding-bottom: 150px;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  #maincon {
+    width: 90vw;
+    margin: auto;
+    margin-top: 100px;
+    padding-bottom: 150px;
+  }
 }
 /*# sourceMappingURL=frontend.css.map */

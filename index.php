@@ -8,7 +8,7 @@
     <link href="styles/aos.css" rel="stylesheet">
     <link rel="shortcut icon" href="images/skola_logo_mono.png" type="image/x-icon" />
     <script src="js/aos.js"></script>
-    <title>Knihovna</title>
+    <title>Knihovna|VOŠ, SPŠ A SOŠ VDF</title>
 </head>
 
 <body>
@@ -54,6 +54,7 @@ $books = book($conn, $search, $count_books, $page, $per_page);
 
 echo '<div id="container">';
 echo '<div id="header">';
+echo '<button id="showhide" onclick="myFunction()">MENU</button>';
 echo '<div id="logo"><a href="index.php"><img src="images/skola_logo_color.png" alt="logo"></a></div>';
 echo '<div id="searchfull">';
 echo '<form method="GET" action="">' . "\n";
@@ -80,8 +81,8 @@ if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($con
         echo '</div>';
     }
     echo '<div id="klient">';
-    echo '<input type="submit" name="profile" id="profil" value="Můj profil">' . "\n";
-    echo '<input type="submit" name="logout"  value="Odhlásit se">' . "\n";
+    echo '<input type="submit" name="profile" id="profile" value="Můj profil">' . "\n";
+    echo '<input type="submit" name="logout"  id="out" value="Odhlásit se">' . "\n";
 } 
 else {
     echo '<div id="fullmenue">';
@@ -149,9 +150,9 @@ foreach ($room as $item) {
 }
 echo '</div>';
 echo '</div>';
+
 echo '</div>';
 echo '</div>';
-echo '<button id="showhide" onclick="myFunction()">MENU</button>';
 echo '</div>';
 
 
@@ -306,6 +307,11 @@ echo '</div>';
                 <a href="https://github.com/Boubik" target="_blank">Coder: Jan Chlouba</a><br>
                 <a href="https://github.com/JINXisHERE" target="_blank">Designer: Ibrahim Daghstani</a>
             </div>
+            <div id="kontakt">
+            kontakty:<br><br>
+            <a href="mailto:kristina.petrackova@skolavdf.cz">Kristina Petráčková</a>: 412 315 049<br>
+            <a href="mailto:andrea.skodova@skolavdf.cz">Andrea Škodová</a>: 412 315 049<br>
+            </div>
         </div>
     </div>
 </footer>
@@ -316,15 +322,20 @@ echo '</div>';
 function myFunction() {
   var x = document.getElementById("filter");
   var y = document.getElementById("logo");
+  var z = document.getElementById("profile");
+  var l = document.getElementById("out");
   if (x.style.display === "none") {
     x.style.display = "block";
     y.style.display = "none";
+    // z.style.marginTop = "25px";
+    // l.style.marginTop = "25px";
+
   } else {
     x.style.display = "none";
     y.style.display = "block";
+    z.style.marginTop = "";
+    l.style.marginTop = "";
   }
-//   $(document).click(function(){
-//     y.style.display = "none";   
 }
 $('input:text').focus(
     function(){

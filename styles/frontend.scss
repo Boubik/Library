@@ -21,10 +21,13 @@ hr{
 }
 #main{
 	margin-top: 100px;
+	height: 100vh;
+	padding-top: 5%;
 }
 .container{
 	min-height:100%;
 	position:relative;
+	height: 100vh;
 }
 #header {
 	height: 50px;
@@ -36,11 +39,12 @@ hr{
 	width: 100%;
 }
 #logo {
-	width: 58px;
-	height: 50px;
-	position: absolute;
-	margin: auto !important;
-	justify-content: center;
+	width: 55px;
+	height: 48px;
+	position: relative;
+	margin: auto ;
+	margin-top: -32px;
+	
 }
 #logo img {
 	width: 100%;
@@ -116,10 +120,13 @@ hr{
 #klient input[type=submit] {
 	font-family: 'Montserrat', sans-serif;
 	float: right;
-	margin-top: -55px;
+	margin-top: -55px!important;
 }
-#klient input[type=submit]#profil {
-	padding-right: 100px;
+#klient input[type=submit]#profile {
+	padding-right: 100px!important;
+}
+#profile, #out{
+	position: relative;
 }
 #adminhid {
 	display: none;
@@ -132,8 +139,7 @@ hr{
 #footer {
 	width:100%;
 	background-color: black;
-	// background-color: rgba(0, 0, 0, 0.753);
-	// backdrop-filter: blur(5px);
+	margin-top: 100px;
 }
 #footer #team a {
 	font-family: 'Montserrat', sans-serif;
@@ -172,14 +178,36 @@ hr{
 	margin: auto;
 	margin-left: 250px;
 }
+#splitterv2{
+	position: absolute;
+	border-left: 3px solid white;
+	height: 100px;
+	margin: auto;
+	margin-left: 510px;
+	margin-top: -80px;
+}
 #team {
+	display: none;
+	position: absolute;
+	color: $text-color-white;
+	font-size: small;
+	height: 50px;
+	width: 300px;
+	margin-bottom: -700px;
+}
+#kontakt{
 	color: $text-color-white;
 	padding-top: 10px;
 	padding-left: 270px;
-	padding-top: 30px;
 	height: 50px;
 	width: 300px;
 	margin: auto;
+	// margin-top: -10px;
+}
+#kontakt a{
+	color: $text-color-white;
+	font-family: 'Montserrat', sans-serif;
+	text-decoration: none;
 }
 .fab {
 	color: $text-color-white;
@@ -199,9 +227,10 @@ body {
 	margin: auto;
 	min-height: 500px;
 	background-color: transparent;
-	width: 600px;
 	margin: auto;
 	margin-top: 100px;
+	height: 100vh;
+	padding-bottom: 150px;
 }
 .book{
 	display: inline-block;
@@ -371,6 +400,7 @@ body {
 	margin-top: 100px;
 	width: 800px;
 	min-height: 300px;
+	height: 100vh;
 }
 
 #search::placeholder {
@@ -394,7 +424,8 @@ body {
 	margin: auto;
 	width: 500px;
 	margin-top: 100px;
-	margin-bottom: 100px;
+	height: 100vh;
+	padding-top: 6%;
 }
 #logincon input[type=text],
 #logincon input[type=password],
@@ -557,12 +588,6 @@ body {
   .category{
 	  width: 200px;
   }
-  .dropdown-content{
-	  position: absolute;
-	  border: 1px solid white;
-
-  }
-  
   .menuecontent a {
 	color: black;
 	padding: 12px 16px;
@@ -585,31 +610,73 @@ body {
 	position: absolute;
 	// margin-top: 100px ;
 	// border: 1px solid white;
-	margin: auto !important; 
+	// margin-left: 15% !important; 
 
 }
 #filtercon{
-		border: 1px solid white;
-		width: 500px;
-		height: 50px;
-		margin-left: 50%;
-	}
+	position: fixed;
+	text-align: center;
+	width: 600px;
+	margin: auto;
+	border: none;
+	margin-left: 20%;
+	margin-top: -55px;
+	color: white;
+	z-index: 2 !important; 
+	font-family: 'Montserrat', sans-serif;
+}
 #showhide{
-		display: block;
-		position: absolute;
-		margin-top: 13px;
-		background: transparent;
-		border: none;
-		color: white;
-		outline: none;
+	font-family: 'Montserrat', sans-serif;
+	display: block;
+	position: relative;
+	margin-top: 15px;
+	background: transparent;
+	border: none;
+	color: white;
+	outline: none;
+	z-index: 2;
+}
+#showhide:hover{
+	color:rgb(218, 218, 218);
+	transition: 0.3s;
 }
 #category{
 	width: 50px!important;
 	height: 10px!important;
 	margin: auto!important;
 	padding: 20px!important;
-	border: 1px solid white !important;
 }
+
+.dropdown:hover 
+.dropdown-content {
+  display: block;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.753);
+  backdrop-filter: blur(5px);
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  width: auto;
+  margin-left: -50px;
+  margin-top: 5px;
+}
+.dropdown-content a {
+  color: $text-color-gold; 
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+}
+#klient input[type=submit]:hover {
+	color: rgb(218, 218, 218);
+	transition: 0.3s;
+}
+::-webkit-scrollbar {
+	display: none;
+}
+
 @media only screen and (min-width: 1000px) {
 	// #footer{
 	// 	float: right!important;
@@ -624,6 +691,7 @@ body {
 	.dropdownmenue{
 		display: none;
 	}
+
 	#search{
 		display: none;
 	}
@@ -635,9 +703,9 @@ body {
 	}
 	#category{
 		color: 	$text-color-gold !important;
-		text-align: center;
-		display: block;
-		width: 100%;
+		text-align: center!important;
+		display: block!important;
+		width: 100%!important;
 		border: none;
 		padding: 5px;
 	}
@@ -647,8 +715,6 @@ body {
 	.dropdown:hover 
 	.dropdown-content {
 	  display: block;
-	  margin-left: 200px;
-	  margin-top: -50px;
 	}
 	.dropdown-content {
 	  display: none;
@@ -660,6 +726,8 @@ body {
 	  padding: 12px 16px;
 	  z-index: 1;
 	  width: auto;
+	  margin-top: -50px !important;
+	  margin-left: 100px !important;
 	}
 	.dropdown-content a {
 	  color: $text-color-gold !important; 
@@ -671,23 +739,21 @@ body {
 		color: rgb(218, 218, 218);
 		transition: 0.3s;
 	}
-	#filter{
-		display: block!important;
-	}
 	#filtercon{
-		margin-top: 50px !important;
 		width: 100px;
 		margin: auto;
 		border: none;
-		margin-top: 100px !important;
+		margin-top: 50px;
+		margin-left: 15%;
 	}
 	#filter{
+		display: block!important;
 		position: fixed;
-		width: 200px;
+		width: 150px;
 		// background-color: black; 
 		background-color: rgba(0, 0, 0, 0.753);
 		backdrop-filter: blur(5px);
-		height: 100%;
+		height: 100vh;
 		color: $text-color-white;
 		top:0;
 		margin-top: 50px!important;
@@ -702,21 +768,24 @@ body {
 		text-align: center;
 		display: block;
 		color: $text-color-white;
-		margin-left: 50px;
+		margin-left: 80px;
 		margin-top: 50px;
 	}
 	#maincon {
 		margin: auto;
 		min-height: 500px;
 		background-color: transparent;
-		width: 50%;
+		width: 65vw;
 		margin: auto;
 		margin-top: 100px;
 		margin-left: 400px;
+		height: 100vh;
+		padding-bottom: 150px;
 	}
 	#logo {
 		display: block !important;
 		margin-left: 100px !important;
+		margin-top: 2px;
 	}
 	#logo img {
 		filter: grayscale(1);
@@ -735,6 +804,7 @@ body {
 		width: 200px;
 		height: 50px;
 		float: right;
+		margin-top: -50px;
 	}
 	#searchfull input[type=text] {
 		border-width: 0 0 2px;
@@ -758,7 +828,7 @@ body {
 		width: 70%;
 		margin: auto;
 		margin-left: 15%;
-		margin-top: 13px;
+		margin-top: -35px;
 	}
 	#fullmenue input[type=submit] {
 		padding: 15px;
@@ -771,45 +841,23 @@ body {
 		transition: 0.3s;
 	}
 }
-#category{
-	color: 	$text-color-gold !important;
-	text-align: center;
-	display: block;
-	width: 100%;
-	border: none;
-	padding: 5px;
-}
-
 #category:hover{
 	transition: 0.3s;
 }
-.dropdown:hover 
-.dropdown-content {
-  display: block;
-  margin-left: 200px;
-  margin-top: -50px;
+@media only screen and (max-width: 1110px){
+	#maincon{
+		width: 65vw;
+		margin: auto;
+		margin-top: 100px;
+		margin-left: 30%;
+		padding-bottom: 150px;
+	}
 }
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: rgba(0, 0, 0, 0.753);
-  backdrop-filter: blur(5px);
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  padding: 12px 16px;
-  z-index: 1;
-  width: auto;
-}
-.dropdown-content a {
-  color: $text-color-gold !important; 
-  text-decoration: none;
-  display: block;
-  cursor: pointer;
-}
-#klient input[type=submit]:hover {
-	color: rgb(218, 218, 218);
-	transition: 0.3s;
-}
-::-webkit-scrollbar {
-	display: none;
+@media only screen and (max-width: 1000px){
+	#maincon{
+		width: 90vw;
+		margin: auto;
+		margin-top: 100px;
+		padding-bottom: 150px;
+	}
 }

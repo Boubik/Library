@@ -8,7 +8,7 @@
     <link href="styles/aos.css" rel="stylesheet">
     <link rel="shortcut icon" href="images/skola_logo_mono.png" type="image/x-icon" />
     <script src="js/aos.js"></script>
-    <title>Knihovna</title>
+    <title>Knihovna|VOŠ, SPŠ A SOŠ VDF</title>
 </head>
 
 <body>
@@ -52,12 +52,13 @@ if (isset($_GET["page"])) {
 }
 $books = book($conn, $search, $count_books, $page, $per_page);
 
-echo '<div class="container">';
+echo '<div id="container">';
 echo '<div id="header">';
+echo '<button id="showhide" onclick="myFunction()">MENU</button>';
 echo '<div id="logo"><a href="index.php"><img src="images/skola_logo_color.png" alt="logo"></a></div>';
 echo '<div id="searchfull">';
 echo '<form method="GET" action="">' . "\n";
-echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
+echo '<input type="text" placeholder="  Hledáte něco?" name="q" autocomplete="off"';
 if (isset($_GET["q"])) {
     echo filter_input(INPUT_GET, "q") . '">' . "\n";
 } else {
@@ -80,9 +81,10 @@ if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($con
         echo '</div>';
     }
     echo '<div id="klient">';
-    echo '<input type="submit" name="profile" id="profil" value="Můj profil">' . "\n";
-    echo '<input type="submit" name="logout"  value="Odhlásit se">' . "\n";
-} else {
+    echo '<input type="submit" name="profile" id="profile" value="Můj profil">' . "\n";
+    echo '<input type="submit" name="logout"  id="out" value="Odhlásit se">' . "\n";
+} 
+else {
     echo '<div id="fullmenue">';
     echo '<input type="submit" name="login"  value="Přihrásit se"></input>' . "\n";
     echo '</div>';
@@ -100,13 +102,11 @@ if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($con
     }
     echo '<input type="submit" name="profile"  value="Můj profil">';
     echo '<input type="submit" name="logout"  value="Odhlásit se">';
-} else {
-    echo '<input type="submit" name="login"  value="Přihrásit se"></input>';
 }
 echo '</form>' . "\n";
 echo '</div>';
 
-echo '<div id="filter" style="z-index: -1;display: none;">';
+echo '<div id="filter" style="display: none;">';
 echo '<div id="filtercon">';
 echo '<div class="dropdown">';
 echo '<a id="category" id="zanr">Žánr</a>';
@@ -150,15 +150,15 @@ foreach ($room as $item) {
 }
 echo '</div>';
 echo '</div>';
+
+echo '</div>';
 echo '</div>';
 echo '</div>';
 
-echo '</div>';
 
 
 
 
-echo '<button id="showhide" onclick="myFunction()">MENU</button>';
 
 if (isset($_POST["logout"])) {
     unset($_SESSION["username"]);
@@ -306,7 +306,11 @@ echo '</div>';
             <div id="team">
                 <a href="https://github.com/Boubik" target="_blank">Coder: Jan Chlouba</a><br>
                 <a href="https://github.com/JINXisHERE" target="_blank">Designer: Ibrahim Daghstani</a>
-
+            </div>
+            <div id="kontakt">
+            kontakty:<br><br>
+            <a href="mailto:kristina.petrackova@skolavdf.cz">Kristina Petráčková</a>: 412 315 049<br>
+            <a href="mailto:andrea.skodova@skolavdf.cz">Andrea Škodová</a>: 412 315 049<br>
             </div>
         </div>
     </div>
@@ -318,14 +322,25 @@ echo '</div>';
 function myFunction() {
   var x = document.getElementById("filter");
   var y = document.getElementById("logo");
+  var z = document.getElementById("profile");
+  var l = document.getElementById("out");
   if (x.style.display === "none") {
-    x.style.display = "inline-block";
+    x.style.display = "block";
     y.style.display = "none";
+    // z.style.marginTop = "25px";
+    // l.style.marginTop = "25px";
+
   } else {
     x.style.display = "none";
-    y.style.display = "inline-block";
+    y.style.display = "block";
+    z.style.marginTop = "";
+    l.style.marginTop = "";
   }
 }
+$('input:text').focus(
+    function(){
+        $(this).val('');
+    });
 </script>
 
 

@@ -118,9 +118,10 @@ foreach ($lines as $key => $line) {
             if ($insert) {
                 $sql = "INSERT INTO `genre`(`name`) VALUES (\"" . $item . "\"";
                 $insert = false;
-            }
-            if (!($key == 0)) {
+                $in_genres[] = $item;
+            } else {
                 $sql .= "), (\"" . $item . "\"";
+                $in_genres[] = $item;
             }
         }
     }
@@ -130,8 +131,10 @@ foreach ($lines as $key => $line) {
             if ($insert) {
                 $sql = "INSERT INTO `genre`(`name`) VALUES (\"" . $item . "\"";
                 $insert = false;
+                $in_genres[] = $item;
+            } else {
+                $sql .= "), (\"" . $item . "\"";
             }
-            $sql .= "), (\"" . $item . "\"";
         }
     }
 

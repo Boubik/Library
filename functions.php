@@ -1086,3 +1086,14 @@ function save_to_log(String $log_text)
         }
     }
 }
+
+/**
+ * remove more spaces
+ * @param   String  $text   text ro format
+ * @return  String  return formated text
+ * 
+ */
+function delete_more_spaces($text)
+{
+    return preg_replace('/\s+/', ' ', $text);
+}

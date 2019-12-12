@@ -113,7 +113,8 @@ foreach ($lines as $key => $line) {
         }
     }
     foreach ($genres as $key => $item) {
-        if (!(in_array($item, $in_genres))) {
+        if (!(in_array($item, $in_genres)) and $item != "") {
+            $item = delete_more_spaces($item);
             if ($insert) {
                 $sql = "INSERT INTO `genre`(`name`) VALUES (\"" . $item . "\"";
                 $insert = false;
@@ -124,7 +125,8 @@ foreach ($lines as $key => $line) {
         }
     }
     foreach ($genres2 as $key => $item) {
-        if (!(in_array($item, $in_genres))) {
+        if (!(in_array($item, $in_genres)) and $item != "") {
+            $item = delete_more_spaces($item);
             if ($insert) {
                 $sql = "INSERT INTO `genre`(`name`) VALUES (\"" . $item . "\"";
                 $insert = false;
@@ -229,4 +231,15 @@ function load_csv($path)
     echo "<br>\n";
     unset($lines[0]);
     return $lines;
+}
+
+/**
+ * remove more spaces
+ * @param   String  $text   text ro format
+ * @return  String  return formated text
+ * 
+ */
+function delete_more_spaces($text)
+{
+    return preg_replace('/\s+/', ' ', $text);
 }

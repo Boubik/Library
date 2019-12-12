@@ -105,7 +105,7 @@ if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($con
 }
 echo '</form>' . "\n";
 echo '</div>';
-
+echo '<div id="filterbackground">';
 echo '<div id="filter" style="display: none;">';
 echo '<div id="filtercon">';
 echo '<div class="dropdown">';
@@ -321,18 +321,18 @@ echo '</div>';
 <script>
 function myFunction() {
   var x = document.getElementById("filter");
-  var y = document.getElementById("logo");
+//   var y = document.getElementById("logo");
   var z = document.getElementById("profile");
   var l = document.getElementById("out");
   if (x.style.display === "none") {
     x.style.display = "block";
-    y.style.display = "none";
+    // y.style.display = "none";
     // z.style.marginTop = "25px";
     // l.style.marginTop = "25px";
 
   } else {
     x.style.display = "none";
-    y.style.display = "block";
+    // y.style.display = "block";
     z.style.marginTop = "";
     l.style.marginTop = "";
   }

@@ -126,9 +126,11 @@ hr {
 }
 
 #footer {
+  position: absolute;
   width: 100%;
   background-color: black;
   margin-top: 100px;
+  clear: both;
 }
 
 #footer #team a {
@@ -235,12 +237,14 @@ body {
 }
 
 #maincon {
+  position: relative;
   margin: auto;
   min-height: 500px;
   background-color: transparent;
   margin: auto;
   margin-top: 100px;
-  height: 100vh;
+  min-height: 100vh;
+  height: auto;
   padding-bottom: 150px;
 }
 
@@ -724,6 +728,12 @@ body {
 
 #filter {
   position: absolute;
+  background-color: rgba(0, 0, 0, 0.753);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  height: 50px;
+  width: 100vw;
+  margin-top: -19px;
 }
 
 #filtercon {
@@ -733,7 +743,7 @@ body {
   margin: auto;
   border: none;
   margin-left: 20%;
-  margin-top: -55px;
+  margin-top: 0px;
   color: white;
   z-index: 2 !important;
   font-family: 'Montserrat', sans-serif;
@@ -782,6 +792,8 @@ body {
   width: auto;
   margin-left: -50px;
   margin-top: 5px;
+  max-height: 400px;
+  overflow: auto;
 }
 
 .dropdown-content a {
@@ -850,6 +862,8 @@ body {
     width: auto;
     margin-top: -50px !important;
     margin-left: 100px !important;
+    max-height: 400px;
+    overflow: auto;
   }
   .dropdown-content a {
     color: #fff !important;
@@ -894,6 +908,7 @@ body {
     margin-top: 50px;
   }
   #maincon {
+    position: relative;
     margin: auto;
     min-height: 500px;
     background-color: transparent;
@@ -901,7 +916,8 @@ body {
     margin: auto;
     margin-top: 100px;
     margin-left: 400px;
-    height: 100vh;
+    min-height: 100vh;
+    height: auto;
     padding-bottom: 150px;
   }
   #logo {
@@ -983,8 +999,10 @@ body {
 
 @media only screen and (max-width: 1110px) {
   #maincon {
+    position: relative;
     width: 65vw;
     margin: auto;
+    height: auto;
     margin-top: 100px;
     margin-left: 30%;
     padding-bottom: 150px;
@@ -993,7 +1011,9 @@ body {
 
 @media only screen and (max-width: 1000px) {
   #maincon {
+    position: relative;
     width: 90vw;
+    height: auto;
     margin: auto;
     margin-top: 100px;
     padding-bottom: 150px;

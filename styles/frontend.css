@@ -44,7 +44,8 @@ hr {
   height: 48px;
   position: relative;
   margin: auto;
-  margin-top: -32px;
+  -webkit-transition: 1s;
+  transition: 1s;
 }
 
 #logo img {
@@ -191,18 +192,16 @@ hr {
 }
 
 #team {
-  display: none;
-  position: absolute;
   color: white;
-  font-size: small;
-  height: 50px;
-  width: 300px;
-  margin-bottom: -700px;
+  position: absolute;
+  width: 130px;
+  right: 0;
+  bottom: 0;
+  font-size: 8px;
 }
 
 #kontakt {
   color: white;
-  padding-top: 10px;
   padding-left: 270px;
   height: 50px;
   width: 300px;
@@ -660,7 +659,10 @@ body {
 }
 
 #klient {
-  margin-top: 20px;
+  margin-top: 25px;
+  z-index: 2;
+  -webkit-transition: 1s;
+  transition: 1s;
 }
 
 #filtersmall {
@@ -739,7 +741,17 @@ body {
   height: 50px;
   width: 100vw;
   margin: auto;
-  margin-top: -19px;
+  margin-top: -50px;
+  -webkit-transition: 1s;
+  transition: 1s;
+}
+
+#login {
+  font-family: 'Montserrat';
+  position: absolute;
+  width: 90px;
+  margin-top: -30px;
+  right: 0;
 }
 
 #filtercon {
@@ -748,17 +760,16 @@ body {
   margin: auto;
   border: none;
   margin: auto;
-  margin-top: 0px;
   color: white;
-  z-index: 2 !important;
+  z-index: 2;
   font-family: 'Montserrat', sans-serif;
 }
 
 #showhide {
   font-family: 'Montserrat', sans-serif;
   display: block;
-  position: relative;
-  margin-top: 15px;
+  position: absolute;
+  margin-top: 20px;
   background: transparent;
   border: none;
   color: white;
@@ -777,6 +788,12 @@ body {
   height: 10px !important;
   margin: auto !important;
   padding: 20px !important;
+  cursor: default;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .dropdown:hover
@@ -890,6 +907,7 @@ body {
   }
   #filter {
     display: block !important;
+    opacity: 100 !important;
     position: fixed;
     width: 150px;
     background-color: rgba(0, 0, 0, 0.753);
@@ -938,6 +956,11 @@ body {
   }
   #admin {
     display: none;
+  }
+  #login {
+    font-family: 'Montserrat';
+    margin-left: 1050px;
+    margin-top: -35px;
   }
   #klient {
     display: none;

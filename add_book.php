@@ -63,23 +63,28 @@
         add_book($conn, filter_input(INPUT_POST, "name"), filter_input(INPUT_POST, "relase"), filter_input(INPUT_POST, "language"), filter_input(INPUT_POST, "ISBN"), $room, filter_input(INPUT_POST, "pages"), filter_input(INPUT_POST, "img"));
         header("Location: add_author.php?name=" . filter_input(INPUT_POST, "name") . "&relase=" . filter_input(INPUT_POST, "relase") . "&language=" . filter_input(INPUT_POST, "language") . "&ISBN=" . filter_input(INPUT_POST, "ISBN") . "&room_name=" . $room . "&pages=" . filter_input(INPUT_POST, "pages") . "&genres=" . $gendrs_get . "&img=" . filter_input(INPUT_POST, "img"));
     }
-    echo '<div id="footer" style="margin-top:100px;">
-    <div id="footercon">
-    <div id="social">
-    <a href="http://www.skolavdf.cz" target="_blank"><img src="images/skola_logo_color.png" alt="logo"></a>
-    <a href="https://www.facebook.com/skolavdf/?ref=bookmarks"><img src="images/facebook.png" alt="logo"></a>
-    <a href="https://www.instagram.com/skolavdf/" target="_blank"><img src="images/instagram.png" alt="logo"></a>
-    </div>
-    <div id="splitter"></div>
-        <div id="team">
-        <a href="https://github.com/Boubik" target="_blank">Coder: Jan Chlouba</a><br>
-        <a href="https://github.com/JINXisHERE" target="_blank">Designer: Ibrahim Daghstani</a>
-
-    </div>
-    </div>
-    </div>
-    </div>';
     ?>
+    <footer>
+    <div id="footer" style="margin-top:150px !important;">
+        <div id="footercon">
+            <div id="social">
+                <a href="http://www.skolavdf.cz" target="_blank"><img src="images/skola_logo_color.png" alt="logo"></a>
+                <a href="https://www.facebook.com/skolavdf/?ref=bookmarks"><img src="images/facebook.png" alt="logo"></a>
+                <a href="https://www.instagram.com/skolavdf/" target="_blank"><img src="images/instagram.png" alt="logo"></a>
+            </div>
+            <div id="splitter"></div>+
+            <div id="kontakt">
+            kontakty:<br><br>
+            <a href="mailto:kristina.petrackova@skolavdf.cz">Kristina Petráčková</a>: 412 315 049<br>
+            <a href="mailto:andrea.skodova@skolavdf.cz">Andrea Škodová</a>: 412 315 049<br>
+            </div>
+            <div id="team">
+            <a href="https://github.com/Boubik" target="_blank">Coder: Jan Chlouba</a><br>
+                <a href="https://github.com/JINXisHERE" target="_blank">Designer: Ibrahim Daghstani</a>
+            </div>
+        </div>
+    </div>
+</footer>
 </body>
 
 </html>

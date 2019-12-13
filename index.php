@@ -63,30 +63,8 @@ if (isset($_GET["q"])) {
 }
 echo '</form>' . "\n";
 echo '</div>';
-echo '<form method="POST" action="">' . "\n";
-if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
-    if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
-        echo '<div id="admin">';
-        echo '<a name="admin"  value="Administrace"><i class="fas fa-cog"></i></a>' . "\n";
-        echo '<div id="adminhid">';
-        echo '<input id="reservations" type="submit" name="reservations"  value="Rezervace">' . "\n";
-        echo '<input id="addbook" type="submit" name="users"  value="Uživatelé"><br>';
-        echo '<input type="submit" name="add_book"  value="Přidat knížku"><br>';
-        echo '<input type="submit" name="add_author"  value="Přidat autora"><br>';
-        echo '</div>';
-        echo '</div>';
-    }
-    echo '<div id="klient">';
-    echo '<input type="submit" name="profile" id="profile" value="Můj profil">' . "\n";
-    echo '<input type="submit" name="logout"  id="out" value="Odhlásit se">' . "\n";
-} 
-else {
-    echo '<div id="fullmenue">';
-    echo '<input type="submit" name="login"  value="Přihlásit se"></input>' . "\n";
-    echo '</div>';
-}
-echo '</div>';
-echo '</form>' . "\n";
+
+
 echo '<div id="fullmenue">';
 echo '<form method="POST" action="">' . "\n";
 if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
@@ -102,7 +80,7 @@ if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($con
 echo '</form>' . "\n";
 echo '</div>';
 echo '<div id="filterbackground">';
-echo '<div id="filter" style="display: none;">';
+echo '<div id="filter" style="opacity: 0;">';
 echo '<div id="filtercon">';
 echo '<div class="dropdown">';
 echo '<a id="category" id="zanr">Žánr</a>';
@@ -118,7 +96,7 @@ echo '<br><a id="category" id="autor">Autor</a><br>';
 echo '<div class="dropdown-content" class="autor">';
 $author = get_table($conn, "author");
 foreach ($author as $item) {
-    echo "<a href=\"index.php?q=" . $item["f_name"] . " " . $item["l_name"] . "\">" . $item["f_name"] . " " . $item["l_name"] . "</a><br>\n";
+    // echo "<a href=\"index.php?q=" . $item["f_name"] . " " . $item["l_name"] . "\">" . $item["f_name"] . " " . $item["l_name"] . "</a><br>\n";
 }
 echo '</div>';
 echo '</div>';
@@ -171,6 +149,31 @@ if (isset($_POST["users"])) {
 if (isset($_POST["reservations"])) {
     header("Location: reservations.php");
 }
+echo '<form method="POST" action="">' . "\n";
+if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
+    if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
+        // echo '<div id="admin">';
+        // echo '<a name="admin"  value="Administrace"><i class="fas fa-cog"></i></a>' . "\n";
+        // echo '<div id="adminhid">';
+        // echo '<input id="reservations" type="submit" name="reservations"  value="Rezervace">' . "\n";
+        // echo '<input id="addbook" type="submit" name="users"  value="Uživatelé"><br>';
+        // echo '<input type="submit" name="add_book"  value="Přidat knížku"><br>';
+        // echo '<input type="submit" name="add_author"  value="Přidat autora"><br>';
+        // echo '</div>';
+        // echo '</div>';
+    }
+    echo '<div id="klient">';
+    echo '<input type="submit" name="profile" id="profile" value="Můj profil">' . "\n";
+    echo '<input type="submit" name="logout"  id="out" value="Odhlásit se">' . "\n";
+    echo '</div>';
+} 
+else {
+    echo '<div id="login">';
+    echo '<input type="submit" name="login"  value="Přihlásit se"></input>' . "\n";
+    echo '</div>';
+}
+echo '</div>';
+echo '</form>' . "\n";
 echo '</div>';
 
 
@@ -283,15 +286,15 @@ echo '</div>';
                 <a href="https://www.facebook.com/skolavdf/?ref=bookmarks"><img src="images/facebook.png" alt="logo"></a>
                 <a href="https://www.instagram.com/skolavdf/" target="_blank"><img src="images/instagram.png" alt="logo"></a>
             </div>
-            <div id="splitter"></div>
-            <div id="team">
-                <a href="https://github.com/Boubik" target="_blank">Coder: Jan Chlouba</a><br>
-                <a href="https://github.com/JINXisHERE" target="_blank">Designer: Ibrahim Daghstani</a>
-            </div>
+            <div id="splitter"></div>+
             <div id="kontakt">
             kontakty:<br><br>
             <a href="mailto:kristina.petrackova@skolavdf.cz">Kristina Petráčková</a>: 412 315 049<br>
             <a href="mailto:andrea.skodova@skolavdf.cz">Andrea Škodová</a>: 412 315 049<br>
+            </div>
+            <div id="team">
+            <a href="https://github.com/Boubik" target="_blank">Coder: Jan Chlouba</a><br>
+                <a href="https://github.com/JINXisHERE" target="_blank">Designer: Ibrahim Daghstani</a>
             </div>
         </div>
     </div>
@@ -300,21 +303,36 @@ echo '</div>';
     AOS.init();
 </script>
 <script>
+// function myFunction() {
+//   var x = document.getElementById("filter");
+// //   var y = document.getElementById("logo");
+//   var z = document.getElementById("profile");
+//   var l = document.getElementById("out");
+//   if (x.style.display === "none") {
+//     x.style.display = "block";
+//     x.style.opacity = "100";
+
+//   } else {
+//     x.style.display = "none";
+//     x.style.opacity = "0";
+//     z.style.marginTop = "";
+//     l.style.marginTop = "";
+//   }
+// }
 function myFunction() {
   var x = document.getElementById("filter");
-//   var y = document.getElementById("logo");
-  var z = document.getElementById("profile");
-  var l = document.getElementById("out");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-    // y.style.display = "none";
-    // z.style.marginTop = "25px";
-    // l.style.marginTop = "25px";
+  var z = document.getElementById("klient");
+  var y = document.getElementById("logo");
+  if (x.style.opacity === "0") {
+    x.style.opacity = "100";
+    y.style.opacity = "0";
+    z.style.opacity = "0";
+
 
   } else {
-    x.style.display = "none";
-    z.style.marginTop = "";
-    l.style.marginTop = "";
+    x.style.opacity = "0";
+    y.style.opacity = "100";
+    z.style.opacity = "100";
   }
 }
 </script>

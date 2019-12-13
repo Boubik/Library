@@ -205,7 +205,8 @@
             echo "<div class=\"status\" id=\"" . $status . "\"></div>";
 
             echo '<div id="img">';
-            echo "<img src=\"" . $book["img"] . "\">";
+            echo "<img src=\"" . $book["img"] . "\" onError='this.src=\"/images/no_cover.png\"' >";
+            // echo "<img src=\"" . $book["img"] . "\">";
             echo "</div>";
 
             echo '<div class="info">';

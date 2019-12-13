@@ -231,7 +231,8 @@ body {
 	color: $text-color-white;
 	text-decoration: none;
 }
-.book img {
+.book img{
+	// position: absolute;
 	display: box;
 	height: 150px;
 	padding-top: 10px;
@@ -239,6 +240,10 @@ body {
 	width: 100px;
 	margin-top: 25px;
 }
+// #no_img{
+// 	position: absolute;
+// }
+
 #administrace{
 	display: none;
 

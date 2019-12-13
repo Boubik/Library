@@ -149,7 +149,7 @@
     echo $book["name"];
     echo "</div>";
     echo '<div id="image">';
-    echo "<img src=\"" . $book["img"] . "\" onError='this.src=\"/images/no_cover.png\"' >";
+    echo "<img src=\"" . $book["img"] . "\" onError='this.src=\"images/no_cover.png\"' >";
     echo "</div>";
 
     echo '<div id="info";>';

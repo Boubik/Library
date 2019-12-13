@@ -6,7 +6,6 @@
     <link href="styles/frontend.css" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="images/fav.png" type="image/x-icon" />
     <link rel="icon" href="images/logo.ico">
-    <script src="js/350205fd30.js"></script>
     <?php
 if (isset($_GET["name"])) {
     echo "<title>Kniha: " . filter_input(INPUT_GET, "name") . "</title>";

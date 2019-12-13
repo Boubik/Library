@@ -326,6 +326,10 @@ body {
 	margin-bottom: 20px;
 	z-index: 2;
 }
+.info{
+	display: inline-block;
+	vertical-align: top;
+}
 .reservation{
 	width: 400px;
 	margin-left: 400px;
@@ -611,20 +615,22 @@ body {
 	display: inline-block;
 }
 #filter{
-	position: absolute;
+	position: fixed;
 	background-color: rgba(0, 0, 0, 0.753);
 	backdrop-filter: blur(5px);
 	height: 50px;
 	width: 100vw;
+	margin: auto;
 	margin-top: -19px;
+	
 }
 #filtercon{
-	position: fixed;
+	// position: fixed;
 	text-align: center;
-	width: 600px;
+	width: 400px;
 	margin: auto;
 	border: none;
-	margin-left: 20%;
+	margin: auto;
 	margin-top: 0px;
 	color: white;
 	z-index: 2 !important; 

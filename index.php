@@ -40,10 +40,8 @@ if (isset($_SESSION["rows"])) {
         $_SESSION["rows"] = $per_page;
     }
 }
-
 unset($_POST["rows"]);
 unset($_POST["per_page"]);
-
 if (isset($_GET["q"])) {
     $search = filter_input(INPUT_GET, "q");
 }
@@ -51,7 +49,6 @@ if (isset($_GET["page"])) {
     $page = filter_input(INPUT_GET, "page");
 }
 $books = book($conn, $search, $count_books, $page, $per_page);
-
 echo '<div id="container">';
 echo '<div id="header">';
 echo '<button id="showhide" onclick="myFunction()">MENU</button>';
@@ -66,7 +63,6 @@ if (isset($_GET["q"])) {
 }
 echo '</form>' . "\n";
 echo '</div>';
-
 echo '<form method="POST" action="">' . "\n";
 if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
     if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
@@ -86,7 +82,7 @@ if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($con
 } 
 else {
     echo '<div id="fullmenue">';
-    echo '<input type="submit" name="login"  value="Přihrásit se"></input>' . "\n";
+    echo '<input type="submit" name="login"  value="Přihlásit se"></input>' . "\n";
     echo '</div>';
 }
 echo '</div>';
@@ -128,7 +124,6 @@ echo '</div>';
 echo '</div>';
 echo '<div class="dropdown">';
 echo '<a id="category" id="language">Jazyk</a><br>';
-
 echo '<div class="dropdown-content" class="language"><br>';
 $language = get_table($conn, "book");
 $k = array();
@@ -150,46 +145,32 @@ foreach ($room as $item) {
 }
 echo '</div>';
 echo '</div>';
-
 echo '</div>';
 echo '</div>';
 echo '</div>';
-
-
-
-
-
-
 if (isset($_POST["logout"])) {
     unset($_SESSION["username"]);
     unset($_SESSION["password"]);
     header("Location: index.php");
 }
-
 if (isset($_POST["login"])) {
     header("Location: login.php");
 }
-
 if (isset($_POST["add_book"])) {
     header("Location: add_book.php");
 }
-
 if (isset($_POST["add_author"])) {
     header("Location: add_author.php");
 }
-
 if (isset($_POST["profile"])) {
     header("Location: profile.php");
 }
-
 if (isset($_POST["users"])) {
     header("Location: users.php");
 }
-
 if (isset($_POST["reservations"])) {
     header("Location: reservations.php");
 }
-
 echo '</div>';
 
 
@@ -332,15 +313,10 @@ function myFunction() {
 
   } else {
     x.style.display = "none";
-    // y.style.display = "block";
     z.style.marginTop = "";
     l.style.marginTop = "";
   }
 }
-$('input:text').focus(
-    function(){
-        $(this).val('');
-    });
 </script>
 
 

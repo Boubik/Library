@@ -38,18 +38,19 @@ foreach ($lines as $key => $line) {
     if ($value[4] == "American English") {
         $value[4] = "US";
     }
+    $misto = "---";
     $genres = explode("/", $value[10]);
     $genres2 = explode("/", $value[11]);
 
     $db_room = true;
-    $sql = "INSERT INTO `room`(`name`) VALUES (\"\-\-\-\")";
+    $sql = "INSERT INTO `room`(`name`) VALUES (\"" . $misto . "\")";
     echo $sql;
     $select_search = "SELECT * FROM `room`";
     $select_search = $conn->prepare($select_search);
     $numrows = $select_search->execute();
     if ($numrows > 0) {
         while ($row = $select_search->fetch()) {
-            if ("nikde" == $row["name"]) {
+            if ($misto == $row["name"]) {
                 $db_room = false;
                 break;
             }
@@ -75,7 +76,7 @@ foreach ($lines as $key => $line) {
         }
     }
     if ($insert) {
-        $sql = "INSERT INTO `book`(`name`, `relase`, `language`, `pages`, `room_name`, `price`, `level`, `accesories`, `for`) VALUES (\"" . $value[0] . "\", \"" . $value[3] . "\", \"" . $value[4] . "\", \"" . $value[5] . "\",\"nikde\", \"" . $value[6] . "\", \"" . $value[9] . "\", \"" . $value[13] . "\", ' . $value[14] . ')";
+        $sql = "INSERT INTO `book`(`name`, `relase`, `language`, `pages`, `room_name`, `price`, `level`, `accesories`, `for`) VALUES (\"" . $value[0] . "\", \"" . $value[3] . "\", \"" . $value[4] . "\", \"" . $value[5] . "\",\"" . $misto . "\", \"" . $value[6] . "\", \"" . $value[9] . "\", \"" . $value[13] . "\", '" . $value[14] . "')";
         echo $sql;
         $sql = $conn->prepare($sql);
         $sql->execute();

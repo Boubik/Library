@@ -1098,3 +1098,45 @@ function delete_more_spaces($text)
 {
     return preg_replace('/\s+/', ' ', $text);
 }
+
+
+/**
+ * search
+ * @param   mixed   $conn           db connection
+ * @param   String  $search         search in db
+ * @param   String  $page           page
+ * @param   String  $per_page       users per page
+ * @return  Array   array
+ */
+function my_reservation($conn, $user_id, String $search = "", $page = 1, $per_page = 30)
+{
+    $page -= 1;
+    if ($page == 0) {
+        $skipp = 0;
+    } else {
+        $skipp = $page * $per_page;
+    }
+    if ($search == "") {
+        $sql = "SELECT * FROM `reservation` INNER JOIN `book_has_reservation` ON book_has_reservation.reservation_id = reservation.id INNER JOIN book ON book.id = book_has_reservation.book_id WHERE `user_id` = " . $user_id;
+    } else {
+        $sql = "SELECT * FROM `reservation` INNER JOIN `book_has_reservation` ON book_has_reservation.reservation_id = reservation.id INNER JOIN book ON book.id = book_has_reservation.book_id WHERE `user_id` = 1 AND book.name LIKE '%" . $search . "%'";
+    }
+    //echo $sql;
+    $sql = $conn->prepare($sql);
+    $sql->execute();
+    $i = 0;
+    $users = array();
+    while ($row = $sql->fetch()) {
+        if ($skipp != 0) {
+            $skipp--;
+        } else {
+            if ($i != $per_page) {
+                $users[] = $row;
+                $i++;
+            } else {
+                return $users;
+            }
+        }
+    }
+    return $users;
+}

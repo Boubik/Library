@@ -43,6 +43,11 @@
     } else {
         echo '">' . "\n";
     }
+    if (isset($_GET["q"])) {
+        $search = $_GET["q"];
+    } else {
+        $search = "";
+    }
     echo '</form>' . "\n";
     echo '</div>';
 
@@ -126,7 +131,7 @@
     $old = array();
     $user_id = get_user_id($conn, $_SESSION["username"]);
     $k = get_table($conn, "reservation");
-    foreach ($k as $reservation) {
+    /*foreach ($k as $reservation) {
         if ($reservation["user_id"] == $user_id) {
             $book_has_reservation = mn($conn, "book_has_reservation", $reservation["id"], "reservation_id", "book_id");
             if (strtotime($reservation["e-reservation"]) > strtotime('-' . 1 . ' days')) {
@@ -134,6 +139,14 @@
             } else {
                 $old[] = "<th>" . get_book($conn, $book_has_reservation[0]) . "</th><th>" . to_cz_date(substr($reservation["s-reservation"], 0, 10)) . "</th><th>" . to_cz_date(substr($reservation["e-reservation"], 0, 10)) . "</th>";
             }
+        }
+    }*/
+    $k = my_reservation($conn, $user_id, $search);
+    foreach ($k as $reservation) {
+        if (strtotime($reservation["e-reservation"]) > strtotime('-' . 1 . ' days')) {
+            $new[] = "<th>" . $reservation["name"] . "</th><th>" . to_cz_date(substr($reservation["s-reservation"], 0, 10)) . "</th><th>" . to_cz_date(substr($reservation["e-reservation"], 0, 10)) . "</th>";
+        } else {
+            $old[] = "<th>" . $reservation["name"] . "</th><th>" . to_cz_date(substr($reservation["s-reservation"], 0, 10)) . "</th><th>" . to_cz_date(substr($reservation["e-reservation"], 0, 10)) . "</th>";
         }
     }
 
@@ -171,27 +184,27 @@
     echo '</div>';
 
     ?>
-        <footer>
-    <div id="footer" style="margin-top:150px !important;">
-        <div id="footercon">
-            <div id="social">
-                <a href="http://www.skolavdf.cz" target="_blank"><img src="images/skola_logo_color.png" alt="logo"></a>
-                <a href="https://www.facebook.com/skolavdf/?ref=bookmarks"><img src="images/facebook.png" alt="logo"></a>
-                <a href="https://www.instagram.com/skolavdf/" target="_blank"><img src="images/instagram.png" alt="logo"></a>
-            </div>
-            <div id="splitter"></div>+
-            <div id="kontakt">
-            kontakty:<br><br>
-            <a href="mailto:kristina.petrackova@skolavdf.cz">Kristina Petráčková</a>: 412 315 049<br>
-            <a href="mailto:andrea.skodova@skolavdf.cz">Andrea Škodová</a>: 412 315 049<br>
-            </div>
-            <div id="team">
-            <a href="https://github.com/Boubik" target="_blank">Coder: Jan Chlouba</a><br>
-                <a href="https://github.com/JINXisHERE" target="_blank">Designer: Ibrahim Daghstani</a>
+    <footer>
+        <div id="footer" style="margin-top:150px !important;">
+            <div id="footercon">
+                <div id="social">
+                    <a href="http://www.skolavdf.cz" target="_blank"><img src="images/skola_logo_color.png" alt="logo"></a>
+                    <a href="https://www.facebook.com/skolavdf/?ref=bookmarks"><img src="images/facebook.png" alt="logo"></a>
+                    <a href="https://www.instagram.com/skolavdf/" target="_blank"><img src="images/instagram.png" alt="logo"></a>
+                </div>
+                <div id="splitter"></div>+
+                <div id="kontakt">
+                    kontakty:<br><br>
+                    <a href="mailto:kristina.petrackova@skolavdf.cz">Kristina Petráčková</a>: 412 315 049<br>
+                    <a href="mailto:andrea.skodova@skolavdf.cz">Andrea Škodová</a>: 412 315 049<br>
+                </div>
+                <div id="team">
+                    <a href="https://github.com/Boubik" target="_blank">Coder: Jan Chlouba</a><br>
+                    <a href="https://github.com/JINXisHERE" target="_blank">Designer: Ibrahim Daghstani</a>
+                </div>
             </div>
         </div>
-    </div>
-</footer>
+    </footer>
 
 
 </html>

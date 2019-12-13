@@ -65,8 +65,7 @@
             echo '</div>';
         }
         echo '<div id="klient">';
-        echo '<input type="submit" name="profile" id="profil" value="Můj profil">' . "\n";
-        echo '<input type="submit" name="logout"  value="Odhlásit se">' . "\n";
+        echo '<input type="submit" name="logout"  id="out" value="Odhlásit se">' . "\n";
     } else {
         echo '<div id="fullmenue">';
         echo '<input type="submit" name="login"  value="Přihrásit se"></input>' . "\n";
@@ -83,7 +82,7 @@
             echo '<input type="submit" name="add_book"  value="Přidat knížku">';
             echo '<input type="submit" name="add_author"  value="Přidat autora">';
         }
-        echo '<input type="submit" name="profile"  value="Můj profil">';
+        echo '<input type="submit" name="profile" value="Můj profil">';
         echo '<input type="submit" name="logout"  value="Odhlásit se">';
     } else {
         echo '<input type="submit" name="login"  value="Přihrásit se"></input>';
@@ -91,6 +90,7 @@
     echo '</form>' . "\n";
     echo '</div>';
     echo '</div>';
+
 
     if (isset($_POST["logout"])) {
         unset($_SESSION["username"]);
@@ -125,7 +125,9 @@
 
     echo '<div id="main">';
     echo '<div id="res">';
-    echo "<a href=\"login.php?reset=" . $_SESSION["username"] . "\">Change password</a><br>";
+    echo '<hr><br>';
+    echo "<a href=\"login.php?reset=" . $_SESSION["username"] . "\">Změnit heslo</a><br>";
+    echo '<br><hr>'; 
     echo '</div>';
     $new = array();
     $old = array();

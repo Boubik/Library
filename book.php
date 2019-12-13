@@ -41,10 +41,11 @@
 
     echo '<div class="container">';
     echo '<div id="header">';
+    echo '<button id="showhide" onclick="myFunction()">MENU</button>';
     echo '<div id="logo"><a href="index.php"><img src="images/skola_logo_color.png" alt="logo"></a></div>';
     echo '<div id="searchfull">';
     echo '<form method="GET" action="">' . "\n";
-    echo '<input type="text" onfocusout=" " placeholder="Hledáte něco?" name="q" autocomplete="off" value="';
+    echo '<input type="text" placeholder="  Hledáte něco?" name="q" autocomplete="off"';
     if (isset($_GET["q"])) {
         echo filter_input(INPUT_GET, "q") . '">' . "\n";
     } else {
@@ -53,29 +54,7 @@
     echo '</form>' . "\n";
     echo '</div>';
 
-    echo '<form method="POST" action="">' . "\n";
-    if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
-        if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
-            echo '<div id="admin">';
-            echo '<a name="admin"  value="Administrace"><i class="fas fa-cog"></i></a>' . "\n";
-            echo '<div id="adminhid">';
-            echo '<input id="reservations" type="submit" name="reservations"  value="Rezervace">' . "\n";
-            echo '<input id="addbook" type="submit" name="users"  value="Uživatelé"><br>';
-            echo '<input type="submit" name="add_book"  value="Přidat knížku"><br>';
-            echo '<input type="submit" name="add_author"  value="Přidat autora"><br>';
-            echo '</div>';
-            echo '</div>';
-        }
-        echo '<div id="klient">';
-        echo '<input type="submit" name="profile" id="profil" value="Můj profil">' . "\n";
-        echo '<input type="submit" name="logout"  value="Odhlásit se">' . "\n";
-    } else {
-        echo '<div id="fullmenue">';
-        echo '<input type="submit" name="login"  value="Přihrásit se"></input>' . "\n";
-        echo '</div>';
-    }
-    echo '</div>';
-    echo '</form>' . "\n";
+
     echo '<div id="fullmenue">';
     echo '<form method="POST" action="">' . "\n";
     if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
@@ -87,11 +66,33 @@
         }
         echo '<input type="submit" name="profile"  value="Můj profil">';
         echo '<input type="submit" name="logout"  value="Odhlásit se">';
-    } else {
-        echo '<input type="submit" name="login"  value="Přihrásit se"></input>';
     }
     echo '</form>' . "\n";
     echo '</div>';
+    echo '<form method="POST" action="">' . "\n";
+    if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
+        if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
+            // echo '<div id="admin">';
+            // echo '<a name="admin"  value="Administrace"><i class="fas fa-cog"></i></a>' . "\n";
+            // echo '<div id="adminhid">';
+            // echo '<input id="reservations" type="submit" name="reservations"  value="Rezervace">' . "\n";
+            // echo '<input id="addbook" type="submit" name="users"  value="Uživatelé"><br>';
+            // echo '<input type="submit" name="add_book"  value="Přidat knížku"><br>';
+            // echo '<input type="submit" name="add_author"  value="Přidat autora"><br>';
+            // echo '</div>';
+            // echo '</div>';
+        }
+        echo '<div id="klient">';
+        echo '<input type="submit" name="profile" id="profile" value="Můj profil">' . "\n";
+        echo '<input type="submit" name="logout"  id="out" value="Odhlásit se">' . "\n";
+        echo '</div>';
+    } else {
+        echo '<div id="login">';
+        echo '<input type="submit" name="login"  value="Přihlásit se"></input>' . "\n";
+        echo '</div>';
+    }
+    echo '</div>';
+    echo '</form>' . "\n";
     echo '</div>';
 
     if (isset($_POST["logout"])) {

@@ -221,7 +221,9 @@
         echo "</table>";
     } else {
         echo "<div class=\"warning\">";
+        echo '<hr>';
         echo "Žádné rezervace";
+        echo '<hr>';
         echo "</div>";
     }
     echo "</div>";

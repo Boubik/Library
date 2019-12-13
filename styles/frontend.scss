@@ -18,8 +18,12 @@ p{
 hr{
 	width: 90%;
 }
+.warning{
+	color: white;
+	text-align: center;
+}
 #main{
-	margin-top: 100px;
+	margin-top: 50px;
 	height: 100vh;
 	padding-top: 5%;
 }
@@ -307,6 +311,20 @@ body {
 	margin-left: 400px;
 	color: $text-color-white;
 }
+#res{
+	color: white;
+	text-decoration: none;
+	text-align: center;
+
+}
+#res a{
+	padding: 10px;
+	border-radius: 25px;
+	text-decoration: none;
+	color: rgb(0, 0, 0);
+	border: 1px solid transparent;
+	background-color: #5DADE2;
+}
 .reservation input[type=submit]{
 	margin-top: 20px;
 	background-color: #5DADE2;
@@ -366,7 +384,7 @@ body {
 
 }
 #sel{
-	margin-left: 50px;
+	margin-left: 225px;
 	margin-top: 20px;
 	width: 80px!important;
 }

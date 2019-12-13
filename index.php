@@ -48,6 +48,29 @@
     if (isset($_GET["page"])) {
         $page = filter_input(INPUT_GET, "page");
     }
+    if (isset($_POST["logout"])) {
+        unset($_SESSION["username"]);
+        unset($_SESSION["password"]);
+        header("Location: index.php");
+    }
+    if (isset($_POST["login"])) {
+        header("Location: login.php");
+    }
+    if (isset($_POST["add_book"])) {
+        header("Location: add_book.php");
+    }
+    if (isset($_POST["add_author"])) {
+        header("Location: add_author.php");
+    }
+    if (isset($_POST["profile"])) {
+        header("Location: profile.php");
+    }
+    if (isset($_POST["users"])) {
+        header("Location: users.php");
+    }
+    if (isset($_POST["reservations"])) {
+        header("Location: reservations.php");
+    }
     $books = book($conn, $search, $count_books, $page, $per_page);
     echo '<div id="container">';
     echo '<div id="header">';
@@ -126,29 +149,6 @@
     echo '</div>';
     echo '</div>';
     echo '</div>';
-    if (isset($_POST["logout"])) {
-        unset($_SESSION["username"]);
-        unset($_SESSION["password"]);
-        header("Location: index.php");
-    }
-    if (isset($_POST["login"])) {
-        header("Location: login.php");
-    }
-    if (isset($_POST["add_book"])) {
-        header("Location: add_book.php");
-    }
-    if (isset($_POST["add_author"])) {
-        header("Location: add_author.php");
-    }
-    if (isset($_POST["profile"])) {
-        header("Location: profile.php");
-    }
-    if (isset($_POST["users"])) {
-        header("Location: users.php");
-    }
-    if (isset($_POST["reservations"])) {
-        header("Location: reservations.php");
-    }
     echo '<form method="POST" action="">' . "\n";
     if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
         if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {

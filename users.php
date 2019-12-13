@@ -179,46 +179,52 @@
     $users = users($conn, $search, $page, $per_page);
     $count_users = count_users($conn, $search);
 
-    echo '<div id="usermain">';
-    echo '<table id="tab">';
-    echo '<tr id="no">';
-    echo '<th>Jméno</th><th>Přezdívka</th><th>Role</th>';
-    if ($is_admin) {
-        echo "<th>Smazat</th>";
-    }
-    echo "</tr>";
-    foreach ($users as $value) {
-        echo "<tr>";
-
-        echo "<th> " . $value["f_name"] . " " . $value["l_name"] . "</th><th>" . $value["username"] . "</th>";
-        echo "<th>";
-
-        echo '<form method="GET" action="">';
-        echo '<input type="text" name="username" value="' . $value["username"] . '" class="none">';
-        echo '<select name="role" id="sel">' . "\n";
-        foreach ($roles as $item) {
-            if ($item == $value["role"]) {
-                echo '<option selected>';
-            } else {
-                echo '<option>';
-            }
-            echo $item . '</option>' . "\n";
-        }
-        echo '</select>' . "\n";
-
-        echo '<input type="submit" name="set_role" value="nastavit">';
-        echo '</form></th>';
-
+    if (isset($users[0])) {
+        echo '<div id="usermain">';
+        echo '<table id="tab">';
+        echo '<tr id="no">';
+        echo '<th>Jméno</th><th>Přezdívka</th><th>Role</th>';
         if ($is_admin) {
+            echo "<th>Smazat</th>";
+        }
+        echo "</tr>";
+        foreach ($users as $value) {
+            echo "<tr>";
+
+            echo "<th> " . $value["f_name"] . " " . $value["l_name"] . "</th><th>" . $value["username"] . "</th>";
             echo "<th>";
+
             echo '<form method="GET" action="">';
             echo '<input type="text" name="username" value="' . $value["username"] . '" class="none">';
-            echo '<input id="del" type="submit" name="delete" value="smazat">';
-            echo '</form>';
-            echo '</th>';
-        }
+            echo '<select name="role" id="sel">' . "\n";
+            foreach ($roles as $item) {
+                if ($item == $value["role"]) {
+                    echo '<option selected>';
+                } else {
+                    echo '<option>';
+                }
+                echo $item . '</option>' . "\n";
+            }
+            echo '</select>' . "\n";
 
-        echo "</tr>";
+            echo '<input type="submit" name="set_role" value="nastavit">';
+            echo '</form></th>';
+
+            if ($is_admin) {
+                echo "<th>";
+                echo '<form method="GET" action="">';
+                echo '<input type="text" name="username" value="' . $value["username"] . '" class="none">';
+                echo '<input id="del" type="submit" name="delete" value="smazat">';
+                echo '</form>';
+                echo '</th>';
+            }
+
+            echo "</tr>";
+        }
+    } else {
+        echo "<div class=\"warning\">";
+        echo "Žádný takový uživatel";
+        echo "</div>";
     }
     echo "</table>";
     echo "</div>";

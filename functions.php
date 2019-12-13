@@ -906,6 +906,7 @@ function users($conn, String $search = "", $page = 1, $per_page = 30)
     $sql = $conn->prepare($sql);
     $sql->execute();
     $i = 0;
+    $users = array();
     while ($row = $sql->fetch()) {
         if ($skipp != 0) {
             $skipp--;

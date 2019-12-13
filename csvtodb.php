@@ -42,7 +42,7 @@ foreach ($lines as $key => $line) {
     $genres2 = explode("/", $value[11]);
 
     $db_room = true;
-    $sql = "INSERT INTO `room`(`name`) VALUES (\"nikde\")";
+    $sql = "INSERT INTO `room`(`name`) VALUES (\"\-\-\-\")";
     echo $sql;
     $select_search = "SELECT * FROM `room`";
     $select_search = $conn->prepare($select_search);

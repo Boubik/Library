@@ -10,7 +10,7 @@
     <script src="js/sha3.js"></script>
 </head>
 
-<body>
+<body style="overflow:hidden;">
     <?php
     include "functions.php";
     ini_set('max_execution_time', 0);
@@ -18,7 +18,7 @@
     date_default_timezone_set('Europe/Prague');
     $conn = connect_to_db($configs["servername"], $configs["dbname"], $configs["username"], $configs["password"]);
     session_start();
-    echo '<div class="container">';
+    echo '<div class="logcon">';
     echo '<div id="logincon">';
     if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"]) and !isset($_GET["reset"])) {
         header("Location: index.php");
@@ -117,42 +117,9 @@
     echo '</div>';
     echo '</div>';
     echo '</div>';
+    echo '</div>';
 
     ?>
-    <footer>
-    <div id="footer" style="margin-top:150px !important;">
-        <div id="footercon">
-            <div id="social">
-                <a href="http://www.skolavdf.cz" target="_blank"><img src="images/skola_logo_color.png" alt="logo"></a>
-                <a href="https://www.facebook.com/skolavdf/?ref=bookmarks"><img src="images/facebook.png" alt="logo"></a>
-                <a href="https://www.instagram.com/skolavdf/" target="_blank"><img src="images/instagram.png" alt="logo"></a>
-            </div>
-            <div id="splitter"></div>+
-            <div id="kontakt">
-            kontakty:<br><br>
-            <a href="mailto:kristina.petrackova@skolavdf.cz">Kristina Petráčková</a>: 412 315 049<br>
-            <a href="mailto:andrea.skodova@skolavdf.cz">Andrea Škodová</a>: 412 315 049<br>
-            </div>
-            <div id="team">
-            <a href="https://github.com/Boubik" target="_blank">Coder: Jan Chlouba</a><br>
-                <a href="https://github.com/JINXisHERE" target="_blank">Designer: Ibrahim Daghstani</a>
-            </div>
-        </div>
-    </div>
-</footer>
-    <script type="text/javascript">
-        $('.form-signin').submit(function() {
-            if ($("#password").val().length !== 0) {
-                var hash = CryptoJS.SHA3($("#password").val(), {
-                    outputLength: 512
-                });
-                $("#passwordHMAC").val(hash);
-            } else {
-                $("#passwordHMAC").val("");
-            }
-            $("#password").val("");
-        });
-    </script>
 </body>
 <script>
     function myFunction() {
@@ -167,6 +134,19 @@
         }
     }
 </script>
+    <script type="text/javascript">
+        $('.form-signin').submit(function() {
+            if ($("#password").val().length !== 0) {
+                var hash = CryptoJS.SHA3($("#password").val(), {
+                    outputLength: 512
+                });
+                $("#passwordHMAC").val(hash);
+            } else {
+                $("#passwordHMAC").val("");
+            }
+            $("#password").val("");
+        });
+    </script>
 
 
 </html>

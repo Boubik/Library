@@ -93,56 +93,6 @@
     }
     echo '</div>';
     echo '</form>' . "\n";
-    echo '</div>';
-
-    if (isset($_POST["logout"])) {
-        unset($_SESSION["username"]);
-        unset($_SESSION["password"]);
-        header("Location: index.php");
-    }
-
-    if (isset($_POST["login"])) {
-        header("Location: login.php");
-    }
-
-    if (isset($_POST["add_book"])) {
-        header("Location: add_book.php");
-    }
-
-    if (isset($_POST["add_author"])) {
-        header("Location: add_author.php");
-    }
-
-    if (isset($_POST["profile"])) {
-        header("Location: profile.php");
-    }
-
-    if (isset($_POST["users"])) {
-        header("Location: users.php");
-    }
-
-    if (isset($_POST["reservations"])) {
-        header("Location: reservations.php");
-    }
-
-    if (isset($_POST["edit"])) {
-        header("Location: edit_book.php?id=" . $book["id"] . "&name=" . $_GET["name"]);
-    }
-
-    if (isset($_POST["delete_reservation"])) {
-        delete_reservation($conn, $_POST["reservation_id"]);
-    }
-
-    if (isset($_POST["reservations"])) {
-        header("Location: reservations.php");
-    }
-
-    if (isset($_POST["delete_book"])) {
-        hide_book($conn, $book["id"]);
-        header("Location: index.php");
-    }
-
-
     echo '<div id="bookmain">';
     echo "<div id=\"book\">";
     echo "<div class=\"name\">";
@@ -331,6 +281,56 @@
     echo "</div>";
     echo "</div>";
     echo '</div>';
+
+    if (isset($_POST["logout"])) {
+        unset($_SESSION["username"]);
+        unset($_SESSION["password"]);
+        header("Location: index.php");
+    }
+
+    if (isset($_POST["login"])) {
+        header("Location: login.php");
+    }
+
+    if (isset($_POST["add_book"])) {
+        header("Location: add_book.php");
+    }
+
+    if (isset($_POST["add_author"])) {
+        header("Location: add_author.php");
+    }
+
+    if (isset($_POST["profile"])) {
+        header("Location: profile.php");
+    }
+
+    if (isset($_POST["users"])) {
+        header("Location: users.php");
+    }
+
+    if (isset($_POST["reservations"])) {
+        header("Location: reservations.php");
+    }
+
+    if (isset($_POST["edit"])) {
+        header("Location: edit_book.php?id=" . $book["id"] . "&name=" . $_GET["name"]);
+    }
+
+    if (isset($_POST["delete_reservation"])) {
+        delete_reservation($conn, $_POST["reservation_id"]);
+    }
+
+    if (isset($_POST["reservations"])) {
+        header("Location: reservations.php");
+    }
+
+    if (isset($_POST["delete_book"])) {
+        hide_book($conn, $book["id"]);
+        header("Location: index.php");
+    }
+
+
+    
     ?>
     <footer>
     <div id="footer" style="margin-top:150px !important;">

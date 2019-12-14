@@ -78,7 +78,7 @@
     echo '<div id="logo"><a href="index.php"><img src="images/skola_logo_color.png" alt="logo"></a></div>';
     echo '<div id="searchfull">';
     echo '<form method="GET" action="">' . "\n";
-    echo '<input type="text" placeholder="  Hledáte něco?" name="q" autocomplete="off"';
+    echo '<input type="text" placeholder="  Hledáte něco?" name="q" autocomplete="off" value="';
     if (isset($_GET["q"])) {
         echo filter_input(INPUT_GET, "q") . '">' . "\n";
     } else {
@@ -336,7 +336,7 @@
             y.style.opacity = "100";
             z.style.opacity = "100";
             p.style.display = "block";
-            
+
         }
     }
 </script>

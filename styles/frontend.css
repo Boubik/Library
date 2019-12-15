@@ -322,6 +322,7 @@ body {
 #administrace input[type=submit]#del {
   outline: none;
   background-color: red;
+  margin-top: 10px;
 }
 
 #bookmain .name {
@@ -636,6 +637,10 @@ body {
   background-color: #5DADE2;
 }
 
+#del {
+  margin-top: 5px;
+}
+
 #tab input[type=submit]#del:hover {
   color: white;
   background-color: red;
@@ -832,6 +837,32 @@ body {
   user-select: none;
 }
 
+#set {
+  width: 200px;
+}
+
+#set select {
+  margin-left: 120px;
+  width: 100px;
+  height: 25px;
+  border-radius: 20px;
+  margin-top: 5px;
+  text-align-last: center;
+  outline: none;
+}
+
+#sett {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  float: left;
+}
+
+#sett input[type=submit] {
+  margin-top: -25px;
+  float: right;
+}
+
 .dropdown:hover
 .dropdown-content {
   display: block;
@@ -899,9 +930,10 @@ body {
     display: none;
   }
   #sel {
+    position: relative;
     width: 50px;
     width: 100px;
-    border: 1px solid black;
+    z-index: 1;
   }
   .dropdown-content {
     display: none;
@@ -935,7 +967,7 @@ body {
     z-index: 1;
     width: auto;
     margin-top: -50px !important;
-    margin-left: 100px !important;
+    margin-left: 115px !important;
     max-height: 400px;
     overflow: auto;
   }

@@ -194,9 +194,11 @@
             echo "<th> " . $value["f_name"] . " " . $value["l_name"] . "</th><th>" . $value["username"] . "</th>";
             echo "<th>";
 
+            echo '<div id="set">';
             echo '<form method="GET" action="">';
             echo '<input type="text" name="username" value="' . $value["username"] . '" class="none">';
-            echo '<select name="role" id="sel">' . "\n";
+            echo '<div id= id="sett">';
+            echo '<select name="role">' . "\n";
             foreach ($roles as $item) {
                 if ($item == $value["role"]) {
                     echo '<option selected>';
@@ -206,9 +208,13 @@
                 echo $item . '</option>' . "\n";
             }
             echo '</select>' . "\n";
-
+            echo '</div>';
+            echo '<div id="sett">';
             echo '<input type="submit" name="set_role" value="nastavit">';
+            echo '</div>';
             echo '</form></th>';
+
+            echo '</div>';
 
             if ($is_admin) {
                 echo "<th>";

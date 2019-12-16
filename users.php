@@ -82,7 +82,7 @@
             echo '</div>';
         }
         echo '<div id="klient">';
-        echo '<input type="submit" name="profile" id="profil" value="Můj profil">' . "\n";
+        echo '<input type="submit" name="profile" id="profile" value="Můj profil">' . "\n";
         echo '<input type="submit" name="logout"  value="Odhlásit se">' . "\n";
     } else {
         echo '<div id="fullmenue">';
@@ -100,7 +100,7 @@
             echo '<input type="submit" name="add_book"  value="Přidat knížku">';
             echo '<input type="submit" name="add_author"  value="Přidat autora">';
         }
-        echo '<input type="submit" name="profile"  value="Můj profil">';
+        echo '<input type="submit" name="profile" value="Můj profil">';
         echo '<input type="submit" name="logout"  value="Odhlásit se">';
     } else {
         echo '<input type="submit" name="login"  value="Přihrásit se"></input>';
@@ -264,23 +264,28 @@
         }
     }
     echo "</div>";
-    echo '<div id="footer" style="margin-top:100px;">
-<div id="footercon">
-<div id="social">
-<a href="http://www.skolavdf.cz" target="_blank"><img src="images/skola_logo_color.png" alt="logo"></a>
-<a href="https://www.facebook.com/skolavdf/?ref=bookmarks"><img src="images/facebook.png" alt="logo"></a>
-<a href="https://www.instagram.com/skolavdf/" target="_blank"><img src="images/instagram.png" alt="logo"></a>
-</div>
-<div id="splitter"></div>
-    <div id="team">
-    <a href="https://github.com/Boubik" target="_blank">Coder: Jan Chlouba</a><br>
-    <a href="https://github.com/JINXisHERE" target="_blank">Designer: Ibrahim Daghstani</a>
-
-</div>
-</div>
-</div>';
     echo '</div>';
     ?>
 </body>
-
+<footer>
+    <div id="footer" style="margin-top:150px !important;">
+        <div id="footercon">
+            <div id="social">
+                <a href="http://www.skolavdf.cz" target="_blank"><img src="images/skola_logo_color.png" alt="logo"></a>
+                <a href="https://www.facebook.com/skolavdf/?ref=bookmarks"><img src="images/facebook.png" alt="logo"></a>
+                <a href="https://www.instagram.com/skolavdf/" target="_blank"><img src="images/instagram.png" alt="logo"></a>
+            </div>
+            <div id="splitter"></div>+
+            <div id="kontakt">
+                kontakty:<br><br>
+                <a href="mailto:kristina.petrackova@skolavdf.cz">Kristina Petráčková</a>: 412 315 049<br>
+                <a href="mailto:andrea.skodova@skolavdf.cz">Andrea Škodová</a>: 412 315 049<br>
+            </div>
+            <div id="team">
+                <a href="https://github.com/Boubik" target="_blank">Coder: Jan Chlouba</a><br>
+                <a href="https://github.com/JINXisHERE" target="_blank">Designer: Ibrahim Daghstani</a>
+            </div>
+        </div>
+    </div>
+</footer>
 </html>

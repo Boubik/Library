@@ -136,7 +136,7 @@
     echo '<div id="container">';
     echo '<div id="header">';
     echo '<button id="showhide" onclick="myFunction()">MENU</button>';
-    echo '<div id="logo"><a href="index.php"><img src="images/skola_logo_color.png" alt="logo"></a></div>';
+    echo '<div id="logo"><a href="index.php?reset=true"><img src="images/skola_logo_color.png" alt="logo"></a></div>';
     echo '<div id="searchfull">';
     echo '<form method="GET" action="">' . "\n";
     echo '<input type="text" placeholder="  Hledáte něco?" name="q" autocomplete="off" value="';
@@ -165,18 +165,14 @@
     echo '</div>';
     echo '<div id="filterbackground">';
     echo '<div id="filter" style="opacity: 0;">';
-    if ($search != "") {
-        echo '<a href="index.php?q=' . $search . '&reset=true">vymazat filtr</a>';
-    } else {
-        echo '<a href="index.php?reset=true">vymazat filtr</a>';
-    }
+    echo '<a href="index.php?reset=true">vymazat filtr</a>';
     echo '<div id="filtercon">';
     echo '<div class="dropdown">';
     echo '<a id="category" id="zanr">Žánr</a>';
     echo '<div class="dropdown-content" class="zanr">';
     $genres = get_table($conn, "genre");
     foreach ($genres as $item) {
-        echo "<a href=\"index.php?genre=" . $item["id"] . "\">" . $item["name"] . "</a><br>\n";
+        echo "<a href=\"index.php?q=" . $search . "&genre=" . $item["id"] . "\">" . $item["name"] . "</a><br>\n";
     }
     echo '</div>';
     echo '</div>';
@@ -185,7 +181,7 @@
     echo '<div class="dropdown-content" class="autor">';
     $author = get_table($conn, "author");
     foreach ($author as $item) {
-        echo "<a href=\"index.php?author=" . $item["id"] . "\">" . $item["f_name"] . " " . $item["l_name"] . "</a><br>\n";
+        echo "<a href=\"index.php?q=" . $search . "&author=" . $item["id"] . "\">" . $item["f_name"] . " " . $item["l_name"] . "</a><br>\n";
     }
     echo '</div>';
     echo '</div>';
@@ -196,7 +192,7 @@
     $k = array();
     foreach ($language as $item) {
         if (!in_array($item["language"], $k)) {
-            echo "<a href=\"index.php?language=" . $item["language"] . "\">" . $item["language"] . "</a><br>\n";
+            echo "<a href=\"index.php?q=" . $search . "&language=" . $item["language"] . "\">" . $item["language"] . "</a><br>\n";
             $k[] = $item["language"];
         }
     }
@@ -207,8 +203,7 @@
     echo '<div class="dropdown-content" class="room">';
     $room = get_table($conn, "room");
     foreach ($room as $item) {
-        echo "<a href=\"
-        index.php?room=" . $item["name"] . "\">" . $item["name"] . "</a><br>\n";
+        echo "<a href=\"index.php?q=" . $search . "&room=" . $item["name"] . "\">" . $item["name"] . "</a><br>\n";
     }
     echo '</div>';
     echo '</div>';
@@ -346,7 +341,7 @@
             }
 
             echo '<div id="book">';
-             echo "<div class=\"status\" id=\"" . $status . "\"></div>";
+            echo "<div class=\"status\" id=\"" . $status . "\"></div>";
 
             echo '<div id="img">';
             echo "<img src=\"" . $book["img"] . "\" onError='this.src=\"images/no_cover.png\"' >";

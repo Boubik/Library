@@ -9,6 +9,11 @@
     <link rel="shortcut icon" href="images/skola_logo_mono.png" type="image/x-icon" />
     <script src="js/aos.js"></script>
     <title>Knihovna|VOŠ, SPŠ A SOŠ VDF</title>
+    <style>
+        .none {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -48,6 +53,62 @@
     if (isset($_GET["page"])) {
         $page = filter_input(INPUT_GET, "page");
     }
+    if (isset($_GET["reset"]) and $_GET["reset"] == "true") {
+        $_SESSION["search_genre"] = "";
+        $_SESSION["search_author"] = "";
+        $_SESSION["search_language"] = "";
+        $_SESSION["search_room"] = "";
+        if ($search != "") {
+            header("Location: index.php?q=" . $search);
+        } else {
+            header("Location: index.php");
+        }
+    }
+
+
+    if (isset($_GET["genre"])) {
+        $search_genre = filter_input(INPUT_GET, "genre");
+        $_SESSION["search_genre"] = $search_genre;
+    } else {
+        if (isset($_SESSION["search_genre"])) {
+            $search_genre = $_SESSION["search_genre"];
+        } else {
+            $search_genre = "";
+        }
+    }
+
+    if (isset($_GET["author"])) {
+        $search_author = filter_input(INPUT_GET, "author");
+        $_SESSION["search_author"] = $search_author;
+    } else {
+        if (isset($_SESSION["search_author"])) {
+            $search_author = $_SESSION["search_author"];
+        } else {
+            $search_author = "";
+        }
+    }
+
+    if (isset($_GET["language"])) {
+        $search_language = filter_input(INPUT_GET, "language");
+        $_SESSION["search_language"] = $search_language;
+    } else {
+        if (isset($_SESSION["search_language"])) {
+            $search_language = $_SESSION["search_language"];
+        } else {
+            $search_language = "";
+        }
+    }
+
+    if (isset($_GET["room"])) {
+        $search_room = filter_input(INPUT_GET, "room");
+        $_SESSION["search_room"] = $search_room;
+    } else {
+        if (isset($_SESSION["search_room"])) {
+            $search_room = $_SESSION["search_room"];
+        } else {
+            $search_room = "";
+        }
+    }
     if (isset($_POST["logout"])) {
         unset($_SESSION["username"]);
         unset($_SESSION["password"]);
@@ -71,7 +132,7 @@
     if (isset($_POST["reservations"])) {
         header("Location: reservations.php");
     }
-    $books = book($conn, $search, $count_books, $page, $per_page);
+    $books = book($conn, $search, $search_genre, $search_author, $search_language, $search_room, $count_books, $page, $per_page);
     echo '<div id="container">';
     echo '<div id="header">';
     echo '<button id="showhide" onclick="myFunction()">MENU</button>';
@@ -104,13 +165,18 @@
     echo '</div>';
     echo '<div id="filterbackground">';
     echo '<div id="filter" style="opacity: 0;">';
+    if ($search != "") {
+        echo '<a href="index.php?q=' . $search . '&reset=true">vymazat filtr</a>';
+    } else {
+        echo '<a href="index.php?reset=true">vymazat filtr</a>';
+    }
     echo '<div id="filtercon">';
     echo '<div class="dropdown">';
     echo '<a id="category" id="zanr">Žánr</a>';
     echo '<div class="dropdown-content" class="zanr">';
     $genres = get_table($conn, "genre");
     foreach ($genres as $item) {
-        echo "<a href=\"index.php?q=" . $item["name"] . "\">" . $item["name"] . "</a><br>\n";
+        echo "<a href=\"index.php?genre=" . $item["id"] . "\">" . $item["name"] . "</a><br>\n";
     }
     echo '</div>';
     echo '</div>';
@@ -119,7 +185,7 @@
     echo '<div class="dropdown-content" class="autor">';
     $author = get_table($conn, "author");
     foreach ($author as $item) {
-        echo "<a href=\"index.php?q=" . $item["f_name"] . " " . $item["l_name"] . "\">" . $item["f_name"] . " " . $item["l_name"] . "</a><br>\n";
+        echo "<a href=\"index.php?author=" . $item["id"] . "\">" . $item["f_name"] . " " . $item["l_name"] . "</a><br>\n";
     }
     echo '</div>';
     echo '</div>';
@@ -130,7 +196,7 @@
     $k = array();
     foreach ($language as $item) {
         if (!in_array($item["language"], $k)) {
-            echo "<a href=\"index.php?q=" . $item["language"] . "\">" . $item["language"] . "</a><br>\n";
+            echo "<a href=\"index.php?language=" . $item["language"] . "\">" . $item["language"] . "</a><br>\n";
             $k[] = $item["language"];
         }
     }
@@ -142,11 +208,89 @@
     $room = get_table($conn, "room");
     foreach ($room as $item) {
         echo "<a href=\"
-        index.php?q=" . $item["name"] . "\">" . $item["name"] . "</a><br>\n";
+        index.php?room=" . $item["name"] . "\">" . $item["name"] . "</a><br>\n";
     }
     echo '</div>';
     echo '</div>';
     echo '</div>';
+
+
+    if ($search_genre != "" or $search_author != "" or $search_language != "" or $search_room != "") {
+        echo 'Filtr: <br>';
+        require "connector/Select.php";
+    }
+    echo '<table id="tab">';
+    if ($search_genre != "") {
+        echo "<tr>";
+        echo "<th>";
+        echo "žánr: ";
+        echo "</th>";
+
+        echo "<th>";
+        $s = new Select();
+        $s->setselect("name");
+        $s->setfrom("genre");
+        $s->setwhere("`id` = " . $search_genre);
+        $search_genre = exe_sql($conn, $s);
+        if (mb_strlen($search_genre[0]["name"]) > 12) {
+            echo mb_substr($search_genre[0]["name"], 0, 9) . "...";
+        } else {
+            echo $search_genre[0]["name"];
+        }
+        echo "</th>";
+        echo "</tr>";
+    }
+    if ($search_author != "") {
+        echo "<tr>";
+        echo "<th>";
+        echo "autor: ";
+        echo "</th>";
+
+        echo "<th>";
+        $s = new Select();
+        $s->setselect("f_name");
+        $s->addselect("l_name");
+        $s->setfrom("author");
+        $s->setwhere("`id` = " . $search_author);
+        $search_author = exe_sql($conn, $s);
+        if (mb_strlen($search_author[0]["l_name"]) > 10) {
+            $search_author = mb_substr($search_author[0]["f_name"], 0, 1) . ". " . mb_substr($search_author[0]["l_name"], 0, 7) . "...";
+        } else {
+            $search_author = mb_substr($search_author[0]["f_name"], 0, 1) . ". " . $search_author[0]["l_name"];
+        }
+        echo $search_author;
+        echo "</th>";
+        echo "</tr>";
+    }
+    if ($search_language != "") {
+        echo "<tr>";
+        echo "<th>";
+        echo "jazyk: ";
+        echo "</th>";
+
+        echo "<th>";
+        echo $search_language;
+        echo "</th>";
+        echo "</tr>";
+    }
+    if ($search_room != "") {
+        echo "<tr>";
+        echo "<th>";
+        echo "místnost: ";
+        echo "</th>";
+
+        echo "<th>";
+        if (mb_strlen($search_room) > 12) {
+            echo mb_substr($search_room, 0, 9) . "...";
+        } else {
+            echo $search_room;
+        }
+        echo "</th>";
+        echo "</tr>";
+    }
+    echo "</table>";
+
+
     echo '</div>';
     echo '</div>';
     echo '<form method="POST" action="">' . "\n";

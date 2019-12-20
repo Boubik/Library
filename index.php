@@ -346,7 +346,7 @@
             }
 
             echo '<div id="book">';
-            echo "<div class=\"status\" id=\"" . $status . "\"></div>";
+             echo "<div class=\"status\" id=\"" . $status . "\"></div>";
 
             echo '<div id="img">';
             echo "<img src=\"" . $book["img"] . "\" onError='this.src=\"images/no_cover.png\"' >";

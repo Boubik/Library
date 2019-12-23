@@ -912,7 +912,21 @@ body {
   display: none;
 }
 
+#Filter_table {
+  display: none;
+}
+
 @media only screen and (min-width: 1000px) {
+  #Filter_table {
+    display: block;
+  }
+  #Filter_table th {
+    padding: 7px;
+  }
+  #reset {
+    text-align: center !important;
+    padding-left: 20px;
+  }
   #login {
     margin-right: 0;
   }

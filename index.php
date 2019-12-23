@@ -165,7 +165,7 @@
     echo '</div>';
     echo '<div id="filterbackground">';
     echo '<div id="filter" style="opacity: 0;">';
-    echo '<a href="index.php?reset=true">vymazat filtr</a>';
+    echo '<a id="reset" href="index.php?reset=true">vymazat filtr</a>';
     echo '<div id="filtercon">';
     echo '<div class="dropdown">';
     echo '<a id="category" id="zanr">Žánr</a>';
@@ -211,9 +211,10 @@
 
 
     if ($search_genre != "" or $search_author != "" or $search_language != "" or $search_room != "") {
-        echo 'Filtr: <br>';
+        echo '<div style="padding-left:60px;">Filtr: </div><br>';
         require "connector/Select.php";
     }
+    echo '<div id="Filter_table">';
     echo '<table id="tab">';
     if ($search_genre != "") {
         echo "<tr>";
@@ -284,6 +285,7 @@
         echo "</tr>";
     }
     echo "</table>";
+    echo '</div>';
 
 
     echo '</div>';

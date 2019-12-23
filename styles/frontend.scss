@@ -739,9 +739,24 @@ body {
 ::-webkit-scrollbar {
 	display: none;
 }
+#Filter_table{
+	display: none;
+}
 
 
 @media only screen and (min-width: 1000px) {
+	#Filter_table{
+		// border: 1px solid white;
+		display: block;
+			th{
+				padding: 7px;
+			}
+	
+	}
+	#reset{
+		text-align: center !important;
+		padding-left: 20px;
+	}
 	#login {
 		margin-right: 0;
 	}

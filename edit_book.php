@@ -85,7 +85,6 @@
     }
 
     echo "<div id='logincon'>";
-    echo "<div class=\"book\">";
     echo '<form method="POST" action="">';
     echo '<input class="none" type="text" name="id" value="' . $book["id"] . '">';
     echo '<input type="text" name="name" placeholder="Nazev" value="' . $book["name"] . '">';
@@ -115,9 +114,10 @@
         echo $author["f_name"] . " " . $author["l_name"] . '</option>' . "\n";
     }
     echo '</select>' . "<br>\n";
-    echo "</div>";
+    
     echo '<input type="submit" name="save"  value="Uložit">';
     echo "</form>";
+    echo "</div>";
     echo "</div>";
     echo "</div>";
     ?>

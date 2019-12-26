@@ -406,6 +406,16 @@ body {
 	height: 100vh;
 }
 
+select#sel{
+	margin-left: 180px;
+	width: 150px !important;
+	height: 25px;
+	border-radius: 20px;
+	margin-top: 5px;
+	text-align-last:center;
+	outline: none;
+}
+
 #search::placeholder {
 	color: $text-color-white;
 }
@@ -428,7 +438,7 @@ body {
 	height: 100vh;
 	padding-top: 6%;
 	justify-content: space-around;
-}
+	}
 #logincon input[type=text],
 #logincon input[type=password],
 #logincon input[type=number] {

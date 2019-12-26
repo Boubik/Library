@@ -481,6 +481,16 @@ body {
   height: 100vh;
 }
 
+select#sel {
+  margin-left: 180px;
+  width: 150px !important;
+  height: 25px;
+  border-radius: 20px;
+  margin-top: 5px;
+  text-align-last: center;
+  outline: none;
+}
+
 #search::-webkit-input-placeholder {
   color: white;
 }

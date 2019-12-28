@@ -990,13 +990,23 @@ select#sel{
 }
 
 .status{
+	display: block;
 	text-align: center;
 	font-size: 25px;
 	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 	#free {
+		display: block;
 		color: green !important;
 	}
 	#booked	{
-		color: red !important;
+		color:red !important;
+		display: block;
+	}
+}
+
+.reservation{
+	#sel{
+		margin-top: 15px;
+		width: 90px!important;
 	}
 }

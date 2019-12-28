@@ -333,17 +333,19 @@
             echo "</div>";
 
             $status = "free";
+            $text = "Dostupna";
             foreach ($k as $reservation) {
                 if ($reservation["book_id"] == $key) {
                     if (strtotime($reservation["e-reservation"]) > strtotime('-' . 1 . ' days') and strtotime($reservation["s-reservation"]) < strtotime('-' . 0 . ' days') or $reservation["taken"] == 1) {
                         $status = "booked";
+                        $text = "Nedostupna";
                         break;
                     }
                 }
             }
 
             echo '<div id="book">';
-            echo "<div class=\"status\" id=\"" . $status . "\"></div>";
+            echo "<div class=\"status\"> <div id=\"" . $status . "\">$text</div></div>";
 
             echo '<div id="img">';
             echo "<img src=\"" . $book["img"] . "\" onError='this.src=\"images/no_cover.png\"' >";

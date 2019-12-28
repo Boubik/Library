@@ -464,14 +464,14 @@ function get_author($conn, int $id)
 function get_status_by_book($conn, int $id)
 {
 
-    $sql = "SELECT reservation.taken FROM `reservation` INNER JOIN book_has_reservation ON reservation.id = book_has_reservation.reservation_id INNER JOIN book ON book.id = book_has_reservation.book_id WHERE `e-reservation` >= CURRENT_DATE() AND `s-reservation` <= CURRENT_DATE() AND book.id = '1'";
+    $sql = "SELECT reservation.taken FROM `reservation` INNER JOIN book_has_reservation ON reservation.id = book_has_reservation.reservation_id INNER JOIN book ON book.id = book_has_reservation.book_id WHERE `e-reservation` >= CURRENT_DATE() AND `s-reservation` <= CURRENT_DATE() AND book.id = '" . $id . "'";
     $sql = $conn->prepare($sql);
     $numrows = $sql->execute();
     $row = $sql->fetch();
-    if ($numrows > 0) {
-        return $row["taken"];
-    } else {
+    if (isset($row["taken"])) {
         return false;
+    } else {
+        return true;
     }
 }
 

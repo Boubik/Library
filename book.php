@@ -106,9 +106,9 @@
     echo '<div id="info";>';
     $status = get_status_by_book($conn, $book["id"]);
     if ($status) {
-        echo '<div class="status"><div id="free">Je dostupná</div><br><br>';
+        echo '<div class="status"><div id="free">Dostupna</div>';
     } else {
-        echo '<div class="status"><div id="booked">Smůla, kniha není dostupná </div><br><br>';
+        echo '<div class="status"><div id="booked">Nedostupna</div>';
     }
     echo "</div>";
 

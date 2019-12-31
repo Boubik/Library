@@ -324,7 +324,6 @@
         echo "Žádná taková knížka tu není<br>\n";
         echo "</div>";
     } else {
-        $k = get_reservation_with_book($conn);
         foreach ($books as $key => $book) {
             echo "<a href=\"book.php?id=" . $key . "&name=" . $book["book_name"] . "\"><div class=\"book\">";
             // echo '<div data-aos="zoom-in" data-aos-once="true" data-aos-easing="linear" data-aos-duration="30">';
@@ -332,20 +331,15 @@
             echo $book["book_name"];
             echo "</div>";
 
-            $status = "free";
-            $text = "Dostupna";
-            foreach ($k as $reservation) {
-                if ($reservation["book_id"] == $key) {
-                    if (strtotime($reservation["e-reservation"]) > strtotime('-' . 1 . ' days') and strtotime($reservation["s-reservation"]) < strtotime('-' . 0 . ' days') or $reservation["taken"] == 1) {
-                        $status = "booked";
-                        $text = "Nedostupna";
-                        break;
-                    }
-                }
-            }
 
             echo '<div id="book">';
-            echo "<div class=\"status\"> <div id=\"" . $status . "\">$text</div></div>";
+            $status = get_status_by_book($conn, $key);
+            if ($status) {
+                echo '<div class="status"><div id="free">Dostupna</div>';
+            } else {
+                echo '<div class="status"><div id="booked">Nedostupna</div>';
+            }
+            echo "</div>";
 
             echo '<div id="img">';
             echo "<img src=\"" . $book["img"] . "\" onError='this.src=\"images/no_cover.png\"' >";

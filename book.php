@@ -159,12 +159,14 @@
             $users = get_users($conn);
             echo '<select name="user" id="sel">' . "\n";
             foreach ($users as $user) {
-                if ($user["username"] == $_SESSION["username"]) {
-                    echo '<option selected>';
-                } else {
-                    echo '<option>';
+                if ($user["role"] != "guest") {
+                    if ($user["username"] == $_SESSION["username"]) {
+                        echo '<option selected>';
+                    } else {
+                        echo '<option>';
+                    }
+                    echo $user["username"] . '</option>' . "\n";
                 }
-                echo $user["username"] . '</option>' . "\n";
             }
             echo '</select>' . "<br>\n";
             echo '<input type="checkbox" name="taken"> Vyzvednuta<br>' . "\n";

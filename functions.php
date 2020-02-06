@@ -261,6 +261,9 @@ function login($conn, string $username, string $password, $mod_plus = false)
     $numrows = $sql->execute();
     $row = $sql->fetch();
     if ($row["username"] == $username and $row["password"] == $password) {
+        if ($row["role"] == "guest") {
+            return false;
+        }
         last_login($conn, $username);
         if ($mod_plus != false and !($row["role"] == "mod" or $row["role"] == "admin")) {
             return false;

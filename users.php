@@ -35,6 +35,7 @@
     }
     $per_page = 30;
     $roles = array();
+    $roles[] = "guest";
     $roles[] = "user";
     $roles[] = "mod";
     if (is_admin($conn, $_SESSION["username"], $_SESSION["password"])) {
@@ -288,4 +289,5 @@
         </div>
     </div>
 </footer>
+
 </html>

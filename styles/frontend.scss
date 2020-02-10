@@ -33,7 +33,7 @@ hr{
 	height: 100vh;
 }
 #header {
-	height: 50px;
+	height: 100px;
 	position: fixed;
 	top: 0;
 	z-index: 1;
@@ -42,8 +42,8 @@ hr{
 	width: 100%;
 }
 #logo {
-	width: 55px;
-	height: 48px;
+	width: 110px;
+	height: 96px;
 	position: relative;
 	margin: auto ;
 	transition: 1s;
@@ -94,9 +94,10 @@ hr{
 	font-family: 'Montserrat', sans-serif;
 	float: right;
 	margin-top: -55px!important;
+	font-size: 30px;
 }
 #klient input[type=submit]#profile {
-	padding-right: 100px!important;
+	padding-right: 200px!important;
 }
 #profile, #out{
 	position: relative;
@@ -111,7 +112,7 @@ hr{
 
 #footer {
 	position: absolute;
-	width:100%;
+	width:100vw;
 	background-color: black;
 	margin-top: 100px;
 	clear:both;
@@ -406,7 +407,6 @@ body {
 }
 #logincon::placeholder {
 	color: $text-color-white;
-	;
 }
 #fullmenue {
 	display: none;
@@ -418,12 +418,12 @@ body {
 }
 #logincon {
 	color: $text-color-white;
-	// border: 1px solid white;
 	margin: auto;
 	width: 500px;
 	margin-top: 100px;
 	height: 100vh;
 	padding-top: 6%;
+	justify-content: space-around;
 }
 #logincon input[type=text],
 #logincon input[type=password],
@@ -464,6 +464,10 @@ body {
 	margin-left: 160px;
 	outline: none;
 	margin-top: 25px;
+}
+.logcon{
+	width: 100%;
+	height: 100vh;
 }
 #swap {
 	font-family: 'Montserrat', sans-serif;
@@ -545,7 +549,7 @@ body {
 	color: white;
 }
 #klient{
-	margin-top: 25px;
+	margin-top: -10px;
 	z-index: 2;
 	transition: 1s;
 }
@@ -610,10 +614,10 @@ body {
 	position: fixed;
 	background-color: rgba(0, 0, 0, 0.753);
 	backdrop-filter: blur(5px);
-	height: 50px;
+	height: 100px;
 	width: 100vw;
 	margin: auto;
-	margin-top: -50px;
+	margin-top: -100px;
 	transition: 1s;
 	
 }
@@ -621,12 +625,17 @@ body {
 	font-family: 'Montserrat';
 	position: absolute;
 	width: 90px;
-	margin-top: -30px;
+	margin-top: -60px;
+	margin-right: 95px;
 	right: 0;
+}
+#login input[type=submit] {
+	font-size: 30px;
+	font-family: 'Montserrat';
 }
 #filtercon{
 	text-align: center;
-	width: 400px;
+	width: 600px;
 	margin: auto;
 	border: none;
 	margin: auto;
@@ -635,17 +644,19 @@ body {
 	color: white;
 	z-index: 2; 
 	font-family: 'Montserrat', sans-serif;
+	font-size: 30px;
 }
 #showhide{
 	font-family: 'Montserrat', sans-serif;
 	display: block;
 	position: absolute;
-	margin-top: 20px;
+	margin-top: 30px;
 	background: transparent;
 	border: none;
 	color: white;
 	outline: none;
 	z-index: 2;
+	font-size: 30px;
 }
 #showhide:hover{
 	color:rgb(218, 218, 218);
@@ -701,6 +712,20 @@ body {
 	// 	float: right!important;
 	// 	width: 86%!important
 	// }
+	#login {
+		margin-right: 0;
+	}
+	#login input[type=submit] {
+		font-size: 12px;
+		font-family: 'Montserrat';
+	}
+	#header{
+		height: 50px;
+	}
+	#header img{
+	height: 45px;
+	width: auto;
+	}
 	#showhide{
 		display: none;
 	}
@@ -768,13 +793,13 @@ body {
 		border: none;
 		margin-top: 50px;
 		margin-left: 15%;
+		font-size: 15px;
 	}
 	#filter{
 		display: block!important;
 		opacity: 100 !important;
 		position: fixed;
 		width: 150px;
-		// background-color: black; 
 		background-color: rgba(0, 0, 0, 0.753);
 		backdrop-filter: blur(5px);
 		height: 100vh;
@@ -823,7 +848,7 @@ body {
 	#login{
 		font-family: 'Montserrat';
 		margin-left: 1050px;
-		margin-top: -35px;
+		margin-top: -84px;
 	}
 	#klient{
 		display: none;
@@ -835,7 +860,7 @@ body {
 		width: 200px;
 		height: 50px;
 		float: right;
-		margin-top: -50px;
+		margin-top: -100px;
 	}
 	#searchfull input[type=text] {
 		border-width: 0 0 2px;
@@ -859,7 +884,7 @@ body {
 		width: 70%;
 		margin: auto;
 		margin-left: 15%;
-		margin-top: -35px;
+		margin-top: -85px;
 	}
 	#fullmenue input[type=submit] {
 		padding: 15px;
@@ -874,6 +899,16 @@ body {
 }
 #category:hover{
 	transition: 0.3s;
+}
+@media only screen and (max-width: 700px){
+	#maincon{
+		position: relative;
+		width: 50vw;
+	    height: auto;
+		margin: auto;
+		margin-top: 100px;
+		padding-bottom: 150px;
+	}
 }
 @media only screen and (max-width: 1110px){
 	#maincon{

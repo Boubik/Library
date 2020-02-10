@@ -323,16 +323,20 @@
         var x = document.getElementById("filter");
         var z = document.getElementById("klient");
         var y = document.getElementById("logo");
+        var p = document.getElementById("profile");
         if (x.style.opacity === "0") {
             x.style.opacity = "100";
             y.style.opacity = "0";
             z.style.opacity = "0";
+            p.style.display = "none";
 
 
         } else {
             x.style.opacity = "0";
             y.style.opacity = "100";
             z.style.opacity = "100";
+            p.style.display = "block";
+            
         }
     }
 </script>

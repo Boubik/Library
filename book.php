@@ -106,9 +106,9 @@
     echo '<div id="info";>';
     $status = get_status_by_book($conn, $book["id"]);
     if ($status) {
-        echo '<div class="status" id="free">';
+        echo '<div class="status"><div id="free">Dostupna</div>';
     } else {
-        echo '<div class="status" id="booked">';
+        echo '<div class="status"><div id="booked">Nedostupna</div>';
     }
     echo "</div>";
 
@@ -159,12 +159,14 @@
             $users = get_users($conn);
             echo '<select name="user" id="sel">' . "\n";
             foreach ($users as $user) {
-                if ($user["username"] == $_SESSION["username"]) {
-                    echo '<option selected>';
-                } else {
-                    echo '<option>';
+                if ($user["role"] != "guest") {
+                    if ($user["username"] == $_SESSION["username"]) {
+                        echo '<option selected>';
+                    } else {
+                        echo '<option>';
+                    }
+                    echo $user["username"] . '</option>' . "\n";
                 }
-                echo $user["username"] . '</option>' . "\n";
             }
             echo '</select>' . "<br>\n";
             echo '<input type="checkbox" name="taken"> Vyzvednuta<br>' . "\n";
@@ -318,6 +320,7 @@
 
     if (isset($_POST["delete_reservation"])) {
         delete_reservation($conn, $_POST["reservation_id"]);
+        header("Location: book.php?id=" . $book["id"] . "&name=" . $_GET["name"]);
     }
 
     if (isset($_POST["reservations"])) {
@@ -330,29 +333,28 @@
     }
 
 
-    
     ?>
     <footer>
-    <div id="footer" style="margin-top:150px !important;">
-        <div id="footercon">
-            <div id="social">
-                <a href="http://www.skolavdf.cz" target="_blank"><img src="images/skola_logo_color.png" alt="logo"></a>
-                <a href="https://www.facebook.com/skolavdf/?ref=bookmarks"><img src="images/facebook.png" alt="logo"></a>
-                <a href="https://www.instagram.com/skolavdf/" target="_blank"><img src="images/instagram.png" alt="logo"></a>
-            </div>
-            <div id="splitter"></div>+
-            <div id="kontakt">
-            kontakty:<br><br>
-            <a href="mailto:kristina.petrackova@skolavdf.cz">Kristina Petráčková</a>: 412 315 049<br>
-            <a href="mailto:andrea.skodova@skolavdf.cz">Andrea Škodová</a>: 412 315 049<br>
-            </div>
-            <div id="team">
-            <a href="https://github.com/Boubik" target="_blank">Coder: Jan Chlouba</a><br>
-                <a href="https://github.com/JINXisHERE" target="_blank">Designer: Ibrahim Daghstani</a>
+        <div id="footer" style="margin-top:150px !important;">
+            <div id="footercon">
+                <div id="social">
+                    <a href="http://www.skolavdf.cz" target="_blank"><img src="images/skola_logo_color.png" alt="logo"></a>
+                    <a href="https://www.facebook.com/skolavdf/?ref=bookmarks"><img src="images/facebook.png" alt="logo"></a>
+                    <a href="https://www.instagram.com/skolavdf/" target="_blank"><img src="images/instagram.png" alt="logo"></a>
+                </div>
+                <div id="splitter"></div>
+                <div id="kontakt">
+                    kontakty:<br><br>
+                    <a href="mailto:kristina.petrackova@skolavdf.cz">Kristina Petráčková</a>: 412 315 049<br>
+                    <a href="mailto:andrea.skodova@skolavdf.cz">Andrea Škodová</a>: 412 315 049<br>
+                </div>
+                <div id="team">
+                    <a href="https://github.com/Boubik" target="_blank">Coder: Jan Chlouba</a><br>
+                    <a href="https://github.com/JINXisHERE" target="_blank">Designer: Ibrahim Daghstani</a>
+                </div>
             </div>
         </div>
-    </div>
-</footer>
+    </footer>
 </body>
 
 

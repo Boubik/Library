@@ -124,6 +124,10 @@ hr {
   position: relative;
 }
 
+#profile {
+  border: 1px solid pink;
+}
+
 #adminhid {
   display: none;
 }
@@ -322,6 +326,7 @@ body {
 #administrace input[type=submit]#del {
   outline: none;
   background-color: red;
+  margin-top: 10px;
 }
 
 #bookmain .name {
@@ -474,6 +479,16 @@ body {
   width: 800px;
   min-height: 300px;
   height: 100vh;
+}
+
+select#sel {
+  margin-left: 180px;
+  width: 150px !important;
+  height: 25px;
+  border-radius: 20px;
+  margin-top: 5px;
+  text-align-last: center;
+  outline: none;
 }
 
 #search::-webkit-input-placeholder {
@@ -634,6 +649,10 @@ body {
 
 #tab input[type=submit]:hover {
   background-color: #5DADE2;
+}
+
+#del {
+  margin-top: 5px;
 }
 
 #tab input[type=submit]#del:hover {
@@ -832,6 +851,38 @@ body {
   user-select: none;
 }
 
+#set {
+  width: 200px;
+}
+
+#set select {
+  margin-left: 120px;
+  width: 100px;
+  height: 25px;
+  border-radius: 20px;
+  margin-top: 5px;
+  text-align-last: center;
+  outline: none;
+}
+
+#sett {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  float: left;
+}
+
+#sett input[type=submit] {
+  margin-top: -25px;
+  float: right;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+#sett input[type=submit]:hover {
+  background-color: #5DADE2;
+}
+
 .dropdown:hover
 .dropdown-content {
   display: block;
@@ -871,7 +922,21 @@ body {
   display: none;
 }
 
+#Filter_table {
+  display: none;
+}
+
 @media only screen and (min-width: 1000px) {
+  #Filter_table {
+    display: block;
+  }
+  #Filter_table th {
+    padding: 7px;
+  }
+  #reset {
+    text-align: center !important;
+    padding-left: 20px;
+  }
   #login {
     margin-right: 0;
   }
@@ -899,9 +964,10 @@ body {
     display: none;
   }
   #sel {
+    position: relative;
     width: 50px;
     width: 100px;
-    border: 1px solid black;
+    z-index: 1;
   }
   .dropdown-content {
     display: none;
@@ -935,7 +1001,7 @@ body {
     z-index: 1;
     width: auto;
     margin-top: -50px !important;
-    margin-left: 100px !important;
+    margin-left: 115px !important;
     max-height: 400px;
     overflow: auto;
   }
@@ -981,7 +1047,7 @@ body {
     display: block;
     color: white;
     margin-left: 80px;
-    margin-top: 50px;
+    margin-top: -100px;
   }
   #maincon {
     position: relative;
@@ -1110,5 +1176,27 @@ body {
     margin-top: 100px;
     padding-bottom: 150px;
   }
+}
+
+.status {
+  display: block;
+  text-align: center;
+  font-size: 25px;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.status #free {
+  display: block;
+  color: green !important;
+}
+
+.status #booked {
+  color: red !important;
+  display: block;
+}
+
+.reservation #sel {
+  margin-top: 15px;
+  width: 90px !important;
 }
 /*# sourceMappingURL=frontend.css.map */

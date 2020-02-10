@@ -102,6 +102,9 @@ hr{
 #profile, #out{
 	position: relative;
 }
+#profile{
+	border: 1px solid pink;
+}
 #adminhid {
 	display: none;
 }
@@ -277,6 +280,7 @@ body {
 #administrace input[type=submit]#del{
 	outline: none;
 	background-color: red;
+	margin-top: 10px
 }
 #bookmain .name{
 	color: $text-color-white;
@@ -402,6 +406,16 @@ body {
 	height: 100vh;
 }
 
+select#sel{
+	margin-left: 180px;
+	width: 150px !important;
+	height: 25px;
+	border-radius: 20px;
+	margin-top: 5px;
+	text-align-last:center;
+	outline: none;
+}
+
 #search::placeholder {
 	color: $text-color-white;
 }
@@ -513,6 +527,9 @@ body {
 }
 #tab input[type=submit]:hover {
 	background-color: #5DADE2;
+}
+#del{
+	margin-top: 5px;
 }
 #tab input[type=submit]#del:hover {
 	color: $text-color-white;
@@ -675,6 +692,32 @@ body {
         -ms-user-select: none;
             user-select: none;
 }
+#set{
+	width: 200px;
+	select{
+		margin-left: 120px;
+		width: 100px;
+		height: 25px;
+		border-radius: 20px;
+		margin-top: 5px;
+		text-align-last:center;
+		outline: none;
+	}
+}
+#sett{
+	display: inline-flex;
+	float: left;
+	input[type=submit]{
+		margin-top: -25px;
+		float: right;
+		transition: 0.3s;
+	}
+	input[type=submit]:hover{
+		background-color: #5DADE2;
+	}
+	
+}
+
 .dropdown:hover 
 .dropdown-content {
   display: block;
@@ -706,12 +749,24 @@ body {
 ::-webkit-scrollbar {
 	display: none;
 }
+#Filter_table{
+	display: none;
+}
+
 
 @media only screen and (min-width: 1000px) {
-	// #footer{
-	// 	float: right!important;
-	// 	width: 86%!important
-	// }
+	#Filter_table{
+		// border: 1px solid white;
+		display: block;
+			th{
+				padding: 7px;
+			}
+	
+	}
+	#reset{
+		text-align: center !important;
+		padding-left: 20px;
+	}
 	#login {
 		margin-right: 0;
 	}
@@ -740,9 +795,11 @@ body {
 		display: none;
 	}
 	#sel{
+		position: relative;
 		width: 50px;
 		width: 100px;
-		border: 1px solid black;
+		// border: 1px solid black;
+		z-index: 1;
 	}
 	.dropdown-content{
 		display: none;
@@ -773,7 +830,7 @@ body {
 	  z-index: 1;
 	  width: auto;
 	  margin-top: -50px !important;
-	  margin-left: 100px !important;
+	  margin-left: 115px !important;
 	  max-height: 400px;
 	  overflow: auto;
 	}
@@ -818,7 +875,7 @@ body {
 		display: block;
 		color: $text-color-white;
 		margin-left: 80px;
-		margin-top: 50px;
+		margin-top: -100px;
 	}
 	#maincon {
 		position: relative;
@@ -897,6 +954,7 @@ body {
 		transition: 0.3s;
 	}
 }
+
 #category:hover{
 	transition: 0.3s;
 }
@@ -929,5 +987,27 @@ body {
 		margin: auto;
 		margin-top: 100px;
 		padding-bottom: 150px;
+	}
+}
+
+.status{
+	display: block;
+	text-align: center;
+	font-size: 25px;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	#free {
+		display: block;
+		color: green !important;
+	}
+	#booked	{
+		color:red !important;
+		display: block;
+	}
+}
+
+.reservation{
+	#sel{
+		margin-top: 15px;
+		width: 90px!important;
 	}
 }

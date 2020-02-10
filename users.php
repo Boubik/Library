@@ -35,6 +35,7 @@
     }
     $per_page = 30;
     $roles = array();
+    $roles[] = "guest";
     $roles[] = "user";
     $roles[] = "mod";
     if (is_admin($conn, $_SESSION["username"], $_SESSION["password"])) {
@@ -82,7 +83,7 @@
             echo '</div>';
         }
         echo '<div id="klient">';
-        echo '<input type="submit" name="profile" id="profil" value="Můj profil">' . "\n";
+        echo '<input type="submit" name="profile" id="profile" value="Můj profil">' . "\n";
         echo '<input type="submit" name="logout"  value="Odhlásit se">' . "\n";
     } else {
         echo '<div id="fullmenue">';
@@ -100,7 +101,7 @@
             echo '<input type="submit" name="add_book"  value="Přidat knížku">';
             echo '<input type="submit" name="add_author"  value="Přidat autora">';
         }
-        echo '<input type="submit" name="profile"  value="Můj profil">';
+        echo '<input type="submit" name="profile" value="Můj profil">';
         echo '<input type="submit" name="logout"  value="Odhlásit se">';
     } else {
         echo '<input type="submit" name="login"  value="Přihrásit se"></input>';
@@ -194,9 +195,11 @@
             echo "<th> " . $value["f_name"] . " " . $value["l_name"] . "</th><th>" . $value["username"] . "</th>";
             echo "<th>";
 
+            echo '<div id="set">';
             echo '<form method="GET" action="">';
             echo '<input type="text" name="username" value="' . $value["username"] . '" class="none">';
-            echo '<select name="role" id="sel">' . "\n";
+            echo '<div id= id="sett">';
+            echo '<select name="role">' . "\n";
             foreach ($roles as $item) {
                 if ($item == $value["role"]) {
                     echo '<option selected>';
@@ -206,9 +209,13 @@
                 echo $item . '</option>' . "\n";
             }
             echo '</select>' . "\n";
-
+            echo '</div>';
+            echo '<div id="sett">';
             echo '<input type="submit" name="set_role" value="nastavit">';
+            echo '</div>';
             echo '</form></th>';
+
+            echo '</div>';
 
             if ($is_admin) {
                 echo "<th>";
@@ -258,23 +265,29 @@
         }
     }
     echo "</div>";
-    echo '<div id="footer" style="margin-top:100px;">
-<div id="footercon">
-<div id="social">
-<a href="http://www.skolavdf.cz" target="_blank"><img src="images/skola_logo_color.png" alt="logo"></a>
-<a href="https://www.facebook.com/skolavdf/?ref=bookmarks"><img src="images/facebook.png" alt="logo"></a>
-<a href="https://www.instagram.com/skolavdf/" target="_blank"><img src="images/instagram.png" alt="logo"></a>
-</div>
-<div id="splitter"></div>
-    <div id="team">
-    <a href="https://github.com/Boubik" target="_blank">Coder: Jan Chlouba</a><br>
-    <a href="https://github.com/JINXisHERE" target="_blank">Designer: Ibrahim Daghstani</a>
-
-</div>
-</div>
-</div>';
     echo '</div>';
     ?>
 </body>
+<footer>
+    <div id="footer" style="margin-top:150px !important;">
+        <div id="footercon">
+            <div id="social">
+                <a href="http://www.skolavdf.cz" target="_blank"><img src="images/skola_logo_color.png" alt="logo"></a>
+                <a href="https://www.facebook.com/skolavdf/?ref=bookmarks"><img src="images/facebook.png" alt="logo"></a>
+                <a href="https://www.instagram.com/skolavdf/" target="_blank"><img src="images/instagram.png" alt="logo"></a>
+            </div>
+            <div id="splitter"></div>+
+            <div id="kontakt">
+                kontakty:<br><br>
+                <a href="mailto:kristina.petrackova@skolavdf.cz">Kristina Petráčková</a>: 412 315 049<br>
+                <a href="mailto:andrea.skodova@skolavdf.cz">Andrea Škodová</a>: 412 315 049<br>
+            </div>
+            <div id="team">
+                <a href="https://github.com/Boubik" target="_blank">Coder: Jan Chlouba</a><br>
+                <a href="https://github.com/JINXisHERE" target="_blank">Designer: Ibrahim Daghstani</a>
+            </div>
+        </div>
+    </div>
+</footer>
 
 </html>

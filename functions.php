@@ -261,6 +261,9 @@ function login($conn, string $username, string $password, $mod_plus = false)
     $numrows = $sql->execute();
     $row = $sql->fetch();
     if ($row["username"] == $username and $row["password"] == $password) {
+        if ($row["role"] == "guest") {
+            return false;
+        }
         last_login($conn, $username);
         if ($mod_plus != false and !($row["role"] == "mod" or $row["role"] == "admin")) {
             return false;
@@ -464,14 +467,14 @@ function get_author($conn, int $id)
 function get_status_by_book($conn, int $id)
 {
 
-    $sql = "SELECT reservation.taken FROM `reservation` INNER JOIN book_has_reservation ON reservation.id = book_has_reservation.reservation_id INNER JOIN book ON book.id = book_has_reservation.book_id WHERE `e-reservation` >= CURRENT_DATE() AND `s-reservation` <= CURRENT_DATE() AND book.id = '1'";
+    $sql = "SELECT reservation.taken FROM `reservation` INNER JOIN book_has_reservation ON reservation.id = book_has_reservation.reservation_id INNER JOIN book ON book.id = book_has_reservation.book_id WHERE `e-reservation` >= CURRENT_DATE() AND `s-reservation` <= CURRENT_DATE() AND book.id = '" . $id . "'";
     $sql = $conn->prepare($sql);
     $numrows = $sql->execute();
     $row = $sql->fetch();
-    if ($numrows > 0) {
-        return $row["taken"];
-    } else {
+    if (isset($row["taken"])) {
         return false;
+    } else {
+        return true;
     }
 }
 
@@ -567,7 +570,8 @@ function reservations($conn, $s_reservation, $e_reservation, $book_id, $user, $t
     if ($numrows > 0) {
         while ($row = $sql->fetch()) {
             //save_to_log(strtotime($row["e-reservation"]) . " <= " . strtotime($s_reservation) . " and " . strtotime($row["e-reservation"]) . " < " . strtotime($e_reservation) . " or " . strtotime($row["s-reservation"]) . " >= " . strtotime($e_reservation));
-            if (((strtotime($row["e-reservation"]) <= strtotime($s_reservation) and strtotime($row["e-reservation"]) < strtotime($e_reservation)) or strtotime($row["s-reservation"]) >= strtotime($e_reservation))) { } else {
+            if (((strtotime($row["e-reservation"]) <= strtotime($s_reservation) and strtotime($row["e-reservation"]) < strtotime($e_reservation)) or strtotime($row["s-reservation"]) >= strtotime($e_reservation))) {
+            } else {
                 return false;
             }
         }
@@ -756,8 +760,20 @@ function add_book_has_reservation($conn, int $id_book, int $id_reservation)
  * @param   String  $search         search in db
  * @return  Array   array
  */
-function book($conn, String $search = "", $count_books = 1, $page = 1, $per_page = 30)
+function book($conn, String $search = "", $search_genre = "", $search_author = "", $search_language = "", $search_room = "", $count_books = 1, $page = 1, $per_page = 30)
 {
+    if ($search_genre != "") {
+        $search_genre = "AND genre.id = " . $search_genre;
+    }
+    if ($search_author != "") {
+        $search_author = "AND author.id = " . $search_author;
+    }
+    if ($search_language != "") {
+        $search_language = "AND book.language = '" . $search_language . "'";
+    }
+    if ($search_room != "") {
+        $search_room = "AND room.name = '" . $search_room . "'";
+    }
     $page -= 1;
     if ($page == 0) {
         $items = 0;
@@ -767,9 +783,9 @@ function book($conn, String $search = "", $count_books = 1, $page = 1, $per_page
     $book_id = array();
     $books = array();
     if ($search == "") {
-        $sql = "SELECT book.id AS 'book_id' FROM book INNER JOIN book_has_genre ON book_has_genre.book_id = book.id INNER JOIN genre ON genre.id = book_has_genre.genre_id INNER JOIN book_has_author ON book_has_author.book_id = book.id INNER JOIN room ON room.name = room_name INNER JOIN author ON author.id = book_has_author.author_id WHERE `show` != '0' OR `show` IS NULL ORDER BY book.name";
+        $sql = "SELECT book.id AS 'book_id' FROM book INNER JOIN book_has_genre ON book_has_genre.book_id = book.id INNER JOIN genre ON genre.id = book_has_genre.genre_id INNER JOIN book_has_author ON book_has_author.book_id = book.id INNER JOIN room ON room.name = room_name INNER JOIN author ON author.id = book_has_author.author_id WHERE `show` != '0' OR `show` IS NULL " . $search_genre . " " . $search_author . " " . $search_language . " " . $search_room . " ORDER BY  book.name";
     } else {
-        $sql = "SELECT book.id AS 'book_id' FROM book INNER JOIN book_has_genre ON book_has_genre.book_id = book.id INNER JOIN genre ON genre.id = book_has_genre.genre_id INNER JOIN book_has_author ON book_has_author.book_id = book.id INNER JOIN room ON room.name = room_name INNER JOIN author ON author.id = book_has_author.author_id WHERE book.room_name = room.name AND book.id = book_has_genre.book_id AND book_has_genre.genre_id = genre.id AND book_has_author.author_id = author.id AND book.id = book_has_author.book_id AND (book.room_name LIKE '%" . $search . "%' OR book.name LIKE '%" . $search . "%' OR book.relase LIKE '%" . $search . "%' OR book.language LIKE '%" . $search . "%'OR book.ISBN LIKE '%" . $search . "%'OR book.pages LIKE '%" . $search . "%'OR author.f_name LIKE '%" . $search . "%' OR author.l_name LIKE '%" . $search . "%' OR author.bday LIKE '%" . $search . "%' OR genre.name LIKE '%" . $search . "%' OR room.name LIKE '%" . $search . "%' OR CONCAT(author.f_name, ' ' , author.l_name) LIKE '%" . $search . "%' OR CONCAT(author.l_name, ' ', author.f_name) LIKE '%" . $search . "%') and (`show` != '0' OR `show` IS NULL) ORDER BY book.name";
+        $sql = "SELECT book.id AS 'book_id' FROM book INNER JOIN book_has_genre ON book_has_genre.book_id = book.id INNER JOIN genre ON genre.id = book_has_genre.genre_id INNER JOIN book_has_author ON book_has_author.book_id = book.id INNER JOIN room ON room.name = room_name INNER JOIN author ON author.id = book_has_author.author_id WHERE book.room_name = room.name AND book.id = book_has_genre.book_id AND book_has_genre.genre_id = genre.id AND book_has_author.author_id = author.id AND book.id = book_has_author.book_id AND (book.room_name LIKE '%" . $search . "%' OR book.name LIKE '%" . $search . "%' OR book.relase LIKE '%" . $search . "%' OR book.language LIKE '%" . $search . "%'OR book.ISBN LIKE '%" . $search . "%'OR book.pages LIKE '%" . $search . "%'OR author.f_name LIKE '%" . $search . "%' OR author.l_name LIKE '%" . $search . "%' OR author.bday LIKE '%" . $search . "%' OR genre.name LIKE '%" . $search . "%' OR room.name LIKE '%" . $search . "%' OR CONCAT(author.f_name, ' ' , author.l_name) LIKE '%" . $search . "%' OR CONCAT(author.l_name, ' ', author.f_name) LIKE '%" . $search . "%') and (`show` != '0' OR `show` IS NULL) " . $search_genre . " " . $search_author . " " . $search_language . " " . $search_room . " ORDER BY book.name";
     }
     //echo $sql;
     $sql = $conn->prepare($sql);
@@ -853,6 +869,8 @@ function book($conn, String $search = "", $count_books = 1, $page = 1, $per_page
             $books[$id]["img"] = $db_book[$id]["img"];
             $books[$id]["room_name"] = $db_book[$id]["room_name"];
         }
+    } else {
+        echo "<div class=\"warning\">Žádná taková knížka nené<div>";
     }
     return $books;
 }
@@ -988,7 +1006,8 @@ function generate_db()
             try {
                 $sql = $conn->prepare($item . ";");
                 $sql->execute();
-            } catch (PDOException $e) { }
+            } catch (PDOException $e) {
+            }
         }
     }
 }
@@ -1139,4 +1158,21 @@ function my_reservation($conn, $user_id, String $search = "", $page = 1, $per_pa
         }
     }
     return $users;
+}
+
+/**
+ * execute inputed sql and return array
+ * @param   mixed   $conn           db connection
+ * @param   String  $sql            sql to execute
+ * @return  Array   array
+ */
+function exe_sql($conn, $sql)
+{
+    $sql = $conn->prepare($sql);
+    $sql->execute();
+    $rows = array();
+    while ($row = $sql->fetch()) {
+        $rows[] = $row;
+    }
+    return $rows;
 }

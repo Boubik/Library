@@ -371,7 +371,6 @@
     }
 
 
-
     ?>
     <footer>
         <div id="footer" style="margin-top:150px !important;">
@@ -381,7 +380,7 @@
                     <a href="https://www.facebook.com/skolavdf/?ref=bookmarks"><img src="images/facebook.png" alt="logo"></a>
                     <a href="https://www.instagram.com/skolavdf/" target="_blank"><img src="images/instagram.png" alt="logo"></a>
                 </div>
-                <div id="splitter"></div>+
+                <div id="splitter"></div>
                 <div id="kontakt">
                     kontakty:<br><br>
                     <a href="mailto:kristina.petrackova@skolavdf.cz">Kristina Petráčková</a>: 412 315 049<br>

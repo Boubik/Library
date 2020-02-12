@@ -473,7 +473,6 @@
             y.style.opacity = "100";
             z.style.opacity = "100";
             p.style.display = "block";
-
         }
     }
 </script>

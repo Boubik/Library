@@ -52,7 +52,7 @@
     echo '</div>';
 
     echo '<form method="POST" action="">' . "\n";
-    if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
+    if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"], false, true)) {
         if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
             echo '<div id="admin">';
             echo '<a name="admin"  value="Administrace"><i class="fas fa-cog"></i></a>' . "\n";
@@ -75,7 +75,7 @@
     echo '</form>' . "\n";
     echo '<div id="fullmenue">';
     echo '<form method="POST" action="">' . "\n";
-    if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
+    if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"], false, true)) {
         if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
             echo '<input id="reservations" type="submit" name="reservations"  value="Rezervace">';
             echo '<input id="addbook" type="submit" name="users"  value="Uživatelé">';
@@ -127,7 +127,7 @@
     echo '<div id="res">';
     echo '<hr><br>';
     echo "<a href=\"login.php?reset=" . $_SESSION["username"] . "\">Změnit heslo</a><br>";
-    echo '<br><hr>'; 
+    echo '<br><hr>';
     echo '</div>';
     $new = array();
     $old = array();

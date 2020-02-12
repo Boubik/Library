@@ -151,7 +151,7 @@
 
     echo '<div id="fullmenue">';
     echo '<form method="POST" action="">' . "\n";
-    if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
+    if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"], false, true)) {
         if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
             echo '<input id="reservations" type="submit" name="reservations"  value="Rezervace">';
             echo '<input id="addbook" type="submit" name="users"  value="Uživatelé">';
@@ -291,7 +291,7 @@
     echo '</div>';
     echo '</div>';
     echo '<form method="POST" action="">' . "\n";
-    if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
+    if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"], false, true)) {
         if (login($conn, $_SESSION["username"], $_SESSION["password"], true)) {
             // echo '<div id="admin">';
             // echo '<a name="admin"  value="Administrace"><i class="fas fa-cog"></i></a>' . "\n";

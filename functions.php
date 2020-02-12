@@ -252,7 +252,7 @@ function update_password($conn, string $username, string $password)
  * @param   Bool    check if is moderator or admin
  * @return  Bool    if true you can login
  */
-function login($conn, string $username, string $password, $mod_plus = false)
+function login($conn, string $username, string $password, $mod_plus = false, $alow_guests = false)
 {
     $password = hash_password($password);
 
@@ -262,7 +262,11 @@ function login($conn, string $username, string $password, $mod_plus = false)
     $row = $sql->fetch();
     if ($row["username"] == $username and $row["password"] == $password) {
         if ($row["role"] == "guest") {
-            return false;
+            if ($alow_guests) {
+                return true;
+            } else {
+                return false;
+            }
         }
         last_login($conn, $username);
         if ($mod_plus != false and !($row["role"] == "mod" or $row["role"] == "admin")) {
@@ -306,11 +310,50 @@ function is_admin($conn, string $username, string $password)
  */
 function set_role($conn, string $username, string $role)
 {
-
     save_to_log("Set role: " . $role . " to: \"" . $username . "\" by: \"" . $_SESSION["username"] . "\"");
     $sql = "UPDATE `user` SET `role` = '" . $role . "' WHERE `username` = '" . $username . "'";
     $sql = $conn->prepare($sql);
     $sql->execute();
+}
+
+/**
+ * get avg of stars
+ * @param   mixed   $conn           db connection
+ * @param   String  $book_id           book id
+ */
+function get_rating($conn, string $book_id)
+{
+    $sql = "SELECT AVG(stars) as \"stars\" FROM rating WHERE `book_id` = " . $book_id;
+    $sql = $conn->prepare($sql);
+    $sql->execute();
+    $rating = 0;
+    $i = 0;
+    $row = $sql->fetch();
+    return $row["stars"];
+}
+
+/**
+ * set_rating
+ * @param   mixed   $conn           db connection
+ * @param   String  $book_id       book id
+ * @param   String  $user_id           user id
+ * @param   String  $rating           rating
+ */
+function set_rating($conn, string $book_id, string $user_id, int $rating)
+{
+    $sql = "SELECT `book_id`, `user_id` FROM `rating` WHERE `book_id` = " . $book_id . " AND `user_id` = " . $user_id;
+    $sql = $conn->prepare($sql);
+    $sql->execute();
+    $row = $sql->fetch();
+    if (isset($row["book_id"])) {
+        $sql = "UPDATE `rating` SET `stars` = " . $rating . " WHERE `book_id` = " . $book_id . " AND `user_id` = " . $user_id;
+        $sql = $conn->prepare($sql);
+        $sql->execute();
+    } else {
+        $sql = "INSERT INTO `rating`(`stars`, `book_id`, `user_id`) VALUES ( " . $rating . ", " . $book_id . ", " . $user_id . ")";
+        $sql = $conn->prepare($sql);
+        $sql->execute();
+    }
 }
 
 /**

@@ -20,7 +20,7 @@
     session_start();
     echo '<div class="logcon">';
     echo '<div id="logincon">';
-    if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"]) and !isset($_GET["reset"])) {
+    if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"], false, true) and !isset($_GET["reset"])) {
         header("Location: index.php");
     } else {
 
@@ -73,7 +73,7 @@
     echo '</div>';
 
     if (isset($_POST["reset"])) {
-        if (login($conn, $_SESSION["username"], filter_input(INPUT_POST, "old_pass"))) {
+        if (login($conn, $_SESSION["username"], filter_input(INPUT_POST, "old_pass"), false, true)) {
             if ($_POST["new_pass"] == $_POST["new2_pass"]) {
                 update_password($conn, $_SESSION["username"], filter_input(INPUT_POST, "passwordHMAC"));
                 $_SESSION["password"] = filter_input(INPUT_POST, "new_pass");
@@ -101,7 +101,7 @@
     }
 
     if (isset($_POST["login"])) {
-        if (login($conn, filter_input(INPUT_POST, "username"), filter_input(INPUT_POST, "passwordHMAC"))) {
+        if (login($conn, filter_input(INPUT_POST, "username"), filter_input(INPUT_POST, "passwordHMAC"), false, true)) {
             echo "jsi přihlášený";
             $_SESSION["username"] = filter_input(INPUT_POST, "username");
             $_SESSION["password"] = filter_input(INPUT_POST, "passwordHMAC");
@@ -134,19 +134,19 @@
         }
     }
 </script>
-    <script type="text/javascript">
-        $('.form-signin').submit(function() {
-            if ($("#password").val().length !== 0) {
-                var hash = CryptoJS.SHA3($("#password").val(), {
-                    outputLength: 512
-                });
-                $("#passwordHMAC").val(hash);
-            } else {
-                $("#passwordHMAC").val("");
-            }
-            $("#password").val("");
-        });
-    </script>
+<script type="text/javascript">
+    $('.form-signin').submit(function() {
+        if ($("#password").val().length !== 0) {
+            var hash = CryptoJS.SHA3($("#password").val(), {
+                outputLength: 512
+            });
+            $("#passwordHMAC").val(hash);
+        } else {
+            $("#passwordHMAC").val("");
+        }
+        $("#password").val("");
+    });
+</script>
 
 
 </html>

@@ -253,26 +253,30 @@
 
     echo '<div id="rez">';
     if (isset($_POST["add_reservation"])) {
-        if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
-            if (isset($_POST["taken"])) {
-                $taken = 1;
-            } else {
-                $taken = 0;
-            }
-            if (strtotime(filter_input(INPUT_POST, "s_date")) >= strtotime(date("Y-m-d")) and isset($_SESSION["username"]) and isset($_SESSION["password"]) and strtotime(filter_input(INPUT_POST, "s_date")) < strtotime(filter_input(INPUT_POST, "e_date"))) {
-                if (reservations($conn, filter_input(INPUT_POST, "s_date"), filter_input(INPUT_POST, "e_date"), filter_input(INPUT_GET, "id"), filter_input(INPUT_POST, "user"), $taken)) {
-                    $reservation_id = get_reservation_id($conn, filter_input(INPUT_POST, "s_date"), filter_input(INPUT_POST, "e_date"), filter_input(INPUT_GET, "id"));
-                    add_book_has_reservation($conn, (int) $_GET["id"], (int) $reservation_id);
-                    header("Location: book.php?id=" . filter_input(INPUT_GET, "id") . "&name=" . filter_input(INPUT_GET, "name"));
+        if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"], false, true)) {
+            if (login($conn, $_SESSION["username"], $_SESSION["password"])) {
+                if (isset($_POST["taken"])) {
+                    $taken = 1;
+                } else {
+                    $taken = 0;
+                }
+                if (strtotime(filter_input(INPUT_POST, "s_date")) >= strtotime(date("Y-m-d")) and isset($_SESSION["username"]) and isset($_SESSION["password"]) and strtotime(filter_input(INPUT_POST, "s_date")) < strtotime(filter_input(INPUT_POST, "e_date"))) {
+                    if (reservations($conn, filter_input(INPUT_POST, "s_date"), filter_input(INPUT_POST, "e_date"), filter_input(INPUT_GET, "id"), filter_input(INPUT_POST, "user"), $taken)) {
+                        $reservation_id = get_reservation_id($conn, filter_input(INPUT_POST, "s_date"), filter_input(INPUT_POST, "e_date"), filter_input(INPUT_GET, "id"));
+                        add_book_has_reservation($conn, (int) $_GET["id"], (int) $reservation_id);
+                        header("Location: book.php?id=" . filter_input(INPUT_GET, "id") . "&name=" . filter_input(INPUT_GET, "name"));
+                    } else {
+                        echo '<div id="rezz">';
+                        echo "Vaše rezervace nenímožná kryje se s jinou";
+                        echo "</div>";
+                    }
                 } else {
                     echo '<div id="rezz">';
-                    echo "Vaše rezervace nenímožná kryje se s jinou";
+                    echo "špatně zadaný datum";
                     echo "</div>";
                 }
             } else {
-                echo '<div id="rezz">';
-                echo "špatně zadaný datum";
-                echo "</div>";
+                echo "<div class=\"error\">Nemáte práva na rezervaci</div>";
             }
         } else {
             header("Location: login.php");
@@ -283,6 +287,40 @@
     echo "</div>";
     echo "</div>";
     echo '</div>';
+
+
+    echo '<div id="coments">';
+    echo '<div id="rating">';
+
+    if (isset($_SESSION["username"]) and isset($_SESSION["password"]) and login($conn, $_SESSION["username"], $_SESSION["password"])) {
+        echo '<form method="POST">';
+        $user_id = get_user_id($conn, $_SESSION["username"]);
+        if (isset($_POST["rating"])) {
+            $rating = $_POST["rating"];
+            set_rating($conn, $book["id"], $user_id, $rating);
+        } else {
+            $sql = "SELECT `stars` FROM `rating` WHERE `book_id` = " . $book["id"] . " AND `user_id` = " . $user_id;
+            $sql = $conn->prepare($sql);
+            $sql->execute();
+            $row = $sql->fetch();
+            if (isset($row["stars"])) {
+                $rating = $row["stars"];
+            } else {
+                $rating = 0;
+            }
+        }
+        echo '<input type="number" name="rating" min="0" max "5" value="' . $rating . '">';
+        echo '<input type="submit" name="rating_submit" value="nastavit">';
+        echo '</form">';
+    }
+    echo get_rating($conn, $book["id"]);
+
+    echo '</div>';
+
+    echo $book["basic_info"];
+
+    echo '</div>';
+
 
     if (isset($_POST["logout"])) {
         unset($_SESSION["username"]);

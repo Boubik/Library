@@ -180,6 +180,8 @@
     $users = users($conn, $search, $page, $per_page);
     $count_users = count_users($conn, $search);
 
+    print_r($user);
+
     if (isset($users[0])) {
         echo '<div id="usermain">';
         echo '<table id="tab">';
@@ -196,24 +198,53 @@
             echo "<th>";
 
             echo '<div id="set">';
-            echo '<form method="GET" action="">';
-            echo '<input type="text" name="username" value="' . $value["username"] . '" class="none">';
-            echo '<div id= id="sett">';
-            echo '<select name="role">' . "\n";
-            foreach ($roles as $item) {
-                if ($item == $value["role"]) {
-                    echo '<option selected>';
-                } else {
-                    echo '<option>';
+            if ($is_admin) {
+                echo '<form method="GET" action="">';
+                echo '<input type="text" name="username" value="' . $value["username"] . '" class="none">';
+                echo '<div id= id="sett">';
+                echo '<select name="role">' . "\n";
+                $selected = false;
+                foreach ($roles as $item) {
+                    if ($item == $value["role"]) {
+                        echo '<option selected>';
+                        $slected = true;
+                    } else {
+                        echo '<option>';
+                    }
+                    echo $item . '</option>' . "\n";
                 }
-                echo $item . '</option>' . "\n";
+                echo '</select>' . "\n";
+                echo '</div>';
+                echo '<div id="sett">';
+                echo '<input type="submit" name="set_role" value="nastavit">';
+                echo '</div>';
+                echo '</form></th>';
+            } else {
+                if ($value["role"] != "admin") {
+                    echo '<form method="GET" action="">';
+                    echo '<input type="text" name="username" value="' . $value["username"] . '" class="none">';
+                    echo '<div id= id="sett">';
+                    echo '<select name="role">' . "\n";
+                    $selected = false;
+                    foreach ($roles as $item) {
+                        if ($item == $value["role"]) {
+                            echo '<option selected>';
+                            $slected = true;
+                        } else {
+                            echo '<option>';
+                        }
+                        echo $item . '</option>' . "\n";
+                    }
+                    echo '</select>' . "\n";
+                    echo '</div>';
+                    echo '<div id="sett">';
+                    echo '<input type="submit" name="set_role" value="nastavit">';
+                    echo '</div>';
+                    echo '</form></th>';
+                } else {
+                    echo "admin";
+                }
             }
-            echo '</select>' . "\n";
-            echo '</div>';
-            echo '<div id="sett">';
-            echo '<input type="submit" name="set_role" value="nastavit">';
-            echo '</div>';
-            echo '</form></th>';
 
             echo '</div>';
 

@@ -695,7 +695,7 @@ select#sel{
 #set{
 	width: 200px;
 	select{
-		margin-left: 120px;
+		margin-left: -70px;
 		width: 100px;
 		height: 25px;
 		border-radius: 20px;
@@ -706,10 +706,11 @@ select#sel{
 }
 #sett{
 	display: inline-flex;
-	float: left;
+	float: right;
 	input[type=submit]{
 		margin-top: -25px;
 		float: right;
+		margin-right: -30px;
 		transition: 0.3s;
 	}
 	input[type=submit]:hover{

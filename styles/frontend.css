@@ -856,7 +856,7 @@ select#sel {
 }
 
 #set select {
-  margin-left: 120px;
+  margin-left: -70px;
   width: 100px;
   height: 25px;
   border-radius: 20px;
@@ -869,12 +869,13 @@ select#sel {
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
-  float: left;
+  float: right;
 }
 
 #sett input[type=submit] {
   margin-top: -25px;
   float: right;
+  margin-right: -30px;
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }

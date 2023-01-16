@@ -1,7 +1,28 @@
 # Scripts For RBDS
 
 ## Obsah
-ToDo
+1. [Funkce poceč zanrů](#funkce-poceč-zanrů)
+2. [Transakce přidej x kč](#transakce-přidej-x-kč)
+3. [Index book name](#index-book-name)
+4. [Pohled na fantasy knizky](#pohled-na-fantasy-knizky)
+5. [Proceuda book name calculator](#proceuda-book-name-calculator)
+6. [Select analiticka funkce](#select-analiticka-funkce)
+7. [Select join](#select-join)
+8. [Select select](#select-select)
+9. [Lock/Unlock](#lockunlock)
+10. [User](#user)
+    - [Vytvoří uživatele](#vytvoří-uživatele)
+    - [Smaže uživatele](#smaže-uživatele)
+    - [Aktualizace záznamů v paměti](#aktualizuje-záznam-v-paměti-zprovozní-upravené-věci-s-uživateli)
+    - [Dá všechny práva uživateli...](#dá-všechny-práva-uživateli)
+    - [Dá select, update... pro dbname.vše .. pro uživatele@přístup](#dá-select-update-pro-dbnamevše--pro-uživatelepřístup)
+    - [Odebere práva](#odebere-práva)
+    - [Ukáže práva pro daného uživatele](#ukáže-práva-pro-daného-uživatele)
+    - [Pro všechny](#pro-všechny)
+
+## Návrh databáze
+![Návrh databáze](https://raw.githubusercontent.com/Boubik/Library/master/db/Library.png)
+
 
 ## Funkce poceč zanrů
 ```
@@ -57,7 +78,7 @@ ON book (name);
 END$$
 DELIMITER ;
 ```
-## Pohled na fantasy knozky
+## Pohled na fantasy knizky
 ```
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `pohled_na_fantasy_knizky`()
